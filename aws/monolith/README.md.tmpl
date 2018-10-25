@@ -1,0 +1,20 @@
+## Monolith application on AWS ECS-Fargate 
+
+The blueprint deploys a monolithic application generated with JHipster, to AWS ECS with fargate launch type.
+XL deploy does the provisioning and deployment, while XL release orchestartes everything.
+
+The application is available in the repo [https://github.com/xebialabs/e-commerce-monolith](https://github.com/xebialabs/e-commerce-monolith)
+
+To deploy this blueprint with XL Platform follow the below steps
+
+1. Generate the blueprint with `xl blueprint -t aws/monolith`
+2. Apply the generated yaml configurations in the below order using XL CLI
+
+    ```
+    xl apply -f xld-environment.yml
+    xl apply -f xld-infrastructure.yml
+    xl apply -f xld-service.yml
+    xl apply -f xld-pipeline.yml
+    ```
+
+3. Go to XL Release and look for the {{.AppName}}-release-pipeline and start a new release from it.
