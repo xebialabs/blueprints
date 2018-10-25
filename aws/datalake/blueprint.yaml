@@ -1,21 +1,17 @@
 apiVersion: xl-cli/v1beta1
 kind: Blueprint
 metadata:
-  projectName: AWS-Monolith-ECS-Fargate 
+  projectName: AWS-Datalake 
   description: |
-    The blueprint deploys a monolithic application generated with JHipster, to AWS ECS with fargate launch type.
+    The blueprint deploys a data lake architecture to AWS using CloudFormation.
     XL deploy does the provisioning and deployment, while XL release orchestrates everything.
+    Refer https://docs.aws.amazon.com/solutions/latest/data-lake-solution
   author: XebiaLabs
   version: 1.0
 spec:
-- name: AppName
+- name: S3BucketName
+  # description: The S3 bucket name to use for CloudFormation templates
   type: Input
-- name: MySQLMasterPassword
-  type: Input
-  secret: true
-- name: XLRScriptUserPassword
-  type: Input
-  secret: true
 - name: AWSAccessKey
   type: Input
   secret: true
@@ -27,5 +23,5 @@ spec:
 - name: AWSRegion
   type: Select
   options:
-    - !fn aws.regions(ecs)
-  default: !fn aws.regions(ecs)[0]
+    - !fn aws.regions(lambda)
+  default: !fn aws.regions(lambda)[0]
