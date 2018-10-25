@@ -834,9 +834,7 @@ Resources:
             Timeout: "300"
             Environment:
                 Variables:
-                    CRAWLER_ROLE_ARN: !GetAtt
-                        - DataLakePackageCrawlerRole
-                        - Arn
+                    CRAWLER_ROLE_ARN: !GetAtt DataLakePackageCrawlerRole.Arn
                     ACCOUNT_ID: !Ref "AWS::AccountId"
                     USER_POOL_ID: !Ref "UserPoolId"
                     FEDERATED_LOGIN: !Ref "FederatedLogin"
