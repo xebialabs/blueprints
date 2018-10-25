@@ -1,0 +1,31 @@
+apiVersion: xl-cli/v1beta1
+kind: Blueprint
+metadata:
+  projectName: AWS-Monolith-ECS-Fargate 
+  description: |
+    The blueprint deploys a monolithic application generated with JHipster, to AWS ECS with fargate launch type.
+    XL deploy does the provisioning and deployment, while XL release orchestartes everything.
+  author: XebiaLabs
+  version: 1.0
+spec:
+- name: AppName
+  type: Input
+- name: MySQLMasterPassword
+  type: Input
+  secret: true
+- name: XLRScriptUserPassword
+  type: Input
+  secret: true
+- name: AWSAccessKey
+  type: Input
+  secret: true
+  value: !fn aws.credentials().AccessKeyID
+- name: AWSAccessSecret
+  type: Input
+  secret: true
+  value: !fn aws.credentials().SecretAccessKey
+- name: AWSRegion
+  type: Select
+  options:
+    - !fn aws.regions(ecs)
+  default: !fn aws.regions(ecs)[0]

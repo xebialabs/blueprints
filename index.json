@@ -1,0 +1,6 @@
+[
+  "aws/monolith",
+  "aws/microservice/eks",
+  "aws/microservice/ecs",
+  "azure/monolith"
+]
