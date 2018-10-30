@@ -10,7 +10,16 @@ metadata:
   version: 1.0
 spec:
 - name: S3BucketName
-  # description: The S3 bucket name to use for CloudFormation templates
+  description: The S3 bucket name to use for CloudFormation templates
+  type: Input
+- name: AdministratorName
+  description: Name of the Data Lake administrator
+  type: Input
+- name: AdministratorEmail
+  description: A valid Email address for Data Lake administrator
+  type: Input
+- name: CognitoDomain
+  description: Prefixed domain names can only contain lower-case letters, numbers, and hyphens
   type: Input
 - name: AWSAccessKey
   type: Input

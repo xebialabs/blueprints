@@ -5,12 +5,8 @@ spec:
   type: "aws.Cloud"
   accesskey: {{.AWSAccessKey}}
   accessSecret: {{.AWSAccessSecret}}
-- name: "Infrastructure/AWS/CLOUDFORMATION"
+- name: "Infrastructure/AWS/cloudformation"
   type: "aws.cloudformation.Stack"
-  region: !value AWSRegion
-- name: "Infrastructure/AWS/S3"
-  type: "aws.s3.Bucket"
-  bucketName: {{.S3BucketName}}
   region: !value AWSRegion
 
 ---
@@ -26,5 +22,6 @@ spec:
   type: udm.Environment
   members:
   - "~Infrastructure/AWS"
+  - "~Infrastructure/AWS/cloudformation"
   dictionaries:
   - "~Environments/AWS Dictionary"
