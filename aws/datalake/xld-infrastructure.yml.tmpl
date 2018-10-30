@@ -52,6 +52,7 @@ spec:
         file: !file data-lake-deploy.master.yaml
         # use the below to deploy an AD Federated infrastructure
         # file: !file data-lake-deploy-federated.master.yaml
+        timeoutInterval: 300 # wait for 300 loops(approx 30 minutes)
         capabilities:
         - CAPABILITY_IAM
         - CAPABILITY_NAMED_IAM
