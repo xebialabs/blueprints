@@ -48,7 +48,7 @@ spec:
               logDriver: awslogs
               options:
                 awslogs-group: "/ecs/ecommerce"
-                awslogs-region: !value AWSRegion
+                awslogs-region: '{{"{{region}}"}}'
                 awslogs-stream-prefix: "ecs-ecommerce"
             environment:
               SPRING_PROFILES_ACTIVE: prod,swagger
