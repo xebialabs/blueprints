@@ -1,4 +1,5 @@
 [
   "aws/monolith",
+  "aws/microservice",
   "aws/datalake"
 ]

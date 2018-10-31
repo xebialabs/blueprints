@@ -1,0 +1,69 @@
+apiVersion: xl-cli/v1beta1
+kind: Blueprint
+
+metadata:
+  projectName: AWS-Microservice-EKS
+  description: |
+    The blueprint deploys a microservice application to AWS EKS.
+    XL deploy does the provisioning and deployment, while XL release orchestrates everything.
+  author: XebiaLabs
+  version: 1.0
+
+spec:
+- name: AppName
+  type: Input
+  description: Application name, will be used within various resources
+# AWS specific variables
+- name: AWSAccessKey
+  type: Input
+  secret: true
+  value: !fn aws.credentials().AccessKeyID
+- name: AWSAccessSecret
+  type: Input
+  secret: true
+  value: !fn aws.credentials().SecretAccessKey
+- name: AWSRegion #is set manually because EKS service is not registered within AWS GO SDK
+  type: Select
+  description: AWS EKS region to work with
+  options:
+    - eu-west-1
+    - us-east-1
+    - us-west-2
+- name: ProvisionCluster
+  type: Confirm
+  description: Answer no if EKS cluster already exists
+- name: ProvisionNamespace
+  type: Confirm
+  description: Answer no if K8s namespace already exists
+# K8s specific variables
+- name: Namespace
+  type: Input
+  description: K8s namespace to create/use
+- name: ClusterName
+  type: Input
+  description: AWS EKS cluster name to create/use
+- name: ClusterEndpoint
+  type: Input
+  dependsOnFalse: ProvisionCluster
+  description: URL for RESTful interface provided by API Server, example https://cluster1.k8s.abc.org
+# XLD/XLR specific variables
+- name: XLDServerURL
+  type: Input
+  default: http://xld:4516
+  description: XL-Deploy URL
+- name: XLDUsername
+  type: Input
+  default: admin
+  description: XL-Deploy user name
+- name: XLDPassword
+  type: Input
+  secret: true
+  description: XL-Deploy user password
+- name: XLRUsername
+  type: Input
+  default: admin
+  description: XL-Release user name
+- name: XLRPassword
+  type: Input
+  secret: true
+  description: XL-Release user password

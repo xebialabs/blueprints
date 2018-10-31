@@ -3,11 +3,31 @@ import os
 import re
 import sys
 import boto3
+import hashlib
 
 local_directory = './'
-bucket = 'xl-cli'
+bucket_name = 'xl-cli'
 destination = 'blueprints/'
 excludes = r'^\..+'
+
+# Calculate MD5 sum for local file
+def md5_file(fname):
+    hash_md5 = hashlib.md5()
+    with open(fname, "rb") as f:
+        for chunk in iter(lambda: f.read(4096), b""):
+            hash_md5.update(chunk)
+    return hash_md5.hexdigest()
+
+# Calculate MD5 sum for S3 resource
+def md5_s3(s3_client, bucket_name, resource_name):
+    try:
+        return s3_client.head_object(
+            Bucket=bucket_name,
+            Key=resource_name
+        )['ETag'][1:-1]
+    except Exception as e:
+        print("Error getting MD5 from S3 resource %s" % resource_name)
+        raise e
 
 # get S3 client using local credentials file & default profile
 session = boto3.Session(profile_name='default')
@@ -29,16 +49,20 @@ for root, dirs, files in os.walk(local_directory):
         if local_path in ['./README.md', './publish.py']:
             continue
 
-        print('\n>> Processing [%s] in S3 path "%s" & bucket: "%s"' % (local_path, s3_path, bucket))
+        print('>> Processing [%s] in S3 path "%s" & bucket: "%s"' % (local_path, s3_path, bucket_name))
         try:
-            s3_client.head_object(Bucket=bucket, Key=s3_path)
-            print("\tFile found on S3! Deleting...")
-            try:
-                s3_client.delete_object(Bucket=bucket, Key=s3_path)
-            except:
-                print("Unable to delete %s..." % s3_path)
+            s3_client.head_object(Bucket=bucket_name, Key=s3_path)
+            if md5_s3(s3_client, bucket_name, s3_path) != md5_file(local_path):
+                print("\tFile has changed, deleting...")
+                try:
+                    s3_client.delete_object(Bucket=bucket_name, Key=s3_path)
+                    print("\tUploading new version...")
+                    s3_client.upload_file(local_path, bucket_name, s3_path)
+                except:
+                    print("\tUnable to delete %s" % s3_path)
+            else:
+                #print("\tFile is up-to-date")
+                pass
         except:
-            pass
-        
-        print("\tUploading...")
-        s3_client.upload_file(local_path, bucket, s3_path)
+            print("\tFile [%s] not found on S3, uploading.." % s3_path)
+            s3_client.upload_file(local_path, bucket_name, s3_path)
