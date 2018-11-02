@@ -1,0 +1,92 @@
+{{$app := .AppName | snakecase}}
+apiVersion: xl-deploy/v1beta1
+kind: Applications
+spec:
+- name: {{.AppName}}
+  type: core.Directory
+  children:
+{{if eq .ProvisionCluster "true"}}
+# Provision EKS cluster using Cloudformation templates
+    - name: EKS-PROVISION
+      type: core.Directory
+      children:
+      - name: {{$app}}-cloudformation-eks-user
+        type: udm.Application
+        children:
+        - name: '1.0.0'
+          type: udm.DeploymentPackage
+          deployables:
+          - name: eks-user
+            type: aws.cloudformation.Template
+            file: !file cloudformation/eks-user.yaml
+            capabilities:
+            - CAPABILITY_IAM
+            - CAPABILITY_NAMED_IAM
+            inputVariables:
+            - ProjectName: {{$app}}
+      - name: {{$app}}-cloudformation-eks-vpc
+        type: udm.Application
+        children:
+        - name: '1.0.0'
+          type: udm.DeploymentPackage
+          deployables:
+          - name: eks-vpc
+            type: aws.cloudformation.Template
+            file: !file cloudformation/eks-vpc.yaml
+            capabilities:
+            - CAPABILITY_IAM
+            - CAPABILITY_NAMED_IAM
+            inputVariables:
+            - ProjectName: {{$app}}
+      - name: {{$app}}-cloudformation-eks-master
+        type: udm.Application
+        children:
+        - name: '1.0.0'
+          type: udm.DeploymentPackage
+          deployables:
+          - name: eks-master
+            type: aws.cloudformation.Template
+            file: !file cloudformation/eks-master.yaml
+            capabilities:
+            - CAPABILITY_IAM
+            - CAPABILITY_NAMED_IAM
+            inputVariables:
+            - ProjectName: {{$app}}
+      - name: {{$app}}-cloudformation-eks-workers
+        type: udm.Application
+        children:
+        - name: '1.0.0'
+          type: udm.DeploymentPackage
+          deployables:
+          - name: eks-workers
+            type: aws.cloudformation.Template
+            file: !file cloudformation/eks-workers.yaml
+            capabilities:
+            - CAPABILITY_IAM
+            - CAPABILITY_NAMED_IAM
+      - name: {{$app}}-k8s-configmap
+        type: udm.Application
+        children:
+        - name: '1.0.0'
+          type: udm.DeploymentPackage
+          deployables:
+          - name: aws-auth
+            type: k8s.ResourcesFile
+            file: !file k8s/aws-auth-cm.yaml
+            delimiters: "## ##"
+{{end}}
+    - name: K8S
+      type: core.Directory
+{{if eq .ProvisionNamespace "true"}}
+# Provision K8s namespace
+      children:
+      - name: {{$app}}-namespace
+        type: udm.Application
+        children:
+        - name: '1.0.0'
+          type: udm.DeploymentPackage
+          deployables:
+          - name: {{.Namespace}}
+            type: k8s.NamespaceSpec
+            namespaceName: '{{.Namespace}}'
+{{end}}

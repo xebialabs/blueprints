@@ -1,0 +1,36 @@
+{{if eq .ProvisionCluster "true"}}
+# Provision AWS EKS cluster
+apiVersion: "xl-deploy/v1beta1"
+kind: "Infrastructure"
+spec:
+- name: "Infrastructure/AWS"
+  type: "aws.Cloud"
+  accesskey: "{{.AWSAccessKey}}"
+  accessSecret: "{{.AWSAccessSecret}}"
+- name: "Infrastructure/AWS/EKS-CLOUDFORMATION"
+  type: "aws.cloudformation.Stack"
+  region: "{{.AWSRegion}}"
+---
+apiVersion: "xl-deploy/v1beta1"
+kind: "Environments"
+spec:
+- name: "Environments/AWS-CLOUDFORMATION"
+  type: "udm.Environment"
+  members:
+  - "Infrastructure/AWS/EKS-CLOUDFORMATION"
+{{else}}
+# Definition of existing EKS cluster
+apiVersion: "xl-deploy/v1beta1"
+kind: "Infrastructure"
+spec:
+- name: "Infrastructure/EKS-{{.ClusterName}}"
+  type: "k8s.Master"
+  isEKS: "true"
+  clusterName: "{{.ClusterName}}"
+  accessKey: "{{.AWSAccessKey}}"
+  accessSecret: "{{.AWSAccessSecret}}"
+  apiServerURL: "{{.ClusterEndpoint}}"
+- name: "Infrastructure/EKS-{{.ClusterName}}/{{.Namespace}}"
+  type: "k8s.NamespaceSpec"
+  namespaceName: "{{.Namespace}}"
+{{end}}

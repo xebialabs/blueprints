@@ -1,0 +1,18 @@
+## Generic microservice application on AWS EKS 
+
+The blueprint deploys a microservice application to AWS EKS.
+XL deploy does the provisioning and deployment, while XL release orchestrates everything.
+
+To deploy this blueprint with XL Platform follow the below steps
+
+1. Generate the blueprint with `xl blueprint -t aws/microservice-generic`
+2. Apply the generated yaml configurations in the below order using XL CLI
+
+    ```
+    xl apply -f xld-environment.yml
+    xl apply -f xld-infrastructure.yml
+    xl apply -f xld-service.yml
+    xl apply -f xlr-pipeline.yml
+    ```
+
+3. Go to XL Release and look for the {{.AppName}}-release-pipeline and start a new release from it.
