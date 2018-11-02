@@ -12,13 +12,13 @@ spec:
     - data-lake
     - ECS
     - Fargate
-    scriptUsername: "admin"
+    scriptUsername: admin
     scriptUserPassword: {{.XLRScriptUserPassword}}
     variables:
     - key: "DATALAKE_CONSOLE_URL"
-      type: "xlrelease.StringVariable"
-      requiresValue: "false"
-      showOnReleaseStart: "false"
+      type: xlrelease.StringVariable
+      requiresValue: false
+      showOnReleaseStart: false
     phases:
     - name: Create artifacts
       color: '#ff9e3b'
@@ -52,13 +52,13 @@ spec:
         tasks:
         - name: Get XL Deploy Environmnet CI
           type: xld.GetCITask
-          server: "XL Deploy"
+          server: XL Deploy
           accept: json
-          ciID: "Environments/data-lake-dictionary"
+          ciID: Environments/data-lake-dictionary
           variableMapping:
             pythonScript.response: "${DATALAKE_DICTIONARY_CI}"
-        - name: "Get console URL"
-          type: "xlrelease.ScriptTask"
+        - name: Get console URL
+          type: xlrelease.ScriptTask
           script: |
             import json
 
@@ -66,8 +66,8 @@ spec:
             releaseVariables['DATALAKE_CONSOLE_URL'] = data['entries']['DATALAKE_CONSOLE_URL']
           # end of script
 
-      - name: "Check data lake application access"
-        type: "xlrelease.ScriptTask"
+      - name: Check data lake application access
+        type: xlrelease.ScriptTask
         script: |
           import urllib2
 

@@ -49,7 +49,7 @@ spec:
               options:
                 awslogs-group: "/ecs/ecommerce"
                 awslogs-region: '{{"{{region}}"}}'
-                awslogs-stream-prefix: "ecs-ecommerce"
+                awslogs-stream-prefix: ecs-ecommerce
             environment:
               SPRING_PROFILES_ACTIVE: prod,swagger
               SPRING_DATASOURCE_URL: jdbc:mysql://{{"{{MYSQL_DB_ADDRESS}}"}}:{{"{{MYSQL_DB_PORT}}"}}/store?useUnicode=true&characterEncoding=utf8&useSSL=false

@@ -1,18 +1,18 @@
-apiVersion: "xl-deploy/v1beta1"
-kind: "Infrastructure"
+apiVersion: xl-deploy/v1beta1
+kind: Infrastructure
 spec:
-- name: "Infrastructure/AWS"
-  type: "aws.Cloud"
+- name: Infrastructure/AWS
+  type: aws.Cloud
   accesskey: {{.AWSAccessKey}}
   accessSecret: {{.AWSAccessSecret}}
-- name: "Infrastructure/AWS/cloudformation"
-  type: "aws.cloudformation.Stack"
+- name: Infrastructure/AWS/cloudformation
+  type: aws.cloudformation.Stack
   region: !value AWSRegion
 
 ---
 
-apiVersion: "xl-deploy/v1beta1"
-kind: "Environments"
+apiVersion: xl-deploy/v1beta1
+kind: Environments
 spec:
 - name: AWS Dictionary
   type: udm.Dictionary

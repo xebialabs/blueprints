@@ -12,13 +12,13 @@ spec:
     - {{.AppName}}
     - ECS
     - Fargate
-    scriptUsername: "admin"
+    scriptUsername: admin
     scriptUserPassword: {{.XLRScriptUserPassword}}
     variables:
     - key: "ALB_DNS_NAME"
-      type: "xlrelease.StringVariable"
-      requiresValue: "false"
-      showOnReleaseStart: "false"
+      type: xlrelease.StringVariable
+      requiresValue: false
+      showOnReleaseStart: false
     phases:
     - name: Provision Infrastructure
       color: '#ff9e3b'
@@ -49,13 +49,13 @@ spec:
         tasks:
         - name: Get XL Deploy Environmnet CI
           type: xld.GetCITask
-          server: "XL Deploy"
+          server: XL Deploy
           accept: json
-          ciID: "Environments/{{.AppName}}-ecs-alb-dictionary"
+          ciID: Environments/{{.AppName}}-ecs-alb-dictionary
           variableMapping:
             pythonScript.response: "${ALB_DICTIONARY_CI}"
-        - name: "Get load balancer DNS"
-          type: "xlrelease.ScriptTask"
+        - name: Get load balancer DNS
+          type: xlrelease.ScriptTask
           script: |
             import json
 
@@ -63,8 +63,8 @@ spec:
             releaseVariables['ALB_DNS_NAME'] = data['entries']['ALB_DNS_NAME']
           # end of script
 
-      - name: "Check {{.AppName}} application health"
-        type: "xlrelease.ScriptTask"
+      - name: Check {{.AppName}} application health
+        type: xlrelease.ScriptTask
         script: |
           import urllib2
           import json
