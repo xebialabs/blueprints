@@ -1,0 +1,232 @@
+{{$app := .AppName | snakecase}}
+{{$reverseModules := reverse .Modules}}
+apiVersion: xl-release/v1beta1
+kind: Configurations
+spec:
+- name: XL Deploy
+  type: xldeploy.XLDeployServer
+  url: {{.XLDServerURL}}
+  username: {{.XLDUsername}}
+  password: {{.XLDPassword}}
+---
+apiVersion: xl-release/v1beta1
+kind: Templates
+spec:
+- name: {{.AppName}}
+  type: xlrelease.Folder
+  children:
+  - name: {{$app}}
+    type: xlrelease.Release
+    description: |
+      This XL Release template shows how to deploy and undeploy an application, based on microservices architecture, to AWS EKS using XL Deploy.
+    tags:
+    - AWS
+    - EKS
+    - {{$app}}
+    scriptUsername: "{{.XLRUsername}}"
+    scriptUserPassword: {{.XLRPassword}}
+    # Variables
+    variables:
+    - key: "control"
+      type: "xlrelease.MapStringStringVariable"
+      requiresValue: "false"
+      showOnReleaseStart: "false"
+      value:
+        namespace: "{{.Namespace}}"
+        serviceName: "{{index (index .Modules 0) "ModuleName"}}"
+    - key: "lbHostnameOrIp"
+      type: "xlrelease.StringVariable"
+      requiresValue: "false"
+      showOnReleaseStart: "false"
+    - key: AWSaccessKey
+      type: "xlrelease.StringVariable"
+      requiresValue: "true"
+      showOnReleaseStart: "false"
+      value: {{.AWSAccessKey}}
+    - key: "AWSaccessSecret"
+      type: "xlrelease.StringVariable"
+      requiresValue: "true"
+      showOnReleaseStart: "false"
+      value: "{{.AWSAccessSecret}}"
+    - key: "xld-admin-password"
+      type: "xlrelease.PasswordStringVariable"
+      requiresValue: "true"
+      showOnReleaseStart: "false"
+      value: {{.XLDPassword}}
+    phases:
+    {{if eq .ProvisionCluster "true"}}
+    # Provision Infra
+    - name: Provision Infrastructure
+      color: '#ff9e3b'
+      type: xlrelease.Phase
+      tasks:
+      - name: Update AWS cloud with correct access key and secret
+        type: xlrelease.SequentialGroup
+        tasks:
+        - name: Add accessKey to AWS cloud CI
+          type: xld.UpdateCIProperty
+          server: XL Deploy
+          ciID: Infrastructure/AWS
+          ciProperty: accesskey
+          propertyValue: ${AWSaccessKey}
+        - name: Add accessSecret to AWS cloud CI
+          type: xld.UpdateCIProperty
+          server: XL Deploy
+          ciID: Infrastructure/AWS
+          ciProperty: accessSecret
+          propertyValue: ${AWSaccessSecret}
+      - name: Provision AWS VPC and IAM resources
+        type: xlrelease.ParallelGroup
+        tasks:
+        - name: Provision AWS IAM resources
+          type: xldeploy.Deploy
+          server: XL Deploy
+          deploymentPackage: {{.AppName}}/EKS-PROVISION/{{$app}}-cloudformation-eks-user/1.0.0
+          deploymentEnvironment: Environments/AWS-CLOUDFORMATION
+        - name: Provision AWS VPC
+          type: xldeploy.Deploy
+          server: XL Deploy
+          deploymentPackage: {{.AppName}}/EKS-PROVISION/{{$app}}-cloudformation-eks-vpc/1.0.0
+          deploymentEnvironment: Environments/AWS-CLOUDFORMATION
+      - name: Provision AWS EKS cluster
+        type: xlrelease.SequentialGroup
+        tasks:
+        - name: Provision EKS master node
+          type: xldeploy.Deploy
+          server: XL Deploy
+          deploymentPackage: {{.AppName}}/EKS-PROVISION/{{$app}}-cloudformation-eks-master/1.0.0
+          deploymentEnvironment: Environments/AWS-CLOUDFORMATION
+        - name: Provision EKS workers nodes
+          type: xldeploy.Deploy
+          server: XL Deploy
+          deploymentPackage: {{.AppName}}/EKS-PROVISION/{{$app}}-cloudformation-eks-workers/1.0.0
+          deploymentEnvironment: Environments/AWS-CLOUDFORMATION
+        - name: Add accessKey to EKS cluster CI
+          type: xld.UpdateCIProperty
+          server: XL Deploy
+          ciID: Infrastructure/EKS-{{.ClusterName}}
+          ciProperty: accessKey
+          propertyValue: ${AWSaccessKey}
+        - name: Add accessSecret to EKS cluster CI
+          type: xld.UpdateCIProperty
+          server: XL Deploy
+          ciID: Infrastructure/EKS-{{.ClusterName}}
+          ciProperty: accessSecret
+          propertyValue: ${AWSaccessSecret}
+        - name: Provision EKS config map for workers
+          type: xldeploy.Deploy
+          server: XL Deploy
+          deploymentPackage: {{.AppName}}/EKS-PROVISION/{{$app}}-k8s-configmap/1.0.0
+          deploymentEnvironment: Environments/AWS-PREREQUISITE
+    {{end}}
+    - name: Deploy {{.AppName}} application
+      type: xlrelease.Phase
+      tasks:
+      {{if eq .ProvisionNamespace "true"}}
+      # Deploy Namespace
+      - name: Deploy {{.Namespace}} namespace
+        type: xldeploy.Deploy
+        server: XL Deploy
+        deploymentPackage: {{.AppName}}/K8S/{{$app}}-namespace/1.0.0
+        deploymentEnvironment: Environments/AWS-EKS
+      {{end}}
+      # Deploy K8s modules
+      - name: Deploy K8s services
+        type: xlrelease.SequentialGroup
+        tasks:
+        {{range .Modules}}
+        - name: Deploy {{.ModuleName}} svc
+          type: xldeploy.Deploy
+          server: XL Deploy
+          deploymentPackage: {{$.AppName}}/K8S/{{$app}}-{{.ModuleName}}/1.0.0
+          deploymentEnvironment: Environments/AWS-EKS
+        {{end}}
+    # Testing
+    - name: Test
+      type: xlrelease.Phase
+      tasks:
+      - name: Get service public URL
+        type: xlrelease.SequentialGroup
+        tasks:
+        - name: Get k8s service specs
+          type: xldeploy.Controltask
+          server: "XL Deploy"
+          numberOfContinueRetrials: 100
+          pollingInterval: 10
+          ciId: "Infrastructure/EKS-{{.ClusterName}}"
+          taskName: "describeService"
+          variableMapping:
+            pythonScript.xlDeployTaskId: "${taskId}"
+            pythonScript.parameters: "${control}"
+        - name: Parse k8s service
+          type: webhook.XmlWebhook
+          URL: "{{.XLDServerURL}}/deployit/tasks/v2/export"
+          method: "GET"
+          username: "{{.XLDUsername}}"
+          xPathExpression: "/list/task[@id=\"${taskId}\"]//log/text()"
+          variableMapping:
+            pythonScript.result: "${taskOutput}"
+            pythonScript.password: "${xld-admin-password}"
+        - name: Get k8s service ip or hostname
+          type: xlrelease.ScriptTask
+          script: |
+            import re
+            m = re.search('hostname:(.*)\nip:([0-9.]+|None)', releaseVariables['taskOutput'])
+            ipHostname = [m.group(1),m.group(2)]
+            for item in ipHostname:
+                if "None" not in item:
+                    releaseVariables['lbHostnameOrIp'] = item
+          # end of script
+    # Undeploy App
+    - name: Undeploy Application
+      type: xlrelease.Phase
+      tasks:
+      - name: Undeploy K8s services
+        type: xlrelease.SequentialGroup
+        tasks:
+        {{range $reverseModules}}
+        - name: Undeploy {{.ModuleName}} svc
+          type: xldeploy.Deploy
+          server: XL Deploy
+          deployedApplication: Environments/AWS-EKS/{{$app}}-{{.ModuleName}}
+        {{end}}
+      {{if eq .ProvisionNamespace "true"}}
+      # Un-provision namespace
+      - name: Undeploy {{.Namespace}} namespace
+        type: xldeploy.Undeploy
+        server: XL Deploy
+        deployedApplication: Environments/AWS-EKS/{{$app}}-namespace
+      {{end}}
+    {{if eq .ProvisionCluster "true"}}
+    # De-provision Infra
+    - name: Deprovision Infrastructure
+      color: '#ff9e3b'
+      type: xlrelease.Phase
+      tasks:
+      - name: Deprovision AWS EKS cluster
+        type: xlrelease.SequentialGroup
+        tasks:
+        - name: Deprovision EKS config map for workers
+          type: xldeploy.Undeploy
+          server: XL Deploy
+          deployedApplication: Environments/AWS-PREREQUISITE/{{$app}}-k8s-configmap
+        - name: Deprovision EKS workers nodes
+          type: xldeploy.Undeploy
+          server: XL Deploy
+          deployedApplication: Environments/AWS-CLOUDFORMATION/{{$app}}-cloudformation-eks-workers
+        - name: Deprovision EKS master node
+          type: xldeploy.Undeploy
+          server: XL Deploy
+          deployedApplication: Environments/AWS-CLOUDFORMATION/{{$app}}-cloudformation-eks-master
+      - name: Deprovision AWS VPC and IAM resources
+        type: xlrelease.ParallelGroup
+        tasks:
+        - name: Deprovision AWS IAM resources
+          type: xldeploy.Undeploy
+          server: XL Deploy
+          deployedApplication: Environments/AWS-CLOUDFORMATION/{{$app}}-cloudformation-eks-user
+        - name: Deprovision AWS VPC
+          type: xldeploy.Undeploy
+          server: XL Deploy
+          deployedApplication: Environments/AWS-CLOUDFORMATION/{{$app}}-cloudformation-eks-vpc
+    {{end}}
