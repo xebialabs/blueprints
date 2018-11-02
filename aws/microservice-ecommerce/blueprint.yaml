@@ -2,9 +2,9 @@ apiVersion: xl-cli/v1beta1
 kind: Blueprint
 
 metadata:
-  projectName: AWS-Microservice-EKS-with-jHipster
+  projectName: AWS-Microservice-EKS-with-JHipster
   description: |
-    The blueprint deploys a microservice application to AWS EKS.
+    The blueprint deploys an e-commerce microservice application to AWS EKS.
     XL deploy does the provisioning and deployment, while XL release orchestrates everything.
   author: XebiaLabs
   version: 1.0
@@ -36,12 +36,12 @@ spec:
   description: Answer no if EKS cluster already exists
 - name: ProvisionNamespace
   type: Confirm
-  description: Answer no if K8s namespace already exists
+  description: Answer no if Kubernetes namespace already exists
 
 # K8s specific variables
 - name: Namespace
   type: Input
-  description: K8s namespace to create/use
+  description: Kubernetes namespace to create/use
   default: default
 - name: ClusterName
   type: Input

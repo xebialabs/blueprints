@@ -72,7 +72,7 @@ spec:
           deployables:
           - name: aws-auth
             type: k8s.ResourcesFile
-            file: !file k8s/aws-auth-cm.yaml
+            file: !file kubernetes/aws-auth-cm.yaml
             delimiters: "## ##"
 {{end}}
     - name: K8S

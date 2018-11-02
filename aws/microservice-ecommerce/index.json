@@ -3,7 +3,7 @@
   "xld-infrastructure.yaml.tmpl",
   "xld-apps.yaml.tmpl",
   "xlr-pipeline.yaml.tmpl",
-  "k8s/aws-auth-cm.yaml",
+  "kubernetes/aws-auth-cm.yaml",
   "cloudformation/eks-master.yaml",
   "cloudformation/eks-user.yaml",
   "cloudformation/eks-vpc.yaml",

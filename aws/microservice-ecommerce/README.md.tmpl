@@ -1,13 +1,15 @@
-## jHipster microservice application on AWS EKS 
+## e-commerce microservice application on AWS EKS 
 
-The blueprint deploys a jHipster microservice application to AWS EKS.
+The blueprint deploys an e-commerce microservice created using JHipster to AWS EKS.
 XL deploy does the provisioning and deployment, while XL release orchestrates everything.
 
 To deploy this blueprint with XL Platform follow the below steps
 
 1. Git clone [https://github.com/xebialabs/e-commerce-microservice/tree/blueprint-demo](https://github.com/xebialabs/e-commerce-microservice/tree/blueprint-demo)
-2. Generate the blueprint with `xl blueprint -t aws/microservice-jhipster`
-3. Apply the generated yaml configurations in the below order using XL CLI
+2. Create a new folder, for example `xl-platform`, and navigate into it
+3. Generate the blueprint with `xl blueprint -t aws/microservice-ecommerce`
+4. Move the `kubernetes` folder from the root directory into this new folder
+5. Apply the generated yaml configurations in the below order using XL CLI
 
     ```
     xl apply -f xld-environment.yml
