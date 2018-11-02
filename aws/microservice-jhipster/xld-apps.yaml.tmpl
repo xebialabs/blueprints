@@ -1,4 +1,3 @@
-# TODO: Update rest of the file according to the blueprint definiton
 {{$app := .AppName | snakecase}}
 apiVersion: xl-deploy/v1beta1
 kind: Applications
@@ -9,14 +8,12 @@ spec:
     - name: K8S
       type: core.Directory
       children:
-        # TODO: For loop list of modules (get module name from user)
         - name: {{$app}}-invoice-mysql
         type: udm.Application
         children:
         - name: '1.0.0'
           type: udm.DeploymentPackage
           deployables:
-          # TODO: For loop list of deployables (get yml file path from user)
           - name: invoice-mysql
             type: k8s.ResourcesFile
             file: !file kubernetes/invoice/invoice-mysql.yml

@@ -1,5 +1,6 @@
 [
   "aws/monolith",
-  "aws/microservice",
+  "aws/microservice-generic",
+  "aws/microservice-jhipster",
   "aws/datalake"
 ]
