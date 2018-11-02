@@ -52,9 +52,12 @@ for root, dirs, files in os.walk(local_directory):
         print('>> Processing [%s] in S3 path "%s" & bucket: "%s"' % (local_path, s3_path, bucket_name))
         try:
             s3_client.head_object(Bucket=bucket_name, Key=s3_path)
-            if md5_s3(s3_client, bucket_name, s3_path) != md5_file(local_path):
-                print("\tFile has changed, deleting...")
+            md5_s3_val = md5_s3(s3_client, bucket_name, s3_path)
+            md5_file_val = md5_file(local_path)
+            if md5_s3_val != md5_file_val:
+                print("\tFile has changed, old: %s, new: %s" % (md5_s3_val, md5_file_val))
                 try:
+                    print("\tDeleting file...")
                     s3_client.delete_object(Bucket=bucket_name, Key=s3_path)
                     print("\tUploading new version...")
                     s3_client.upload_file(local_path, bucket_name, s3_path)
