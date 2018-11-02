@@ -1,14 +1,5 @@
 {{$app := .AppName | snakecase}}
 apiVersion: xl-release/v1beta1
-kind: Configurations
-spec:
-- name: XL Deploy
-  type: xldeploy.XLDeployServer
-  url: {{.XLDServerURL}}
-  username: {{.XLDUsername}}
-  password: {{.XLDPassword}}
----
-apiVersion: xl-release/v1beta1
 kind: Templates
 spec:
 - name: {{.AppName}}
