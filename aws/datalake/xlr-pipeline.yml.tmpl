@@ -72,7 +72,7 @@ spec:
           import urllib2
 
           health_url = '${DATALAKE_CONSOLE_URL}'
-          
+
           def make_req(url):
               req = urllib2.Request(url)
               opener = urllib2.build_opener()
@@ -117,9 +117,9 @@ spec:
         team: Release Admin
         description: |
           Please delete the Cognito domain and user pool manually by visiting below url
-
-          URL => https://{{.AWSRegion}}.console.aws.amazon.com/cognito/users?region={{.AWSRegion}}#/pool/${COGNITO_USER_POOL_ID}
+          Domain => https://{{.AWSRegion}}.console.aws.amazon.com/cognito/users?region={{.AWSRegion}}#/pool/${COGNITO_USER_POOL_ID}/app-integration-domain
+          User Pool => https://{{.AWSRegion}}.console.aws.amazon.com/cognito/users?region={{.AWSRegion}}#/pool/${COGNITO_USER_POOL_ID}
 
           Please delete all the data lake log groups manually by visiting below url
 
-          URL => https://{{.AWSRegion}}.console.aws.amazon.com/cloudwatch/home?region={{.AWSRegion}}#logs:
+          URL => https://{{.AWSRegion}}.console.aws.amazon.com/cloudwatch/home?region={{.AWSRegion}}#logs:/
