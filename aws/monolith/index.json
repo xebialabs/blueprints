@@ -1,7 +1,7 @@
 [
-  "xld-infrastructure.yml.tmpl",
-  "xld-service.yml.tmpl",
-  "xld-environment.yml.tmpl",
-  "xlr-pipeline.yml.tmpl",
+  "xld-infrastructure.yaml.tmpl",
+  "xld-service.yaml.tmpl",
+  "xld-environment.yaml.tmpl",
+  "xlr-pipeline.yaml.tmpl",
   "README.md.tmpl"
 ]
