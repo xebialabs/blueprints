@@ -38,7 +38,6 @@ Mappings:
     SourceCode:
         General:
             S3Bucket: "{{.S3BucketName}}"
-            KeyPrefix: "data-lake/latest"
     Solution:
         Data:
             SendAnonymousUsageData: "Yes"
@@ -47,7 +46,7 @@ Resources:
     DataLakeStorageStack:
         Type: "AWS::CloudFormation::Stack"
         Properties:
-            TemplateURL: !Join ["/", ["https://s3.amazonaws.com", !FindInMap ["SourceCode", "General", "S3Bucket"], !FindInMap ["SourceCode", "General", "KeyPrefix"], "data-lake-storage.yaml"]]
+            TemplateURL: !Join ["/", ["https://s3.amazonaws.com", !FindInMap ["SourceCode", "General", "S3Bucket"], "data-lake-storage.yaml"]]
 
     DataLakeUserPool:
         Type: "Custom::LoadLambda"
@@ -64,19 +63,18 @@ Resources:
         DependsOn: "DataLakeUserPool"
         Type: "AWS::CloudFormation::Stack"
         Properties:
-            TemplateURL: !Join ["/", ["https://s3.amazonaws.com", !FindInMap ["SourceCode", "General", "S3Bucket"] , !FindInMap ["SourceCode", "General", "KeyPrefix"], "data-lake-services.yaml"]]
+            TemplateURL: !Join ["/", ["https://s3.amazonaws.com", !FindInMap ["SourceCode", "General", "S3Bucket"], "data-lake-services.yaml"]]
             Parameters:
                 UserPoolId: !GetAtt DataLakeUserPool.UserPoolId
                 UserPoolClientId: !GetAtt DataLakeUserPool.UserPoolClientId
                 SourceS3Bucket: !FindInMap ["SourceCode", "General", "S3Bucket"]
-                SourceKeyPrefix: !FindInMap ["SourceCode", "General", "KeyPrefix"]
                 FederatedLogin: false
 
     DataLakeApiStack:
         DependsOn: "DataLakeServicesStack"
         Type: "AWS::CloudFormation::Stack"
         Properties:
-            TemplateURL: !Join ["/", ["https://s3.amazonaws.com", !FindInMap ["SourceCode", "General", "S3Bucket"], !FindInMap ["SourceCode", "General", "KeyPrefix"], "data-lake-api.yaml"]]
+            TemplateURL: !Join ["/", ["https://s3.amazonaws.com", !FindInMap ["SourceCode", "General", "S3Bucket"], "data-lake-api.yaml"]]
             Parameters:
                 AuthorizerArn: !GetAtt DataLakeServicesStack.Outputs.AuthorizerArn
                 AdminArn: !GetAtt DataLakeServicesStack.Outputs.AdminArn
@@ -174,8 +172,8 @@ Resources:
             Region:
                 - Ref: "AWS::Region"
             sourceS3Bucket: !FindInMap ["SourceCode", "General", "S3Bucket"]
-            sourceS3key: !Join ["/", [!FindInMap ["SourceCode", "General", "KeyPrefix"], "site"]]
-            sourceSiteManifestS3key: !Join ["/", [!FindInMap ["SourceCode", "General", "KeyPrefix"], "data-lake-site-manifest.json"]]
+            sourceS3key: "site"
+            sourceSiteManifestS3key: "data-lake-site-manifest.json"
             destS3Bucket: !Join ["", ["datalakeweb-", Ref: "AWS::Region", "-", Ref: "AWS::AccountId"]]
             customAction: "configureWebsite"
 
@@ -365,7 +363,7 @@ Resources:
         Properties:
             Code:
                 S3Bucket: !FindInMap ["SourceCode", "General", "S3Bucket"]
-                S3Key: !Join ["/", [!FindInMap ["SourceCode", "General", "KeyPrefix"],  "data-lake-helper.zip"]]
+                S3Key: "data-lake-helper.zip"
             Description: "A data lake helper function for solution deployment"
             FunctionName: "data-lake-helper"
             Handler: "index.handler"

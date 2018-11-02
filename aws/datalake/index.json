@@ -5,5 +5,8 @@
   "data-lake-deploy.master.yaml",
   "data-lake-services.yaml",
   "data-lake-storage.yaml",
-  "README.md.tmpl"
+  "README.md.tmpl",
+  "xld-infrastructure.yml.tmpl",
+  "xld-environment.yml.tmpl",
+  "xlr-pipeline.yml.tmpl"
 ]

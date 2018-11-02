@@ -11,8 +11,6 @@ Parameters:
         Description: Id of data lake Amazon Cognito App Client
     SourceS3Bucket:
         Type: String
-    SourceKeyPrefix:
-        Type: String
     FederatedLogin:
         Type: String
 
@@ -93,7 +91,7 @@ Resources:
         Properties:
             Code:
                 S3Bucket: !Ref SourceS3Bucket
-                S3Key: !Join ["/", [!Ref SourceKeyPrefix,  "data-lake-logging-service.zip"]]
+                S3Key: "data-lake-logging-service.zip"
             Description: "A data lake microservice function for logging functionality"
             FunctionName: "data-lake-logging-service"
             Handler: "index.handler"
@@ -186,7 +184,7 @@ Resources:
         Properties:
             Code:
                 S3Bucket: !Ref SourceS3Bucket
-                S3Key: !Join ["/", [!Ref SourceKeyPrefix,  "data-lake-admin-service.zip"]]
+                S3Key: "data-lake-admin-service.zip"
             Description: "A data lake microservice function for admin functionality"
             FunctionName: "data-lake-admin-service"
             Handler: "index.handler"
@@ -292,7 +290,7 @@ Resources:
         Properties:
             Code:
                 S3Bucket: !Ref SourceS3Bucket
-                S3Key: !Join ["/", [!Ref SourceKeyPrefix,  "data-lake-search-service.zip"]]
+                S3Key: "data-lake-search-service.zip"
             Description: "A data lake microservice function for interacting with the elasticsearch cluster"
             FunctionName: "data-lake-search-service"
             Handler: "index.handler"
@@ -431,7 +429,7 @@ Resources:
         Properties:
             Code:
                 S3Bucket: !Ref SourceS3Bucket
-                S3Key: !Join ["/", [!Ref SourceKeyPrefix,  "data-lake-manifest-service.zip"]]
+                S3Key: "data-lake-manifest-service.zip"
             Description: "A data lake microservice function for manifest functionality"
             FunctionName: "data-lake-manifest-service"
             Handler: "index.handler"
@@ -522,7 +520,7 @@ Resources:
         Properties:
             Code:
                 S3Bucket: !Ref SourceS3Bucket
-                S3Key: !Join ["/", [!Ref SourceKeyPrefix,  "data-lake-cart-service.zip"]]
+                S3Key: "data-lake-cart-service.zip"
             Description: "A data lake microservice function for cart functionality"
             FunctionName: "data-lake-cart-service"
             Handler: "index.handler"
@@ -821,7 +819,7 @@ Resources:
         Properties:
             Code:
                 S3Bucket: !Ref SourceS3Bucket
-                S3Key: !Join ["/", [!Ref SourceKeyPrefix,  "data-lake-package-service.zip"]]
+                S3Key: "data-lake-package-service.zip"
             Description: "A data lake microservice function for package functionality"
             FunctionName: "data-lake-package-service"
             Handler: "index.handler"
@@ -918,7 +916,7 @@ Resources:
         Properties:
             Code:
                 S3Bucket: !Ref SourceS3Bucket
-                S3Key: !Join ["/", [!Ref SourceKeyPrefix,  "data-lake-profile-service.zip"]]
+                S3Key: "data-lake-profile-service.zip"
             Description: "A data lake microservice function for profile functionality"
             FunctionName: "data-lake-profile-service"
             Handler: "index.handler"
@@ -999,7 +997,7 @@ Resources:
         Properties:
             Code:
                 S3Bucket: !Ref SourceS3Bucket
-                S3Key: !Join ["/", [!Ref SourceKeyPrefix,  "data-lake-authorizer.zip"]]
+                S3Key: "data-lake-authorizer.zip"
             Description: "A data lake microservice function for custom authorizer functionality"
             FunctionName: "data-lake-authorizer"
             Handler: "index.handler"
