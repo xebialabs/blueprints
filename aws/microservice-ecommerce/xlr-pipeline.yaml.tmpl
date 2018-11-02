@@ -119,7 +119,7 @@ spec:
     - name: Deploy {{.AppName}} application
       type: xlrelease.Phase
       tasks:
-      {{if eq .ProvisionNamespace "true"}}
+      {{if eq .UseExistingNamespace "false"}}
       - name: Deploy {{.Namespace}} namespace
         type: xldeploy.Deploy
         server: XL Deploy
@@ -266,7 +266,7 @@ spec:
           type: xldeploy.Undeploy
           server: XL Deploy
           deployedApplication: Environments/AWS-EKS/{{$app}}-notification-mongodb
-      {{if eq .ProvisionNamespace "true"}}
+      {{if eq .UseExistingNamespace "false"}}
       # Un-provision namespace
       - name: Undeploy {{.Namespace}} namespace
         type: xldeploy.Undeploy

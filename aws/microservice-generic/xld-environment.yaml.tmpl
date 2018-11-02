@@ -30,7 +30,8 @@ spec:
   accessKey: {{.AWSAccessKey}}
   accessSecret: {{.AWSAccessSecret}}
   apiServerURL: {{.ClusterEndpoint}}
+  skipTLS: true
 - name: Infrastructure/EKS-{{.ClusterName}}/{{.Namespace}}
-  type: k8s.NamespaceSpec
+  type: k8s.Namespace
   namespaceName: {{.Namespace}}
 {{end}}

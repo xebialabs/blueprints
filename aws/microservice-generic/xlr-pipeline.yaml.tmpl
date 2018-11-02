@@ -113,7 +113,7 @@ spec:
     - name: Deploy {{.AppName}} application
       type: xlrelease.Phase
       tasks:
-      {{if eq .ProvisionNamespace "true"}}
+      {{if eq .UseExistingNamespace "false"}}
       # Deploy Namespace
       - name: Deploy {{.Namespace}} namespace
         type: xldeploy.Deploy
@@ -181,7 +181,7 @@ spec:
           server: XL Deploy
           deployedApplication: Environments/AWS-EKS/{{$app}}-{{.ModuleName}}
         {{end}}
-      {{if eq .ProvisionNamespace "true"}}
+      {{if eq .UseExistingNamespace "false"}}
       # Un-provision namespace
       - name: Undeploy {{.Namespace}} namespace
         type: xldeploy.Undeploy
