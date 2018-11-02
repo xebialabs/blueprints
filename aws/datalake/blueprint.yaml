@@ -21,6 +21,9 @@ spec:
 - name: CognitoDomain
   description: Prefixed domain names can only contain lower-case letters, numbers, and hyphens
   type: Input
+- name: XLRScriptUserPassword
+  type: Input
+  secret: true
 - name: AWSAccessKey
   type: Input
   secret: true
