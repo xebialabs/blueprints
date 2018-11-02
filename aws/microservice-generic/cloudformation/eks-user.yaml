@@ -7,10 +7,10 @@ Parameters:
     Default: "app"
   S3BucketPrefix:
     Type: String
-    Default: 'binxio-s3'
+    Default: 'xl-cli/resources/shared-fn/cfn-secret-provider'
   CFNCustomProviderZipFileName:
     Type: String
-    Default: 'lambdas/cfn-secret-provider-0.12.2.zip'
+    Default: 'lambdas/cfn-secret-provider-latest.zip'
   Username:
     Type: String
     Default: 'eks-user'
