@@ -5,8 +5,8 @@ kind: "Infrastructure"
 spec:
 - name: "Infrastructure/AWS"
   type: "aws.Cloud"
-  accesskey: "{{.AWSAccessKey}}"
-  accessSecret: "{{.AWSAccessSecret}}"
+  accesskey: {{.AWSAccessKey}}
+  accessSecret: {{.AWSAccessSecret}}
 - name: "Infrastructure/AWS/EKS-CLOUDFORMATION"
   type: "aws.cloudformation.Stack"
   region: "{{.AWSRegion}}"
@@ -27,8 +27,8 @@ spec:
   type: "k8s.Master"
   isEKS: "true"
   clusterName: "{{.ClusterName}}"
-  accessKey: "{{.AWSAccessKey}}"
-  accessSecret: "{{.AWSAccessSecret}}"
+  accessKey: {{.AWSAccessKey}}
+  accessSecret: {{.AWSAccessSecret}}
   apiServerURL: "{{.ClusterEndpoint}}"
 - name: "Infrastructure/EKS-{{.ClusterName}}/{{.Namespace}}"
   type: "k8s.NamespaceSpec"
