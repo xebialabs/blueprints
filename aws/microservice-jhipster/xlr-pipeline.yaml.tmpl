@@ -23,7 +23,7 @@ spec:
     - EKS
     - {{$app}}
     scriptUsername: "{{.XLRUsername}}"
-    scriptUserPassword: "{{.XLRPassword}}"
+    scriptUserPassword: {{.XLRPassword}}
     variables:
     - key: "control"
       type: "xlrelease.MapStringStringVariable"
@@ -40,12 +40,12 @@ spec:
       type: "xlrelease.StringVariable"
       requiresValue: "true"
       showOnReleaseStart: "false"
-      value: "{{.AWSAccessKey}}"
+      value: {{.AWSAccessKey}}
     - key: "AWSaccessSecret"
       type: "xlrelease.StringVariable"
       requiresValue: "true"
       showOnReleaseStart: "false"
-      value: "{{.AWSAccessSecret}}"
+      value: {{.AWSAccessSecret}}
     - key: "store-admin-username"
       type: "xlrelease.StringVariable"
       requiresValue: "true"
@@ -58,7 +58,7 @@ spec:
       type: "xlrelease.PasswordStringVariable"
       requiresValue: "true"
       showOnReleaseStart: "false"
-      value: "{{.XLDPassword}}"
+      value: {{.XLDPassword}}
     phases:
     {{if eq .ProvisionCluster "true"}}
     # Provision Infra
@@ -110,13 +110,13 @@ spec:
         - name: Add accessKey to EKS cluster CI
           type: xld.UpdateCIProperty
           server: XL Deploy
-          ciID: Infrastructure/EKS/EKS-CLUSTER
+          ciID: Infrastructure/EKS-{{.ClusterName}}
           ciProperty: accessKey
           propertyValue: ${AWSaccessKey}
         - name: Add accessSecret to EKS cluster CI
           type: xld.UpdateCIProperty
           server: XL Deploy
-          ciID: Infrastructure/EKS/EKS-CLUSTER
+          ciID: Infrastructure/EKS-{{.ClusterName}}
           ciProperty: accessSecret
           propertyValue: ${AWSaccessSecret}
         - name: Provision EKS config map for workers
@@ -187,7 +187,7 @@ spec:
           server: "XL Deploy"
           numberOfContinueRetrials: 100
           pollingInterval: 10
-          ciId: "Infrastructure/EKS-CLUSTER"
+          ciId: "Infrastructure/EKS-{{.ClusterName}}"
           taskName: "describeService"
           variableMapping:
             pythonScript.xlDeployTaskId: "${taskId}"
