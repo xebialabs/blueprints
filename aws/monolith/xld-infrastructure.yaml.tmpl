@@ -1,3 +1,4 @@
+{{$region := "{{region}}"}}
 apiVersion: xl-deploy/v1beta1
 kind: Applications
 spec:
@@ -14,34 +15,34 @@ spec:
         - name: {{.AppName}}-ecs-cluster
           type: aws.ecs.ClusterSpec
           clusterName: '{{.AppName}}-ecs-cluster'
-          region: '{{"{{region}}"}}'
+          region: '{{$region}}'
 
 # Networking
         - name: {{.AppName}}-ecs-vpc
           type: aws.vpc.VPCSpec
           vpcName: '{{.AppName}}-ecs-vpc'
-          region: '{{"{{region}}"}}'
+          region: '{{$region}}'
           cidrBlock: 10.0.0.0/16
           createInternetGateway: true
           internetGatewayName: '{{.AppName}}-ecs-igw'
         - name: {{.AppName}}-ecs-subnet-ipv4-az-1a
           type: aws.vpc.SubnetSpec
           subnetName: '{{.AppName}}-ecs-subnet-ipv4-az-1a'
-          region: '{{"{{region}}"}}'
-          availabilityZone: '{{"{{region}}"}}a'
+          region: '{{$region}}'
+          availabilityZone: '{{$region}}a'
           vpc: 'Name:{{.AppName}}-ecs-vpc'
           cidrBlock: 10.0.0.0/24
         - name: {{.AppName}}-ecs-subnet-ipv4-az-1b
           type: aws.vpc.SubnetSpec
           subnetName: '{{.AppName}}-ecs-subnet-ipv4-az-1b'
-          region: '{{"{{region}}"}}'
-          availabilityZone: '{{"{{region}}"}}b'
+          region: '{{$region}}'
+          availabilityZone: '{{$region}}b'
           vpc: 'Name:{{.AppName}}-ecs-vpc'
           cidrBlock: 10.0.1.0/24
         - name: {{.AppName}}-ecs-route-table
           type: aws.vpc.RouteTableSpec
           routeTableName: '{{.AppName}}-ecs-route-table'
-          region: '{{"{{region}}"}}'
+          region: '{{$region}}'
           vpc: 'Name:{{.AppName}}-ecs-vpc'
           is_main: true
           subnets:
@@ -57,7 +58,7 @@ spec:
           type: aws.vpc.SecurityGroupSpec
           securityGroupName: '{{.AppName}}-ecs-security-group'
           description: Created by XL Deploy
-          region: '{{"{{region}}"}}'
+          region: '{{$region}}'
           vpc: 'Name:{{.AppName}}-ecs-vpc'
           inboundRules:
           - name: inbound
@@ -71,7 +72,7 @@ spec:
           type: aws.elb.TargetGroupSpec
           targetName: {{.AppName}}-targetgroup
           targetType: ip
-          region: '{{"{{region}}"}}'
+          region: '{{$region}}'
           vpc: 'Name:{{.AppName}}-ecs-vpc'
           protocol: http
           port: {{.PublicPort}}
@@ -79,7 +80,7 @@ spec:
         - name: {{.AppName}}-ecs-alb
           type: aws.elb.ApplicationELBSpec
           loadBalancerName: {{.AppName}}-ecs-alb
-          region: '{{"{{region}}"}}'
+          region: '{{$region}}'
           scheme: internet-facing
           listeners:
           - name: {{.AppName}}-ecs-alb-listener
@@ -99,13 +100,13 @@ spec:
           description: DB subnet group
           type: aws.rds.DBSubnetGroupSpec
           subnetGroupName: '{{.AppName}}-ecs-db-subnet-group'
-          region: '{{"{{region}}"}}'
+          region: '{{$region}}'
           subnets:
           - 'Name:{{.AppName}}-ecs-subnet-ipv4-az-1a'
           - 'Name:{{.AppName}}-ecs-subnet-ipv4-az-1b'
         - name: {{.AppName}}-mysql-db
           type: aws.rds.DBInstanceSpec
-          region: '{{"{{region}}"}}'
+          region: '{{$region}}'
           engine: mysql
           multiAZ: true
           licenseModel: general-public-license
