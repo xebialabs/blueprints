@@ -1,18 +1,19 @@
+{{$app := .AppName | kebabcase}}
 apiVersion: xl-deploy/v1beta1
 kind: Applications
 spec:
-- name: {{.AppName}}
+- name: {{$app}}
   type: core.Directory
   children:
-    - name: {{.AppName}}-app-service
+    - name: {{$app}}-app-service
       type: udm.Application
       children:
       - name: '1.0'
         type: udm.DeploymentPackage
         deployables:
-        - name: {{.AppName}}-app
+        - name: {{$app}}-app
           type: aws.ecs.ServiceSpec
-          serviceName: {{.AppName}}-app
+          serviceName: {{$app}}-app
           desiredCount: 1
           launchType: FARGATE
           networkMode: awsvpc
@@ -21,19 +22,19 @@ spec:
           cpu: 2048
           memory: 4096
           subnets:
-          - 'Name:{{.AppName}}-ecs-subnet-ipv4-az-1a'
-          - 'Name:{{.AppName}}-ecs-subnet-ipv4-az-1b'
+          - 'Name:{{$app}}-ecs-subnet-ipv4-az-1a'
+          - 'Name:{{$app}}-ecs-subnet-ipv4-az-1b'
           securityGroups:
-          - 'Name:{{.AppName}}-ecs-security-group'
+          - 'Name:{{$app}}-ecs-security-group'
           loadBalancers:
-          - name: {{.AppName}}-app-alb
+          - name: {{$app}}-app-alb
             type: aws.ecs.LoadBalancerSpec
-            targetGroupArn: Name:{{.AppName}}-targetgroup
-            containerName: {{.AppName}}-app
+            targetGroupArn: Name:{{$app}}-targetgroup
+            containerName: {{$app}}-app
             containerPort: 8080
           containerDefinitions:
-          - name: {{.AppName}}-app
-            containerName: {{.AppName}}-app
+          - name: {{$app}}-app
+            containerName: {{$app}}-app
             type: aws.ecs.ContainerDefinitionSpec
             image: xebialabsunsupported/ecommerce-monolith
             cpu: 1024

@@ -4,7 +4,7 @@ spec:
 - name: {{.AppName | upper}}
   type: xlrelease.Folder
   children:
-  - name: {{.AppName}}-release-pipeline
+  - name: {{$app}}-release-pipeline
     type: xlrelease.Release
     description: |
       This XL Release template shows how to deploy and undeploy a monolithic application to AWS ECS(Fargate) using XL Deploy.
@@ -28,7 +28,7 @@ spec:
       - name: Provision Fargate cluster, RDS DB and Network resources
         type: xldeploy.Deploy
         server: XL Deploy
-        deploymentPackage: {{.AppName}}/{{.AppName}}-ecs-fargate-cluster/1.0
+        deploymentPackage: {{$app}}/{{$app}}-ecs-fargate-cluster/1.0
         deploymentEnvironment: Environments/AWS
 
     - name: Deploy {{.AppName}} application
@@ -38,7 +38,7 @@ spec:
       - name: Deploy application
         type: xldeploy.Deploy
         server: XL Deploy
-        deploymentPackage: {{.AppName}}/{{.AppName}}-app-service/1.0
+        deploymentPackage: {{$app}}/{{$app}}-app-service/1.0
         deploymentEnvironment: Environments/AWS
     # Get the application URL and verify
     - name: Test
@@ -51,7 +51,7 @@ spec:
           type: xld.GetCITask
           server: XL Deploy
           accept: json
-          ciID: Environments/{{.AppName}}-ecs-alb-dictionary
+          ciID: Environments/{{$app}}-ecs-alb-dictionary
           variableMapping:
             pythonScript.response: "${ALB_DICTIONARY_CI}"
         - name: Get load balancer DNS
@@ -99,8 +99,8 @@ spec:
       - name: Undeploy application services
         type: xldeploy.Undeploy
         server: XL Deploy
-        deployedApplication: Environments/AWS/{{.AppName}}-app-service
+        deployedApplication: Environments/AWS/{{$app}}-app-service
       - name: Deprovision application infrastructure
         type: xldeploy.Undeploy
         server: XL Deploy
-        deployedApplication: Environments/AWS/{{.AppName}}-ecs-fargate-cluster
+        deployedApplication: Environments/AWS/{{$app}}-ecs-fargate-cluster
