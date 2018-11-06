@@ -10,7 +10,10 @@ Parameters:
     Description: 'List of Availability Zones to use for the subnets in the VPC. Note:
       The logical order is preserved.'
     Type: List<AWS::EC2::AvailabilityZone::Name>
-    Default: 'eu-west-1a, eu-west-1b'
+  VPCStackName:
+    Type: String
+    Description: VPC Stack Name
+    Default: "eks-vpc"
 
 Resources:
   InternetGateway:
@@ -28,7 +31,7 @@ Resources:
       InstanceTenancy: default
       Tags:
       - Key: Name
-        Value: !Sub "${ProjectName}-eks-vpc"
+        Value: !Sub "${ProjectName}-${VPCStackName}"
   AttachGateway:
     Type: AWS::EC2::VPCGatewayAttachment
     Properties:
@@ -48,7 +51,7 @@ Resources:
         - Ref: AvailabilityZones
       Tags:
       - Key: Name
-        Value: !Sub "${ProjectName}-eks-vpc-a"
+        Value: !Sub "${ProjectName}-${VPCStackName}-a"
   subnetB:
     Type: AWS::EC2::Subnet
     Properties:
@@ -61,7 +64,7 @@ Resources:
         - Ref: AvailabilityZones
       Tags:
       - Key: Name
-        Value: !Sub "${ProjectName}-eks-vpc-b"
+        Value: !Sub "${ProjectName}-${VPCStackName}-b"
   subnetARouteTable:
       Type: AWS::EC2::RouteTable
       Properties:

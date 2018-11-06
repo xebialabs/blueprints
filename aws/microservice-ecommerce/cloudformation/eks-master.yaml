@@ -6,7 +6,7 @@ Parameters:
   ProjectName:
     Type: String
     Default: "app"
-  VPCStack:
+  VPCStackName:
     Type: String
     Description: VPC Stack Name
     Default: "eks-vpc"
@@ -37,7 +37,7 @@ Resources:
       GroupDescription: Cluster communication with worker nodes
       VpcId:
         Fn::ImportValue:
-          !Sub "${VPCStack}-VPCID"
+          !Sub "${VPCStackName}-VPCID"
 
   Cluster:
     Type: "AWS::EKS::Cluster"
@@ -50,9 +50,9 @@ Resources:
           - !Ref ClusterControlPlaneSecurityGroup
         SubnetIds:
           - Fn::ImportValue:
-              !Sub "${VPCStack}-subnetAID"
+              !Sub "${VPCStackName}-subnetAID"
           - Fn::ImportValue:
-              !Sub "${VPCStack}-subnetBID"
+              !Sub "${VPCStackName}-subnetBID"
 
 Outputs:
   ClusterName:

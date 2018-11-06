@@ -1,4 +1,4 @@
-{{$app := .AppName | snakecase}}
+{{$app := .AppName | kebabcase}}
 apiVersion: xl-deploy/v1beta1
 kind: Applications
 spec:
@@ -7,7 +7,7 @@ spec:
   children:
 {{if eq .ProvisionCluster "true"}}
 # Provision EKS cluster using Cloudformation templates
-    - name: EKS-PROVISION
+    - name: EKS-CLOUDFORMATION
       type: core.Directory
       children:
       - name: {{$app}}-cloudformation-eks-user
@@ -16,61 +16,72 @@ spec:
         - name: '1.0.0'
           type: udm.DeploymentPackage
           deployables:
-          - name: eks-user
+          - name: {{$app}}-eks-user
             type: aws.cloudformation.Template
             file: !file cloudformation/eks-user.yaml
             capabilities:
             - CAPABILITY_IAM
             - CAPABILITY_NAMED_IAM
             inputVariables:
-            - ProjectName: {{$app}}
+              ProjectName: {{$app}}
+              UserStackName: {{$app}}-eks-user
       - name: {{$app}}-cloudformation-eks-vpc
         type: udm.Application
         children:
         - name: '1.0.0'
           type: udm.DeploymentPackage
           deployables:
-          - name: eks-vpc
+          - name: {{$app}}-eks-vpc
             type: aws.cloudformation.Template
             file: !file cloudformation/eks-vpc.yaml
             capabilities:
             - CAPABILITY_IAM
             - CAPABILITY_NAMED_IAM
             inputVariables:
-            - ProjectName: {{$app}}
+              ProjectName: {{$app}}
+              VPCStackName: {{$app}}-eks-vpc
+              AvailabilityZones: {{.AWSRegion}}a, {{.AWSRegion}}b
       - name: {{$app}}-cloudformation-eks-master
         type: udm.Application
         children:
         - name: '1.0.0'
           type: udm.DeploymentPackage
           deployables:
-          - name: eks-master
+          - name: {{$app}}-eks-master
             type: aws.cloudformation.Template
             file: !file cloudformation/eks-master.yaml
             capabilities:
             - CAPABILITY_IAM
             - CAPABILITY_NAMED_IAM
             inputVariables:
-            - ProjectName: {{$app}}
+              ProjectName: {{$app}}
+              VPCStackName: {{$app}}-eks-vpc
       - name: {{$app}}-cloudformation-eks-workers
         type: udm.Application
         children:
         - name: '1.0.0'
           type: udm.DeploymentPackage
           deployables:
-          - name: eks-workers
+          - name: {{$app}}-eks-workers
             type: aws.cloudformation.Template
             file: !file cloudformation/eks-workers.yaml
             capabilities:
             - CAPABILITY_IAM
             - CAPABILITY_NAMED_IAM
+            inputVariables:
+              ProjectName: {{$app}}
+              VPCStackName: {{$app}}-eks-vpc
+              UserStackName: {{$app}}-eks-user
+              ClusterStackName: {{$app}}-eks-master
+              ClusterName: {{$app}}-master
+              NodeGroupName: {{$app}}
       - name: {{$app}}-k8s-configmap
         type: udm.Application
         children:
         - name: '1.0.0'
           type: udm.DeploymentPackage
           deployables:
-          - name: aws-auth
+          - name: {{$app}}-aws-auth
             type: k8s.ResourcesFile
             file: !file kubernetes/aws-auth-cm.yaml
             delimiters: "## ##"

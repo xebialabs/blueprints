@@ -7,6 +7,6 @@
   "cloudformation/eks-master.yaml",
   "cloudformation/eks-user.yaml",
   "cloudformation/eks-vpc.yaml",
-  "cloudformation/eks-workers.yaml.tmpl",
+  "cloudformation/eks-workers.yaml",
   "README.md.tmpl"
 ]

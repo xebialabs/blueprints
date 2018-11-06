@@ -1,4 +1,4 @@
-{{$app := .AppName | snakecase}}
+{{$app := .AppName | kebabcase}}
 apiVersion: xl-release/v1beta1
 kind: Templates
 spec:
@@ -57,63 +57,48 @@ spec:
       color: '#ff9e3b'
       type: xlrelease.Phase
       tasks:
-      - name: Update AWS cloud with correct access key and secret
-        type: xlrelease.SequentialGroup
-        tasks:
-        - name: Add accessKey to AWS cloud CI
-          type: xld.UpdateCIProperty
-          server: XL Deploy
-          ciID: Infrastructure/AWS
-          ciProperty: accesskey
-          propertyValue: ${AWSaccessKey}
-        - name: Add accessSecret to AWS cloud CI
-          type: xld.UpdateCIProperty
-          server: XL Deploy
-          ciID: Infrastructure/AWS
-          ciProperty: accessSecret
-          propertyValue: ${AWSaccessSecret}
       - name: Provision AWS VPC and IAM resources
         type: xlrelease.ParallelGroup
         tasks:
         - name: Provision AWS IAM resources
           type: xldeploy.Deploy
           server: XL Deploy
-          deploymentPackage: {{.AppName}}/EKS-PROVISION/{{$app}}-cloudformation-eks-user/1.0.0
-          deploymentEnvironment: Environments/AWS-CLOUDFORMATION
+          deploymentPackage: {{.AppName}}/EKS-CLOUDFORMATION/{{$app}}-cloudformation-eks-user/1.0.0
+          deploymentEnvironment: Environments/aws-{{$app}}-cloudformation
         - name: Provision AWS VPC
           type: xldeploy.Deploy
           server: XL Deploy
-          deploymentPackage: {{.AppName}}/EKS-PROVISION/{{$app}}-cloudformation-eks-vpc/1.0.0
-          deploymentEnvironment: Environments/AWS-CLOUDFORMATION
+          deploymentPackage: {{.AppName}}/EKS-CLOUDFORMATION/{{$app}}-cloudformation-eks-vpc/1.0.0
+          deploymentEnvironment: Environments/aws-{{$app}}-cloudformation
       - name: Provision AWS EKS cluster
         type: xlrelease.SequentialGroup
         tasks:
         - name: Provision EKS master node
           type: xldeploy.Deploy
           server: XL Deploy
-          deploymentPackage: {{.AppName}}/EKS-PROVISION/{{$app}}-cloudformation-eks-master/1.0.0
-          deploymentEnvironment: Environments/AWS-CLOUDFORMATION
+          deploymentPackage: {{.AppName}}/EKS-CLOUDFORMATION/{{$app}}-cloudformation-eks-master/1.0.0
+          deploymentEnvironment: Environments/aws-{{$app}}-cloudformation
         - name: Provision EKS workers nodes
           type: xldeploy.Deploy
           server: XL Deploy
-          deploymentPackage: {{.AppName}}/EKS-PROVISION/{{$app}}-cloudformation-eks-workers/1.0.0
-          deploymentEnvironment: Environments/AWS-CLOUDFORMATION
+          deploymentPackage: {{.AppName}}/EKS-CLOUDFORMATION/{{$app}}-cloudformation-eks-workers/1.0.0
+          deploymentEnvironment: Environments/aws-{{$app}}-cloudformation
         - name: Add accessKey to EKS cluster CI
           type: xld.UpdateCIProperty
           server: XL Deploy
-          ciID: Infrastructure/EKS-{{.ClusterName}}
+          ciID: Infrastructure/eks-{{$app}}/eks-cluster
           ciProperty: accessKey
           propertyValue: ${AWSaccessKey}
         - name: Add accessSecret to EKS cluster CI
           type: xld.UpdateCIProperty
           server: XL Deploy
-          ciID: Infrastructure/EKS-{{.ClusterName}}
+          ciID: Infrastructure/eks-{{$app}}/eks-cluster
           ciProperty: accessSecret
           propertyValue: ${AWSaccessSecret}
         - name: Provision EKS config map for workers
           type: xldeploy.Deploy
           server: XL Deploy
-          deploymentPackage: {{.AppName}}/EKS-PROVISION/{{$app}}-k8s-configmap/1.0.0
+          deploymentPackage: {{.AppName}}/EKS-CLOUDFORMATION/{{$app}}-k8s-configmap/1.0.0
           deploymentEnvironment: Environments/AWS-PREREQUISITE
     {{end}}
     - name: Deploy {{.AppName}} application
@@ -124,7 +109,7 @@ spec:
         type: xldeploy.Deploy
         server: XL Deploy
         deploymentPackage: {{.AppName}}/K8S/{{$app}}-namespace/1.0.0
-        deploymentEnvironment: Environments/AWS-EKS
+        deploymentEnvironment: Environments/aws-eks-{{$app}}
       {{end}}
       - name: Deploy stateful services
         type: xlrelease.ParallelGroup
@@ -133,17 +118,17 @@ spec:
           type: xldeploy.Deploy
           server: XL Deploy
           deploymentPackage: {{.AppName}}/K8S/{{$app}}-invoice-mysql/1.0.0
-          deploymentEnvironment: Environments/AWS-EKS
+          deploymentEnvironment: Environments/aws-eks-{{$app}}
         - name: Deploy store mysql svc
           type: xldeploy.Deploy
           server: XL Deploy
           deploymentPackage: {{.AppName}}/K8S/{{$app}}-store-mysql/1.0.0
-          deploymentEnvironment: Environments/AWS-EKS
+          deploymentEnvironment: Environments/aws-eks-{{$app}}
         - name: Deploy notification mongodb svc
           type: xldeploy.Deploy
           server: XL Deploy
           deploymentPackage: {{.AppName}}/K8S/{{$app}}-notification-mongodb/1.0.0
-          deploymentEnvironment: Environments/AWS-EKS
+          deploymentEnvironment: Environments/aws-eks-{{$app}}
       - name: Deploy stateless services
         type: xlrelease.SequentialGroup
         tasks:
@@ -151,22 +136,22 @@ spec:
           type: xldeploy.Deploy
           server: XL Deploy
           deploymentPackage: {{.AppName}}/K8S/{{$app}}-registry/1.0.0
-          deploymentEnvironment: Environments/AWS-EKS
+          deploymentEnvironment: Environments/aws-eks-{{$app}}
         - name: Deploy invoice svc
           type: xldeploy.Deploy
           server: XL Deploy
           deploymentPackage: {{.AppName}}/K8S/{{$app}}-invoice/1.0.0
-          deploymentEnvironment: Environments/AWS-EKS
+          deploymentEnvironment: Environments/aws-eks-{{$app}}
         - name: Deploy notification svc
           type: xldeploy.Deploy
           server: XL Deploy
           deploymentPackage: {{.AppName}}/K8S/{{$app}}-notification/1.0.0
-          deploymentEnvironment: Environments/AWS-EKS
+          deploymentEnvironment: Environments/aws-eks-{{$app}}
         - name: Deploy store svc
           type: xldeploy.Deploy
           server: XL Deploy
           deploymentPackage: {{.AppName}}/K8S/{{$app}}-store/1.0.0
-          deploymentEnvironment: Environments/AWS-EKS
+          deploymentEnvironment: Environments/aws-eks-{{$app}}
     - name: Test
       type: xlrelease.Phase
       tasks:
@@ -178,7 +163,7 @@ spec:
           server: XL Deploy
           numberOfContinueRetrials: 100
           pollingInterval: 10
-          ciId: Infrastructure/EKS-{{.ClusterName}}
+          ciId: Infrastructure/eks-{{$app}}/eks-cluster
           taskName: describeService
           variableMapping:
             pythonScript.xlDeployTaskId: ${taskId}
@@ -238,40 +223,40 @@ spec:
         - name: Undeploy registry svc
           type: xldeploy.Undeploy
           server: XL Deploy
-          deployedApplication: Environments/AWS-EKS/{{$app}}-registry
+          deployedApplication: Environments/aws-eks-{{$app}}/{{$app}}-registry
         - name: Undeploy invoice svc
           type: xldeploy.Undeploy
           server: XL Deploy
-          deployedApplication: Environments/AWS-EKS/{{$app}}-invoice
+          deployedApplication: Environments/aws-eks-{{$app}}/{{$app}}-invoice
         - name: Undeploy notification svc
           type: xldeploy.Undeploy
           server: XL Deploy
-          deployedApplication: Environments/AWS-EKS/{{$app}}-notification
+          deployedApplication: Environments/aws-eks-{{$app}}/{{$app}}-notification
         - name: Undeploy store svc
           type: xldeploy.Undeploy
           server: XL Deploy
-          deployedApplication: Environments/AWS-EKS/{{$app}}-store
+          deployedApplication: Environments/aws-eks-{{$app}}/{{$app}}-store
       - name: Undeploy stateful services
         type: xlrelease.ParallelGroup
         tasks:
         - name: Undeploy invoice mysql svc
           type: xldeploy.Undeploy
           server: XL Deploy
-          deployedApplication: Environments/AWS-EKS/{{$app}}-invoice-mysql
+          deployedApplication: Environments/aws-eks-{{$app}}/{{$app}}-invoice-mysql
         - name: Undeploy store mysql svc
           type: xldeploy.Undeploy
           server: XL Deploy
-          deployedApplication: Environments/AWS-EKS/{{$app}}-store-mysql
+          deployedApplication: Environments/aws-eks-{{$app}}/{{$app}}-store-mysql
         - name: Undeploy notification mongodb svc
           type: xldeploy.Undeploy
           server: XL Deploy
-          deployedApplication: Environments/AWS-EKS/{{$app}}-notification-mongodb
+          deployedApplication: Environments/aws-eks-{{$app}}/{{$app}}-notification-mongodb
       {{if eq .UseExistingNamespace "false"}}
       # Un-provision namespace
       - name: Undeploy {{.Namespace}} namespace
         type: xldeploy.Undeploy
         server: XL Deploy
-        deployedApplication: Environments/AWS-EKS/{{$app}}-namespace
+        deployedApplication: Environments/aws-eks-{{$app}}/{{$app}}-namespace
       {{end}}
     {{if eq .ProvisionCluster "true"}}
     # De-provision Infra
@@ -289,20 +274,20 @@ spec:
         - name: Deprovision EKS workers nodes
           type: xldeploy.Undeploy
           server: XL Deploy
-          deployedApplication: Environments/AWS-CLOUDFORMATION/{{$app}}-cloudformation-eks-workers
+          deployedApplication: Environments/aws-{{$app}}-cloudformation/{{$app}}-cloudformation-eks-workers
         - name: Deprovision EKS master node
           type: xldeploy.Undeploy
           server: XL Deploy
-          deployedApplication: Environments/AWS-CLOUDFORMATION/{{$app}}-cloudformation-eks-master
+          deployedApplication: Environments/aws-{{$app}}-cloudformation/{{$app}}-cloudformation-eks-master
       - name: Deprovision AWS VPC and IAM resources
         type: xlrelease.ParallelGroup
         tasks:
         - name: Deprovision AWS IAM resources
           type: xldeploy.Undeploy
           server: XL Deploy
-          deployedApplication: Environments/AWS-CLOUDFORMATION/{{$app}}-cloudformation-eks-user
+          deployedApplication: Environments/aws-{{$app}}-cloudformation/{{$app}}-cloudformation-eks-user
         - name: Deprovision AWS VPC
           type: xldeploy.Undeploy
           server: XL Deploy
-          deployedApplication: Environments/AWS-CLOUDFORMATION/{{$app}}-cloudformation-eks-vpc
+          deployedApplication: Environments/aws-{{$app}}-cloudformation/{{$app}}-cloudformation-eks-vpc
     {{end}}
