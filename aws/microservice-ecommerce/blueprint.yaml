@@ -13,7 +13,7 @@ spec:
 # General variables
 - name: AppName
   type: Input
-  description: Enter name of the application
+  description: What is the name of the application?
 
 # AWS specific variables
 - name: AWSAccessKey
@@ -26,28 +26,28 @@ spec:
   value: !fn aws.credentials().SecretAccessKey
 - name: AWSRegion #options are set manually because EKS service is not registered within AWS GO SDK
   type: Select
-  description: Select AWS region
+  description: What is the AWS region?
   options:
     - eu-west-1
     - us-east-1
     - us-west-2
 - name: ProvisionCluster
   type: Confirm
-  description: Provision a new AWS EKS cluster?
+  description: Do you want to provision a new AWS EKS cluster?
 - name: ClusterName
   type: Input
-  description: AWS EKS cluster name to create/use
+  description: What is the name of the cluster?
 - name: ClusterEndpoint
   type: Input
-  dependsOnFalse: ProvisionCluster
-  description: URL for RESTful interface provided by API Server, example https://cluster1.k8s.abc.org
+  dependsOnTrue: ProvisionCluster
+  description: What is the endpoint for the cluster, example https://cluster1.k8s.abc.org
 - name: UseExistingNamespace
   type: Confirm
   dependsOnFalse: ProvisionCluster
-  description: Use an existing K8s namespace?
+  description: Do you want to use an existing namespace?
 - name: Namespace
   type: Input
-  description: Enter the name of the namespace to create/use
+  description: What is the name of the namespace? should be same as used in Kubernetes files.
   default: default
 
 # XLD/XLR specific variables
