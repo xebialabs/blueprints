@@ -88,7 +88,7 @@ spec:
 {{end}}
     - name: K8S
       type: core.Directory
-{{if eq .UseExistingNamespace "false"}}
+{{if eq .CreateNamespace "true"}}
 # Provision K8s namespace
       children:
       - name: {{$app}}-namespace
