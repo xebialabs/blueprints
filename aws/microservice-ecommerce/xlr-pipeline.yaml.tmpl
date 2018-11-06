@@ -163,7 +163,7 @@ spec:
           server: XL Deploy
           numberOfContinueRetrials: 100
           pollingInterval: 10
-          ciId: Infrastructure/eks-{{$app}}/eks-cluster
+          ciId: Infrastructure/eks-{{.ClusterName | kebabcase}}
           taskName: describeService
           variableMapping:
             pythonScript.xlDeployTaskId: ${taskId}
@@ -214,6 +214,14 @@ spec:
               print "Not all instances are registered. Only {0} are registered".format(len(resp['applications']))
               exit(1)
         # end of script
+      - name: Verify application
+        type: xlrelease.GateTask
+        team: Release Admin
+        description: |
+          The {{$app}} app is now live on EKS!
+          Check out the web site and complete this task when done.
+
+          URL => http://${lbHostnameOrIp}:8080
     - name: Undeploy Application
       type: xlrelease.Phase
       tasks:

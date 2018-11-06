@@ -1,0 +1,8 @@
+apiVersion: xl/v1
+kind: Import
+metadata:
+  imports:
+    - xld-environment.yaml
+    - xld-infrastructure.yaml
+    - xld-apps.yaml
+    - xlr-pipeline.yaml

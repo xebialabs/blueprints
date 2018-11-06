@@ -9,13 +9,10 @@ To deploy this blueprint with XL Platform follow the below steps
 2. Create a new folder, for example `xl-platform`, and navigate into it
 3. Generate the blueprint with `xl blueprint -t aws/microservice-ecommerce`
 4. Move the `kubernetes` folder from the root directory into this new folder
-5. Apply the generated yaml configurations in the below order using XL CLI
+5. Apply the generated yaml configurations
 
     ```
-    xl apply -f xld-environment.yml
-    xl apply -f xld-infrastructure.yml
-    xl apply -f xld-apps.yml
-    xl apply -f xlr-pipeline.yml
+    xl apply -f xebialabs.yml
     ```
 
 4. Go to XL Release and look for the {{.AppName}}-release-pipeline and start a new release from it.

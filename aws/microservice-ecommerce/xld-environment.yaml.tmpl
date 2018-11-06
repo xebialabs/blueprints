@@ -35,4 +35,14 @@ spec:
 - name: Infrastructure/eks-{{.ClusterName | kebabcase}}/{{.Namespace | kebabcase}}
   type: k8s.Namespace
   namespaceName: {{.Namespace}}
+---
+# Definition of existing EKS Environment
+apiVersion: xl-deploy/v1beta1
+kind: Environments
+spec:
+- name: Environments/aws-eks-{{$app}}
+  type: udm.Environment
+  members:
+  - Infrastructure/eks-{{.ClusterName | kebabcase}}/{{.Namespace | kebabcase}}
+  - Infrastructure/eks-{{.ClusterName | kebabcase}}
 {{end}}

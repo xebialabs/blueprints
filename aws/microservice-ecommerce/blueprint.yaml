@@ -44,7 +44,7 @@ spec:
 - name: UseExistingNamespace
   type: Confirm
   dependsOnFalse: ProvisionCluster
-  description: Use and existing K8s namespace?
+  description: Use an existing K8s namespace?
 - name: Namespace
   type: Input
   description: Enter the name of the namespace to create/use
@@ -53,7 +53,7 @@ spec:
 # XLD/XLR specific variables
 - name: XLDServerURL
   type: Input
-  default: http://xld:4516
+  default: http://xl-deploy:4516
   description: XL-Deploy URL
 - name: XLDUsername
   type: Input

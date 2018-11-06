@@ -8,5 +8,6 @@
   "cloudformation/eks-user.yaml",
   "cloudformation/eks-vpc.yaml",
   "cloudformation/eks-workers.yaml",
+  "xebialabs.yaml",
   "README.md.tmpl"
 ]
