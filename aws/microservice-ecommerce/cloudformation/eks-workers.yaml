@@ -4,9 +4,9 @@ Description: 'Amazon EKS - Workers for Microservices Application'
 ## The XLD infrastructure and environment are created via XLD Cloudformation plugin here
 Metadata:
   XLD::Infrastructure:
-    - id: "eks-{ProjectName}"
+    - id: "{ProjectName}/eks-{ProjectName}"
       type: "core.Directory"
-    - id: "eks-{ProjectName}/eks-cluster"
+    - id: "{ProjectName}/eks-{ProjectName}/eks-cluster"
       type: "k8s.Master"
       apiServerURL: "{ClusterEndpoint}"
       skipTLS: "true"
@@ -14,27 +14,27 @@ Metadata:
       clusterName: "{ClusterName}"
       accessKey: "dummy"
       accessSecret: "dummy"
-    - id: "eks-{ProjectName}/eks-cluster/kube-system"
+    - id: "{ProjectName}/eks-{ProjectName}/eks-cluster/kube-system"
       type: "k8s.Namespace"
       namespaceName: "kube-system"
   XLD::Environments:
-    - id: "aws-eks-{ProjectName}-dictionary"
+    - id: "{ProjectName}/aws-eks-{ProjectName}-dictionary"
       type: "udm.Dictionary"
       entries:
         NODES_ROLE_ARN: "{NodeInstanceRole}"
         EKS_USER: "{EksUser}"
         EKS_USER_ARN: "{EksUserArn}"
         CLUSTER_ENDPOINT: "{ClusterEndpoint}"
-    - id: "aws-eks-{ProjectName}"
+    - id: "{ProjectName}/aws-eks-{ProjectName}"
       type: "udm.Environment"
       members:
-      - ci ref: "Infrastructure/eks-{ProjectName}/eks-cluster"
-    - id: "AWS-PREREQUISITE"
+      - ci ref: "Infrastructure/{ProjectName}/eks-{ProjectName}/eks-cluster"
+    - id: "{ProjectName}/AWS-PREREQUISITE"
       type: "udm.Environment"
       members:
-      - ci ref: "Infrastructure/eks-{ProjectName}/eks-cluster/kube-system"
+      - ci ref: "Infrastructure/{ProjectName}/eks-{ProjectName}/eks-cluster/kube-system"
       dictionaries:
-      - ci ref: "Environments/aws-eks-{ProjectName}-dictionary"
+      - ci ref: "Environments/{ProjectName}/aws-eks-{ProjectName}-dictionary"
 
 Mappings:
     RegionMap:

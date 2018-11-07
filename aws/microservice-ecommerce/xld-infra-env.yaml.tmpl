@@ -4,45 +4,59 @@
 apiVersion: xl-deploy/v1beta1
 kind: Infrastructure
 spec:
-- name: Infrastructure/aws-{{$app}}
-  type: aws.Cloud
-  accesskey: {{.AWSAccessKey}}
-  accessSecret: {{.AWSAccessSecret}}
-- name: Infrastructure/aws-{{$app}}/eks-cloudformation
-  type: aws.cloudformation.Stack
-  region: {{.AWSRegion}}
+- name: {{.AppName}}
+  type: core.Directory
+  children:
+  - name: aws-{{$app}}
+    type: aws.Cloud
+    accesskey: {{.AWSAccessKey}}
+    accessSecret: {{.AWSAccessSecret}}
+    children:
+    - name: eks-cloudformation
+      type: aws.cloudformation.Stack
+      region: {{.AWSRegion}}
 ---
 apiVersion: xl-deploy/v1beta1
 kind: Environments
 spec:
-- name: Environments/aws-{{$app}}-cloudformation
-  type: udm.Environment
-  members:
-  - Infrastructure/aws-{{$app}}/eks-cloudformation
+- name: {{$app}}
+  type: core.Directory
+  children:
+  - name: aws-{{$app}}-cloudformation
+    type: udm.Environment
+    members:
+    - Infrastructure/{{$app}}/aws-{{$app}}/eks-cloudformation
 {{else}}
 # Definition of existing EKS cluster
 apiVersion: xl-deploy/v1beta1
 kind: Infrastructure
 spec:
-- name: Infrastructure/eks-{{.ClusterName | kebabcase}}
-  type: k8s.Master
-  isEKS: true
-  clusterName: {{.ClusterName}}
-  accessKey: {{.AWSAccessKey}}
-  accessSecret: {{.AWSAccessSecret}}
-  apiServerURL: {{.ClusterEndpoint}}
-  skipTLS: true
-- name: Infrastructure/eks-{{.ClusterName | kebabcase}}/{{.Namespace | kebabcase}}
-  type: k8s.Namespace
-  namespaceName: {{.Namespace}}
+- name: {{$app}}
+  type: core.Directory
+  children:
+  - name: eks-{{.ClusterName | kebabcase}}
+    type: k8s.Master
+    isEKS: true
+    clusterName: {{.ClusterName}}
+    accessKey: {{.AWSAccessKey}}
+    accessSecret: {{.AWSAccessSecret}}
+    apiServerURL: {{.ClusterEndpoint}}
+    skipTLS: true
+    children:
+    - name: {{.Namespace | kebabcase}}
+      type: k8s.Namespace
+      namespaceName: {{.Namespace}}
 ---
 # Definition of existing EKS Environment
 apiVersion: xl-deploy/v1beta1
 kind: Environments
 spec:
-- name: Environments/aws-eks-{{$app}}
-  type: udm.Environment
-  members:
-  - Infrastructure/eks-{{.ClusterName | kebabcase}}/{{.Namespace | kebabcase}}
-  - Infrastructure/eks-{{.ClusterName | kebabcase}}
+- name: {{$app}}
+  type: core.Directory
+  children:
+  - name: aws-eks-{{$app}}
+    type: udm.Environment
+    members:
+    - Infrastructure/{{$app}}/eks-{{.ClusterName | kebabcase}}/{{.Namespace | kebabcase}}
+    - Infrastructure/{{$app}}/eks-{{.ClusterName | kebabcase}}
 {{end}}
