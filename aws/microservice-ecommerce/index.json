@@ -1,7 +1,7 @@
 [
-  "xld-environment.yaml.tmpl",
-  "xld-infrastructure.yaml.tmpl",
-  "xld-apps.yaml.tmpl",
+  "xld-infra-env.yaml.tmpl",
+  "xld-cloudformation-apps.yaml.tmpl",
+  "xld-k8s-apps.yaml.tmpl",
   "xlr-pipeline.yaml.tmpl",
   "kubernetes/aws-auth-cm.yaml",
   "cloudformation/eks-master.yaml",

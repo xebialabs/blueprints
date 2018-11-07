@@ -2,7 +2,7 @@ apiVersion: xl/v1
 kind: Import
 metadata:
   imports:
-    - xld-environment.yaml
-    - xld-infrastructure.yaml
-    - xld-apps.yaml
+    - xld-infra-env.yaml
+    - xld-cloudformation-apps.yaml
+    - xld-k8s-apps.yaml
     - xlr-pipeline.yaml
