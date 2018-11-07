@@ -41,11 +41,6 @@ spec:
   type: Input
   dependsOnFalse: ProvisionCluster
   description: What is the endpoint for the cluster, example https://cluster1.k8s.abc.org
-- name: CreateNamespace
-  type: Confirm
-  dependsOnFalse: ProvisionCluster
-  default: "true"
-  description: Do you want to create a new namespace?
 - name: Namespace
   type: Input
   description: What is the name of the namespace? should be same as used in Kubernetes files.
