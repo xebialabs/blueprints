@@ -163,7 +163,11 @@ spec:
           server: XL Deploy
           numberOfContinueRetrials: 100
           pollingInterval: 10
+          {{if eq .ProvisionCluster "true"}}
+          ciId: Infrastructure/eks-{{$app}}/eks-cluster
+          {{else}}
           ciId: Infrastructure/eks-{{.ClusterName | kebabcase}}
+          {{end}}
           taskName: describeService
           variableMapping:
             pythonScript.xlDeployTaskId: ${taskId}
