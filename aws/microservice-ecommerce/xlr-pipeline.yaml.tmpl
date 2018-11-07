@@ -137,21 +137,24 @@ spec:
           server: XL Deploy
           deploymentPackage: {{.AppName}}/K8S/{{$app}}-registry/1.0.0
           deploymentEnvironment: Environments/aws-eks-{{$app}}
-        - name: Deploy invoice svc
-          type: xldeploy.Deploy
-          server: XL Deploy
-          deploymentPackage: {{.AppName}}/K8S/{{$app}}-invoice/1.0.0
-          deploymentEnvironment: Environments/aws-eks-{{$app}}
-        - name: Deploy notification svc
-          type: xldeploy.Deploy
-          server: XL Deploy
-          deploymentPackage: {{.AppName}}/K8S/{{$app}}-notification/1.0.0
-          deploymentEnvironment: Environments/aws-eks-{{$app}}
-        - name: Deploy store svc
-          type: xldeploy.Deploy
-          server: XL Deploy
-          deploymentPackage: {{.AppName}}/K8S/{{$app}}-store/1.0.0
-          deploymentEnvironment: Environments/aws-eks-{{$app}}
+        - name: Deploy microservices
+          type: xlrelease.ParallelGroup
+          tasks:
+          - name: Deploy invoice svc
+            type: xldeploy.Deploy
+            server: XL Deploy
+            deploymentPackage: {{.AppName}}/K8S/{{$app}}-invoice/1.0.0
+            deploymentEnvironment: Environments/aws-eks-{{$app}}
+          - name: Deploy notification svc
+            type: xldeploy.Deploy
+            server: XL Deploy
+            deploymentPackage: {{.AppName}}/K8S/{{$app}}-notification/1.0.0
+            deploymentEnvironment: Environments/aws-eks-{{$app}}
+          - name: Deploy store svc
+            type: xldeploy.Deploy
+            server: XL Deploy
+            deploymentPackage: {{.AppName}}/K8S/{{$app}}-store/1.0.0
+            deploymentEnvironment: Environments/aws-eks-{{$app}}
     - name: Test
       type: xlrelease.Phase
       tasks:
