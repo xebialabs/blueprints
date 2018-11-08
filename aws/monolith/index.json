@@ -3,5 +3,6 @@
   "xld-service.yaml.tmpl",
   "xld-environment.yaml.tmpl",
   "xlr-pipeline.yaml.tmpl",
+  "xebialabs.yaml",
   "README.md.tmpl"
 ]
