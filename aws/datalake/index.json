@@ -1,5 +1,6 @@
 [
   "README.md.tmpl",
+  "xebialabs.yaml",
   "data-lake-artifacts.zip",
   "data-lake-api.yaml",
   "data-lake-services.yaml",

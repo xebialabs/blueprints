@@ -10,11 +10,14 @@ metadata:
 spec:
 - name: AppName
   type: Input
+  description: What is the Application name?
 - name: MySQLMasterPassword
   type: Input
+  description: What is the master password for MySQL?
   secret: true
 - name: XLRScriptUserPassword
   type: Input
+  description: What is the XLR Script user password?
   secret: true
 - name: AWSAccessKey
   type: Input
@@ -26,6 +29,7 @@ spec:
   value: !fn aws.credentials().SecretAccessKey
 - name: AWSRegion
   type: Select
+  description: What is the AWS region?
   options:
     - !fn aws.regions(ecs)
   default: !fn aws.regions(ecs)[0]
