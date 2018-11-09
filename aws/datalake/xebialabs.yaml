@@ -2,6 +2,6 @@ apiVersion: xl/v1
 kind: Import
 metadata:
   imports:
-    - xld-environment.yaml.tmpl
-    - xld-infrastructure.yaml.tmpl
-    - xlr-pipeline.yaml.tmpl
+    - xld-environment.yaml
+    - xld-infrastructure.yaml
+    - xlr-pipeline.yaml
