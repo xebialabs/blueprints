@@ -199,7 +199,9 @@ spec:
         script: |
           import urllib2
           import json
+          import time
 
+          time.sleep(60)
           token_url = 'http://${lbHostnameOrIp}:8080/jhipster-registry/api/authenticate'
           instances_url = 'http://${lbHostnameOrIp}:8080/jhipster-registry/api/eureka/applications'
           values = {"password": "${store-admin-password}",
