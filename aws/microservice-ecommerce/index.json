@@ -1,13 +1,13 @@
 [
-  "xld-infra-env.yaml.tmpl",
-  "xld-cloudformation-apps.yaml.tmpl",
-  "xld-kubernetes-apps.yaml.tmpl",
-  "xlr-pipeline.yaml.tmpl",
+  "xebialabs/xld-infra-env.yaml.tmpl",
+  "xebialabs/xld-cloudformation-apps.yaml.tmpl",
+  "xebialabs/xld-kubernetes-apps.yaml.tmpl",
+  "xebialabs/xlr-pipeline.yaml.tmpl",
+  "xebialabs/README.md.tmpl",
   "kubernetes/aws-auth-cm.yaml",
   "cloudformation/eks-master.yaml",
   "cloudformation/eks-user.yaml",
   "cloudformation/eks-vpc.yaml",
   "cloudformation/eks-workers.yaml",
-  "xebialabs.yaml",
-  "README.md.tmpl"
+  "xebialabs.yaml"
 ]

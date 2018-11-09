@@ -18,7 +18,7 @@ spec:
           deployables:
           - name: {{$app}}-eks-user
             type: aws.cloudformation.Template
-            file: !file cloudformation/eks-user.yaml
+            file: !file ../cloudformation/eks-user.yaml
             capabilities:
             - CAPABILITY_IAM
             - CAPABILITY_NAMED_IAM
@@ -33,7 +33,7 @@ spec:
           deployables:
           - name: {{$app}}-eks-vpc
             type: aws.cloudformation.Template
-            file: !file cloudformation/eks-vpc.yaml
+            file: !file ../cloudformation/eks-vpc.yaml
             capabilities:
             - CAPABILITY_IAM
             - CAPABILITY_NAMED_IAM
@@ -49,7 +49,7 @@ spec:
           deployables:
           - name: {{$app}}-eks-master
             type: aws.cloudformation.Template
-            file: !file cloudformation/eks-master.yaml
+            file: !file ../cloudformation/eks-master.yaml
             capabilities:
             - CAPABILITY_IAM
             - CAPABILITY_NAMED_IAM
@@ -64,7 +64,7 @@ spec:
           deployables:
           - name: {{$app}}-eks-workers
             type: aws.cloudformation.Template
-            file: !file cloudformation/eks-workers.yaml
+            file: !file ../cloudformation/eks-workers.yaml
             capabilities:
             - CAPABILITY_IAM
             - CAPABILITY_NAMED_IAM
@@ -83,7 +83,7 @@ spec:
           deployables:
           - name: {{$app}}-aws-auth
             type: k8s.ResourcesFile
-            file: !file kubernetes/aws-auth-cm.yaml
+            file: !file ../kubernetes/aws-auth-cm.yaml
             delimiters: "## ##"
 {{end}}
     - name: K8S

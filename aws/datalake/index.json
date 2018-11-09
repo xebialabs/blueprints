@@ -1,13 +1,13 @@
 [
-  "README.md.tmpl",
   "xebialabs.yaml",
-  "data-lake-artifacts.zip",
-  "data-lake-api.yaml",
-  "data-lake-services.yaml",
-  "data-lake-storage.yaml",
-  "data-lake-deploy-federated.master.yaml.tmpl",
-  "data-lake-deploy.master.yaml.tmpl",
-  "xld-infrastructure.yaml.tmpl",
-  "xld-environment.yaml.tmpl",
-  "xlr-pipeline.yaml.tmpl"
+  "cloudformation/data-lake-artifacts.zip",
+  "cloudformation/data-lake-api.yaml",
+  "cloudformation/data-lake-services.yaml",
+  "cloudformation/data-lake-storage.yaml",
+  "cloudformation/data-lake-deploy-federated.master.yaml.tmpl",
+  "cloudformation/data-lake-deploy.master.yaml.tmpl",
+  "xebialabs/README.md.tmpl",
+  "xebialabs/xld-infrastructure.yaml.tmpl",
+  "xebialabs/xld-environment.yaml.tmpl",
+  "xebialabs/xlr-pipeline.yaml.tmpl"
 ]
