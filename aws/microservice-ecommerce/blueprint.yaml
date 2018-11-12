@@ -16,14 +16,19 @@ spec:
   description: What is the name of the application?
 
 # AWS specific variables
+- name: EnterAWSCredsManually
+  type: Confirm
+  description: Do you want to enter AWS credentials manually through CLI?
 - name: AWSAccessKey
   type: Input
   secret: true
-  value: !fn aws.credentials().AccessKeyID
+  dependsOnTrue: EnterAWSCredsManually
+  default: !fn aws.credentials().AccessKeyID
 - name: AWSAccessSecret
   type: Input
   secret: true
-  value: !fn aws.credentials().SecretAccessKey
+  dependsOnTrue: EnterAWSCredsManually
+  default: !fn aws.credentials().SecretAccessKey
 - name: AWSRegion #options are set manually because EKS service is not registered within AWS GO SDK
   type: Select
   description: What is the AWS region?
