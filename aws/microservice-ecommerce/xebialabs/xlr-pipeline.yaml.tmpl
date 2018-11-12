@@ -101,6 +101,14 @@ spec:
           deploymentPackage: {{.AppName}}/EKS-CLOUDFORMATION/{{$app}}-k8s-configmap/1.0.0
           deploymentEnvironment: Environments/{{$app}}/AWS-PREREQUISITE
     {{end}}
+    - name: Build {{.AppName}} application
+      type: xlrelease.Phase
+      tasks:
+      - name: Build {{.AppName}} store docker image
+        type: jenkins.Build
+        jenkinsServer: jenkins
+        jobName: job/devops-as-code-eks-blueprint
+        owner: admin
     - name: Deploy {{.AppName}} application
       type: xlrelease.Phase
       tasks:
