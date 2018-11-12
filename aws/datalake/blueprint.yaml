@@ -15,12 +15,15 @@ spec:
 - name: AdministratorName
   description: Name of the Data Lake administrator
   type: Input
+  pattern : ".+"
 - name: AdministratorEmail
   description: A valid Email address for Data Lake administrator
   type: Input
+  pattern: "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$"
 - name: CognitoDomain
   description: Prefixed domain names can only contain lower-case letters, numbers, and hyphens
   type: Input
+  pattern : "[a-z0-9-]+"
 - name: XLRScriptUserPassword
   type: Input
   secret: true
