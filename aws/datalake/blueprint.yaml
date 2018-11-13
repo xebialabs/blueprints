@@ -12,6 +12,7 @@ spec:
 - name: S3BucketName
   description: The S3 bucket name to use for CloudFormation templates
   type: Input
+  pattern: "(([a-z0-9]|[a-z0-9][a-z0-9\\-]*[a-z0-9])\\.)*([a-z0-9]|[a-z0-9][a-z0-9\\-]*[a-z0-9]){3,63}"
 - name: AdministratorName
   description: Name of the Data Lake administrator
   type: Input
