@@ -27,11 +27,15 @@ spec:
 - name: AWSAccessKey
   type: Input
   secret: true
-  value: !fn aws.credentials().AccessKeyID
+  description: What is the AWS access key?
+  dependsOnFalse: !fn aws.credentials().IsAvailable
+  default: !fn aws.credentials().AccessKeyID
 - name: AWSAccessSecret
   type: Input
   secret: true
-  value: !fn aws.credentials().SecretAccessKey
+  description: What is the AWS secret?
+  dependsOnFalse: !fn aws.credentials().IsAvailable
+  default: !fn aws.credentials().SecretAccessKey
 - name: AWSRegion
   type: Select
   options:
