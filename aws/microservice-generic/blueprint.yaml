@@ -16,14 +16,22 @@ spec:
   description: Enter name of the application
 
 # AWS specific variables
+- name: UseAWSCredentialsFromSystem
+  type: Confirm
+  description: Do you want to use AWS credentials from ~/.aws/credentials file?
+  dependsOnTrue: !fn aws.credentials().IsAvailable
 - name: AWSAccessKey
   type: Input
   secret: true
-  value: !fn aws.credentials().AccessKeyID
+  description: What is the AWS access key?
+  dependsOnFalse: UseAWSCredentialsFromSystem
+  default: !fn aws.credentials().AccessKeyID
 - name: AWSAccessSecret
   type: Input
   secret: true
-  value: !fn aws.credentials().SecretAccessKey
+  description: What is the AWS secret?
+  dependsOnFalse: UseAWSCredentialsFromSystem
+  default: !fn aws.credentials().SecretAccessKey
 - name: AWSRegion #options are set manually because EKS service is not registered within AWS GO SDK
   type: Select
   description: Select AWS region
