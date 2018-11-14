@@ -28,17 +28,21 @@ spec:
 - name: XLRScriptUserPassword
   type: Input
   secret: true
+- name: UseAWSCredentialsFromSystem
+  type: Confirm
+  description: Do you want to use AWS credentials from ~/.aws/credentials file?
+  dependsOnTrue: !fn aws.credentials().IsAvailable
 - name: AWSAccessKey
   type: Input
   secret: true
   description: What is the AWS access key?
-  dependsOnFalse: !fn aws.credentials().IsAvailable
+  dependsOnFalse: UseAWSCredentialsFromSystem
   default: !fn aws.credentials().AccessKeyID
 - name: AWSAccessSecret
   type: Input
   secret: true
   description: What is the AWS secret?
-  dependsOnFalse: !fn aws.credentials().IsAvailable
+  dependsOnFalse: UseAWSCredentialsFromSystem
   default: !fn aws.credentials().SecretAccessKey
 - name: AWSRegion
   type: Select
