@@ -1,7 +1,7 @@
 {{$app := .AppName | kebabcase}}
 {{if eq .ProvisionCluster "true"}}
 # Provision AWS EKS cluster
-apiVersion: xl-deploy/v1beta1
+apiVersion: xl-deploy/v1
 kind: Infrastructure
 spec:
 - name: {{.AppName}}
@@ -16,7 +16,7 @@ spec:
       type: aws.cloudformation.Stack
       region: {{.AWSRegion}}
 ---
-apiVersion: xl-deploy/v1beta1
+apiVersion: xl-deploy/v1
 kind: Environments
 spec:
 - name: {{$app}}
@@ -28,7 +28,7 @@ spec:
     - Infrastructure/{{$app}}/aws-{{$app}}/eks-cloudformation
 {{else}}
 # Definition of existing EKS cluster
-apiVersion: xl-deploy/v1beta1
+apiVersion: xl-deploy/v1
 kind: Infrastructure
 spec:
 - name: {{$app}}
@@ -48,7 +48,7 @@ spec:
       namespaceName: {{.Namespace}}
 ---
 # Definition of existing EKS Environment
-apiVersion: xl-deploy/v1beta1
+apiVersion: xl-deploy/v1
 kind: Environments
 spec:
 - name: {{$app}}
