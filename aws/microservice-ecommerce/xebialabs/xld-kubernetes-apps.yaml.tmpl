@@ -74,12 +74,12 @@ spec:
       - name: {{$app}}-store
         type: udm.Application
         children:
-        - name: '1.0.0'
+        - name: !value BUILD_ID
           type: udm.DeploymentPackage
           deployables:
           - name: {{$app}}-store-deployment
             type: k8s.ResourcesFile
-            file: !file ../kubernetes/store/store-deployment.yml
+            file: !file ../kubernetes/build/store/store-deployment.yml
           - name: {{$app}}-store-svc
             type: k8s.ResourcesFile
             file: !file ../kubernetes/store/store-service.yml

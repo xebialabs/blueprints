@@ -50,6 +50,10 @@ spec:
       requiresValue: true
       showOnReleaseStart: false
       value: {{.XLDPassword}}
+    - key: buildNumber
+      type: xlrelease.StringVariable
+      requiresValue: false
+      showOnReleaseStart: false
     phases:
     {{if eq .ProvisionCluster "true"}}
     # Provision Infra
@@ -107,8 +111,10 @@ spec:
       - name: Build {{.AppName}} store docker image
         type: jenkins.Build
         jenkinsServer: jenkins
-        jobName: job/devops-as-code-eks-blueprint
+        jobName: devops-as-code-eks-blueprint
         owner: admin
+        variableMapping:
+          pythonScript.buildNumber: ${buildNumber}
     - name: Deploy {{.AppName}} application
       type: xlrelease.Phase
       tasks:
@@ -161,7 +167,7 @@ spec:
           - name: Deploy store svc
             type: xldeploy.Deploy
             server: XL Deploy
-            deploymentPackage: {{.AppName}}/K8S/{{$app}}-store/1.0.0
+            deploymentPackage: {{.AppName}}/K8S/{{$app}}-store/${buildNumber}
             deploymentEnvironment: Environments/{{$app}}/aws-eks-{{$app}}
     - name: Test
       type: xlrelease.Phase
