@@ -13,8 +13,8 @@ spec:
     - {{.AppName}}
     - ECS
     - Fargate
-    scriptUsername: admin
-    scriptUserPassword: {{.XLRScriptUserPassword}}
+    scriptUsername: {{.XLRScriptUsername}}
+    scriptUserPassword: {{.XLRScriptPassword}}
     variables:
     - key: "ALB_DNS_NAME"
       type: xlrelease.StringVariable

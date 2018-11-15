@@ -38,6 +38,7 @@ spec:
   options:
     - eu-west-1
     - us-east-1
+    - us-east-2
     - us-west-2
 - name: ProvisionCluster
   type: Confirm
@@ -67,11 +68,13 @@ spec:
   type: Input
   secret: true
   description: XL-Deploy user password
-- name: XLRUsername
+- name: XLRScriptUsername
   type: Input
-  default: admin
-  description: XL-Release user name
-- name: XLRPassword
-  type: Input
+  value: admin
+  description: What is the XLR Script username?
   secret: true
-  description: XL-Release user password
+- name: XLRScriptUserPassword
+  type: Input
+  value: admin
+  description: What is the XLR Script user password?
+  secret: true
