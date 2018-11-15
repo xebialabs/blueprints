@@ -55,6 +55,14 @@ spec:
   type: Input
   description: What is the name of the namespace? should be same as used in Kubernetes files.
   default: default
+- name: StoreAdminUsername
+  type: Input
+  description: Store Admin username
+  value: admin
+- name: StoreAdminPassword
+  type: Input
+  description: Store Admin password
+  value: admin
 
 # XLD/XLR specific variables
 - name: XLDServerURL
