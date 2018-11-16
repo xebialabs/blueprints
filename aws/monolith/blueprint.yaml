@@ -11,6 +11,10 @@ spec:
 - name: AppName
   type: Input
   description: What is the Application name?
+- name: PublicPort
+  type: Input
+  description: What is the public port?
+  value: 80
 - name: MySQLMasterPassword
   type: Input
   description: What is the master password for MySQL?
