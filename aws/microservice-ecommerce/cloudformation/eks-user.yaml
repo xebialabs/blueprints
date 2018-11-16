@@ -7,7 +7,6 @@ Parameters:
     Default: "app"
   S3BucketPrefix:
     Type: String
-    Default: ''
   CFNCustomProviderZipFileName:
     Type: String
     Default: 'cfn-secret-provider.zip'
