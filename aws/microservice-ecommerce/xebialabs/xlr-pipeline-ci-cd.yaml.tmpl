@@ -131,17 +131,17 @@ spec:
         - name: Deploy invoice mysql svc
           type: xldeploy.Deploy
           server: XL Deploy
-          deploymentPackage: {{.AppName}}/K8S/{{$app}}-invoice-mysql/${buildNumber}
+          deploymentPackage: {{.AppName}}/K8S/{{$app}}-invoice-mysql/1.0.${buildNumber}
           deploymentEnvironment: Environments/{{$app}}/aws-eks-{{$app}}
         - name: Deploy store mysql svc
           type: xldeploy.Deploy
           server: XL Deploy
-          deploymentPackage: {{.AppName}}/K8S/{{$app}}-store-mysql/${buildNumber}
+          deploymentPackage: {{.AppName}}/K8S/{{$app}}-store-mysql/1.0.${buildNumber}
           deploymentEnvironment: Environments/{{$app}}/aws-eks-{{$app}}
         - name: Deploy notification mongodb svc
           type: xldeploy.Deploy
           server: XL Deploy
-          deploymentPackage: {{.AppName}}/K8S/{{$app}}-notification-mongodb/${buildNumber}
+          deploymentPackage: {{.AppName}}/K8S/{{$app}}-notification-mongodb/1.0.${buildNumber}
           deploymentEnvironment: Environments/{{$app}}/aws-eks-{{$app}}
       - name: Deploy stateless services
         type: xlrelease.SequentialGroup
@@ -149,7 +149,7 @@ spec:
         - name: Deploy registry svc
           type: xldeploy.Deploy
           server: XL Deploy
-          deploymentPackage: {{.AppName}}/K8S/{{$app}}-registry/${buildNumber}
+          deploymentPackage: {{.AppName}}/K8S/{{$app}}-registry/1.0.${buildNumber}
           deploymentEnvironment: Environments/{{$app}}/aws-eks-{{$app}}
         - name: Deploy microservices
           type: xlrelease.ParallelGroup
@@ -157,17 +157,17 @@ spec:
           - name: Deploy invoice svc
             type: xldeploy.Deploy
             server: XL Deploy
-            deploymentPackage: {{.AppName}}/K8S/{{$app}}-invoice/${buildNumber}
+            deploymentPackage: {{.AppName}}/K8S/{{$app}}-invoice/1.0.${buildNumber}
             deploymentEnvironment: Environments/{{$app}}/aws-eks-{{$app}}
           - name: Deploy notification svc
             type: xldeploy.Deploy
             server: XL Deploy
-            deploymentPackage: {{.AppName}}/K8S/{{$app}}-notification/${buildNumber}
+            deploymentPackage: {{.AppName}}/K8S/{{$app}}-notification/1.0.${buildNumber}
             deploymentEnvironment: Environments/{{$app}}/aws-eks-{{$app}}
           - name: Deploy store svc
             type: xldeploy.Deploy
             server: XL Deploy
-            deploymentPackage: {{.AppName}}/K8S/{{$app}}-store/${buildNumber}
+            deploymentPackage: {{.AppName}}/K8S/{{$app}}-store/1.0.${buildNumber}
             deploymentEnvironment: Environments/{{$app}}/aws-eks-{{$app}}
     - name: Test
       type: xlrelease.Phase
