@@ -1,6 +1,7 @@
 [
   "xebialabs/xld-infra-env.yaml.tmpl",
   "xebialabs/xld-cloudformation-apps.yaml.tmpl",
+  "xebialabs/xld-kubernetes-apps.yaml.tmpl",
   "xebialabs/xlr-pipeline-ci-cd.yaml.tmpl",
   "xebialabs/xlr-pipeline-destroy.yaml.tmpl",
   "xebialabs/README.md.tmpl",
