@@ -15,11 +15,6 @@ spec:
     - {{$app}}
     scriptUsername: {{.XLRUsername}}
     scriptUserPassword: {{.XLRPassword}}
-    variables:
-    - key: buildNumber
-      type: xlrelease.StringVariable
-      requiresValue: true
-      showOnReleaseStart: true
     phases:
     - name: Undeploy Application
       type: xlrelease.Phase
