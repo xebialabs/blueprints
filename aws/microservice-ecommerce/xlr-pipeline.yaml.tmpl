@@ -13,8 +13,8 @@ spec:
     - AWS
     - EKS
     - {{$app}}
-    scriptUsername: {{.XLRUsername}}
-    scriptUserPassword: {{.XLRPassword}}
+    scriptUsername: {{.XLRScriptUsername}}
+    scriptUserPassword: {{.XLRScriptUserPassword}}
     variables:
     - key: control
       type: xlrelease.MapStringStringVariable
@@ -40,11 +40,13 @@ spec:
     - key: store-admin-username
       type: xlrelease.StringVariable
       requiresValue: true
-      showOnReleaseStart: true
+      showOnReleaseStart: false
+      value: {{.StoreAdminUsername}}
     - key: store-admin-password
       type: xlrelease.StringVariable
       requiresValue: true
-      showOnReleaseStart: true
+      showOnReleaseStart: false
+      value: {{.StoreAdminPassword}}
     - key: xld-admin-password
       type: xlrelease.PasswordStringVariable
       requiresValue: true

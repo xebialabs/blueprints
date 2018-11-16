@@ -11,12 +11,22 @@ spec:
 - name: AppName
   type: Input
   description: What is the Application name?
+- name: PublicPort
+  type: Input
+  description: What is the public port?
+  value: 80
 - name: MySQLMasterPassword
   type: Input
   description: What is the master password for MySQL?
   secret: true
+- name: XLRScriptUsername
+  type: Input
+  value: admin
+  description: What is the XLR Script username?
+  secret: true
 - name: XLRScriptUserPassword
   type: Input
+  value: admin
   description: What is the XLR Script user password?
   secret: true
 - name: UseAWSCredentialsFromSystem
