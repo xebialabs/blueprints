@@ -11,11 +11,10 @@ XL deploy does the provisioning and deployment, while XL release orchestrates ev
 
 To deploy this blueprint with XL Platform follow the below steps
 
-1. Move the `kubernetes` folder from the root directory into the xebialabs folder created by blueprint
-2. Apply the generated yaml configurations
+1. Apply the generated yaml configurations
 
     ```
     xl apply -f xebialabs.yaml
     ```
 
-3. Go to XL Release and look for the {{.AppName}}-release-pipeline and start a new release from it.
+2. Go to XL Release and look for the {{.AppName}}-release-pipeline and start a new release from it.

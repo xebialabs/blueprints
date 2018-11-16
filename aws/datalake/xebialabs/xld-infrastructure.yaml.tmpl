@@ -24,13 +24,13 @@ spec:
       deployables:
       - name: data-lake-solution-artifacts
         type: aws.s3.Folder
-        file: !file data-lake-artifacts.zip
+        file: !file ../cloudformation/data-lake-artifacts.zip
         acl: bucket-owner-full-control
         createTargetPath: true
         scanPlaceholders: false
       - name: data-lake-solution-services
         type: aws.s3.File
-        file: !file data-lake-services.yaml
+        file: !file ../cloudformation/data-lake-services.yaml
         acl: bucket-owner-full-control
       - name: data-lake-solution-storage
         type: aws.s3.File
@@ -38,7 +38,7 @@ spec:
         acl: bucket-owner-full-control
       - name: data-lake-solution-api
         type: aws.s3.File
-        file: !file data-lake-api.yaml
+        file: !file ../cloudformation/data-lake-api.yaml
         acl: bucket-owner-full-control
   ### provision data-lake solution with cloudformation templates ###
   - name: aws-data-lake-solution-cloudformation
@@ -49,9 +49,9 @@ spec:
       deployables:
       - name: provision-data-lake-stack
         type: aws.cloudformation.Template
-        file: !file data-lake-deploy.master.yaml
+        file: !file ../cloudformation/data-lake-deploy.master.yaml
         # use the below to deploy an AD Federated infrastructure
-        # file: !file data-lake-deploy-federated.master.yaml
+        # file: !file ../cloudformation/data-lake-deploy-federated.master.yaml
         timeoutInterval: 300 # wait for 300 loops(approx 30 minutes)
         capabilities:
         - CAPABILITY_IAM
