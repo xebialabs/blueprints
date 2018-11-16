@@ -1,0 +1,100 @@
+{{$app := .AppName | kebabcase}}
+apiVersion: xl-release/v1beta1
+kind: Templates
+spec:
+- name: {{.AppName}}
+  type: xlrelease.Folder
+  children:
+  - name: {{$app}}-destroy
+    type: xlrelease.Release
+    description: |
+      This XL Release template shows how to undeploy an application, based on microservices architecture, to AWS EKS using XL Deploy.
+    tags:
+    - AWS
+    - EKS
+    - {{$app}}
+    scriptUsername: {{.XLRUsername}}
+    scriptUserPassword: {{.XLRPassword}}
+    variables:
+    - key: buildNumber
+      type: xlrelease.StringVariable
+      requiresValue: true
+      showOnReleaseStart: true
+    phases:
+    - name: Undeploy Application
+      type: xlrelease.Phase
+      tasks:
+      - name: Undeploy stateless services
+        type: xlrelease.ParallelGroup
+        tasks:
+        - name: Undeploy registry svc
+          type: xldeploy.Undeploy
+          server: XL Deploy
+          deployedApplication: Environments/{{$app}}/aws-eks-{{$app}}/{{$app}}-registry
+        - name: Undeploy invoice svc
+          type: xldeploy.Undeploy
+          server: XL Deploy
+          deployedApplication: Environments/{{$app}}/aws-eks-{{$app}}/{{$app}}-invoice
+        - name: Undeploy notification svc
+          type: xldeploy.Undeploy
+          server: XL Deploy
+          deployedApplication: Environments/{{$app}}/aws-eks-{{$app}}/{{$app}}-notification
+        - name: Undeploy store svc
+          type: xldeploy.Undeploy
+          server: XL Deploy
+          deployedApplication: Environments/{{$app}}/aws-eks-{{$app}}/{{$app}}-store
+      - name: Undeploy stateful services
+        type: xlrelease.ParallelGroup
+        tasks:
+        - name: Undeploy invoice mysql svc
+          type: xldeploy.Undeploy
+          server: XL Deploy
+          deployedApplication: Environments/{{$app}}/aws-eks-{{$app}}/{{$app}}-invoice-mysql
+        - name: Undeploy store mysql svc
+          type: xldeploy.Undeploy
+          server: XL Deploy
+          deployedApplication: Environments/{{$app}}/aws-eks-{{$app}}/{{$app}}-store-mysql
+        - name: Undeploy notification mongodb svc
+          type: xldeploy.Undeploy
+          server: XL Deploy
+          deployedApplication: Environments/{{$app}}/aws-eks-{{$app}}/{{$app}}-notification-mongodb
+      {{if eq .ProvisionCluster "true"}}
+      # Un-provision namespace
+      - name: Undeploy {{.Namespace}} namespace
+        type: xldeploy.Undeploy
+        server: XL Deploy
+        deployedApplication: Environments/{{$app}}/aws-eks-{{$app}}/{{$app}}-namespace
+      {{end}}
+    {{if eq .ProvisionCluster "true"}}
+    # De-provision Infra
+    - name: Deprovision Infrastructure
+      color: '#ff9e3b'
+      type: xlrelease.Phase
+      tasks:
+      - name: Deprovision AWS EKS cluster
+        type: xlrelease.SequentialGroup
+        tasks:
+        - name: Deprovision EKS config map for workers
+          type: xldeploy.Undeploy
+          server: XL Deploy
+          deployedApplication: Environments/{{$app}}/AWS-PREREQUISITE/{{$app}}-k8s-configmap
+        - name: Deprovision EKS workers nodes
+          type: xldeploy.Undeploy
+          server: XL Deploy
+          deployedApplication: Environments/{{$app}}/aws-{{$app}}-cloudformation/{{$app}}-cloudformation-eks-workers
+        - name: Deprovision EKS master node
+          type: xldeploy.Undeploy
+          server: XL Deploy
+          deployedApplication: Environments/{{$app}}/aws-{{$app}}-cloudformation/{{$app}}-cloudformation-eks-master
+      - name: Deprovision AWS VPC and IAM resources
+        type: xlrelease.ParallelGroup
+        tasks:
+        - name: Deprovision AWS IAM resources
+          type: xldeploy.Undeploy
+          server: XL Deploy
+          deployedApplication: Environments/{{$app}}/aws-{{$app}}-cloudformation/{{$app}}-cloudformation-eks-user
+        - name: Deprovision AWS VPC
+          type: xldeploy.Undeploy
+          server: XL Deploy
+          deployedApplication: Environments/{{$app}}/aws-{{$app}}-cloudformation/{{$app}}-cloudformation-eks-vpc
+    {{end}}
