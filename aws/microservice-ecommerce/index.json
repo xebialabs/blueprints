@@ -3,11 +3,12 @@
   "xld-cloudformation-apps.yaml.tmpl",
   "xld-kubernetes-apps.yaml.tmpl",
   "xlr-pipeline.yaml.tmpl",
+  "xebialabs.yaml",
+  "README.md.tmpl",
   "kubernetes/aws-auth-cm.yaml",
   "cloudformation/eks-master.yaml",
   "cloudformation/eks-user.yaml",
   "cloudformation/eks-vpc.yaml",
   "cloudformation/eks-workers.yaml",
-  "xebialabs.yaml",
-  "README.md.tmpl"
+  "cloudformation/cfn-secret-provider.zip"
 ]
