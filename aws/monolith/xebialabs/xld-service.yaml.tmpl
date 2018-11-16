@@ -15,6 +15,7 @@ spec:
           type: aws.ecs.ServiceSpec
           serviceName: {{$app}}-app
           desiredCount: 1
+          maxDrainRetryCount: 100
           launchType: FARGATE
           networkMode: awsvpc
           assignPublicIp: true
