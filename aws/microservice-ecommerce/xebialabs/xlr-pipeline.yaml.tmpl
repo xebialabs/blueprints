@@ -13,8 +13,8 @@ spec:
     - AWS
     - EKS
     - {{$app}}
-    scriptUsername: {{.XLRUsername}}
-    scriptUserPassword: {{.XLRPassword}}
+    scriptUsername: !value XL_RELEASE_USERNAME
+    scriptUserPassword: !value XL_RELEASE_PASSWORD
     variables:
     - key: control
       type: xlrelease.MapStringStringVariable
@@ -49,7 +49,7 @@ spec:
       type: xlrelease.PasswordStringVariable
       requiresValue: true
       showOnReleaseStart: false
-      value: {{.XLDPassword}}
+      value: !value XL_DEPLOY_PASSWORD
     phases:
     {{if eq .ProvisionCluster "true"}}
     # Provision Infra
@@ -177,9 +177,9 @@ spec:
             pythonScript.parameters: ${control}
         - name: Parse Store k8s service
           type: webhook.XmlWebhook
-          URL: {{.XLDServerURL}}/deployit/tasks/v2/export
+          URL: !format '%XL_DEPLOY_URL%/deployit/tasks/v2/export'
           method: GET
-          username: {{.XLDUsername}}
+          username: !value XL_DEPLOY_USERNAME
           xPathExpression: "/list/task[@id=\"${taskId}\"]//log/text()"
           variableMapping:
             pythonScript.result: ${taskOutput}

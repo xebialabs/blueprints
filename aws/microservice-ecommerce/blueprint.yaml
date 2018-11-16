@@ -53,25 +53,3 @@ spec:
   type: Input
   description: What is the name of the namespace? should be same as used in Kubernetes files.
   default: default
-
-# XLD/XLR specific variables
-- name: XLDServerURL
-  type: Input
-  default: http://xl-deploy:4516
-  description: XL-Deploy URL
-- name: XLDUsername
-  type: Input
-  default: admin
-  description: XL-Deploy user name
-- name: XLDPassword
-  type: Input
-  secret: true
-  description: XL-Deploy user password
-- name: XLRUsername
-  type: Input
-  default: admin
-  description: XL-Release user name
-- name: XLRPassword
-  type: Input
-  secret: true
-  description: XL-Release user password

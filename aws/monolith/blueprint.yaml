@@ -15,10 +15,6 @@ spec:
   type: Input
   description: What is the master password for MySQL?
   secret: true
-- name: XLRScriptUserPassword
-  type: Input
-  description: What is the XLR Script user password?
-  secret: true
 - name: UseAWSCredentialsFromSystem
   type: Confirm
   description: Do you want to use AWS credentials from ~/.aws/credentials file?
