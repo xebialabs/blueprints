@@ -7,10 +7,10 @@ Parameters:
     Default: "app"
   S3BucketPrefix:
     Type: String
-    Default: 'xl-cli'
+    Default: ''
   CFNCustomProviderZipFileName:
     Type: String
-    Default: 'resources/shared-fn/cfn-secret-provider/lambdas/cfn-secret-provider-latest.zip'
+    Default: 'cfn-secret-provider.zip'
   UserStackName:
     Type: String
     Default: 'eks-user'

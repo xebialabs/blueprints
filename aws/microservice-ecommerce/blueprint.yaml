@@ -37,7 +37,8 @@ spec:
   description: What is the AWS region?
   options:
     - eu-west-1
-    - us-east-1
+    # commented out becouse of https://github.com/boto/boto3/issues/811
+    # - us-east-1
     - us-west-2
 - name: ProvisionCluster
   type: Confirm
