@@ -2,7 +2,7 @@
 apiVersion: xl-release/v1
 kind: Templates
 spec:
-- name: {{.AppName}}
+- name: {{$app}}
   type: xlrelease.Folder
   children:
   - name: {{$app}}-destroy
@@ -13,8 +13,8 @@ spec:
     - AWS
     - EKS
     - {{$app}}
-    scriptUsername: {{.XLRUsername}}
-    scriptUserPassword: {{.XLRPassword}}
+    scriptUsername: {{.XLRScriptUsername}}
+    scriptUserPassword: {{.XLRScriptUserPassword}}
     phases:
     - name: Undeploy Application
       type: xlrelease.Phase
@@ -76,20 +76,31 @@ spec:
         - name: Deprovision EKS workers nodes
           type: xldeploy.Undeploy
           server: XL Deploy
-          deployedApplication: Environments/{{$app}}/aws-{{$app}}-cloudformation/{{$app}}-cloudformation-eks-workers
+          deployedApplication: Environments/{{$app}}/aws-cloudformation-{{$app}}/{{$app}}-cloudformation-eks-workers
         - name: Deprovision EKS master node
           type: xldeploy.Undeploy
           server: XL Deploy
-          deployedApplication: Environments/{{$app}}/aws-{{$app}}-cloudformation/{{$app}}-cloudformation-eks-master
+          deployedApplication: Environments/{{$app}}/aws-cloudformation-{{$app}}/{{$app}}-cloudformation-eks-master
+      - name: Delete artifacts from S3
+        type: xlrelease.SequentialGroup
+        tasks:
+        - name: Delete artifacts from S3
+          type: xldeploy.Undeploy
+          server: XL Deploy
+          deployedApplication: Environments/{{$app}}/aws-cloudformation-{{$app}}/{{$app}}-lambda-artifacts
+        - name: Delete S3 bucket
+          type: xldeploy.Undeploy
+          server: XL Deploy
+          deployedApplication: Environments/{{$app}}/aws-cloudformation-{{$app}}/{{$app}}-lambda-bucket
       - name: Deprovision AWS VPC and IAM resources
         type: xlrelease.ParallelGroup
         tasks:
         - name: Deprovision AWS IAM resources
           type: xldeploy.Undeploy
           server: XL Deploy
-          deployedApplication: Environments/{{$app}}/aws-{{$app}}-cloudformation/{{$app}}-cloudformation-eks-user
+          deployedApplication: Environments/{{$app}}/aws-cloudformation-{{$app}}/{{$app}}-cloudformation-eks-user
         - name: Deprovision AWS VPC
           type: xldeploy.Undeploy
           server: XL Deploy
-          deployedApplication: Environments/{{$app}}/aws-{{$app}}-cloudformation/{{$app}}-cloudformation-eks-vpc
+          deployedApplication: Environments/{{$app}}/aws-cloudformation-{{$app}}/{{$app}}-cloudformation-eks-vpc
     {{end}}

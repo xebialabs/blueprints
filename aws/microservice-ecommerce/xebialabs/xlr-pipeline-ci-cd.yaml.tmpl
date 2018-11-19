@@ -70,12 +70,12 @@ spec:
           type: xldeploy.Deploy
           server: XL Deploy
           deploymentPackage: {{$app}}/EKS-LAMBDA/{{$app}}-lambda-bucket/1.0.0
-          deploymentEnvironment: Environments/{{$app}}/aws-{{$app}}
+          deploymentEnvironment: Environments/{{$app}}/aws-cloudformation-{{$app}}
         - name: Upload lambda artifacts to S3
           type: xldeploy.Deploy
           server: XL Deploy
           deploymentPackage: {{$app}}/EKS-LAMBDA/{{$app}}-lambda-artifacts/1.0.0
-          deploymentEnvironment: Environments/{{$app}}/aws-{{$app}}
+          deploymentEnvironment: Environments/{{$app}}/aws-cloudformation-{{$app}}
       - name: Provision AWS VPC and IAM resources
         type: xlrelease.ParallelGroup
         tasks:
@@ -83,12 +83,12 @@ spec:
           type: xldeploy.Deploy
           server: XL Deploy
           deploymentPackage: {{$app}}/EKS-CLOUDFORMATION/{{$app}}-cloudformation-eks-user/1.0.0
-          deploymentEnvironment: Environments/{{$app}}/aws-{{$app}}
+          deploymentEnvironment: Environments/{{$app}}/aws-cloudformation-{{$app}}
         - name: Provision AWS VPC
           type: xldeploy.Deploy
           server: XL Deploy
           deploymentPackage: {{$app}}/EKS-CLOUDFORMATION/{{$app}}-cloudformation-eks-vpc/1.0.0
-          deploymentEnvironment: Environments/{{$app}}/aws-{{$app}}
+          deploymentEnvironment: Environments/{{$app}}/aws-cloudformation-{{$app}}
       - name: Provision AWS EKS cluster
         type: xlrelease.SequentialGroup
         tasks:
@@ -96,12 +96,12 @@ spec:
           type: xldeploy.Deploy
           server: XL Deploy
           deploymentPackage: {{$app}}/EKS-CLOUDFORMATION/{{$app}}-cloudformation-eks-master/1.0.0
-          deploymentEnvironment: Environments/{{$app}}/aws-{{$app}}
+          deploymentEnvironment: Environments/{{$app}}/aws-cloudformation-{{$app}}
         - name: Provision EKS workers nodes
           type: xldeploy.Deploy
           server: XL Deploy
           deploymentPackage: {{$app}}/EKS-CLOUDFORMATION/{{$app}}-cloudformation-eks-workers/1.0.0
-          deploymentEnvironment: Environments/{{$app}}/aws-{{$app}}
+          deploymentEnvironment: Environments/{{$app}}/aws-cloudformation-{{$app}}
         - name: Add accessKey to EKS cluster CI
           type: xld.UpdateCIProperty
           server: XL Deploy
@@ -120,17 +120,17 @@ spec:
           deploymentPackage: {{$app}}/EKS-CLOUDFORMATION/{{$app}}-k8s-configmap/1.0.0
           deploymentEnvironment: Environments/{{$app}}/AWS-PREREQUISITE
     {{end}}
-    - name: Build {{.AppName}} application
+    - name: Build {{$app}} application
       type: xlrelease.Phase
       tasks:
-      - name: Build {{.AppName}} store docker image
+      - name: Build {{$app}} store docker image
         type: jenkins.Build
         jenkinsServer: jenkins
         jobName: devops-as-code-eks-blueprint
         owner: admin
         variableMapping:
           pythonScript.buildNumber: ${buildNumber}
-    - name: Deploy {{.AppName}} application
+    - name: Deploy {{$app}} application
       type: xlrelease.Phase
       tasks:
       {{if eq .ProvisionCluster "true"}}
@@ -223,7 +223,7 @@ spec:
                 if "None" not in item:
                     releaseVariables['lbHostnameOrIp'] = item
           # end of script
-      - name: Check {{.AppName}} application status
+      - name: Check {{$app}} application status
         type: xlrelease.ScriptTask
         script: |
           import urllib2

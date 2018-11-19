@@ -22,7 +22,7 @@ spec:
 - name: {{$app}}
   type: core.Directory
   children:
-  - name: aws-{{$app}}
+  - name: aws-cloudformation-{{$app}}
     type: udm.Environment
     members:
     - Infrastructure/{{$app}}/aws-{{$app}}
