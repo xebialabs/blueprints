@@ -13,8 +13,8 @@ spec:
     - AWS
     - EKS
     - {{$app}}
-    scriptUsername: {{.XLRScriptUsername}}
-    scriptUserPassword: {{.XLRScriptUserPassword}}
+    scriptUsername: !value XL_RELEASE_USERNAME
+    scriptUserPassword: !value XL_RELEASE_PASSWORD
     phases:
     - name: Undeploy Application
       type: xlrelease.Phase
