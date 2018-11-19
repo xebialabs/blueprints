@@ -2,7 +2,7 @@
 apiVersion: xl-release/v1
 kind: Templates
 spec:
-- name: {{.AppName}}
+- name: {{$app}}
   type: xlrelease.Folder
   children:
   - name: {{$app}}-ci-cd
@@ -13,8 +13,8 @@ spec:
     - AWS
     - EKS
     - {{$app}}
-    scriptUsername: {{.XLRUsername}}
-    scriptUserPassword: {{.XLRPassword}}
+    scriptUsername: {{.XLRScriptUsername}}
+    scriptUserPassword: {{.XLRScriptUserPassword}}
     variables:
     - key: control
       type: xlrelease.MapStringStringVariable
@@ -40,11 +40,13 @@ spec:
     - key: store-admin-username
       type: xlrelease.StringVariable
       requiresValue: true
-      showOnReleaseStart: true
+      showOnReleaseStart: false
+      value: {{.StoreAdminUsername}}
     - key: store-admin-password
       type: xlrelease.StringVariable
       requiresValue: true
-      showOnReleaseStart: true
+      showOnReleaseStart: false
+      value: {{.StoreAdminPassword}}
     - key: xld-admin-password
       type: xlrelease.PasswordStringVariable
       requiresValue: true
@@ -61,32 +63,45 @@ spec:
       color: '#ff9e3b'
       type: xlrelease.Phase
       tasks:
+      - name: Provision Lambda artifacts
+        type: xlrelease.SequentialGroup
+        tasks:
+        - name: Create S3 bucket for lambda artifacts
+          type: xldeploy.Deploy
+          server: XL Deploy
+          deploymentPackage: {{$app}}/EKS-LAMBDA/{{$app}}-lambda-bucket/1.0.0
+          deploymentEnvironment: Environments/{{$app}}/aws-{{$app}}
+        - name: Upload lambda artifacts to S3
+          type: xldeploy.Deploy
+          server: XL Deploy
+          deploymentPackage: {{$app}}/EKS-LAMBDA/{{$app}}-lambda-artifacts/1.0.0
+          deploymentEnvironment: Environments/{{$app}}/aws-{{$app}}
       - name: Provision AWS VPC and IAM resources
         type: xlrelease.ParallelGroup
         tasks:
         - name: Provision AWS IAM resources
           type: xldeploy.Deploy
           server: XL Deploy
-          deploymentPackage: {{.AppName}}/EKS-CLOUDFORMATION/{{$app}}-cloudformation-eks-user/1.0.0
-          deploymentEnvironment: Environments/{{$app}}/aws-{{$app}}-cloudformation
+          deploymentPackage: {{$app}}/EKS-CLOUDFORMATION/{{$app}}-cloudformation-eks-user/1.0.0
+          deploymentEnvironment: Environments/{{$app}}/aws-{{$app}}
         - name: Provision AWS VPC
           type: xldeploy.Deploy
           server: XL Deploy
-          deploymentPackage: {{.AppName}}/EKS-CLOUDFORMATION/{{$app}}-cloudformation-eks-vpc/1.0.0
-          deploymentEnvironment: Environments/{{$app}}/aws-{{$app}}-cloudformation
+          deploymentPackage: {{$app}}/EKS-CLOUDFORMATION/{{$app}}-cloudformation-eks-vpc/1.0.0
+          deploymentEnvironment: Environments/{{$app}}/aws-{{$app}}
       - name: Provision AWS EKS cluster
         type: xlrelease.SequentialGroup
         tasks:
         - name: Provision EKS master node
           type: xldeploy.Deploy
           server: XL Deploy
-          deploymentPackage: {{.AppName}}/EKS-CLOUDFORMATION/{{$app}}-cloudformation-eks-master/1.0.0
-          deploymentEnvironment: Environments/{{$app}}/aws-{{$app}}-cloudformation
+          deploymentPackage: {{$app}}/EKS-CLOUDFORMATION/{{$app}}-cloudformation-eks-master/1.0.0
+          deploymentEnvironment: Environments/{{$app}}/aws-{{$app}}
         - name: Provision EKS workers nodes
           type: xldeploy.Deploy
           server: XL Deploy
-          deploymentPackage: {{.AppName}}/EKS-CLOUDFORMATION/{{$app}}-cloudformation-eks-workers/1.0.0
-          deploymentEnvironment: Environments/{{$app}}/aws-{{$app}}-cloudformation
+          deploymentPackage: {{$app}}/EKS-CLOUDFORMATION/{{$app}}-cloudformation-eks-workers/1.0.0
+          deploymentEnvironment: Environments/{{$app}}/aws-{{$app}}
         - name: Add accessKey to EKS cluster CI
           type: xld.UpdateCIProperty
           server: XL Deploy
@@ -102,7 +117,7 @@ spec:
         - name: Provision EKS config map for workers
           type: xldeploy.Deploy
           server: XL Deploy
-          deploymentPackage: {{.AppName}}/EKS-CLOUDFORMATION/{{$app}}-k8s-configmap/1.0.0
+          deploymentPackage: {{$app}}/EKS-CLOUDFORMATION/{{$app}}-k8s-configmap/1.0.0
           deploymentEnvironment: Environments/{{$app}}/AWS-PREREQUISITE
     {{end}}
     - name: Build {{.AppName}} application
@@ -122,7 +137,7 @@ spec:
       - name: Deploy {{.Namespace}} namespace
         type: xldeploy.Deploy
         server: XL Deploy
-        deploymentPackage: {{.AppName}}/K8S/{{$app}}-namespace/1.0.0
+        deploymentPackage: {{$app}}/K8S/{{$app}}-namespace/1.0.0
         deploymentEnvironment: Environments/{{$app}}/aws-eks-{{$app}}
       {{end}}
       - name: Deploy stateful services
@@ -131,17 +146,17 @@ spec:
         - name: Deploy invoice mysql svc
           type: xldeploy.Deploy
           server: XL Deploy
-          deploymentPackage: {{.AppName}}/K8S/{{$app}}-invoice-mysql/1.0.${buildNumber}
+          deploymentPackage: {{$app}}/K8S/{{$app}}-invoice-mysql/1.0.${buildNumber}
           deploymentEnvironment: Environments/{{$app}}/aws-eks-{{$app}}
         - name: Deploy store mysql svc
           type: xldeploy.Deploy
           server: XL Deploy
-          deploymentPackage: {{.AppName}}/K8S/{{$app}}-store-mysql/1.0.${buildNumber}
+          deploymentPackage: {{$app}}/K8S/{{$app}}-store-mysql/1.0.${buildNumber}
           deploymentEnvironment: Environments/{{$app}}/aws-eks-{{$app}}
         - name: Deploy notification mongodb svc
           type: xldeploy.Deploy
           server: XL Deploy
-          deploymentPackage: {{.AppName}}/K8S/{{$app}}-notification-mongodb/1.0.${buildNumber}
+          deploymentPackage: {{$app}}/K8S/{{$app}}-notification-mongodb/1.0.${buildNumber}
           deploymentEnvironment: Environments/{{$app}}/aws-eks-{{$app}}
       - name: Deploy stateless services
         type: xlrelease.SequentialGroup
@@ -149,7 +164,7 @@ spec:
         - name: Deploy registry svc
           type: xldeploy.Deploy
           server: XL Deploy
-          deploymentPackage: {{.AppName}}/K8S/{{$app}}-registry/1.0.${buildNumber}
+          deploymentPackage: {{$app}}/K8S/{{$app}}-registry/1.0.${buildNumber}
           deploymentEnvironment: Environments/{{$app}}/aws-eks-{{$app}}
         - name: Deploy microservices
           type: xlrelease.ParallelGroup
@@ -157,17 +172,17 @@ spec:
           - name: Deploy invoice svc
             type: xldeploy.Deploy
             server: XL Deploy
-            deploymentPackage: {{.AppName}}/K8S/{{$app}}-invoice/1.0.${buildNumber}
+            deploymentPackage: {{$app}}/K8S/{{$app}}-invoice/1.0.${buildNumber}
             deploymentEnvironment: Environments/{{$app}}/aws-eks-{{$app}}
           - name: Deploy notification svc
             type: xldeploy.Deploy
             server: XL Deploy
-            deploymentPackage: {{.AppName}}/K8S/{{$app}}-notification/1.0.${buildNumber}
+            deploymentPackage: {{$app}}/K8S/{{$app}}-notification/1.0.${buildNumber}
             deploymentEnvironment: Environments/{{$app}}/aws-eks-{{$app}}
           - name: Deploy store svc
             type: xldeploy.Deploy
             server: XL Deploy
-            deploymentPackage: {{.AppName}}/K8S/{{$app}}-store/1.0.${buildNumber}
+            deploymentPackage: {{$app}}/K8S/{{$app}}-store/1.0.${buildNumber}
             deploymentEnvironment: Environments/{{$app}}/aws-eks-{{$app}}
     - name: Test
       type: xlrelease.Phase
