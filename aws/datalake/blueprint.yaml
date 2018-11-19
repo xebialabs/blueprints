@@ -25,16 +25,6 @@ spec:
   description: Prefixed domain names can only contain lower-case letters, numbers, and hyphens
   type: Input
   pattern : "[a-z0-9-]+"
-- name: XLRScriptUsername
-  type: Input
-  value: admin
-  description: What is the XLR Script username?
-  secret: true
-- name: XLRScriptUserPassword
-  type: Input
-  value: admin
-  description: What is the XLR Script user password?
-  secret: true
 - name: UseAWSCredentialsFromSystem
   type: Confirm
   description: Do you want to use AWS credentials from ~/.aws/credentials file?

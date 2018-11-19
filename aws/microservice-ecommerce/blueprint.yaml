@@ -55,35 +55,3 @@ spec:
   type: Input
   description: What is the name of the namespace? should be same as used in Kubernetes files.
   default: default
-- name: StoreAdminUsername
-  type: Input
-  description: Store Admin username
-  value: admin
-- name: StoreAdminPassword
-  type: Input
-  description: Store Admin password
-  value: admin
-
-# XLD/XLR specific variables
-- name: XLDServerURL
-  type: Input
-  default: http://xl-deploy:4516
-  description: XL-Deploy URL
-- name: XLDUsername
-  type: Input
-  default: admin
-  description: XL-Deploy user name
-- name: XLDPassword
-  type: Input
-  secret: true
-  description: XL-Deploy user password
-- name: XLRScriptUsername
-  type: Input
-  value: admin
-  description: What is the XLR Script username?
-  secret: true
-- name: XLRScriptUserPassword
-  type: Input
-  value: admin
-  description: What is the XLR Script user password?
-  secret: true

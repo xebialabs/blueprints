@@ -12,8 +12,8 @@ spec:
     - data-lake
     - ECS
     - Fargate
-    scriptUsername: {{.XLRScriptUsername}}
-    scriptUserPassword: {{.XLRScriptUserPassword}}
+    scriptUsername: !value XL_RELEASE_USERNAME
+    scriptUserPassword: !value XL_RELEASE_PASSWORD
     variables:
     - key: "DATALAKE_CONSOLE_URL"
       type: xlrelease.StringVariable
