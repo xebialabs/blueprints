@@ -13,11 +13,11 @@ spec:
   description: What is the Application name?
 - name: PublicPort
   type: Input
-  description: What is the public port?
+  description: At what port should the application be exposed?
   value: 80
 - name: MySQLMasterPassword
   type: Input
-  description: What is the master password for MySQL?
+  description: What should be the password for MySQL?
   secret: true
 - name: UseAWSCredentialsFromSystem
   type: Confirm
@@ -26,18 +26,18 @@ spec:
 - name: AWSAccessKey
   type: Input
   secret: true
-  description: What is the AWS access key?
+  description: What is the AWS Access Key ID?
   dependsOnFalse: UseAWSCredentialsFromSystem
   default: !fn aws.credentials().AccessKeyID
 - name: AWSAccessSecret
   type: Input
   secret: true
-  description: What is the AWS secret?
+  description: What is the AWS Secret Access Key?
   dependsOnFalse: UseAWSCredentialsFromSystem
   default: !fn aws.credentials().SecretAccessKey
 - name: AWSRegion
   type: Select
-  description: What is the AWS region?
+  description: "Select the AWS region:"
   options:
     - !fn aws.regions(ecs)
   default: !fn aws.regions(ecs)[0]

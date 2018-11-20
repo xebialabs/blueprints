@@ -23,18 +23,18 @@ spec:
 - name: AWSAccessKey
   type: Input
   secret: true
-  description: What is the AWS access key?
+  description: What is the AWS Access Key ID?
   dependsOnFalse: UseAWSCredentialsFromSystem
   default: !fn aws.credentials().AccessKeyID
 - name: AWSAccessSecret
   type: Input
   secret: true
-  description: What is the AWS secret?
+  description: What is the AWS Secret Access Key?
   dependsOnFalse: UseAWSCredentialsFromSystem
   default: !fn aws.credentials().SecretAccessKey
 - name: AWSRegion #options are set manually because EKS service is not registered within AWS GO SDK
   type: Select
-  description: What is the AWS region?
+  description: "Select the AWS region:"
   options:
     - eu-west-1
     # commented out becouse of https://github.com/boto/boto3/issues/811
@@ -50,10 +50,10 @@ spec:
 - name: ClusterEndpoint
   type: Input
   dependsOnFalse: ProvisionCluster
-  description: What is the endpoint for the cluster, example https://cluster1.k8s.abc.org
+  description: What is the endpoint for the cluster, example https://3219568049031C127A97DD725F241767.yl4.eu-west-1.eks.amazonaws.com
 - name: Namespace
   type: Input
-  description: What is the name of the namespace? should be same as used in Kubernetes files.
+  description: What is the name of the namespace? This should be same as the one used in Kubernetes files.
   default: default
 - name: StoreAdminUsername
   type: Input
