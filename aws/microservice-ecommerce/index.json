@@ -6,6 +6,7 @@
   "xebialabs/xlr-pipeline-destroy.yaml.tmpl",
   "xebialabs/README.md.tmpl",
   "kubernetes/aws-auth-cm.yaml",
+  "cloudformation/cfn-secret-provider.zip",
   "cloudformation/eks-master.yaml",
   "cloudformation/eks-user.yaml",
   "cloudformation/eks-vpc.yaml",
