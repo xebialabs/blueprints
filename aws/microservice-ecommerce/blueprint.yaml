@@ -37,7 +37,9 @@ spec:
   description: What is the AWS region?
   options:
     - eu-west-1
-    - us-east-1
+    # commented out becouse of https://github.com/boto/boto3/issues/811
+    # - us-east-1
+    - us-east-2
     - us-west-2
 - name: ProvisionCluster
   type: Confirm
@@ -53,25 +55,11 @@ spec:
   type: Input
   description: What is the name of the namespace? should be same as used in Kubernetes files.
   default: default
-
-# XLD/XLR specific variables
-- name: XLDServerURL
+- name: StoreAdminUsername
   type: Input
-  default: http://xl-deploy:4516
-  description: XL-Deploy URL
-- name: XLDUsername
+  description: Store Admin username
+  value: admin
+- name: StoreAdminPassword
   type: Input
-  default: admin
-  description: XL-Deploy user name
-- name: XLDPassword
-  type: Input
-  secret: true
-  description: XL-Deploy user password
-- name: XLRUsername
-  type: Input
-  default: admin
-  description: XL-Release user name
-- name: XLRPassword
-  type: Input
-  secret: true
-  description: XL-Release user password
+  description: Store Admin password
+  value: admin

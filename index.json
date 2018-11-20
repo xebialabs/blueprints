@@ -1,6 +1,5 @@
 [
   "aws/monolith",
-  "aws/microservice-generic",
   "aws/microservice-ecommerce",
   "aws/datalake"
 ]

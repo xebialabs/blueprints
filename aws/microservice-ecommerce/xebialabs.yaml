@@ -4,5 +4,5 @@ metadata:
   imports:
     - xebialabs/xld-infra-env.yaml
     - xebialabs/xld-cloudformation-apps.yaml
-    - xebialabs/xld-kubernetes-apps.yaml
-    - xebialabs/xlr-pipeline.yaml
+    - xebialabs/xlr-pipeline-ci-cd.yaml
+    - xebialabs/xlr-pipeline-destroy.yaml

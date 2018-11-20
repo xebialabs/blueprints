@@ -2,7 +2,7 @@
 apiVersion: xl-deploy/v1
 kind: Applications
 spec:
-- name: {{.AppName}}
+- name: {{$app}}
   type: core.Directory
   children:
     - name: K8S
@@ -11,7 +11,7 @@ spec:
       - name: {{$app}}-invoice-mysql
         type: udm.Application
         children:
-        - name: '1.0.0'
+        - name: !value BUILD_ID
           type: udm.DeploymentPackage
           deployables:
           - name: {{$app}}-invoice-mysql
@@ -20,7 +20,7 @@ spec:
       - name: {{$app}}-store-mysql
         type: udm.Application
         children:
-        - name: '1.0.0'
+        - name: !value BUILD_ID
           type: udm.DeploymentPackage
           deployables:
           - name: {{$app}}-store-mysql
@@ -29,7 +29,7 @@ spec:
       - name: {{$app}}-notification-mongodb
         type: udm.Application
         children:
-        - name: '1.0.0'
+        - name: !value BUILD_ID
           type: udm.DeploymentPackage
           deployables:
           - name: {{$app}}-notification-mongodb
@@ -38,7 +38,7 @@ spec:
       - name: {{$app}}-registry
         type: udm.Application
         children:
-        - name: '1.0.0'
+        - name: !value BUILD_ID
           type: udm.DeploymentPackage
           deployables:
           - name: {{$app}}-application-config
@@ -50,7 +50,7 @@ spec:
       - name: {{$app}}-invoice
         type: udm.Application
         children:
-        - name: '1.0.0'
+        - name: !value BUILD_ID
           type: udm.DeploymentPackage
           deployables:
           - name: {{$app}}-invoice-deployment
@@ -62,7 +62,7 @@ spec:
       - name: {{$app}}-notification
         type: udm.Application
         children:
-        - name: '1.0.0'
+        - name: !value BUILD_ID
           type: udm.DeploymentPackage
           deployables:
           - name: {{$app}}-invoice-notification
@@ -74,12 +74,12 @@ spec:
       - name: {{$app}}-store
         type: udm.Application
         children:
-        - name: '1.0.0'
+        - name: !value BUILD_ID
           type: udm.DeploymentPackage
           deployables:
           - name: {{$app}}-store-deployment
             type: k8s.ResourcesFile
-            file: !file ../kubernetes/store/store-deployment.yml
+            file: !file ../kubernetes/build/store/store-deployment.yml
           - name: {{$app}}-store-svc
             type: k8s.ResourcesFile
             file: !file ../kubernetes/store/store-service.yml

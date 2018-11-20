@@ -4,7 +4,7 @@
 apiVersion: xl-deploy/v1
 kind: Infrastructure
 spec:
-- name: {{.AppName}}
+- name: {{$app}}
   type: core.Directory
   children:
   - name: aws-{{$app}}
@@ -22,9 +22,10 @@ spec:
 - name: {{$app}}
   type: core.Directory
   children:
-  - name: aws-{{$app}}-cloudformation
+  - name: aws-cloudformation-{{$app}}
     type: udm.Environment
     members:
+    - Infrastructure/{{$app}}/aws-{{$app}}
     - Infrastructure/{{$app}}/aws-{{$app}}/eks-cloudformation
 {{else}}
 # Definition of existing EKS cluster
