@@ -9,7 +9,7 @@ metadata:
   author: XebiaLabs
   version: 1.0
 
-spec:
+parameters:
 # General variables
 - name: AppName
   type: Input
@@ -54,7 +54,7 @@ spec:
 - name: Namespace
   type: Input
   description: What is the name of the namespace? This should be same as the one used in Kubernetes files.
-  default: default
+  default: xl-demo
 - name: StoreAdminUsername
   type: Input
   description: Store Admin username
