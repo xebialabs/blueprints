@@ -50,3 +50,16 @@ parameters:
   options:
     - !fn aws.regions(lambda)
   default: !fn aws.regions(lambda)[0]
+
+files:
+- path: xebialabs.yaml
+- path: cloudformation/data-lake-artifacts.zip
+- path: cloudformation/data-lake-api.yaml
+- path: cloudformation/data-lake-services.yaml
+- path: cloudformation/data-lake-storage.yaml
+- path: cloudformation/data-lake-deploy-federated.master.yaml.tmpl
+- path: cloudformation/data-lake-deploy.master.yaml.tmpl
+- path: xebialabs/README.md.tmpl
+- path: xebialabs/xld-infrastructure.yaml.tmpl
+- path: xebialabs/xld-environment.yaml.tmpl
+- path: xebialabs/xlr-pipeline.yaml.tmpl

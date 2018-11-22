@@ -1,8 +1,0 @@
-[
-  "xebialabs/xld-infrastructure.yaml.tmpl",
-  "xebialabs/xld-service.yaml.tmpl",
-  "xebialabs/xld-environment.yaml.tmpl",
-  "xebialabs/xlr-pipeline.yaml.tmpl",
-  "xebialabs/README.md.tmpl",
-  "xebialabs.yaml"
-]
