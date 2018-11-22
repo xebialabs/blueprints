@@ -63,3 +63,18 @@ parameters:
   type: Input
   description: Store Admin password
   value: admin
+
+files:
+- path: xebialabs/xld-infra-env.yaml.tmpl
+- path: xebialabs/xld-cloudformation-apps.yaml.tmpl
+- path: xebialabs/xld-kubernetes-apps.yaml.tmpl
+- path: xebialabs/xlr-pipeline-ci-cd.yaml.tmpl
+- path: xebialabs/xlr-pipeline-destroy.yaml.tmpl
+- path: xebialabs/README.md.tmpl
+- path: kubernetes/aws-auth-cm.yaml
+- path: cloudformation/cfn-secret-provider.zip
+- path: cloudformation/eks-master.yaml
+- path: cloudformation/eks-user.yaml
+- path: cloudformation/eks-vpc.yaml
+- path: cloudformation/eks-workers.yaml
+- path: xebialabs.yaml
