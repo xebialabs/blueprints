@@ -72,9 +72,15 @@ files:
 - path: xebialabs/xlr-pipeline-destroy.yaml.tmpl
 - path: xebialabs/README.md.tmpl
 - path: kubernetes/aws-auth-cm.yaml
+  dependsOnTrue: ProvisionCluster
 - path: cloudformation/cfn-secret-provider.zip
+  dependsOnTrue: ProvisionCluster
 - path: cloudformation/eks-master.yaml
+  dependsOnTrue: ProvisionCluster 
 - path: cloudformation/eks-user.yaml
+  dependsOnTrue: ProvisionCluster 
 - path: cloudformation/eks-vpc.yaml
+  dependsOnTrue: ProvisionCluster 
 - path: cloudformation/eks-workers.yaml
+  dependsOnTrue: ProvisionCluster 
 - path: xebialabs.yaml
