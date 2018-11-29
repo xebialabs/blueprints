@@ -8,7 +8,7 @@ metadata:
     Refer https://docs.aws.amazon.com/solutions/latest/data-lake-solution
   author: XebiaLabs
   version: 1.0
-spec:
+parameters:
 - name: S3BucketName
   description: What is the name of the S3 bucket where CloudFormation templates should be saved?
   default: data-lake
@@ -50,3 +50,16 @@ spec:
   options:
     - !fn aws.regions(lambda)
   default: !fn aws.regions(lambda)[0]
+
+files:
+- path: xebialabs.yaml
+- path: cloudformation/data-lake-artifacts.zip
+- path: cloudformation/data-lake-api.yaml
+- path: cloudformation/data-lake-services.yaml
+- path: cloudformation/data-lake-storage.yaml
+- path: cloudformation/data-lake-deploy-federated.master.yaml.tmpl
+- path: cloudformation/data-lake-deploy.master.yaml.tmpl
+- path: xebialabs/README.md.tmpl
+- path: xebialabs/xld-infrastructure.yaml.tmpl
+- path: xebialabs/xld-environment.yaml.tmpl
+- path: xebialabs/xlr-pipeline.yaml.tmpl

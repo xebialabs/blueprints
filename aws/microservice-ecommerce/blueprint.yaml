@@ -9,7 +9,7 @@ metadata:
   author: XebiaLabs
   version: 1.0
 
-spec:
+parameters:
 # General variables
 - name: AppName
   type: Input
@@ -54,7 +54,7 @@ spec:
 - name: Namespace
   type: Input
   description: What is the name of the namespace? This should be same as the one used in Kubernetes files.
-  default: default
+  default: xl-demo
 - name: StoreAdminUsername
   type: Input
   description: Store Admin username
@@ -63,3 +63,24 @@ spec:
   type: Input
   description: Store Admin password
   value: admin
+
+files:
+- path: xebialabs/xld-infra-env.yaml.tmpl
+- path: xebialabs/xld-cloudformation-apps.yaml.tmpl
+- path: xebialabs/xld-kubernetes-apps.yaml.tmpl
+- path: xebialabs/xlr-pipeline-ci-cd.yaml.tmpl
+- path: xebialabs/xlr-pipeline-destroy.yaml.tmpl
+- path: xebialabs/README.md.tmpl
+- path: kubernetes/aws-auth-cm.yaml
+  dependsOnTrue: ProvisionCluster
+- path: cloudformation/cfn-secret-provider.zip
+  dependsOnTrue: ProvisionCluster
+- path: cloudformation/eks-master.yaml
+  dependsOnTrue: ProvisionCluster 
+- path: cloudformation/eks-user.yaml
+  dependsOnTrue: ProvisionCluster 
+- path: cloudformation/eks-vpc.yaml
+  dependsOnTrue: ProvisionCluster 
+- path: cloudformation/eks-workers.yaml
+  dependsOnTrue: ProvisionCluster 
+- path: xebialabs.yaml

@@ -7,7 +7,7 @@ metadata:
     XL deploy does the provisioning and deployment, while XL release orchestrates everything.
   author: XebiaLabs
   version: 1.0
-spec:
+parameters:
 - name: AppName
   type: Input
   description: What is the Application name?
@@ -41,3 +41,11 @@ spec:
   options:
     - !fn aws.regions(ecs)
   default: !fn aws.regions(ecs)[0]
+
+files:
+- path: xebialabs/xld-infrastructure.yaml.tmpl
+- path: xebialabs/xld-service.yaml.tmpl
+- path: xebialabs/xld-environment.yaml.tmpl
+- path: xebialabs/xlr-pipeline.yaml.tmpl
+- path: xebialabs/README.md.tmpl
+- path: xebialabs.yaml
