@@ -36,6 +36,7 @@ parameters:
   dependsOnFalse: UseAWSCredentialsFromSystem
   default: !fn aws.credentials().SecretAccessKey
 - name: AWSRegion
+  saveInXlVals: true
   type: Select
   description: "Select the AWS region:"
   options:
