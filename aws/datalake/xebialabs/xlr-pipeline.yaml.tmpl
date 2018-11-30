@@ -19,6 +19,10 @@ spec:
       type: xlrelease.StringVariable
       requiresValue: false
       showOnReleaseStart: false
+    - key: "COGNITO_USER_POOL_ID"
+      type: xlrelease.StringVariable
+      requiresValue: false
+      showOnReleaseStart: false
     phases:
     - name: Create artifacts
       color: '#ff9e3b'
@@ -64,6 +68,7 @@ spec:
 
             data = json.loads('${DATALAKE_DICTIONARY_CI}')
             releaseVariables['DATALAKE_CONSOLE_URL'] = data['entries']['DATALAKE_CONSOLE_URL']
+            releaseVariables['COGNITO_USER_POOL_ID'] = data['entries']['COGNITO_USER_POOL_ID']
           # end of script
 
       - name: Check data lake application access
@@ -92,7 +97,7 @@ spec:
         description: |
           The data lake app is now live on AWS!
           Check out the console and complete this task when done. 
-          The credentials for the application should have been mailed to {{.AdministratorEmail}}
+          Your username for the application is {{.AdministratorEmail}} and password is sent to {{.AdministratorEmail}}
 
           URL => ${DATALAKE_CONSOLE_URL}
     # Cleanup and deprovision everything

@@ -34,7 +34,7 @@ spec:
         acl: bucket-owner-full-control
       - name: data-lake-solution-storage
         type: aws.s3.File
-        file: !file data-lake-storage.yaml
+        file: !file ../cloudformation/data-lake-storage.yaml
         acl: bucket-owner-full-control
       - name: data-lake-solution-api
         type: aws.s3.File
