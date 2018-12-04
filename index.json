@@ -1,5 +1,6 @@
 [
   "aws/monolith",
   "aws/microservice-ecommerce",
-  "aws/datalake"
+  "aws/datalake",
+  "docker/simple-demo-app"
 ]
