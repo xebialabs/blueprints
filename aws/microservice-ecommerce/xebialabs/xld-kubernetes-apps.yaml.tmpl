@@ -16,7 +16,7 @@ spec:
           deployables:
           - name: {{$app}}-invoice-mysql
             type: k8s.ResourcesFile
-            file: !file ../kubernetes/invoice/invoice-mysql.yml
+            file: !file ../invoice/build/kubernetes/invoice-mysql.yml
       - name: {{$app}}-store-mysql
         type: udm.Application
         children:
@@ -25,7 +25,7 @@ spec:
           deployables:
           - name: {{$app}}-store-mysql
             type: k8s.ResourcesFile
-            file: !file ../kubernetes/store/store-mysql.yml
+            file: !file ../store/build/kubernetes/store-mysql.yml
       - name: {{$app}}-notification-mongodb
         type: udm.Application
         children:
@@ -34,7 +34,7 @@ spec:
           deployables:
           - name: {{$app}}-notification-mongodb
             type: k8s.ResourcesFile
-            file: !file ../kubernetes/notification/notification-mongodb.yml
+            file: !file ../notification/build/kubernetes/notification-mongodb.yml
       - name: {{$app}}-registry
         type: udm.Application
         children:
@@ -43,10 +43,10 @@ spec:
           deployables:
           - name: {{$app}}-application-config
             type: k8s.ResourcesFile
-            file: !file ../kubernetes/registry/application-configmap.yml
+            file: !file ../registry/kubernetes/application-configmap.yml
           - name: {{$app}}-jhipster-registry
             type: k8s.ResourcesFile
-            file: !file ../kubernetes/registry/jhipster-registry.yml
+            file: !file ../registry/kubernetes/jhipster-registry.yml
       - name: {{$app}}-invoice
         type: udm.Application
         children:
@@ -55,10 +55,10 @@ spec:
           deployables:
           - name: {{$app}}-invoice-deployment
             type: k8s.ResourcesFile
-            file: !file ../kubernetes/invoice/invoice-deployment.yml
+            file: !file ../invoice/build/kubernetes/invoice-deployment.yml
           - name: {{$app}}-invoice-svc
             type: k8s.ResourcesFile
-            file: !file ../kubernetes/invoice/invoice-service.yml
+            file: !file ../invoice/build/kubernetes/invoice-service.yml
       - name: {{$app}}-notification
         type: udm.Application
         children:
@@ -67,10 +67,10 @@ spec:
           deployables:
           - name: {{$app}}-invoice-notification
             type: k8s.ResourcesFile
-            file: !file ../kubernetes/notification/notification-deployment.yml
+            file: !file ../notification/build/kubernetes/notification-deployment.yml
           - name: {{$app}}-notification-svc
             type: k8s.ResourcesFile
-            file: !file ../kubernetes/notification/notification-service.yml
+            file: !file ../notification/build/kubernetes/notification-service.yml
       - name: {{$app}}-store
         type: udm.Application
         children:
@@ -79,7 +79,7 @@ spec:
           deployables:
           - name: {{$app}}-store-deployment
             type: k8s.ResourcesFile
-            file: !file ../kubernetes/build/store/store-deployment.yml
+            file: !file ../store/build/kubernetes/store-deployment.yml
           - name: {{$app}}-store-svc
             type: k8s.ResourcesFile
-            file: !file ../kubernetes/store/store-service.yml
+            file: !file ../store/build/kubernetes/store-service.yml

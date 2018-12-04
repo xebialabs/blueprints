@@ -117,9 +117,33 @@ spec:
           deploymentEnvironment: Environments/{{$app}}/AWS-PREREQUISITE
     {{end}}
     - name: Build {{$app}} application
-      type: xlrelease.Phase
+      type: xlrelease.SequentialGroup
       tasks:
-      - name: Build {{$app}} store docker image
+      - name: Build {{$app}} application
+        type: xlrelease.ParallelGroup
+        tasks:
+        - name: Build {{$app}} store docker image
+          type: jenkins.Build
+          jenkinsServer: jenkins
+          jobName: devops-as-code-eks-blueprint-store-svc
+          owner: admin
+          variableMapping:
+            pythonScript.buildNumber: ${storeBuildNumber}
+        - name: Build {{$app}} notification docker image
+          type: jenkins.Build
+          jenkinsServer: jenkins
+          jobName: devops-as-code-eks-blueprint-notification-svc
+          owner: admin
+          variableMapping:
+            pythonScript.buildNumber: ${notificationBuildNumber}
+        - name: Build {{$app}} invoice docker image
+          type: jenkins.Build
+          jenkinsServer: jenkins
+          jobName: devops-as-code-eks-blueprint-invoice-svc
+          owner: admin
+          variableMapping:
+            pythonScript.buildNumber: ${invoiceBuildNumber}
+      - name: Apply XLD packages for {{$app}}
         type: jenkins.Build
         jenkinsServer: jenkins
         jobName: devops-as-code-eks-blueprint
@@ -142,17 +166,17 @@ spec:
         - name: Deploy invoice mysql svc
           type: xldeploy.Deploy
           server: XL Deploy
-          deploymentPackage: {{$app}}/K8S/{{$app}}-invoice-mysql/1.0.${buildNumber}
+          deploymentPackage: {{$app}}/K8S/{{$app}}-invoice-mysql/1.0.${invoiceBuildNumber}
           deploymentEnvironment: Environments/{{$app}}/aws-eks-{{$app}}
         - name: Deploy store mysql svc
           type: xldeploy.Deploy
           server: XL Deploy
-          deploymentPackage: {{$app}}/K8S/{{$app}}-store-mysql/1.0.${buildNumber}
+          deploymentPackage: {{$app}}/K8S/{{$app}}-store-mysql/1.0.${storeBuildNumber}
           deploymentEnvironment: Environments/{{$app}}/aws-eks-{{$app}}
         - name: Deploy notification mongodb svc
           type: xldeploy.Deploy
           server: XL Deploy
-          deploymentPackage: {{$app}}/K8S/{{$app}}-notification-mongodb/1.0.${buildNumber}
+          deploymentPackage: {{$app}}/K8S/{{$app}}-notification-mongodb/1.0.${notificationBuildNumber}
           deploymentEnvironment: Environments/{{$app}}/aws-eks-{{$app}}
       - name: Deploy stateless services
         type: xlrelease.SequentialGroup
@@ -168,17 +192,17 @@ spec:
           - name: Deploy invoice svc
             type: xldeploy.Deploy
             server: XL Deploy
-            deploymentPackage: {{$app}}/K8S/{{$app}}-invoice/1.0.${buildNumber}
+            deploymentPackage: {{$app}}/K8S/{{$app}}-invoice/1.0.${invoiceBuildNumber}
             deploymentEnvironment: Environments/{{$app}}/aws-eks-{{$app}}
           - name: Deploy notification svc
             type: xldeploy.Deploy
             server: XL Deploy
-            deploymentPackage: {{$app}}/K8S/{{$app}}-notification/1.0.${buildNumber}
+            deploymentPackage: {{$app}}/K8S/{{$app}}-notification/1.0.${notificationBuildNumber}
             deploymentEnvironment: Environments/{{$app}}/aws-eks-{{$app}}
           - name: Deploy store svc
             type: xldeploy.Deploy
             server: XL Deploy
-            deploymentPackage: {{$app}}/K8S/{{$app}}-store/1.0.${buildNumber}
+            deploymentPackage: {{$app}}/K8S/{{$app}}-store/1.0.${storeBuildNumber}
             deploymentEnvironment: Environments/{{$app}}/aws-eks-{{$app}}
     - name: Test
       type: xlrelease.Phase
