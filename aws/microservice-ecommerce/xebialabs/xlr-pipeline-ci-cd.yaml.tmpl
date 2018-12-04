@@ -117,39 +117,42 @@ spec:
           deploymentEnvironment: Environments/{{$app}}/AWS-PREREQUISITE
     {{end}}
     - name: Build {{$app}} application
-      type: xlrelease.SequentialGroup
+      type: xlrelease.Phase
       tasks:
-      - name: Build {{$app}} application
-        type: xlrelease.ParallelGroup
+      - name: Build docker images for {{$app}} services
+        type: xlrelease.SequentialGroup
         tasks:
-        - name: Build {{$app}} store docker image
+        - name: Build {{$app}} application
+          type: xlrelease.ParallelGroup
+          tasks:
+          - name: Build {{$app}} store docker image
+            type: jenkins.Build
+            jenkinsServer: jenkins
+            jobName: devops-as-code-eks-blueprint-store-svc
+            owner: admin
+            variableMapping:
+              pythonScript.buildNumber: ${storeBuildNumber}
+          - name: Build {{$app}} notification docker image
+            type: jenkins.Build
+            jenkinsServer: jenkins
+            jobName: devops-as-code-eks-blueprint-notification-svc
+            owner: admin
+            variableMapping:
+              pythonScript.buildNumber: ${notificationBuildNumber}
+          - name: Build {{$app}} invoice docker image
+            type: jenkins.Build
+            jenkinsServer: jenkins
+            jobName: devops-as-code-eks-blueprint-invoice-svc
+            owner: admin
+            variableMapping:
+              pythonScript.buildNumber: ${invoiceBuildNumber}
+        - name: Apply XLD packages for {{$app}}
           type: jenkins.Build
           jenkinsServer: jenkins
-          jobName: devops-as-code-eks-blueprint-store-svc
+          jobName: devops-as-code-eks-blueprint
           owner: admin
           variableMapping:
-            pythonScript.buildNumber: ${storeBuildNumber}
-        - name: Build {{$app}} notification docker image
-          type: jenkins.Build
-          jenkinsServer: jenkins
-          jobName: devops-as-code-eks-blueprint-notification-svc
-          owner: admin
-          variableMapping:
-            pythonScript.buildNumber: ${notificationBuildNumber}
-        - name: Build {{$app}} invoice docker image
-          type: jenkins.Build
-          jenkinsServer: jenkins
-          jobName: devops-as-code-eks-blueprint-invoice-svc
-          owner: admin
-          variableMapping:
-            pythonScript.buildNumber: ${invoiceBuildNumber}
-      - name: Apply XLD packages for {{$app}}
-        type: jenkins.Build
-        jenkinsServer: jenkins
-        jobName: devops-as-code-eks-blueprint
-        owner: admin
-        variableMapping:
-          pythonScript.buildNumber: ${buildNumber}
+            pythonScript.buildNumber: ${buildNumber}
     - name: Deploy {{$app}} application
       type: xlrelease.Phase
       tasks:
