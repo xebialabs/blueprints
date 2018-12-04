@@ -1,3 +1,4 @@
+{{$app := .AppName | kebabcase}}
 ## e-commerce microservice application on AWS EKS 
 
 The blueprint deploys an e-commerce microservice created using JHipster to AWS EKS.
@@ -24,4 +25,4 @@ To deploy this blueprint with XL Platform follow the below steps
     xl apply -f xebialabs.yaml
     ```
 
-2. Go to XL Release and look for the {{.AppName}}-release-pipeline and start a new release from it.
+2. Go to XL Release and look for the "{{$app}}-ci-cd" template and start a new release from it.
