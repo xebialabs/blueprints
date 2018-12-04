@@ -1,0 +1,21 @@
+{{$app := .AppName | kebabcase}}
+apiVersion: xl-deploy/v1
+kind: Infrastructure
+spec:
+  - name: {{$app}}
+    type: core.Directory
+    children:
+    - name: Local Docker Daemon
+      type: docker.Engine
+      dockerHost: http://dockerproxy:2375
+---
+apiVersion: xl-deploy/v1
+kind: Environments
+spec:
+  - name: {{$app}}
+    type: core.Directory
+    children:
+    - name: Local Docker Engine
+      type: udm.Environment
+      members:
+      - Infrastructure/{{$app}}/Local Docker Daemon

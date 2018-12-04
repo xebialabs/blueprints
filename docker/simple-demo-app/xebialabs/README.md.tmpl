@@ -1,14 +1,11 @@
 {{$app := .AppName | kebabcase}}
-## Monolith application on AWS ECS-Fargate 
+## Simple API and web application on Docker
 
-The blueprint deploys a monolithic application generated with JHipster, to AWS ECS with fargate launch type.
-XL deploy does the provisioning and deployment, while XL release orchestrates everything.
-
-The application is available in the repo [https://github.com/xebialabs/e-commerce-monolith](https://github.com/xebialabs/e-commerce-monolith)
+The blueprint deploys a simplistic application in 2 docker containers into your local docker setup
 
 ### Prerequisites.
 
-If you do not have an XL Release and XL Deploy instance running, you can use this docker compose setup to spin one up. The setup also contains a pre-configured Jenkins Instance.
+If you do not have an XL Release and XL Deploy instance running, you can use this docker compose setup to spin one up. The setup also contains a pre-configured Jenkins Instance and a dockerproxy container.
 Please note that you need to obtain a trial licence or bring your own licence for XLR and XLD. Follow the below steps to use the docker compose files.
  
     1. Download the contents of https://github.com/xebialabs/e-commerce-microservice/tree/master/docker-compose/xebialabs into a folder, let's say `xl-platform`
@@ -24,4 +21,4 @@ To deploy this blueprint with XL Platform follow the below steps
     xl apply -f xebialabs.yaml
     ```
 
-2. Go to XL Release and look for the "{{$app}}-release-pipeline" template and start a new release from it.
+2. Go to XL Release and look for the "{{$app}} on Docker" template and start a new release from it.

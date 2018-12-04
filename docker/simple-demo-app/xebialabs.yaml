@@ -1,0 +1,7 @@
+apiVersion: xl/v1
+kind: Import
+metadata:
+  imports:
+    - xebialabs/xld-environment.yaml
+    - xebialabs/xld-docker-apps.yaml
+    - xebialabs/xlr-pipeline.yaml

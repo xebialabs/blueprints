@@ -1,0 +1,50 @@
+{{$app := .AppName | kebabcase}}
+apiVersion: xl-release/v1
+kind: Templates
+spec:
+  - name: {{$app}}
+    type: xlrelease.Folder
+    children:
+      - name: {{$app}} on Docker
+        type: xlrelease.Release
+        description: |
+          This XL Release template shows how to deploy and undeploy an application to Docker using XL Deploy.
+        tags:
+          - {{$app}}
+          - Docker
+        phases:
+          - name: Deploy
+            color: '#ff9e3b'
+            type: xlrelease.Phase
+            tasks:
+              - name: Deploy {{$app}} application backend
+                type: xldeploy.Deploy
+                server: XL Deploy
+                deploymentPackage:  {{$app}}/{{$app}}-backend/1.0
+                deploymentEnvironment: Environments/{{$app}}/Local Docker Engine
+              - name: Deploy {{$app}} application frontend
+                type: xldeploy.Deploy
+                server: XL Deploy
+                deploymentPackage:  {{$app}}/{{$app}}-frontend/1.0
+                deploymentEnvironment: Environments/{{$app}}/Local Docker Engine
+          - name: Test
+            type: xlrelease.Phase
+            tasks:
+              - name: Test the {{$app}} application
+                type: xlrelease.Task
+                team: Release Admin
+                description: |
+                  The {{$app}} app is now live on your local Docker Engine. Open the following link in a new browser tab or window:
+                  http://localhost:{{.HostPort}}/
+          - name: Clean up
+            color: '#999999'
+            type: xlrelease.Phase
+            tasks:
+              - name: Undeploy {{$app}} application frontend
+                type: xldeploy.Undeploy
+                server: XL Deploy
+                deployedApplication: Environments/{{$app}}/Local Docker Engine/{{$app}}-frontend
+              - name: Undeploy {{$app}} application backend
+                type: xldeploy.Undeploy
+                server: XL Deploy
+                deployedApplication: Environments/{{$app}}/Local Docker Engine/{{$app}}-backend

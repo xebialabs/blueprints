@@ -1,0 +1,45 @@
+{{$app := .AppName | kebabcase}}
+apiVersion: xl-deploy/v1
+kind: Applications
+spec:
+  - name: {{$app}}
+    type: core.Directory
+    children:
+    - name: {{$app}}-backend
+      type: udm.Application
+      children:
+        - name: '1.0'
+          type: udm.DeploymentPackage
+          deployables:
+            - name: {{$app}}-network
+              type: docker.NetworkSpec
+              networkName: {{$app}}
+              driver: bridge
+            - name: {{$app}}-backend
+              type: docker.ContainerSpec
+              image: {{.BackendDockerImage}}
+              networks:
+                - {{$app}}
+              showLogsAfter: 5
+    - name: {{$app}}-frontend
+      type: udm.Application
+      children:
+        - name: '1.0'
+          type: udm.DeploymentPackage
+          orchestrator:
+            - sequential-by-dependency
+          deployables:
+            - name: {{$app}}-frontend
+              type: docker.ContainerSpec
+              image: {{.FrontendDockerImage}}
+              networks:
+                - {{$app}}
+              showLogsAfter: 5
+              portBindings:
+                - name: ports
+                  type: docker.PortSpec
+                  hostPort: {{.HostPort}}
+                  containerPort: {{.ContainerPort}}
+                  protocol: tcp
+              environment:
+                API_ENDPOINT: http://{{$app}}-backend:8080/rest-o-rant-api
