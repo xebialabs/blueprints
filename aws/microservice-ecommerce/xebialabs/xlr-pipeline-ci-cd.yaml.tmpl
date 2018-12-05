@@ -146,13 +146,6 @@ spec:
             owner: admin
             variableMapping:
               pythonScript.buildNumber: ${invoiceBuildNumber}
-        - name: Apply XLD packages for {{$app}}
-          type: jenkins.Build
-          jenkinsServer: jenkins
-          jobName: devops-as-code-eks-blueprint
-          owner: admin
-          variableMapping:
-            pythonScript.buildNumber: ${buildNumber}
     - name: Deploy {{$app}} application
       type: xlrelease.Phase
       tasks:
@@ -187,7 +180,7 @@ spec:
         - name: Deploy registry svc
           type: xldeploy.Deploy
           server: XL Deploy
-          deploymentPackage: {{$app}}/K8S/{{$app}}-registry/1.0.${buildNumber}
+          deploymentPackage: {{$app}}/K8S/{{$app}}-registry/1.0.${storeBuildNumber}
           deploymentEnvironment: Environments/{{$app}}/aws-eks-{{$app}}
         - name: Deploy microservices
           type: xlrelease.ParallelGroup
