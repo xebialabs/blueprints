@@ -63,6 +63,10 @@ parameters:
   type: Input
   description: Store Admin password
   value: admin
+- name: XLDUrlForXLR
+  type: Input
+  description: XL Deploy URL for XL Release (This will only be used in the XL Release template)
+  default: http://xl-deploy:4516
 
 files:
 - path: xebialabs/xld-infra-env.yaml.tmpl
