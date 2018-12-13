@@ -1,10 +1,10 @@
 apiVersion: xl/v1
 kind: Blueprint
 metadata:
-  projectName: AWS-Monolith-ECS-Fargate 
+  projectName: AWS-Monolith-ECS-Fargate
   description: |
-    The blueprint deploys a monolithic application generated with JHipster, to AWS ECS with fargate launch type.
-    XL deploy does the provisioning and deployment, while XL release orchestrates everything.
+    The blueprint deploys a monolithic application generated with JHipster, to AWS ECS with the Fargate launch type.
+    XL Deploy does the provisioning and deployment, while XL Release orchestrates everything.
   author: XebiaLabs
   version: 1.0
 parameters:

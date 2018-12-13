@@ -5,7 +5,7 @@ metadata:
   projectName: AWS-Microservice-EKS-with-JHipster
   description: |
     The blueprint deploys an e-commerce microservice application to AWS EKS.
-    XL deploy does the provisioning and deployment, while XL release orchestrates everything.
+    XL Deploy does the provisioning and deployment, while XL Release orchestrates everything.
   author: XebiaLabs
   version: 1.0
 

@@ -1,11 +1,11 @@
 apiVersion: xl/v1
 kind: Blueprint
 metadata:
-  projectName: AWS-Datalake 
+  projectName: AWS-Datalake
   description: |
     The blueprint deploys a data lake architecture to AWS using CloudFormation.
-    XL deploy does the provisioning and deployment, while XL release orchestrates everything.
-    Refer https://docs.aws.amazon.com/solutions/latest/data-lake-solution
+    XL Deploy does the provisioning and deployment, while XL Release orchestrates everything.
+    Refer to https://docs.aws.amazon.com/solutions/latest/data-lake-solution
   author: XebiaLabs
   version: 1.0
 parameters:
