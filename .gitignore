@@ -62,6 +62,12 @@ out/
 .vscode/
 
 ######################
+# Sublime Text
+######################
+blueprints.sublime-project
+blueprints.sublime-workspace
+
+######################
 # Maven
 ######################
 /log/
