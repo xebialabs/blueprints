@@ -119,13 +119,30 @@ spec:
     - name: Build {{$app}} application
       type: xlrelease.Phase
       tasks:
-      - name: Build {{$app}} store docker image
-        type: jenkins.Build
-        jenkinsServer: jenkins
-        jobName: devops-as-code-eks-blueprint
-        owner: admin
-        variableMapping:
-          pythonScript.buildNumber: ${buildNumber}
+      - name: Build docker images for {{$app}} services
+        type: xlrelease.ParallelGroup
+        tasks:
+        - name: Build {{$app}} store docker image
+          type: jenkins.Build
+          jenkinsServer: jenkins
+          jobName: devops-as-code-eks-blueprint-store-svc
+          owner: admin
+          variableMapping:
+            pythonScript.buildNumber: ${storeBuildNumber}
+        - name: Build {{$app}} notification docker image
+          type: jenkins.Build
+          jenkinsServer: jenkins
+          jobName: devops-as-code-eks-blueprint-notification-svc
+          owner: admin
+          variableMapping:
+            pythonScript.buildNumber: ${notificationBuildNumber}
+        - name: Build {{$app}} invoice docker image
+          type: jenkins.Build
+          jenkinsServer: jenkins
+          jobName: devops-as-code-eks-blueprint-invoice-svc
+          owner: admin
+          variableMapping:
+            pythonScript.buildNumber: ${invoiceBuildNumber}
     - name: Deploy {{$app}} application
       type: xlrelease.Phase
       tasks:
@@ -142,17 +159,17 @@ spec:
         - name: Deploy invoice mysql svc
           type: xldeploy.Deploy
           server: XL Deploy
-          deploymentPackage: {{$app}}/K8S/{{$app}}-invoice-mysql/1.0.${buildNumber}
+          deploymentPackage: {{$app}}/K8S/{{$app}}-invoice-mysql/1.0.${invoiceBuildNumber}
           deploymentEnvironment: Environments/{{$app}}/aws-eks-{{$app}}
         - name: Deploy store mysql svc
           type: xldeploy.Deploy
           server: XL Deploy
-          deploymentPackage: {{$app}}/K8S/{{$app}}-store-mysql/1.0.${buildNumber}
+          deploymentPackage: {{$app}}/K8S/{{$app}}-store-mysql/1.0.${storeBuildNumber}
           deploymentEnvironment: Environments/{{$app}}/aws-eks-{{$app}}
         - name: Deploy notification mongodb svc
           type: xldeploy.Deploy
           server: XL Deploy
-          deploymentPackage: {{$app}}/K8S/{{$app}}-notification-mongodb/1.0.${buildNumber}
+          deploymentPackage: {{$app}}/K8S/{{$app}}-notification-mongodb/1.0.${notificationBuildNumber}
           deploymentEnvironment: Environments/{{$app}}/aws-eks-{{$app}}
       - name: Deploy stateless services
         type: xlrelease.SequentialGroup
@@ -160,7 +177,7 @@ spec:
         - name: Deploy registry svc
           type: xldeploy.Deploy
           server: XL Deploy
-          deploymentPackage: {{$app}}/K8S/{{$app}}-registry/1.0.${buildNumber}
+          deploymentPackage: {{$app}}/K8S/{{$app}}-registry/1.0.${storeBuildNumber}
           deploymentEnvironment: Environments/{{$app}}/aws-eks-{{$app}}
         - name: Deploy microservices
           type: xlrelease.ParallelGroup
@@ -168,17 +185,17 @@ spec:
           - name: Deploy invoice svc
             type: xldeploy.Deploy
             server: XL Deploy
-            deploymentPackage: {{$app}}/K8S/{{$app}}-invoice/1.0.${buildNumber}
+            deploymentPackage: {{$app}}/K8S/{{$app}}-invoice/1.0.${invoiceBuildNumber}
             deploymentEnvironment: Environments/{{$app}}/aws-eks-{{$app}}
           - name: Deploy notification svc
             type: xldeploy.Deploy
             server: XL Deploy
-            deploymentPackage: {{$app}}/K8S/{{$app}}-notification/1.0.${buildNumber}
+            deploymentPackage: {{$app}}/K8S/{{$app}}-notification/1.0.${notificationBuildNumber}
             deploymentEnvironment: Environments/{{$app}}/aws-eks-{{$app}}
           - name: Deploy store svc
             type: xldeploy.Deploy
             server: XL Deploy
-            deploymentPackage: {{$app}}/K8S/{{$app}}-store/1.0.${buildNumber}
+            deploymentPackage: {{$app}}/K8S/{{$app}}-store/1.0.${storeBuildNumber}
             deploymentEnvironment: Environments/{{$app}}/aws-eks-{{$app}}
     - name: Test
       type: xlrelease.Phase
