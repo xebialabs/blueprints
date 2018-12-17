@@ -202,7 +202,7 @@ spec:
             pythonScript.parameters: ${control}
         - name: Parse Store k8s service
           type: webhook.XmlWebhook
-          URL: !format '{{.XLDUrlForXLR}}/deployit/tasks/v2/export'
+          URL: {{.XLDUrlForXLR}}/deployit/tasks/v2/export
           method: GET
           username: !value XL_DEPLOY_USERNAME
           xPathExpression: "/list/task[@id=\"${taskId}\"]//log/text()"
