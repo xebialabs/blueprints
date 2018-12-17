@@ -17,7 +17,7 @@ parameters:
   value: 80
 - name: MySQLMasterPassword
   type: Input
-  description: What should be the password for MySQL?
+  description: What should be the password for MySQL? (minimum 8 characters)
   secret: true
 - name: UseAWSCredentialsFromSystem
   type: Confirm
