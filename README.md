@@ -4,7 +4,7 @@ Blueprint definitions for xl-cli. These files will be synced to [https://dist.xe
 
 ## Adding new blueprint
 
-Simply create a folder and add required files & templates along with a local `index.json` file. Finally, update root `index.json` file to include the newly created folder.
+Simply create a folder and add required files & templates along with the `blueprint.yaml` file. Finally, update root `index.json` file to include the newly created folder.
 
 ## Publish
 
