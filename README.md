@@ -8,7 +8,11 @@ Simply create a folder and add required files & templates along with a local `in
 
 ## Publish
 
-Run `publish.py` script to update official S3 bucket.
+Any changes that are dependent on a new XL CLI version should be done only on the development branch. Master branch should only contain published changes. Development branch needs to be synced to master during every official XL-CLI release
+
+The official blueprints are hosted on our distribution site and are published using the internal [Jenkins Job](https://jenkins-ng.xebialabs.com/jenkinsng/job/XL%20Devops%20As%20Code/job/Blueprints%20Release/) which is triggered manually.
+
+Run `publish.py` script to update the S3 bucket for development.
 
 ### Prerequisites
 
