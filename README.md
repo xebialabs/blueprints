@@ -1,6 +1,6 @@
 # XebiaLabs Blueprints
 
-Blueprint definitions for xl-cli. These files will be synced to [https://s3.amazonaws.com/xl-cli/blueprints](https://s3.amazonaws.com/xl-cli/blueprints) and can be used as xl-cli blueprint repository (set by default).
+Blueprint definitions for xl-cli. These files will be synced to [https://dist.xebialabs.com/public/blueprints/](https://dist.xebialabs.com/public/blueprints/) and can be used as xl-cli blueprint repository (set by default).
 
 ## Adding new blueprint
 
