@@ -9,84 +9,85 @@ metadata:
   author: XebiaLabs
   version: 1.0
 
-parameters:
-# General variables
-- name: AppName
-  type: Input
-  description: What is the name of the application?
+spec:
+  parameters:
+  # General variables
+  - name: AppName
+    type: Input
+    description: What is the name of the application?
 
-# AWS specific variables
-- name: UseAWSCredentialsFromSystem
-  type: Confirm
-  description: Do you want to use AWS credentials from ~/.aws/credentials file?
-  dependsOnTrue: !fn aws.credentials().IsAvailable
-- name: AWSAccessKey
-  type: Input
-  secret: true
-  description: What is the AWS Access Key ID?
-  dependsOnFalse: UseAWSCredentialsFromSystem
-  default: !fn aws.credentials().AccessKeyID
-- name: AWSAccessSecret
-  type: Input
-  secret: true
-  description: What is the AWS Secret Access Key?
-  dependsOnFalse: UseAWSCredentialsFromSystem
-  default: !fn aws.credentials().SecretAccessKey
-- name: AWSRegion #options are set manually because EKS service is not registered within AWS GO SDK
-  type: Select
-  description: "Select the AWS region:"
-  options:
-    - eu-west-1
-    # commented out becouse of https://github.com/boto/boto3/issues/811
-    # - us-east-1
-    - us-east-2
-    - us-west-2
-- name: ProvisionCluster
-  type: Confirm
-  description: Do you want to provision a new AWS EKS cluster?
-- name: ClusterName
-  type: Input
-  description: What is the name of the cluster?
-- name: ClusterEndpoint
-  type: Input
-  dependsOnFalse: ProvisionCluster
-  description: What is the endpoint for the cluster, example https://3219568049031C127A97DD725F241767.yl4.eu-west-1.eks.amazonaws.com
-- name: Namespace
-  type: Input
-  description: What is the name of the namespace? This should be same as the one used in Kubernetes files.
-  default: xl-demo
-- name: StoreAdminUsername
-  type: Input
-  description: Store Admin username
-  value: admin
-- name: StoreAdminPassword
-  type: Input
-  description: Store Admin password
-  value: admin
-- name: XLDUrlForXLR
-  type: Input
-  description: XL Deploy URL for XL Release (This will only be used in the XL Release template)
-  default: http://xl-deploy:4516
+  # AWS specific variables
+  - name: UseAWSCredentialsFromSystem
+    type: Confirm
+    description: Do you want to use AWS credentials from ~/.aws/credentials file?
+    dependsOnTrue: !fn aws.credentials().IsAvailable
+  - name: AWSAccessKey
+    type: Input
+    secret: true
+    description: What is the AWS Access Key ID?
+    dependsOnFalse: UseAWSCredentialsFromSystem
+    default: !fn aws.credentials().AccessKeyID
+  - name: AWSAccessSecret
+    type: Input
+    secret: true
+    description: What is the AWS Secret Access Key?
+    dependsOnFalse: UseAWSCredentialsFromSystem
+    default: !fn aws.credentials().SecretAccessKey
+  - name: AWSRegion #options are set manually because EKS service is not registered within AWS GO SDK
+    type: Select
+    description: "Select the AWS region:"
+    options:
+      - eu-west-1
+      # commented out becouse of https://github.com/boto/boto3/issues/811
+      # - us-east-1
+      - us-east-2
+      - us-west-2
+  - name: ProvisionCluster
+    type: Confirm
+    description: Do you want to provision a new AWS EKS cluster?
+  - name: ClusterName
+    type: Input
+    description: What is the name of the cluster?
+  - name: ClusterEndpoint
+    type: Input
+    dependsOnFalse: ProvisionCluster
+    description: What is the endpoint for the cluster, example https://3219568049031C127A97DD725F241767.yl4.eu-west-1.eks.amazonaws.com
+  - name: Namespace
+    type: Input
+    description: What is the name of the namespace? This should be same as the one used in Kubernetes files.
+    default: xl-demo
+  - name: StoreAdminUsername
+    type: Input
+    description: Store Admin username
+    value: admin
+  - name: StoreAdminPassword
+    type: Input
+    description: Store Admin password
+    value: admin
+  - name: XLDUrlForXLR
+    type: Input
+    description: XL Deploy URL for XL Release (This will only be used in the XL Release template)
+    default: http://xl-deploy:4516
 
-files:
-- path: xebialabs/xld-infra-env.yaml.tmpl
-- path: xebialabs/xld-cloudformation-apps.yaml.tmpl
-- path: xebialabs/xld-kubernetes-invoice-app.yaml.tmpl
-- path: xebialabs/xld-kubernetes-store-app.yaml.tmpl
-- path: xebialabs/xld-kubernetes-notification-app.yaml.tmpl
-- path: xebialabs/xlr-pipeline-ci-cd.yaml.tmpl
-- path: xebialabs/xlr-pipeline-destroy.yaml.tmpl
-- path: xebialabs/README.md.tmpl
-- path: kubernetes/aws-auth-cm.yaml
-  dependsOnTrue: ProvisionCluster
-- path: cloudformation/cfn-secret-provider.zip
-  dependsOnTrue: ProvisionCluster
-- path: cloudformation/eks-master.yaml
-  dependsOnTrue: ProvisionCluster 
-- path: cloudformation/eks-user.yaml
-  dependsOnTrue: ProvisionCluster 
-- path: cloudformation/eks-vpc.yaml
-  dependsOnTrue: ProvisionCluster 
-- path: cloudformation/eks-workers.yaml
-  dependsOnTrue: ProvisionCluster 
-- path: xebialabs.yaml
+  files:
+  - path: xebialabs/xld-infra-env.yaml.tmpl
+  - path: xebialabs/xld-cloudformation-apps.yaml.tmpl
+  - path: xebialabs/xld-kubernetes-invoice-app.yaml.tmpl
+  - path: xebialabs/xld-kubernetes-store-app.yaml.tmpl
+  - path: xebialabs/xld-kubernetes-notification-app.yaml.tmpl
+  - path: xebialabs/xlr-pipeline-ci-cd.yaml.tmpl
+  - path: xebialabs/xlr-pipeline-destroy.yaml.tmpl
+  - path: xebialabs/README.md.tmpl
+  - path: kubernetes/aws-auth-cm.yaml
+    dependsOnTrue: ProvisionCluster
+  - path: cloudformation/cfn-secret-provider.zip
+    dependsOnTrue: ProvisionCluster
+  - path: cloudformation/eks-master.yaml
+    dependsOnTrue: ProvisionCluster
+  - path: cloudformation/eks-user.yaml
+    dependsOnTrue: ProvisionCluster
+  - path: cloudformation/eks-vpc.yaml
+    dependsOnTrue: ProvisionCluster
+  - path: cloudformation/eks-workers.yaml
+    dependsOnTrue: ProvisionCluster
+  - path: xebialabs.yaml
