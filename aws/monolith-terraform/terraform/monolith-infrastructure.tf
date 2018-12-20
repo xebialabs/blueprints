@@ -50,7 +50,9 @@ resource "aws_subnet" "jkmonolith-ecs-subnet-ipv4-az-1b" {
 }
 
 resource "aws_security_group" "jkmonolith-ecs-security-group" {
+  name          = "jkmonolith-ecs-security-group"
   vpc_id        = "${aws_vpc.jkmonolith-ecs-vpc.id}"
+  description   = "ECS Security group"
   ingress {
     from_port   = 0
     to_port     = 0
@@ -148,17 +150,19 @@ resource "aws_db_subnet_group" "jkmonolith-ecs-db-subnet-group" {
 }
 
 resource "aws_db_instance" "jkmonolith-store-mysql-db" {
-  skip_final_snapshot   = true
-  engine                = "mysql"
-  engine_version        = "5.6.40"
-  db_subnet_group_name  = "${aws_db_subnet_group.jkmonolith-ecs-db-subnet-group.name}"
-  multi_az              =  "true"
-  license_model         = "general-public-license"
-  allocated_storage     = 20
-  instance_class        = "db.t2.small"
-  name                  = "store"
-  username              = "store"
-  password              = "password" #{{.MySQLMasterPassword}}
+  identifier             = "jkmonolith-store-mysql-db"
+  skip_final_snapshot    = true
+  engine                 = "mysql"
+  engine_version         = "5.6.40"
+  vpc_security_group_ids = ["${aws_security_group.jkmonolith-ecs-security-group.id}"]
+  db_subnet_group_name   = "${aws_db_subnet_group.jkmonolith-ecs-db-subnet-group.name}"
+  multi_az               =  "true"
+  license_model          = "general-public-license"
+  allocated_storage      = 20
+  instance_class         = "db.t2.small"
+  name                   = "store"
+  username               = "store"
+  password               = "password" #{{.MySQLMasterPassword}}
 }
 
 resource "aws_ecs_cluster" "jkmonolith-ecs-cluster" {
@@ -182,6 +186,11 @@ resource "aws_iam_role" "jkmonolith-ecsTaskExecutionRole" {
   ]
 }
 EOF
+}
+
+resource "aws_iam_role_policy_attachment" "jkmonolith-ecsTaskExecutionRoleAttachment" {
+  role       = "${aws_iam_role.jkmonolith-ecsTaskExecutionRole.name}"
+  policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"
 }
 
 resource "aws_ecs_service" "jkmonolith-app" {
