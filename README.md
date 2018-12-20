@@ -12,7 +12,7 @@ Any changes that are dependent on a new XL CLI version should be done only on th
 
 The official blueprints are hosted on our distribution site and are published using the internal [Jenkins Job](https://jenkins-ng.xebialabs.com/jenkinsng/job/XL%20Devops%20As%20Code/job/Blueprints%20Release/) which is triggered manually.
 
-Run `publish.py` script to update the S3 bucket for development.
+Run `publish.py` script to update the S3 bucket for development availabvle at [https://s3.amazonaws.com/xl-cli/blueprints](https://s3.amazonaws.com/xl-cli/blueprints)
 
 ### Prerequisites
 
