@@ -3,16 +3,11 @@
 # https://www.terraform.io/docs/import/usage.html
 variable "aws_access_key" {}
 variable "aws_secret_key" {}
-variable "app_name" {
-  default = "jk2monolith"
-}
-variable "region" {
-  default = "eu-west-1"
-}
+variable "app_name" {}
+variable "region" {}
 
-
-variable "vpc_cidr" {
-    default = "10.0.0.0/16"
+output "address" {
+  value = "${aws_alb.ecs-alb.dns_name}"
 }
 
 provider "aws" {
@@ -21,37 +16,37 @@ provider "aws" {
   region     = "${var.region}"
 }
 
-resource "aws_vpc" "jkmonolith-ecs-vpc" {
-  cidr_block           = "${var.vpc_cidr}"
+resource "aws_vpc" "ecs-vpc" {
+  cidr_block           = "10.0.0.0/16"
   instance_tenancy     = "default"
   enable_dns_support   = "true"
   enable_dns_hostnames = "false"
   tags {
-      Name             = "jkmonolith-ecs-vpc"
+      Name             = "${var.app_name}-ecs-vpc"
   }
 }
 
-resource "aws_subnet" "jkmonolith-ecs-subnet-ipv4-az-1a" {
+resource "aws_subnet" "ecs-subnet-ipv4-az-1a" {
   availability_zone = "${var.region}a"
-  vpc_id            = "${aws_vpc.jkmonolith-ecs-vpc.id}"
+  vpc_id            = "${aws_vpc.ecs-vpc.id}"
   cidr_block        = "10.0.0.0/24"
   tags {
-      Name          = "jkmonolith-ecs-subnet-ipv4-az-1a"
+      Name          = "${var.app_name}-ecs-subnet-ipv4-az-1a"
   }
 }
 
-resource "aws_subnet" "jkmonolith-ecs-subnet-ipv4-az-1b" {
+resource "aws_subnet" "ecs-subnet-ipv4-az-1b" {
   availability_zone = "${var.region}b"
-  vpc_id            = "${aws_vpc.jkmonolith-ecs-vpc.id}"
+  vpc_id            = "${aws_vpc.ecs-vpc.id}"
   cidr_block        = "10.0.1.0/24"
   tags {
-      Name          = "jkmonolith-ecs-subnet-ipv4-az-1b"
+      Name          = "${var.app_name}-ecs-subnet-ipv4-az-1b"
   }
 }
 
-resource "aws_security_group" "jkmonolith-ecs-security-group" {
-  name          = "jkmonolith-ecs-security-group"
-  vpc_id        = "${aws_vpc.jkmonolith-ecs-vpc.id}"
+resource "aws_security_group" "ecs-security-group" {
+  name          = "${var.app_name}-ecs-security-group"
+  vpc_id        = "${aws_vpc.ecs-vpc.id}"
   description   = "ECS Security group"
   ingress {
     from_port   = 0
@@ -67,49 +62,52 @@ resource "aws_security_group" "jkmonolith-ecs-security-group" {
   }
 }
 
-resource "aws_internet_gateway" "jkmonolith-ecs-igw" {
-  vpc_id   = "${aws_vpc.jkmonolith-ecs-vpc.id}"
+resource "aws_internet_gateway" "ecs-igw" {
+  vpc_id   = "${aws_vpc.ecs-vpc.id}"
   tags {
-      Name = "jkmonolith-ecs-igw"
+      Name = "${var.app_name}-ecs-igw"
   }
 }
 
-resource "aws_route_table" "jkmonolith-ecs-route-table" {
-  vpc_id       = "${aws_vpc.jkmonolith-ecs-vpc.id}"
+resource "aws_route_table" "ecs-route-table" {
+  vpc_id       = "${aws_vpc.ecs-vpc.id}"
   route {
     cidr_block = "0.0.0.0/0"
-    gateway_id = "${aws_internet_gateway.jkmonolith-ecs-igw.id}"
+    gateway_id = "${aws_internet_gateway.ecs-igw.id}"
+  }
+  tags {
+    Name                   = "${var.app_name}-ecs-route-table"
   }
 }
 
-resource "aws_route" "jkmonolith-ecs-route-table" {
-  route_table_id         = "${aws_route_table.jkmonolith-ecs-route-table.id}"
-  gateway_id             = "${aws_internet_gateway.jkmonolith-ecs-igw.id}"
+resource "aws_route" "ecs-route" {
+  route_table_id         = "${aws_route_table.ecs-route-table.id}"
+  gateway_id             = "${aws_internet_gateway.ecs-igw.id}"
   destination_cidr_block = "0.0.0.0/0"
 }
 
-resource "aws_main_route_table_association" "jkmonolith-ecs-route-table" {
-  vpc_id         = "${aws_vpc.jkmonolith-ecs-vpc.id}"
-  route_table_id = "${aws_route_table.jkmonolith-ecs-route-table.id}"
+resource "aws_main_route_table_association" "ecs-route-table-association" {
+  vpc_id         = "${aws_vpc.ecs-vpc.id}"
+  route_table_id = "${aws_route_table.ecs-route-table.id}"
 }
 
-resource "aws_alb" "jkmonolith-ecs-alb" {
-  name                       = "jkmonolith-ecs-alb"
+resource "aws_alb" "ecs-alb" {
+  name                       = "${var.app_name}-ecs-alb"
   internal                   = false
   load_balancer_type         = "application"
-  security_groups            = ["${aws_security_group.jkmonolith-ecs-security-group.id}"]
-  subnets                    = ["${aws_subnet.jkmonolith-ecs-subnet-ipv4-az-1a.id}",
-                                "${aws_subnet.jkmonolith-ecs-subnet-ipv4-az-1b.id}"]
+  security_groups            = ["${aws_security_group.ecs-security-group.id}"]
+  subnets                    = ["${aws_subnet.ecs-subnet-ipv4-az-1a.id}",
+                                "${aws_subnet.ecs-subnet-ipv4-az-1b.id}"]
   enable_deletion_protection = false
   ip_address_type            = "ipv4"
 
   tags {
-      Name                   = "jkmonolith-ecs-alb"
+      Name                   = "${var.app_name}-ecs-alb"
   }
 }
 
-resource "aws_alb_target_group" "jkmonolith-targetgroup" {
-  vpc_id                = "${aws_vpc.jkmonolith-ecs-vpc.id}"
+resource "aws_alb_target_group" "ecs-alb-target-group" {
+  vpc_id                = "${aws_vpc.ecs-vpc.id}"
   port                  = "80"
   protocol              = "HTTP"
   target_type           = "ip"
@@ -128,34 +126,36 @@ resource "aws_alb_target_group" "jkmonolith-targetgroup" {
     enabled             = "false"
     type                = "lb_cookie"
   }
-}
-
-resource "aws_alb_listener" "jkmonolith-ecs-alb" {
-  load_balancer_arn  = "${aws_alb.jkmonolith-ecs-alb.arn}"
-  port               = "80"
-  protocol           = "HTTP"
-  ssl_policy         = ""
-
-  default_action {
-    type             = "forward"
-    target_group_arn = "${aws_alb_target_group.jkmonolith-targetgroup.arn}"
+  tags {
+    Name                   = "${var.app_name}-ecs-alb-target-group"
   }
 }
 
-resource "aws_db_subnet_group" "jkmonolith-ecs-db-subnet-group" {
-  name        = "jkmonolith-ecs-db-subnet-group"
-  description = "DB subnet group"
-  subnet_ids  = ["${aws_subnet.jkmonolith-ecs-subnet-ipv4-az-1a.id}",
-                 "${aws_subnet.jkmonolith-ecs-subnet-ipv4-az-1b.id}"]
+resource "aws_alb_listener" "ecs-alb-listener" {
+  load_balancer_arn  = "${aws_alb.ecs-alb.arn}"
+  port               = "80"
+  protocol           = "HTTP"
+  ssl_policy         = ""
+  default_action {
+    type             = "forward"
+    target_group_arn = "${aws_alb_target_group.ecs-alb-target-group.arn}"
+  }
 }
 
-resource "aws_db_instance" "jkmonolith-store-mysql-db" {
-  identifier             = "jkmonolith-store-mysql-db"
+resource "aws_db_subnet_group" "ecs-db-subnet-group" {
+  name        = "${var.app_name}-ecs-db-subnet-group"
+  description = "DB subnet group"
+  subnet_ids  = ["${aws_subnet.ecs-subnet-ipv4-az-1a.id}",
+                 "${aws_subnet.ecs-subnet-ipv4-az-1b.id}"]
+}
+
+resource "aws_db_instance" "store-mysql-db" {
+  identifier             = "${var.app_name}-store-mysql-db"
   skip_final_snapshot    = true
   engine                 = "mysql"
   engine_version         = "5.6.40"
-  vpc_security_group_ids = ["${aws_security_group.jkmonolith-ecs-security-group.id}"]
-  db_subnet_group_name   = "${aws_db_subnet_group.jkmonolith-ecs-db-subnet-group.name}"
+  vpc_security_group_ids = ["${aws_security_group.ecs-security-group.id}"]
+  db_subnet_group_name   = "${aws_db_subnet_group.ecs-db-subnet-group.name}"
   multi_az               =  "true"
   license_model          = "general-public-license"
   allocated_storage      = 20
@@ -165,12 +165,12 @@ resource "aws_db_instance" "jkmonolith-store-mysql-db" {
   password               = "password" #{{.MySQLMasterPassword}}
 }
 
-resource "aws_ecs_cluster" "jkmonolith-ecs-cluster" {
-  name = "jkmonolith-ecs-cluster"
+resource "aws_ecs_cluster" "ecs-cluster" {
+  name = "${var.app_name}-ecs-cluster"
 }
 
-resource "aws_iam_role" "jkmonolith-ecsTaskExecutionRole" {
-  name = "jkmonolith-ecsTaskExecutionRole",
+resource "aws_iam_role" "ecs-task-execution-role" {
+  name = "${var.app_name}-ecs-task-execution-role",
   assume_role_policy = <<EOF
 {
   "Version": "2008-10-17",
@@ -188,13 +188,14 @@ resource "aws_iam_role" "jkmonolith-ecsTaskExecutionRole" {
 EOF
 }
 
-resource "aws_iam_role_policy_attachment" "jkmonolith-ecsTaskExecutionRoleAttachment" {
-  role       = "${aws_iam_role.jkmonolith-ecsTaskExecutionRole.name}"
+resource "aws_iam_role_policy_attachment" "ecs-task-execution-role-attachment" {
+  role       = "${aws_iam_role.ecs-task-execution-role.name}"
   policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"
 }
 
-resource "aws_ecs_service" "jkmonolith-app" {
-  cluster                            = "${aws_ecs_cluster.jkmonolith-ecs-cluster.id}"
+resource "aws_ecs_service" "ecs-service" {
+  name                               = "${var.app_name}-ecs-service"
+  cluster                            = "${aws_ecs_cluster.ecs-cluster.id}"
   deployment_controller {
     type                             = "ECS"
   }
@@ -205,26 +206,28 @@ resource "aws_ecs_service" "jkmonolith-app" {
   health_check_grace_period_seconds  = "0",
   launch_type                        = "FARGATE"
   load_balancer{
-    container_name                   = "jkmonolith-app"
+    container_name                   = "${var.app_name}-app"
     container_port                   = "8080"
     elb_name                         = ""
-    target_group_arn                 = "${aws_alb_target_group.jkmonolith-targetgroup.arn}"
+    target_group_arn                 = "${aws_alb_target_group.ecs-alb-target-group.arn}"
   }
-  name                               = "jkmonolith-app"
   network_configuration {
     assign_public_ip                 = "true",
-    security_groups                  = ["${aws_security_group.jkmonolith-ecs-security-group.id}"]
-    subnets                          = ["${aws_subnet.jkmonolith-ecs-subnet-ipv4-az-1a.id}",
-                                        "${aws_subnet.jkmonolith-ecs-subnet-ipv4-az-1b.id}"]
+    security_groups                  = ["${aws_security_group.ecs-security-group.id}"]
+    subnets                          = ["${aws_subnet.ecs-subnet-ipv4-az-1a.id}",
+                                        "${aws_subnet.ecs-subnet-ipv4-az-1b.id}"]
   }
   scheduling_strategy                = "REPLICA",
-  task_definition                    = "${aws_ecs_task_definition.jkmonolith-app.arn}"
+  task_definition                    = "${aws_ecs_task_definition.ecs-task-definition.arn}"
 }
 
-resource "aws_ecs_task_definition" "jkmonolith-app" {
+resource "aws_ecs_task_definition" "ecs-task-definition" {
+  tags {
+    Name                   = "${var.app_name}-ecs-alb-target-group"
+  }
   cpu                      = "2048"
-  execution_role_arn       = "${aws_iam_role.jkmonolith-ecsTaskExecutionRole.arn}"
-  family                   = "jkmonolith-app"
+  execution_role_arn       = "${aws_iam_role.ecs-task-execution-role.arn}"
+  family                   = "${var.app_name}-ecs-task-definition"
   memory                   = "4096"
   network_mode             = "awsvpc"
   requires_compatibilities = ["FARGATE"]
@@ -232,7 +235,7 @@ resource "aws_ecs_task_definition" "jkmonolith-app" {
   container_definitions    = <<-JSON
   [
     {
-      "name": "jkmonolith-app",
+      "name": "${var.app_name}-app",
       "image": "xebialabsunsupported/ecommerce-monolith",
       "command": [],
       "cpu": 1024,
@@ -243,7 +246,7 @@ resource "aws_ecs_task_definition" "jkmonolith-app" {
         },
         {
           "name": "SPRING_DATASOURCE_URL",
-          "value": "jdbc:mysql://${aws_db_instance.jkmonolith-store-mysql-db.address}:${aws_db_instance.jkmonolith-store-mysql-db.port}/store?useUnicode=true&characterEncoding=utf8&useSSL=false"
+          "value": "jdbc:mysql://${aws_db_instance.store-mysql-db.address}:${aws_db_instance.store-mysql-db.port}/store?useUnicode=true&characterEncoding=utf8&useSSL=false"
         },
         {
           "name": "SPRING_DATASOURCE_PASSWORD",
@@ -260,7 +263,7 @@ resource "aws_ecs_task_definition" "jkmonolith-app" {
         "logDriver": "awslogs",
         "options": {
           "awslogs-group": "/ecs/ecommerce",
-          "awslogs-region": "eu-west-1",
+          "awslogs-region": "${var.region}",
           "awslogs-stream-prefix": "ecs-ecommerce"
         }
       },
