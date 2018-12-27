@@ -12,6 +12,7 @@ spec:
   children:
     - name: {{$app}}-terraform-service
       type: udm.Application
+      lastVersion: '1.0'
       children:
       - name: '1.0'
         type: udm.DeploymentPackage
@@ -19,6 +20,9 @@ spec:
         - name: {{$app}}-terraform-service
           type: terraform.Module
           file: !file ../terraform/service/service.zip
+          targets:
+            - 'aws_ecs_task_definition.ecs-task-definition'
+            - 'aws_ecs_service.ecs-service'
           inputVariables:
             app_name: '{{$app}}'
             aws_access_key: '{{$aws_access_key}}'

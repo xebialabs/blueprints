@@ -25,6 +25,10 @@ data "aws_security_group" "ecs-security-group" {
   name = "${var.app_name}-ecs-security-group"
 }
 
+data "aws_ecs_cluster" "ecs-cluster" {
+  cluster_name = "${var.app_name}-ecs-cluster"
+}
+
 resource "aws_ecs_service" "ecs-service" {
   name                               = "${var.app_name}-ecs-service"
   cluster                            = "${var.app_name}-ecs-cluster"
