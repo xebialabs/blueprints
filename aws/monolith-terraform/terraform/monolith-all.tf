@@ -211,7 +211,7 @@ resource "aws_ecs_service" "ecs-service" {
 
 resource "aws_ecs_task_definition" "ecs-task-definition" {
   tags {
-    Name                   = "${var.app_name}-ecs-alb-target-group"
+    Name                   = "${var.app_name}-ecs-task-definition"
   }
   cpu                      = "2048"
   execution_role_arn       = "${aws_iam_role.ecs-task-execution-role.arn}"
