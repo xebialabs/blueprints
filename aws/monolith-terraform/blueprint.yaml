@@ -50,5 +50,5 @@ files:
 - path: xebialabs/xlr-pipeline.yaml.tmpl
 - path: xebialabs/README.md.tmpl
 - path: xebialabs.yaml
-- path: terraform/infrastructure/infra.zip
+- path: terraform/infrastructure/infrastructure.zip
 - path: terraform/service/service.zip
