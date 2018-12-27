@@ -1,0 +1,33 @@
+{{$app := .AppName | kebabcase}}
+apiVersion: xl-deploy/v1
+kind: Infrastructure
+spec:
+- name: {{$app}}
+  type: core.Directory
+  children:
+    - name: localhost
+      type: overthere.LocalHost
+      os: UNIX
+      children:
+        - name: terraform-client
+          type: terraform.TerraformClient
+
+---
+apiVersion: xl-deploy/v1
+kind: Environments
+spec:
+- name: {{$app}}
+  type: core.Directory
+  children:
+    - name: aws-dictionary
+      type: udm.Dictionary
+      entries:
+        AWSRegion: {{.AWSRegion}}
+        AWSAccessKey: {{.AWSAccessKey}}
+        AWSSecretKey: {{.AWSAccessSecret}}
+    - name: terraform-aws
+      type: udm.Environment
+      members:
+      - "~Infrastructure/{{$app}}/localhost/terraform-client"
+      dictionaries:
+      - "~Environments/{{$app}}/aws-dictionary"

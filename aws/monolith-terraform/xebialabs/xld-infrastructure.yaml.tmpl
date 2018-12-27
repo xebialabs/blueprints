@@ -1,0 +1,37 @@
+{{$app := .AppName | kebabcase}}
+{{$region := "{{AWSRegion}}"}}
+{{$aws_access_key := "{{AWSAccessKey}}"}}
+{{$aws_secret_key := "{{AWSSecretKey}}"}}
+apiVersion: xl-deploy/v1
+kind: Applications
+spec:
+- name: {{$app}}
+  type: core.Directory
+  children:
+    - name: {{$app}}-ecs-fargate-cluster
+      type: udm.Application
+      lastVersion: '1.0'
+      children:
+      - name: '1.0'
+        type: udm.DeploymentPackage
+        deployables:
+        - name: {{$app}}-terraform-ecs-cluster
+          type: terraform.Module
+          file: !file ../terraform/infrastructure/infrastructure.zip
+          inputVariables:
+            app_name: '{{$app}}'
+            aws_access_key: '{{$aws_access_key}}'
+            aws_secret_key: '{{$aws_secret_key}}'
+            region: '{{$region}}'
+            mysql_master_password: {{.MySQLMasterPassword}}
+            public_port: {{.PublicPort}}
+          boundTemplates:
+          - "../{{$app}}-db-dictionary"
+        templates:
+        - name: {{$app}}-db-dictionary
+          type: template.udm.Dictionary
+          instanceName: {{$app}}/db-dictionary
+          entries:
+            MYSQL_DB_ADDRESS: '{{"{{%outputVariables.mysql_address%}}"}}'
+            MYSQL_DB_PORT: '{{"{{%outputVariables.mysql_port%}}"}}'
+
