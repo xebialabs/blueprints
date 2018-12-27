@@ -1,0 +1,30 @@
+{{$app := .AppName | kebabcase}}
+{{$region := "{{AWSRegion}}"}}
+{{$aws_access_key := "{{AWSAccessKey}}"}}
+{{$aws_secret_key := "{{AWSSecretKey}}"}}
+{{$mysql_address := "{{MYSQL_DB_ADDRESS}}"}}
+{{$mysql_port := "{{MYSQL_DB_PORT}}"}}
+apiVersion: xl-deploy/v1
+kind: Applications
+spec:
+- name: {{$app}}
+  type: core.Directory
+  children:
+    - name: {{$app}}-terraform-service
+      type: udm.Application
+      children:
+      - name: '1.0'
+        type: udm.DeploymentPackage
+        deployables:
+        - name: {{$app}}-terraform-service
+          type: terraform.Module
+          file: !file ../terraform/service/service.zip
+          inputVariables:
+            app_name: '{{$app}}'
+            aws_access_key: '{{$aws_access_key}}'
+            aws_secret_key: '{{$aws_secret_key}}'
+            region: '{{$region}}'
+            mysql_master_password: {{.MySQLMasterPassword}}
+            public_port: {{.PublicPort}}
+            mysql_address: '{{$mysql_address}}'
+            mysql_port: '{{$mysql_port}}'
