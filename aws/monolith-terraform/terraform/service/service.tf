@@ -4,6 +4,27 @@ provider "aws" {
   region     = "${var.region}"
 }
 
+data "aws_iam_role" "ecs-task-execution-role" {
+  name = "${var.app_name}-ecs-task-execution-role"
+}
+
+data "aws_alb_target_group" "ecs-alb-tg" {
+  name = "${var.app_name}-ecs-alb-tg"
+}
+
+data "aws_subnet_ids" "subnet-ids" {
+  vpc_id = "${data.aws_alb_target_group.ecs-alb-tg.vpc_id}"
+}
+
+data "aws_subnet" "subnet" {
+  count = "${length(data.aws_subnet_ids.subnet-ids.ids)}"
+  id    = "${data.aws_subnet_ids.subnet-ids.ids[count.index]}"
+}
+
+data "aws_security_group" "ecs-security-group" {
+  name = "${var.app_name}-ecs-security-group"
+}
+
 resource "aws_ecs_service" "ecs-service" {
   name                               = "${var.app_name}-ecs-service"
   cluster                            = "${var.app_name}-ecs-cluster"
@@ -20,13 +41,12 @@ resource "aws_ecs_service" "ecs-service" {
     container_name                   = "${var.app_name}-app"
     container_port                   = "8080"
     elb_name                         = ""
-    target_group_arn                 = "Name:${var.app_name}-ecs-alb-target-group"
+    target_group_arn                 = "${data.aws_alb_target_group.ecs-alb-tg.arn}"
   }
   network_configuration {
     assign_public_ip                 = "true",
-    security_groups                  = ["Name:${var.app_name}-ecs-security-group"]
-    subnets                          = ["${var.app_name}-ecs-subnet-ipv4-az-1a",
-                                        "${var.app_name}-ecs-subnet-ipv4-az-1b"]
+    security_groups                  = ["${data.aws_security_group.ecs-security-group.id}"]
+    subnets                          = ["${data.aws_subnet.subnet.*.id}"]
   }
   scheduling_strategy                = "REPLICA",
   task_definition                    = "${aws_ecs_task_definition.ecs-task-definition.arn}"
@@ -37,7 +57,7 @@ resource "aws_ecs_task_definition" "ecs-task-definition" {
     Name                   = "${var.app_name}-ecs-alb-target-group"
   }
   cpu                      = "2048"
-  execution_role_arn       = "Name:${var.app_name}-ecs-task-execution-role"
+  execution_role_arn       = "${data.aws_iam_role.ecs-task-execution-role.arn}"
   family                   = "${var.app_name}-ecs-task-definition"
   memory                   = "4096"
   network_mode             = "awsvpc"

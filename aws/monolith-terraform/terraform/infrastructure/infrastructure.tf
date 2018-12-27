@@ -48,6 +48,9 @@ resource "aws_security_group" "ecs-security-group" {
     protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
   }
+  tags {
+    Name        = "${var.app_name}-ecs-security-group"
+  }
 }
 
 resource "aws_internet_gateway" "ecs-igw" {
@@ -94,7 +97,8 @@ resource "aws_alb" "ecs-alb" {
   }
 }
 
-resource "aws_alb_target_group" "ecs-alb-target-group" {
+resource "aws_alb_target_group" "ecs-alb-tg" {
+  name                  = "${var.app_name}-ecs-alb-tg"
   vpc_id                = "${aws_vpc.ecs-vpc.id}"
   port                  = "${var.public_port}"
   protocol              = "HTTP"
@@ -115,7 +119,7 @@ resource "aws_alb_target_group" "ecs-alb-target-group" {
     type                = "lb_cookie"
   }
   tags {
-    Name                   = "${var.app_name}-ecs-alb-target-group"
+    Name                   = "${var.app_name}-ecs-alb-tg"
   }
 }
 
@@ -126,7 +130,7 @@ resource "aws_alb_listener" "ecs-alb-listener" {
   ssl_policy         = ""
   default_action {
     type             = "forward"
-    target_group_arn = "${aws_alb_target_group.ecs-alb-target-group.arn}"
+    target_group_arn = "${aws_alb_target_group.ecs-alb-tg.arn}"
   }
 }
 
