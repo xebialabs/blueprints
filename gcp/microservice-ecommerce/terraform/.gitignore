@@ -3,3 +3,5 @@
 *.tfvars
 .terraform
 tfplan
+account.json
+servive-account.json

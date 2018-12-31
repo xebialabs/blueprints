@@ -1,11 +1,18 @@
 # GCP variables
 
+
+variable "project_id" {
+  default     = "deepu-playground"
+  description = "Project ID"
+}
+
 variable "region" {
-  default     = "asia-southeast1"
+  default     = "europe-west1"
   description = "Region of resources"
 }
 
 variable "bucket_name" {
+  default     = "deepu-playground"
   description = "Name of the google storage bucket"
 }
 
@@ -32,13 +39,13 @@ variable "subnet_cidr" {
 # GKE variables
 
 variable "min_master_version" {
-  default     = "1.10.7-gke.6"
-  description = "Number of nodes in each GKE cluster zone"
+  default     = "1.11.5-gke.5"
+  description = "Minimum GKE master version"
 }
 
 variable "node_version" {
-  default     = "1.10.7-gke.6"
-  description = "Number of nodes in each GKE cluster zone"
+  default     = "1.11.5-gke.5"
+  description = "Minimum GKE node version"
 }
 
 variable "gke_num_nodes" {
@@ -50,14 +57,14 @@ variable "gke_num_nodes" {
   description = "Number of nodes in each GKE cluster zone"
 }
 
-variable "gke_master_user" {
-  default     = "k8s_admin"
-  description = "Username to authenticate with the k8s master"
-}
+# variable "gke_master_user" {
+#   default     = "k8s_admin"
+#   description = "Username to authenticate with the k8s master"
+# }
 
-variable "gke_master_pass" {
-  description = "Username to authenticate with the k8s master"
-}
+# variable "gke_master_pass" {
+#   description = "Password to authenticate with the k8s master"
+# }
 
 variable "gke_node_machine_type" {
   default     = "n1-standard-1"

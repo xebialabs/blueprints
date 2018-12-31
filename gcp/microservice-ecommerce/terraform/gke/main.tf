@@ -1,9 +1,8 @@
 resource "google_container_cluster" "primary" {
   name = "gke-${terraform.workspace}-cluster"
-  zone = "${var.region}-a"
+  zone = "${var.region}-b"
 
   additional_zones = [
-    "${var.region}-b",
     "${var.region}-c",
   ]
 
@@ -29,10 +28,10 @@ resource "google_container_cluster" "primary" {
     }
   }
 
-  master_auth {
-    username = "${var.gke_master_user}"
-    password = "${var.gke_master_pass}"
-  }
+#   master_auth {
+#     username = "${var.gke_master_user}"
+#     password = "${var.gke_master_pass}"
+#   }
 
   node_config {
     oauth_scopes = [

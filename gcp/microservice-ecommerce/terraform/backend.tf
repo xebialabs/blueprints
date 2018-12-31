@@ -1,7 +1,8 @@
 # Configure the Google Cloud tfstate file location
 terraform {
   backend "gcs" {
-    bucket = "terraform-admin-demo"
+    bucket = "deepu-playground" //TODO pass as variable
     prefix = "terraform"
+    credentials = "account.json"
   }
 }

@@ -1,8 +1,3 @@
-# remote state output
-output "data_out" {
-  value = "${data.terraform_remote_state.project_id.project_id}"
-}
-
 # network VPC output
 output "vpc_name" {
   value       = "${module.vpc.vpc_name}"

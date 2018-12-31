@@ -1,18 +1,21 @@
 # Configure the Google Cloud provider
 
-data "terraform_remote_state" "project_id" {
-  backend   = "gcs"
-  workspace = "${terraform.workspace}"
+# data "terraform_remote_state" "project_id" {
+#   backend   = "gcs"
+#   workspace = "${terraform.workspace}"
+#   project_id= "${var.project_id}"
 
-  config {
-    bucket = "${var.bucket_name}"
-    prefix = "terraform-project"
-  }
-}
+#   config {
+#     bucket = "${var.bucket_name}"
+#     prefix = "terraform-project"
+#     credentials = "${file("account.json")}"
+#   }
+# }
 
 provider "google" {
+  credentials = "${file("account.json")}"
   version = "~> 1.16"
-  project = "${data.terraform_remote_state.project_id.project_id}"
+  project = "${var.project_id}"
   region  = "${var.region}"
 }
 
@@ -30,8 +33,8 @@ module "gke" {
   gke_num_nodes         = "${var.gke_num_nodes}"
   vpc_name              = "${module.vpc.vpc_name}"
   subnet_name           = "${module.vpc.subnet_name}"
-  gke_master_user       = "${var.gke_master_user}"
-  gke_master_pass       = "${var.gke_master_pass}"
+#   gke_master_user       = "${var.gke_master_user}"
+#   gke_master_pass       = "${var.gke_master_pass}"
   gke_node_machine_type = "${var.gke_node_machine_type}"
   gke_label             = "${var.gke_label}"
 }
