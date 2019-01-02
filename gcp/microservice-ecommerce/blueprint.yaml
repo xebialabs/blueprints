@@ -2,9 +2,9 @@ apiVersion: xl/v1
 kind: Blueprint
 
 metadata:
-  projectName: AWS-Microservice-EKS-with-JHipster
+  projectName: GCP-Microservice-GKE-with-JHipster
   description: |
-    The blueprint deploys an e-commerce microservice application to AWS EKS.
+    The blueprint deploys an e-commerce microservice application to GCP GKE.
     XL Deploy does the provisioning and deployment, while XL Release orchestrates everything.
   author: XebiaLabs
   version: 1.0
@@ -17,41 +17,40 @@ spec:
     description: What is the name of the application?
 
   # AWS specific variables
-  - name: UseAWSCredentialsFromSystem
-    type: Confirm
-    description: Do you want to use AWS credentials from ~/.aws/credentials file?
-    dependsOnTrue: !fn aws.credentials().IsAvailable
-  - name: AWSAccessKey
+#   - name: UseAWSCredentialsFromSystem
+#     type: Confirm
+#     description: Do you want to use AWS credentials from ~/.aws/credentials file?
+#     dependsOnTrue: !fn aws.credentials().IsAvailable
+  - name: K8SMasterUser
     type: Input
     secret: true
-    description: What is the AWS Access Key ID?
-    dependsOnFalse: UseAWSCredentialsFromSystem
-    default: !fn aws.credentials().AccessKeyID
-  - name: AWSAccessSecret
+    description: What is the user name for Kubernetes cluster?
+    # dependsOnFalse: UseAWSCredentialsFromSystem
+    # default: !fn aws.credentials().AccessKeyID
+  - name: K8SMasterPassword
     type: Input
     secret: true
-    description: What is the AWS Secret Access Key?
-    dependsOnFalse: UseAWSCredentialsFromSystem
-    default: !fn aws.credentials().SecretAccessKey
-  - name: AWSRegion #options are set manually because EKS service is not registered within AWS GO SDK
+    description: What is the password for Kubernetes cluster?
+    # dependsOnFalse: UseAWSCredentialsFromSystem
+    # default: !fn aws.credentials().SecretAccessKey
+  - name: GCPRegion
     type: Select
-    description: "Select the AWS region:"
+    description: "Select the GCP region:"
     options:
-      - eu-west-1
-      # commented out becouse of https://github.com/boto/boto3/issues/811
-      # - us-east-1
+    # TODO: update regions
+      - europe-west-1
       - us-east-2
       - us-west-2
   - name: ProvisionCluster
     type: Confirm
-    description: Do you want to provision a new AWS EKS cluster?
+    description: Do you want to provision a new GCP GKE cluster?
   - name: ClusterName
     type: Input
     description: What is the name of the cluster?
   - name: ClusterEndpoint
     type: Input
     dependsOnFalse: ProvisionCluster
-    description: What is the endpoint for the cluster, example https://3219568049031C127A97DD725F241767.yl4.eu-west-1.eks.amazonaws.com
+    description: What is the endpoint for the cluster, example https://104.155.109.230
   - name: Namespace
     type: Input
     description: What is the name of the namespace? This should be same as the one used in Kubernetes files.

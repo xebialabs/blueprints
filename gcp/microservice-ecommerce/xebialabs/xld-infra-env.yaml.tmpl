@@ -1,20 +1,18 @@
 {{$app := .AppName | kebabcase}}
 {{if eq .ProvisionCluster "true"}}
-# Provision AWS EKS cluster
+# Provision GCP GKE cluster
 apiVersion: xl-deploy/v1
 kind: Infrastructure
 spec:
 - name: {{$app}}
   type: core.Directory
   children:
-  - name: aws-{{$app}}
-    type: aws.Cloud
-    accesskey: {{.AWSAccessKey}}
-    accessSecret: {{.AWSAccessSecret}}
+  - name: gcp-{{$app}}
+    type: overthere.LocalHost
+    os: UNIX
     children:
-    - name: eks-cloudformation
-      type: aws.cloudformation.Stack
-      region: {{.AWSRegion}}
+    - name: terraform-client
+      type: terraform.TerraformClient
 ---
 apiVersion: xl-deploy/v1
 kind: Environments
@@ -22,25 +20,23 @@ spec:
 - name: {{$app}}
   type: core.Directory
   children:
-  - name: aws-cloudformation-{{$app}}
+  - name: gcp-terraform-{{$app}}
     type: udm.Environment
     members:
-    - Infrastructure/{{$app}}/aws-{{$app}}
-    - Infrastructure/{{$app}}/aws-{{$app}}/eks-cloudformation
+    - Infrastructure/{{$app}}/gcp-{{$app}}
+    - Infrastructure/{{$app}}/gcp-{{$app}}/terraform-client
 {{else}}
-# Definition of existing EKS cluster
+# Definition of existing GKE cluster
 apiVersion: xl-deploy/v1
 kind: Infrastructure
 spec:
 - name: {{$app}}
   type: core.Directory
   children:
-  - name: eks-{{.ClusterName | kebabcase}}
+  - name: gke-{{.ClusterName | kebabcase}}
     type: k8s.Master
-    isEKS: true
-    clusterName: {{.ClusterName}}
-    accessKey: {{.AWSAccessKey}}
-    accessSecret: {{.AWSAccessSecret}}
+    username: {{.K8SMasterUser}}
+    password: {{.K8SMasterPassword}}
     apiServerURL: {{.ClusterEndpoint}}
     skipTLS: true
     children:
@@ -48,16 +44,16 @@ spec:
       type: k8s.Namespace
       namespaceName: {{.Namespace}}
 ---
-# Definition of existing EKS Environment
+# Definition of existing GKE Environment
 apiVersion: xl-deploy/v1
 kind: Environments
 spec:
 - name: {{$app}}
   type: core.Directory
   children:
-  - name: aws-eks-{{$app}}
+  - name: gcp-gke-{{$app}}
     type: udm.Environment
     members:
-    - Infrastructure/{{$app}}/eks-{{.ClusterName | kebabcase}}/{{.Namespace | kebabcase}}
-    - Infrastructure/{{$app}}/eks-{{.ClusterName | kebabcase}}
+    - Infrastructure/{{$app}}/gke-{{.ClusterName | kebabcase}}/{{.Namespace | kebabcase}}
+    - Infrastructure/{{$app}}/gke-{{.ClusterName | kebabcase}}
 {{end}}
