@@ -17,22 +17,14 @@ variable "bucket_name" {
 }
 
 variable "name" {
-  default = {
-    prod = "prod"
-    dev  = "dev"
-  }
-
-  description = "Name for vpc"
+  default = "ecommerce-microservice"
+  description = "Name for project"
 }
 
 # Network variables
 
 variable "subnet_cidr" {
-  default = {
-    prod = "10.10.0.0/24"
-    dev  = "10.240.0.0/24"
-  }
-
+  default = "10.10.0.0/24"
   description = "Subnet range"
 }
 
@@ -49,11 +41,7 @@ variable "node_version" {
 }
 
 variable "gke_num_nodes" {
-  default = {
-    prod = 2
-    dev  = 1
-  }
-
+  default = 2
   description = "Number of nodes in each GKE cluster zone"
 }
 
@@ -72,10 +60,6 @@ variable "gke_node_machine_type" {
 }
 
 variable gke_label {
-  default = {
-    prod = "prod"
-    dev  = "dev"
-  }
-
+  default = "ecommerce"
   description = "label"
 }

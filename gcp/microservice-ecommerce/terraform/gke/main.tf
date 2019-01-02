@@ -1,5 +1,5 @@
 resource "google_container_cluster" "primary" {
-  name = "gke-${terraform.workspace}-cluster"
+  name = "gke-${var.name}-cluster"
   zone = "${var.region}-b"
 
   additional_zones = [
@@ -10,7 +10,7 @@ resource "google_container_cluster" "primary" {
   min_master_version = "${var.min_master_version}"
   node_version       = "${var.node_version}"
   enable_legacy_abac = false
-  initial_node_count = "${var.gke_num_nodes[terraform.workspace]}"
+  initial_node_count = "${var.gke_num_nodes}"
   network            = "${var.vpc_name}"
   subnetwork         = "${var.subnet_name}"
 
@@ -42,7 +42,7 @@ resource "google_container_cluster" "primary" {
     ]
 
     labels {
-      env = "${var.gke_label[terraform.workspace]}"
+      env = "${var.gke_label}"
     }
 
     disk_size_gb = 10

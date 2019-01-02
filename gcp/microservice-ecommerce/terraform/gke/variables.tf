@@ -1,5 +1,9 @@
 # GKE variables
 
+variable "name" {
+  description = "Name for project"
+}
+
 variable "region" {
   description = "Region of resources"
 }
@@ -13,7 +17,6 @@ variable "node_version" {
 }
 
 variable "gke_num_nodes" {
-  type        = "map"
   description = "Number of nodes in each GKE cluster zone"
 }
 
@@ -38,6 +41,5 @@ variable "gke_node_machine_type" {
 
 # k8s variables
 variable gke_label {
-  type        = "map"
   description = "label"
 }

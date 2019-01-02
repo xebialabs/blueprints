@@ -21,12 +21,14 @@ provider "google" {
 
 module "vpc" {
   source        = "./vpc"
+  name          = "${var.name}"
   region        = "${var.region}"
   subnet_cidr   = "${var.subnet_cidr}"
 }
 
 module "gke" {
   source                = "./gke"
+  name                  = "${var.name}"
   region                = "${var.region}"
   min_master_version    = "${var.min_master_version}"
   node_version          = "${var.node_version}"
