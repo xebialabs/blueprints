@@ -27,13 +27,13 @@ variable "subnet_name" {
   description = "subnet name"
 }
 
-# variable "gke_master_user" {
-#   description = "Username to authenticate with the k8s master"
-# }
+variable "gke_master_user" {
+  description = "Username to authenticate with the k8s master"
+}
 
-# variable "gke_master_pass" {
-#   description = "Password to authenticate with the k8s master"
-# }
+variable "gke_master_pass" {
+  description = "Password to authenticate with the k8s master"
+}
 
 variable "gke_node_machine_type" {
   description = "Machine type of GKE nodes"

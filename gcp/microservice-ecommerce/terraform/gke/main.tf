@@ -6,13 +6,12 @@ resource "google_container_cluster" "primary" {
     "${var.region}-c",
   ]
 
-  //  region              = "${var.region}"
   min_master_version = "${var.min_master_version}"
   node_version       = "${var.node_version}"
-  enable_legacy_abac = false
   initial_node_count = "${var.gke_num_nodes}"
   network            = "${var.vpc_name}"
   subnetwork         = "${var.subnet_name}"
+  enable_legacy_abac = false
 
   addons_config {
     http_load_balancing {
@@ -28,10 +27,10 @@ resource "google_container_cluster" "primary" {
     }
   }
 
-#   master_auth {
-#     username = "${var.gke_master_user}"
-#     password = "${var.gke_master_pass}"
-#   }
+  master_auth {
+    username = "${var.gke_master_user}"
+    password = "${var.gke_master_pass}"
+  }
 
   node_config {
     oauth_scopes = [

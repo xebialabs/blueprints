@@ -35,8 +35,8 @@ module "gke" {
   gke_num_nodes         = "${var.gke_num_nodes}"
   vpc_name              = "${module.vpc.vpc_name}"
   subnet_name           = "${module.vpc.subnet_name}"
-#   gke_master_user       = "${var.gke_master_user}"
-#   gke_master_pass       = "${var.gke_master_pass}"
+  gke_master_user       = "${var.gke_master_user}"
+  gke_master_pass       = "${var.gke_master_pass}"
   gke_node_machine_type = "${var.gke_node_machine_type}"
   gke_label             = "${var.gke_label}"
 }
