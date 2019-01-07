@@ -1,3 +1,10 @@
+provider "google" {
+  credentials = "${file("account.json")}"
+  version     = "~> 1.16"
+  project     = "${var.project_id}"
+  region      = "${var.region}"
+}
+
 # Create VPC
 resource "google_compute_network" "vpc" {
   name                    = "${var.name}-vpc"

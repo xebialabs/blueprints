@@ -16,17 +16,19 @@ spec:
     type: Input
     description: What is the name of the application?
 
-  # AWS specific variables
+  # GCP specific variables
+  - name: GCPProjectID
+    type: Input
+    description: What is the GCP project ID?
 #   - name: UseAWSCredentialsFromSystem
 #     type: Confirm
 #     description: Do you want to use AWS credentials from ~/.aws/credentials file?
 #     dependsOnTrue: !fn aws.credentials().IsAvailable
   - name: K8SMasterUser
     type: Input
-    secret: true
     description: What is the user name for Kubernetes cluster?
     # dependsOnFalse: UseAWSCredentialsFromSystem
-    # default: !fn aws.credentials().AccessKeyID
+    default: admin
   - name: K8SMasterPassword
     type: Input
     secret: true
@@ -38,9 +40,16 @@ spec:
     description: "Select the GCP region:"
     options:
     # TODO: update regions
-      - europe-west-1
-      - us-east-2
-      - us-west-2
+      - europe-north1
+      - europe-west1
+      - europe-west2
+      - europe-west3
+      - europe-west4
+      - us-west1
+      - us-west2
+      - us-east1
+      - us-central1
+      
   - name: ProvisionCluster
     type: Confirm
     description: Do you want to provision a new GCP GKE cluster?
@@ -63,6 +72,7 @@ spec:
     type: Input
     description: Store Admin password
     value: admin
+    secret: true
   - name: XLDUrlForXLR
     type: Input
     description: XL Deploy URL for XL Release (This will only be used in the XL Release template)
@@ -77,18 +87,18 @@ spec:
   - path: xebialabs/xlr-pipeline-ci-cd.yaml.tmpl
   - path: xebialabs/xlr-pipeline-destroy.yaml.tmpl
   - path: xebialabs/README.md.tmpl
-  - path: terraform/gke/main.tf
-    dependsOnTrue: ProvisionCluster
-  - path: terraform/gke/outputs.tf
-    dependsOnTrue: ProvisionCluster
-  - path: terraform/gke/variables.tf
-    dependsOnTrue: ProvisionCluster
-  - path: terraform/vpc/main.tf
-    dependsOnTrue: ProvisionCluster
-  - path: terraform/vpc/outputs.tf
-    dependsOnTrue: ProvisionCluster
-  - path: terraform/vpc/variables.tf
-    dependsOnTrue: ProvisionCluster
+#   - path: terraform/gke/main.tf
+#     dependsOnTrue: ProvisionCluster
+#   - path: terraform/gke/outputs.tf
+#     dependsOnTrue: ProvisionCluster
+#   - path: terraform/gke/variables.tf
+#     dependsOnTrue: ProvisionCluster
+#   - path: terraform/vpc/main.tf
+#     dependsOnTrue: ProvisionCluster
+#   - path: terraform/vpc/outputs.tf
+#     dependsOnTrue: ProvisionCluster
+#   - path: terraform/vpc/variables.tf
+#     dependsOnTrue: ProvisionCluster
   - path: terraform/.gitignore
     dependsOnTrue: ProvisionCluster
   - path: terraform/backend.tf
@@ -98,5 +108,7 @@ spec:
   - path: terraform/outputs.tf
     dependsOnTrue: ProvisionCluster
   - path: terraform/variables.tf
+    dependsOnTrue: ProvisionCluster
+  - path: terraform/app.zip
     dependsOnTrue: ProvisionCluster
   - path: xebialabs.yaml

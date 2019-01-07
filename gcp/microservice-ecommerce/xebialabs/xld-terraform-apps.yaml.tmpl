@@ -18,11 +18,13 @@ spec:
         deployables:
         - name: {{$app}}-gke
           type: terraform.Module
-          file: !file ../terraform/gke.zip
+          file: !file ../terraform/app.zip
           inputVariables:
-            ProjectName: {{$app}}
-            UserStackName: {{$app}}-gke-user
-            S3BucketPrefix: {{$app}}-lambda
+            project_id    : {{.GCPProjectID}}
+            name          : {{$app}}
+            region        : {{.GCPRegion}}
+            gke_master_user: {{.K8SMasterUser}}
+            gke_master_pass: {{.K8SMasterPassword}}
     # - name: {{$app}}-terraform-gke-vpc
     #   type: udm.Application
     #   children:

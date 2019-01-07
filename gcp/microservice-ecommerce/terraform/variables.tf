@@ -2,7 +2,6 @@
 
 
 variable "project_id" {
-  default     = "deepu-playground"
   description = "Project ID"
 }
 
@@ -11,10 +10,9 @@ variable "region" {
   description = "Region of resources"
 }
 
-variable "bucket_name" {
-  default     = "deepu-playground"
-  description = "Name of the google storage bucket"
-}
+# variable "bucket_name" {
+#   description = "Name of the google storage bucket"
+# }
 
 variable "name" {
   default = "ecommerce-microservice"

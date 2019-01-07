@@ -11,21 +11,21 @@ spec:
       - name: {{$app}}-notification-mongodb
         type: udm.Application
         children:
-        - name: !value BUILD_ID
+        - name: {{$app}}-notification-mongodb
           type: udm.DeploymentPackage
           deployables:
           - name: {{$app}}-notification-mongodb
             type: k8s.ResourcesFile
-            file: !file ../notification/build/kubernetes/notification-mongodb.yml
+            file: !file ../notification/kubernetes/notification-mongodb.yml
       - name: {{$app}}-notification
         type: udm.Application
         children:
-        - name: !value BUILD_ID
+        - name: {{$app}}-notification
           type: udm.DeploymentPackage
           deployables:
           - name: {{$app}}-invoice-notification
             type: k8s.ResourcesFile
-            file: !file ../notification/build/kubernetes/notification-deployment.yml
+            file: !file ../notification/kubernetes/notification-deployment.yml
           - name: {{$app}}-notification-svc
             type: k8s.ResourcesFile
-            file: !file ../notification/build/kubernetes/notification-service.yml
+            file: !file ../notification/kubernetes/notification-service.yml
