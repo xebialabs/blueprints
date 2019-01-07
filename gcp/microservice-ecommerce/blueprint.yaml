@@ -20,35 +20,36 @@ spec:
   - name: GCPProjectID
     type: Input
     description: What is the GCP project ID?
-#   - name: UseAWSCredentialsFromSystem
-#     type: Confirm
-#     description: Do you want to use AWS credentials from ~/.aws/credentials file?
-#     dependsOnTrue: !fn aws.credentials().IsAvailable
   - name: K8SMasterUser
     type: Input
     description: What is the user name for Kubernetes cluster?
-    # dependsOnFalse: UseAWSCredentialsFromSystem
     default: admin
   - name: K8SMasterPassword
     type: Input
     secret: true
     description: What is the password for Kubernetes cluster?
-    # dependsOnFalse: UseAWSCredentialsFromSystem
-    # default: !fn aws.credentials().SecretAccessKey
   - name: GCPRegion
     type: Select
     description: "Select the GCP region:"
     options:
-    # TODO: update regions
+      - asia-east1
+      - asia-east2
+      - asia-northeast1
+      - asia-south1
+      - asia-southeast1
+      - australia-southeast1
       - europe-north1
       - europe-west1
       - europe-west2
       - europe-west3
       - europe-west4
+      - northamerica-northeast1
+      - southamerica-east1
+      - us-central1
+      - us-east1
+      - us-east4
       - us-west1
       - us-west2
-      - us-east1
-      - us-central1
       
   - name: ProvisionCluster
     type: Confirm
@@ -87,22 +88,22 @@ spec:
   - path: xebialabs/xlr-pipeline-ci-cd.yaml.tmpl
   - path: xebialabs/xlr-pipeline-destroy.yaml.tmpl
   - path: xebialabs/README.md.tmpl
-#   - path: terraform/gke/main.tf
-#     dependsOnTrue: ProvisionCluster
-#   - path: terraform/gke/outputs.tf
-#     dependsOnTrue: ProvisionCluster
-#   - path: terraform/gke/variables.tf
-#     dependsOnTrue: ProvisionCluster
-#   - path: terraform/vpc/main.tf
-#     dependsOnTrue: ProvisionCluster
-#   - path: terraform/vpc/outputs.tf
-#     dependsOnTrue: ProvisionCluster
-#   - path: terraform/vpc/variables.tf
-#     dependsOnTrue: ProvisionCluster
+  - path: terraform/gke/main.tf
+    dependsOnTrue: ProvisionCluster
+  - path: terraform/gke/outputs.tf
+    dependsOnTrue: ProvisionCluster
+  - path: terraform/gke/variables.tf
+    dependsOnTrue: ProvisionCluster
+  - path: terraform/vpc/main.tf
+    dependsOnTrue: ProvisionCluster
+  - path: terraform/vpc/outputs.tf
+    dependsOnTrue: ProvisionCluster
+  - path: terraform/vpc/variables.tf
+    dependsOnTrue: ProvisionCluster
   - path: terraform/.gitignore
     dependsOnTrue: ProvisionCluster
-#   - path: terraform/backend.tf
-#     dependsOnTrue: ProvisionCluster
+  - path: terraform/backend.tf
+    dependsOnTrue: ProvisionCluster
   - path: terraform/main.tf
     dependsOnTrue: ProvisionCluster
   - path: terraform/outputs.tf

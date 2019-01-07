@@ -20,71 +20,12 @@ spec:
           type: terraform.Module
           file: !file ../terraform
           inputVariables:
-            project_id    : {{.GCPProjectID}}
-            name          : {{$app}}
-            region        : {{.GCPRegion}}
+            project_id: {{.GCPProjectID}}
+            name: {{$app}}
+            region: {{.GCPRegion}}
             gke_master_user: {{.K8SMasterUser}}
             gke_master_pass: {{.K8SMasterPassword}}
-    # - name: {{$app}}-terraform-gke-vpc
-    #   type: udm.Application
-    #   children:
-    #   - name: '1.0.0'
-    #     type: udm.DeploymentPackage
-    #     deployables:
-    #     - name: {{$app}}-gke-vpc
-    #       type: aws.terraform.Template
-    #       file: !file ../terraform/gke-vpc.yaml
-    #       capabilities:
-    #       - CAPABILITY_IAM
-    #       - CAPABILITY_NAMED_IAM
-    #       inputVariables:
-    #         ProjectName: {{$app}}
-    #         VPCStackName: {{$app}}-gke-vpc
-    #         AvailabilityZones: {{.AWSRegion}}a, {{.AWSRegion}}b
-    # - name: {{$app}}-terraform-gke-master
-    #   type: udm.Application
-    #   children:
-    #   - name: '1.0.0'
-    #     type: udm.DeploymentPackage
-    #     deployables:
-    #     - name: {{$app}}-gke-master
-    #       type: aws.terraform.Template
-    #       file: !file ../terraform/gke-master.yaml
-    #       capabilities:
-    #       - CAPABILITY_IAM
-    #       - CAPABILITY_NAMED_IAM
-    #       inputVariables:
-    #         ProjectName: {{$app}}
-    #         VPCStackName: {{$app}}-gke-vpc
-    # - name: {{$app}}-terraform-gke-workers
-    #   type: udm.Application
-    #   children:
-    #   - name: '1.0.0'
-    #     type: udm.DeploymentPackage
-    #     deployables:
-    #     - name: {{$app}}-gke-workers
-    #       type: aws.terraform.Template
-    #       file: !file ../terraform/gke-workers.yaml
-    #       capabilities:
-    #       - CAPABILITY_IAM
-    #       - CAPABILITY_NAMED_IAM
-    #       inputVariables:
-    #         ProjectName: {{$app}}
-    #         VPCStackName: {{$app}}-gke-vpc
-    #         UserStackName: {{$app}}-gke-user
-    #         ClusterStackName: {{$app}}-gke-master
-    #         ClusterName: {{$app}}-master
-    #         NodeGroupName: {{$app}}
-    # - name: {{$app}}-k8s-configmap
-    #   type: udm.Application
-    #   children:
-    #   - name: '1.0.0'
-    #     type: udm.DeploymentPackage
-    #     deployables:
-    #     - name: {{$app}}-aws-auth
-    #       type: k8s.ResourcesFile
-    #       file: !file ../kubernetes/aws-auth-cm.yaml
-    #       delimiters: "## ##"
+
 {{end}}
   - name: K8S
     type: core.Directory

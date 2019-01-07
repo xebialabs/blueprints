@@ -1,8 +1,4 @@
 # Subnet variables
-variable "project_id" {
-  description = "Project ID"
-}
-
 variable "name" {
   description = "Name for project"
 }

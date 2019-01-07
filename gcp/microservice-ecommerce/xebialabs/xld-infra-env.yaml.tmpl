@@ -14,7 +14,7 @@ spec:
     - name: terraform-client
       type: terraform.TerraformClient
       path: '/usr/local/bin' # for local installation
-      workingDirectory: '/tmp' # for local installation
+      workingDirectory: '/tmp/{{$app}}' # for local installation
   - name: gcp-gke-{{.ClusterName | kebabcase}}
     type: k8s.Master
     username: {{.K8SMasterUser}}
