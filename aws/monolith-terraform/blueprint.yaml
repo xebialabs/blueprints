@@ -7,51 +7,52 @@ metadata:
     XL Deploy does the provisioning and deployment, while XL Release orchestrates everything.
   author: XebiaLabs
   version: 1.0
-parameters:
-- name: AppName
-  type: Input
-  description: What is the Application name?
-- name: PublicPort
-  type: Input
-  description: At what port should the application be exposed?
-  value: 80
-- name: MySQLMasterPassword
-  type: Input
-  description: What should be the password for MySQL? (minimum 8 characters)
-  secret: true
-- name: UseAWSCredentialsFromSystem
-  type: Confirm
-  description: Do you want to use AWS credentials from ~/.aws/credentials file?
-  dependsOnTrue: !fn aws.credentials().IsAvailable
-- name: AWSAccessKey
-  type: Input
-  secret: true
-  description: What is the AWS Access Key ID?
-  dependsOnFalse: UseAWSCredentialsFromSystem
-  default: !fn aws.credentials().AccessKeyID
-- name: AWSAccessSecret
-  type: Input
-  secret: true
-  description: What is the AWS Secret Access Key?
-  dependsOnFalse: UseAWSCredentialsFromSystem
-  default: !fn aws.credentials().SecretAccessKey
-- name: AWSRegion
-  saveInXlVals: true
-  type: Select
-  description: "Select the AWS region:"
-  options:
-    - !fn aws.regions(ecs)
-  default: !fn aws.regions(ecs)[0]
+spec:
+  parameters:
+  - name: AppName
+    type: Input
+    description: What is the Application name?
+  - name: PublicPort
+    type: Input
+    description: At what port should the application be exposed?
+    value: 80
+  - name: MySQLMasterPassword
+    type: Input
+    description: What should be the password for MySQL? (minimum 8 characters)
+    secret: true
+  - name: UseAWSCredentialsFromSystem
+    type: Confirm
+    description: Do you want to use AWS credentials from ~/.aws/credentials file?
+    dependsOnTrue: !fn aws.credentials().IsAvailable
+  - name: AWSAccessKey
+    type: Input
+    secret: true
+    description: What is the AWS Access Key ID?
+    dependsOnFalse: UseAWSCredentialsFromSystem
+    default: !fn aws.credentials().AccessKeyID
+  - name: AWSAccessSecret
+    type: Input
+    secret: true
+    description: What is the AWS Secret Access Key?
+    dependsOnFalse: UseAWSCredentialsFromSystem
+    default: !fn aws.credentials().SecretAccessKey
+  - name: AWSRegion
+    saveInXlVals: true
+    type: Select
+    description: "Select the AWS region:"
+    options:
+      - !fn aws.regions(ecs)
+    default: !fn aws.regions(ecs)[0]
 
-files:
-- path: xebialabs/xld-environment.yaml.tmpl
-- path: xebialabs/xld-infrastructure.yaml.tmpl
-- path: xebialabs/xld-service.yaml.tmpl
-- path: xebialabs/xlr-pipeline.yaml.tmpl
-- path: xebialabs/README.md.tmpl
-- path: xebialabs.yaml
-- path: terraform/infrastructure/infrastructure.tf
-- path: terraform/infrastructure/outputs.tf
-- path: terraform/infrastructure/variables.tf
-- path: terraform/service/service.tf
-- path: terraform/service/variables.tf
+  files:
+  - path: xebialabs/xld-environment.yaml.tmpl
+  - path: xebialabs/xld-infrastructure.yaml.tmpl
+  - path: xebialabs/xld-service.yaml.tmpl
+  - path: xebialabs/xlr-pipeline.yaml.tmpl
+  - path: xebialabs/README.md.tmpl
+  - path: xebialabs.yaml
+  - path: terraform/infrastructure/infrastructure.tf
+  - path: terraform/infrastructure/outputs.tf
+  - path: terraform/infrastructure/variables.tf
+  - path: terraform/service/service.tf
+  - path: terraform/service/variables.tf
