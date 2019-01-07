@@ -18,7 +18,7 @@ spec:
         deployables:
         - name: {{$app}}-gke
           type: terraform.Module
-          file: !file ../terraform/app.zip
+          file: !file ../terraform
           inputVariables:
             project_id    : {{.GCPProjectID}}
             name          : {{$app}}

@@ -101,14 +101,12 @@ spec:
 #     dependsOnTrue: ProvisionCluster
   - path: terraform/.gitignore
     dependsOnTrue: ProvisionCluster
-  - path: terraform/backend.tf
-    dependsOnTrue: ProvisionCluster
+#   - path: terraform/backend.tf
+#     dependsOnTrue: ProvisionCluster
   - path: terraform/main.tf
     dependsOnTrue: ProvisionCluster
   - path: terraform/outputs.tf
     dependsOnTrue: ProvisionCluster
   - path: terraform/variables.tf
-    dependsOnTrue: ProvisionCluster
-  - path: terraform/app.zip
     dependsOnTrue: ProvisionCluster
   - path: xebialabs.yaml
