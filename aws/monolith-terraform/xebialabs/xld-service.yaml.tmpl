@@ -19,7 +19,7 @@ spec:
         deployables:
         - name: {{$app}}-terraform-service
           type: terraform.Module
-          file: !file ../terraform/service/service.zip
+          file: !file ../terraform/service
           targets:
             - 'aws_ecs_task_definition.ecs-task-definition'
             - 'aws_ecs_service.ecs-service'

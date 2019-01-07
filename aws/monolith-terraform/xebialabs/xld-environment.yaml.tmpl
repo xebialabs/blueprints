@@ -11,6 +11,7 @@ spec:
       children:
         - name: terraform-client
           type: terraform.TerraformClient
+          workingDirectory: '/tmp' # for local installation
 
 ---
 apiVersion: xl-deploy/v1
