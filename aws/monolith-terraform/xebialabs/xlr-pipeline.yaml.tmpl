@@ -52,16 +52,16 @@ spec:
           type: xld.GetCITask
           server: XL Deploy
           accept: json
-          ciID: Environments/{{$app}}-ecs-alb-dictionary
+          ciID: Infrastructure/{{$app}}/localhost/terraform-client/{{$app}}-terraform-ecs-cluster
           variableMapping:
-            pythonScript.response: "${ALB_DICTIONARY_CI}"
+            pythonScript.response: "${TERRAFORM_INFRASTRUCTURE_CI}"
         - name: Get load balancer DNS
           type: xlrelease.ScriptTask
           script: |
             import json
 
-            data = json.loads('${ALB_DICTIONARY_CI}')
-            releaseVariables['ALB_DNS_NAME'] = data['entries']['ALB_DNS_NAME']
+            data = json.loads('${TERRAFORM_INFRASTRUCTURE_CI}')
+            releaseVariables['ALB_DNS_NAME'] = data['outputVariables']['address']
           # end of script
 
       - name: Check {{$app}} application health
@@ -71,7 +71,7 @@ spec:
           import json
           import time
 
-          time.sleep(30)
+          time.sleep(40)
           health_url = 'http://${ALB_DNS_NAME}/management/health'
           def make_req(url):
               req = urllib2.Request(url)
@@ -103,8 +103,8 @@ spec:
       - name: Undeploy application services
         type: xldeploy.Undeploy
         server: XL Deploy
-        deployedApplication: Environments/AWS/{{$app}}-app-service
+        deployedApplication: Environments/{{$app}}/terraform-aws/{{$app}}-terraform-service
       - name: Deprovision application infrastructure
         type: xldeploy.Undeploy
         server: XL Deploy
-        deployedApplication: Environments/AWS/{{$app}}-ecs-fargate-cluster
+        deployedApplication: Environments/{{$app}}/terraform-aws/{{$app}}-ecs-fargate-cluster
