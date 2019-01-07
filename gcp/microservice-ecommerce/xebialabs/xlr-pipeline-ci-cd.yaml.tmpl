@@ -8,10 +8,11 @@ spec:
   - name: {{$app}}-ci-cd
     type: xlrelease.Release
     description: |
-      This XL Release template shows how to deploy an application, based on microservices architecture, to AWS EKS using XL Deploy.
+      This XL Release template shows how to deploy an application, based on microservices architecture, to GCP GKE using XL Deploy and Terraform.
     tags:
-    - AWS
-    - EKS
+    - GCP
+    - GKE
+    - Terraform
     - {{$app}}
     scriptUsername: !value XL_RELEASE_USERNAME
     scriptUserPassword: !value XL_RELEASE_PASSWORD
@@ -59,62 +60,11 @@ spec:
       color: '#ff9e3b'
       type: xlrelease.Phase
       tasks:
-      - name: Provision Lambda artifacts
-        type: xlrelease.SequentialGroup
-        tasks:
-        - name: Create S3 bucket for lambda artifacts
-          type: xldeploy.Deploy
-          server: XL Deploy
-          deploymentPackage: {{$app}}/EKS-LAMBDA/{{$app}}-lambda-bucket/1.0.0
-          deploymentEnvironment: Environments/{{$app}}/aws-cloudformation-{{$app}}
-        - name: Upload lambda artifacts to S3
-          type: xldeploy.Deploy
-          server: XL Deploy
-          deploymentPackage: {{$app}}/EKS-LAMBDA/{{$app}}-lambda-artifacts/1.0.0
-          deploymentEnvironment: Environments/{{$app}}/aws-cloudformation-{{$app}}
-      - name: Provision AWS VPC and IAM resources
-        type: xlrelease.ParallelGroup
-        tasks:
-        - name: Provision AWS IAM resources
-          type: xldeploy.Deploy
-          server: XL Deploy
-          deploymentPackage: {{$app}}/EKS-CLOUDFORMATION/{{$app}}-cloudformation-eks-user/1.0.0
-          deploymentEnvironment: Environments/{{$app}}/aws-cloudformation-{{$app}}
-        - name: Provision AWS VPC
-          type: xldeploy.Deploy
-          server: XL Deploy
-          deploymentPackage: {{$app}}/EKS-CLOUDFORMATION/{{$app}}-cloudformation-eks-vpc/1.0.0
-          deploymentEnvironment: Environments/{{$app}}/aws-cloudformation-{{$app}}
-      - name: Provision AWS EKS cluster
-        type: xlrelease.SequentialGroup
-        tasks:
-        - name: Provision EKS master node
-          type: xldeploy.Deploy
-          server: XL Deploy
-          deploymentPackage: {{$app}}/EKS-CLOUDFORMATION/{{$app}}-cloudformation-eks-master/1.0.0
-          deploymentEnvironment: Environments/{{$app}}/aws-cloudformation-{{$app}}
-        - name: Provision EKS workers nodes
-          type: xldeploy.Deploy
-          server: XL Deploy
-          deploymentPackage: {{$app}}/EKS-CLOUDFORMATION/{{$app}}-cloudformation-eks-workers/1.0.0
-          deploymentEnvironment: Environments/{{$app}}/aws-cloudformation-{{$app}}
-        - name: Add accessKey to EKS cluster CI
-          type: xld.UpdateCIProperty
-          server: XL Deploy
-          ciID: Infrastructure/{{$app}}/eks-{{$app}}/eks-cluster
-          ciProperty: accessKey
-          propertyValue: ${AWSaccessKey}
-        - name: Add accessSecret to EKS cluster CI
-          type: xld.UpdateCIProperty
-          server: XL Deploy
-          ciID: Infrastructure/{{$app}}/eks-{{$app}}/eks-cluster
-          ciProperty: accessSecret
-          propertyValue: ${AWSaccessSecret}
-        - name: Provision EKS config map for workers
-          type: xldeploy.Deploy
-          server: XL Deploy
-          deploymentPackage: {{$app}}/EKS-CLOUDFORMATION/{{$app}}-k8s-configmap/1.0.0
-          deploymentEnvironment: Environments/{{$app}}/AWS-PREREQUISITE
+      - name: Provision GCP GKE cluster
+        type: xldeploy.Deploy
+        server: XL Deploy
+        deploymentPackage: {{$app}}/EKS-CLOUDFORMATION/{{$app}}-cloudformation-eks-master/1.0.0
+        deploymentEnvironment: Environments/{{$app}}/aws-cloudformation-{{$app}}
     {{end}}
     - name: Build {{$app}} application
       type: xlrelease.Phase

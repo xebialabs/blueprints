@@ -85,8 +85,8 @@ spec:
   - path: xebialabs/xld-kubernetes-invoice-app.yaml.tmpl
   - path: xebialabs/xld-kubernetes-store-app.yaml.tmpl
   - path: xebialabs/xld-kubernetes-notification-app.yaml.tmpl
-  - path: xebialabs/xlr-pipeline-ci-cd.yaml.tmpl
-  - path: xebialabs/xlr-pipeline-destroy.yaml.tmpl
+#   - path: xebialabs/xlr-pipeline-ci-cd.yaml.tmpl
+#   - path: xebialabs/xlr-pipeline-destroy.yaml.tmpl
   - path: xebialabs/README.md.tmpl
   - path: terraform/gke/main.tf
     dependsOnTrue: ProvisionCluster
