@@ -102,7 +102,7 @@ spec:
     dependsOnTrue: ProvisionCluster
   - path: terraform/.gitignore
     dependsOnTrue: ProvisionCluster
-  - path: terraform/backend.tf
+  - path: terraform/backend.tf.tmpl
     dependsOnTrue: ProvisionCluster
   - path: terraform/main.tf
     dependsOnTrue: ProvisionCluster
