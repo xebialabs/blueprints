@@ -44,7 +44,6 @@ resource "aws_ecs_service" "ecs-service" {
   load_balancer{
     container_name                   = "${var.app_name}-app"
     container_port                   = "8080"
-    elb_name                         = ""
     target_group_arn                 = "${data.aws_alb_target_group.ecs-alb-tg.arn}"
   }
   network_configuration {

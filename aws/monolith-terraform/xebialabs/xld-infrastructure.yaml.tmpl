@@ -17,7 +17,7 @@ spec:
         deployables:
         - name: {{$app}}-terraform-ecs-cluster
           type: terraform.Module
-          file: !file ../terraform/infrastructure/infrastructure.zip
+          file: !file ../terraform/infrastructure
           inputVariables:
             app_name: '{{$app}}'
             aws_access_key: '{{$aws_access_key}}'
