@@ -11,7 +11,7 @@ spec:
       children:
         - name: terraform-client
           type: terraform.TerraformClient
-          workingDirectory: '/tmp' # for local installation
+          workingDirectory: '/tmp/{{$app}}' # for local installation
           path: '/usr/local/bin' # for local installation
 
 ---
