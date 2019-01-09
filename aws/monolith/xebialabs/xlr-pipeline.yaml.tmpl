@@ -52,7 +52,7 @@ spec:
           type: xld.GetCITask
           server: XL Deploy
           accept: json
-          ciID: Environments/{{$app}}-ecs-alb-dictionary
+          ciID: Environments/{{$app}}/{{$app}}-ecs-alb-dictionary
           variableMapping:
             pythonScript.response: "${ALB_DICTIONARY_CI}"
         - name: Get load balancer DNS
