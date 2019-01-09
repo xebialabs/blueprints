@@ -32,12 +32,12 @@ spec:
         type: xldeploy.Deploy
         server: XL Deploy
         deploymentPackage: DATA-LAKE/aws-data-lake-solution-bucket/1.0.0
-        deploymentEnvironment: Environments/AWS-DATA-LAKE
+        deploymentEnvironment: Environments/DATA-LAKE/AWS-DATA-LAKE
       - name: Upload artifacts to S3
         type: xldeploy.Deploy
         server: XL Deploy
         deploymentPackage: DATA-LAKE/aws-data-lake-solution-artifacts/1.0.0
-        deploymentEnvironment: Environments/AWS-DATA-LAKE
+        deploymentEnvironment: Environments/DATA-LAKE/AWS-DATA-LAKE
     - name: Provision CloudFormation stack
       color: '#ff9e3b'
       type: xlrelease.Phase
@@ -46,7 +46,7 @@ spec:
         type: xldeploy.Deploy
         server: XL Deploy
         deploymentPackage: DATA-LAKE/aws-data-lake-solution-cloudformation/1.0.0
-        deploymentEnvironment: Environments/AWS-DATA-LAKE
+        deploymentEnvironment: Environments/DATA-LAKE/AWS-DATA-LAKE
     # Get the application URL and verify
     - name: Test
       type: xlrelease.Phase
@@ -58,7 +58,7 @@ spec:
           type: xld.GetCITask
           server: XL Deploy
           accept: json
-          ciID: Environments/data-lake-dictionary
+          ciID: Environments/DATA-LAKE/data-lake-dictionary
           variableMapping:
             pythonScript.response: "${DATALAKE_DICTIONARY_CI}"
         - name: Get console URL
@@ -96,7 +96,7 @@ spec:
         team: Release Admin
         description: |
           The data lake app is now live on AWS!
-          Check out the console and complete this task when done. 
+          Check out the console and complete this task when done.
           Your username for the application is {{.AdministratorEmail}} and password is sent to {{.AdministratorEmail}}
 
           URL => ${DATALAKE_CONSOLE_URL}
@@ -108,15 +108,15 @@ spec:
       - name: Undeploy cloudformation stack
         type: xldeploy.Undeploy
         server: XL Deploy
-        deployedApplication: Environments/AWS-DATA-LAKE/aws-data-lake-solution-cloudformation
+        deployedApplication: Environments/DATA-LAKE/AWS-DATA-LAKE/aws-data-lake-solution-cloudformation
       - name: Delete artifacts from S3
         type: xldeploy.Undeploy
         server: XL Deploy
-        deployedApplication: Environments/AWS-DATA-LAKE/aws-data-lake-solution-artifacts
+        deployedApplication: Environments/DATA-LAKE/AWS-DATA-LAKE/aws-data-lake-solution-artifacts
       - name: Delete S3 bucket
         type: xldeploy.Undeploy
         server: XL Deploy
-        deployedApplication: Environments/AWS-DATA-LAKE/aws-data-lake-solution-bucket
+        deployedApplication: Environments/DATA-LAKE/AWS-DATA-LAKE/aws-data-lake-solution-bucket
       - name: Delete Cognito user pool and Cloudwatch logs
         type: xlrelease.GateTask
         team: Release Admin

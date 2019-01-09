@@ -30,7 +30,7 @@ spec:
         type: xldeploy.Deploy
         server: XL Deploy
         deploymentPackage: {{$app}}/{{$app}}-ecs-fargate-cluster/1.0
-        deploymentEnvironment: Environments/AWS
+        deploymentEnvironment: Environments/{{$app}}/AWS
 
     - name: Deploy {{$app}} application
       type: xlrelease.Phase
@@ -40,7 +40,7 @@ spec:
         type: xldeploy.Deploy
         server: XL Deploy
         deploymentPackage: {{$app}}/{{$app}}-app-service/1.0
-        deploymentEnvironment: Environments/AWS
+        deploymentEnvironment: Environments/{{$app}}/AWS
     # Get the application URL and verify
     - name: Test
       type: xlrelease.Phase
@@ -103,8 +103,8 @@ spec:
       - name: Undeploy application services
         type: xldeploy.Undeploy
         server: XL Deploy
-        deployedApplication: Environments/AWS/{{$app}}-app-service
+        deployedApplication: Environments/{{$app}}/AWS/{{$app}}-app-service
       - name: Deprovision application infrastructure
         type: xldeploy.Undeploy
         server: XL Deploy
-        deployedApplication: Environments/AWS/{{$app}}-ecs-fargate-cluster
+        deployedApplication: Environments/{{$app}}/AWS/{{$app}}-ecs-fargate-cluster

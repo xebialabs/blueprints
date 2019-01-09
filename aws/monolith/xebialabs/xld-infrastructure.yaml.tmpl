@@ -119,17 +119,19 @@ spec:
           - 'Name:{{$app}}-ecs-security-group'
           dbName: store
           masterUsername: store
-          masterUserPassword: {{.MySQLMasterPassword}} 
+          masterUserPassword: {{.MySQLMasterPassword}}
           boundTemplates:
           - "../{{$app}}-ecs-dictionary"
         templates:
         - name: {{$app}}-ecs-dictionary
           type: template.udm.Dictionary
+          instanceName: {{$app}}/{{$app}}-ecs-dictionary
           entries:
             MYSQL_DB_ADDRESS: '{{"{{%address%}}"}}'
             MYSQL_DB_PORT: '{{"{{%finalPort%}}"}}'
         - name: {{$app}}-ecs-alb-dictionary
           type: template.udm.Dictionary
+          instanceName: {{$app}}/{{$app}}-ecs-alb-dictionary
           entries:
             ALB_DNS_NAME: '{{"{{%dnsName%}}"}}'
 
