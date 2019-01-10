@@ -11,21 +11,21 @@ spec:
       - name: {{$app}}-invoice-mysql
         type: udm.Application
         children:
-        - name: {{$app}}-invoice-mysql
+        - name: !value BUILD_ID
           type: udm.DeploymentPackage
           deployables:
           - name: {{$app}}-invoice-mysql
             type: k8s.ResourcesFile
-            file: !file ../invoice/kubernetes/invoice-mysql.yml
+            file: !file ../invoice/build/kubernetes/invoice-mysql.yml
       - name: {{$app}}-invoice
         type: udm.Application
         children:
-        - name: {{$app}}-invoice
+        - name: !value BUILD_ID
           type: udm.DeploymentPackage
           deployables:
           - name: {{$app}}-invoice-deployment
             type: k8s.ResourcesFile
-            file: !file ../invoice/kubernetes/invoice-deployment.yml
+            file: !file ../invoice/build/kubernetes/invoice-deployment.yml
           - name: {{$app}}-invoice-svc
             type: k8s.ResourcesFile
-            file: !file ../invoice/kubernetes/invoice-service.yml
+            file: !file ../invoice/build/kubernetes/invoice-service.yml

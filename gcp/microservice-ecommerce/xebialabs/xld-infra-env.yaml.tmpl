@@ -21,10 +21,7 @@ spec:
     password: {{.K8SMasterPassword}}
     apiServerURL: {{.ClusterEndpoint}}
     skipTLS: true
-    children:
-    - name: {{.Namespace | kebabcase}}
-      type: k8s.Namespace
-      namespaceName: {{.Namespace}}    
+
 ---
 apiVersion: xl-deploy/v1
 kind: Environments
@@ -40,7 +37,6 @@ spec:
   - name: gcp-gke-{{$app}}
     type: udm.Environment
     members:
-    - Infrastructure/{{$app}}/gcp-gke-{{.ClusterName | kebabcase}}/{{.Namespace | kebabcase}}
     - Infrastructure/{{$app}}/gcp-gke-{{.ClusterName | kebabcase}}
 {{else}}
 # Definition of existing GKE cluster

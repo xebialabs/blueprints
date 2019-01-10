@@ -28,16 +28,7 @@ spec:
       type: xlrelease.StringVariable
       requiresValue: false
       showOnReleaseStart: false
-    - key: AWSaccessKey
-      type: xlrelease.StringVariable
-      requiresValue: true
-      showOnReleaseStart: false
-      value: {{.AWSAccessKey}}
-    - key: AWSaccessSecret
-      type: xlrelease.StringVariable
-      requiresValue: true
-      showOnReleaseStart: false
-      value: {{.AWSAccessSecret}}
+      
     - key: store-admin-username
       type: xlrelease.StringVariable
       requiresValue: true
@@ -63,8 +54,8 @@ spec:
       - name: Provision GCP GKE cluster
         type: xldeploy.Deploy
         server: XL Deploy
-        deploymentPackage: {{$app}}/EKS-CLOUDFORMATION/{{$app}}-cloudformation-eks-master/1.0.0
-        deploymentEnvironment: Environments/{{$app}}/aws-cloudformation-{{$app}}
+        deploymentPackage: {{$app}}/GKE-TERRAFORM/{{$app}}-terraform-gke/1.0.0
+        deploymentEnvironment: Environments/{{$app}}/gcp-terraform
     {{end}}
     - name: Build {{$app}} application
       type: xlrelease.Phase
@@ -101,7 +92,7 @@ spec:
         type: xldeploy.Deploy
         server: XL Deploy
         deploymentPackage: {{$app}}/K8S/{{$app}}-namespace/1.0.0
-        deploymentEnvironment: Environments/{{$app}}/aws-eks-{{$app}}
+        deploymentEnvironment: Environments/{{$app}}/gcp-gke-{{$app}}
       {{end}}
       - name: Deploy stateful services
         type: xlrelease.ParallelGroup
@@ -110,17 +101,17 @@ spec:
           type: xldeploy.Deploy
           server: XL Deploy
           deploymentPackage: {{$app}}/K8S/{{$app}}-invoice-mysql/1.0.${invoiceBuildNumber}
-          deploymentEnvironment: Environments/{{$app}}/aws-eks-{{$app}}
+          deploymentEnvironment: Environments/{{$app}}/gcp-gke-{{$app}}
         - name: Deploy store mysql svc
           type: xldeploy.Deploy
           server: XL Deploy
           deploymentPackage: {{$app}}/K8S/{{$app}}-store-mysql/1.0.${storeBuildNumber}
-          deploymentEnvironment: Environments/{{$app}}/aws-eks-{{$app}}
+          deploymentEnvironment: Environments/{{$app}}/gcp-gke-{{$app}}
         - name: Deploy notification mongodb svc
           type: xldeploy.Deploy
           server: XL Deploy
           deploymentPackage: {{$app}}/K8S/{{$app}}-notification-mongodb/1.0.${notificationBuildNumber}
-          deploymentEnvironment: Environments/{{$app}}/aws-eks-{{$app}}
+          deploymentEnvironment: Environments/{{$app}}/gcp-gke-{{$app}}
       - name: Deploy stateless services
         type: xlrelease.SequentialGroup
         tasks:
@@ -128,7 +119,7 @@ spec:
           type: xldeploy.Deploy
           server: XL Deploy
           deploymentPackage: {{$app}}/K8S/{{$app}}-registry/1.0.${storeBuildNumber}
-          deploymentEnvironment: Environments/{{$app}}/aws-eks-{{$app}}
+          deploymentEnvironment: Environments/{{$app}}/gcp-gke-{{$app}}
         - name: Deploy microservices
           type: xlrelease.ParallelGroup
           tasks:
@@ -136,17 +127,17 @@ spec:
             type: xldeploy.Deploy
             server: XL Deploy
             deploymentPackage: {{$app}}/K8S/{{$app}}-invoice/1.0.${invoiceBuildNumber}
-            deploymentEnvironment: Environments/{{$app}}/aws-eks-{{$app}}
+            deploymentEnvironment: Environments/{{$app}}/gcp-gke-{{$app}}
           - name: Deploy notification svc
             type: xldeploy.Deploy
             server: XL Deploy
             deploymentPackage: {{$app}}/K8S/{{$app}}-notification/1.0.${notificationBuildNumber}
-            deploymentEnvironment: Environments/{{$app}}/aws-eks-{{$app}}
+            deploymentEnvironment: Environments/{{$app}}/gcp-gke-{{$app}}
           - name: Deploy store svc
             type: xldeploy.Deploy
             server: XL Deploy
             deploymentPackage: {{$app}}/K8S/{{$app}}-store/1.0.${storeBuildNumber}
-            deploymentEnvironment: Environments/{{$app}}/aws-eks-{{$app}}
+            deploymentEnvironment: Environments/{{$app}}/gcp-gke-{{$app}}
     - name: Test
       type: xlrelease.Phase
       tasks:
@@ -158,11 +149,7 @@ spec:
           server: XL Deploy
           numberOfContinueRetrials: 100
           pollingInterval: 10
-          {{if eq .ProvisionCluster "true"}}
-          ciId: Infrastructure/{{$app}}/eks-{{$app}}/eks-cluster
-          {{else}}
-          ciId: Infrastructure/{{$app}}/eks-{{.ClusterName | kebabcase}}
-          {{end}}
+          ciId: Infrastructure/{{$app}}/gcp-gke-{{.ClusterName | kebabcase}}
           taskName: describeService
           variableMapping:
             pythonScript.xlDeployTaskId: ${taskId}

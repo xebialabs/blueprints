@@ -11,16 +11,16 @@ spec:
       - name: {{$app}}-store-mysql
         type: udm.Application
         children:
-        - name: {{$app}}-store-mysql
+        - name: !value BUILD_ID
           type: udm.DeploymentPackage
           deployables:
           - name: {{$app}}-store-mysql
             type: k8s.ResourcesFile
-            file: !file ../store/kubernetes/store-mysql.yml
+            file: !file ../store/build/kubernetes/store-mysql.yml
       - name: {{$app}}-registry
         type: udm.Application
         children:
-        - name: {{$app}}-registry
+        - name: !value BUILD_ID
           type: udm.DeploymentPackage
           deployables:
           - name: {{$app}}-application-config
@@ -32,12 +32,12 @@ spec:
       - name: {{$app}}-store
         type: udm.Application
         children:
-        - name: {{$app}}-store
+        - name: !value BUILD_ID
           type: udm.DeploymentPackage
           deployables:
           - name: {{$app}}-store-deployment
             type: k8s.ResourcesFile
-            file: !file ../store/kubernetes/store-deployment.yml
+            file: !file ../store/build/kubernetes/store-deployment.yml
           - name: {{$app}}-store-svc
             type: k8s.ResourcesFile
-            file: !file ../store/kubernetes/store-service.yml
+            file: !file ../store/build/kubernetes/store-service.yml
