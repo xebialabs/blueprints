@@ -1,4 +1,5 @@
 {{$app := .AppName | kebabcase}}
+{{$clusterName := .ClusterName | kebabcase}}
 apiVersion: xl-release/v1
 kind: Templates
 spec:
@@ -211,7 +212,7 @@ spec:
           {{if eq .ProvisionCluster "true"}}
           ciId: Infrastructure/{{$app}}/eks-{{$app}}/eks-cluster
           {{else}}
-          ciId: Infrastructure/{{$app}}/eks-{{.ClusterName | kebabcase}}
+          ciId: Infrastructure/{{$app}}/eks-{{$clusterName}}
           {{end}}
           taskName: describeService
           variableMapping:

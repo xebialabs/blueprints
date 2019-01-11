@@ -1,4 +1,5 @@
 {{$app := .AppName | kebabcase}}
+{{$clusterName := .ClusterName | kebabcase}}
 apiVersion: xl-deploy/v1
 kind: Applications
 spec:
@@ -25,6 +26,16 @@ spec:
             region: {{.GCPRegion}}
             gke_master_user: {{.K8SMasterUser}}
             gke_master_pass: {{.K8SMasterPassword}}
+          boundTemplates:
+          - "../gcp-gke-{{$clusterName}}"
+        templates:
+        - name: gcp-gke-{{$clusterName}}
+          type: template.k8s.Master
+          username: {{.K8SMasterUser}}
+          password: {{.K8SMasterPassword}}
+          apiServerURL: 'https://{{"{{%outputVariables.endpoint%}}"}}'
+          skipTLS: true
+          instanceName: {{$app}}/gcp-gke-{{$clusterName}}
 
 {{end}}
   - name: K8S

@@ -1,4 +1,5 @@
 {{$app := .AppName | kebabcase}}
+{{$clusterName := .ClusterName | kebabcase}}
 apiVersion: xl-release/v1
 kind: Templates
 spec:
@@ -149,7 +150,7 @@ spec:
           server: XL Deploy
           numberOfContinueRetrials: 100
           pollingInterval: 10
-          ciId: Infrastructure/{{$app}}/gcp-gke-{{.ClusterName | kebabcase}}
+          ciId: Infrastructure/{{$app}}/gcp-gke-{{$clusterName}}
           taskName: describeService
           variableMapping:
             pythonScript.xlDeployTaskId: ${taskId}
