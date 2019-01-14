@@ -99,23 +99,11 @@ spec:
           server: XL Deploy
           deploymentPackage: {{$app}}/EKS-CLOUDFORMATION/{{$app}}-cloudformation-eks-workers/1.0.0
           deploymentEnvironment: Environments/{{$app}}/aws-cloudformation-{{$app}}
-        - name: Add accessKey to EKS cluster CI
-          type: xld.UpdateCIProperty
-          server: XL Deploy
-          ciID: Infrastructure/{{$app}}/eks-{{$app}}/eks-cluster
-          ciProperty: accessKey
-          propertyValue: ${AWSaccessKey}
-        - name: Add accessSecret to EKS cluster CI
-          type: xld.UpdateCIProperty
-          server: XL Deploy
-          ciID: Infrastructure/{{$app}}/eks-{{$app}}/eks-cluster
-          ciProperty: accessSecret
-          propertyValue: ${AWSaccessSecret}
         - name: Provision EKS config map for workers
           type: xldeploy.Deploy
           server: XL Deploy
           deploymentPackage: {{$app}}/EKS-CLOUDFORMATION/{{$app}}-k8s-configmap/1.0.0
-          deploymentEnvironment: Environments/{{$app}}/AWS-PREREQUISITE
+          deploymentEnvironment: Environments/{{$app}}/aws-eks-{{$app}}
     {{end}}
     - name: Build {{$app}} application
       type: xlrelease.Phase

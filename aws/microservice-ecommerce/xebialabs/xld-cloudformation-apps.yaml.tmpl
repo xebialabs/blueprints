@@ -102,6 +102,40 @@ spec:
             ClusterStackName: {{$app}}-eks-master
             ClusterName: {{$app}}-master
             NodeGroupName: {{$app}}
+          boundTemplates:
+            - "../eks-cluster"
+            - "../aws-eks-{{$app}}"
+            - "../aws-eks-{{$app}}-dictionary"
+        templates:
+        - name: eks-cluster
+          type: "template.k8s.Master"
+          apiServerURL: '{{"{{%outputVariables.ClusterEndpoint%}}"}}'
+          skipTLS: "true"
+          isEKS: "true"
+          clusterName: "{{$app}}-master"
+          accessKey: {{.AWSAccessKey}}
+          accessSecret: {{.AWSAccessSecret}}
+          instanceName: "{{$app}}/eks-cluster"
+          childTemplates:
+          - name: kube-system
+            type: "template.k8s.Namespace"
+            namespaceName: "kube-system"
+        - name: aws-eks-{{$app}}-dictionary
+          type: "template.udm.Dictionary"
+          instanceName: "{{$app}}/aws-eks-{{$app}}-dictionary"
+          entries:
+            NODES_ROLE_ARN: '{{"{{%outputVariables.NodeInstanceRole%}}"}}'
+            EKS_USER: '{{"{{%outputVariables.EksUser%}}"}}'
+            EKS_USER_ARN: '{{"{{%outputVariables.EksUserArn%}}"}}'
+            CLUSTER_ENDPOINT: '{{"{{%outputVariables.ClusterEndpoint%}}"}}'
+        - name: aws-eks-{{$app}}
+          type: "template.udm.Environment"
+          instanceName: "{{$app}}/aws-eks-{{$app}}"
+          members:
+            - "../eks-cluster/kube-system"
+            - "../eks-cluster"
+          dictionaries:
+            - "../aws-eks-{{$app}}-dictionary"
     - name: {{$app}}-k8s-configmap
       type: udm.Application
       children:
