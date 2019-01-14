@@ -1,5 +1,8 @@
 {{$app := .AppName | kebabcase}}
 {{$clusterName := .ClusterName | kebabcase}}
+{{/* TODO change to new environment once XLD issue is fixed */}}
+{{/* $appEnv := printf "gcp-gke-%s" $app */}}
+{{$appEnv := printf "gcp-terraform" }}
 apiVersion: xl-release/v1
 kind: Templates
 spec:
@@ -93,7 +96,7 @@ spec:
         type: xldeploy.Deploy
         server: XL Deploy
         deploymentPackage: {{$app}}/K8S/{{$app}}-namespace/1.0.0
-        deploymentEnvironment: Environments/{{$app}}/gcp-gke-{{$app}}
+        deploymentEnvironment: Environments/{{$app}}/{{$appEnv}}
       {{end}}
       - name: Deploy stateful services
         type: xlrelease.ParallelGroup
@@ -102,17 +105,17 @@ spec:
           type: xldeploy.Deploy
           server: XL Deploy
           deploymentPackage: {{$app}}/K8S/{{$app}}-invoice-mysql/1.0.${invoiceBuildNumber}
-          deploymentEnvironment: Environments/{{$app}}/gcp-gke-{{$app}}
+          deploymentEnvironment: Environments/{{$app}}/{{$appEnv}}
         - name: Deploy store mysql svc
           type: xldeploy.Deploy
           server: XL Deploy
           deploymentPackage: {{$app}}/K8S/{{$app}}-store-mysql/1.0.${storeBuildNumber}
-          deploymentEnvironment: Environments/{{$app}}/gcp-gke-{{$app}}
+          deploymentEnvironment: Environments/{{$app}}/{{$appEnv}}
         - name: Deploy notification mongodb svc
           type: xldeploy.Deploy
           server: XL Deploy
           deploymentPackage: {{$app}}/K8S/{{$app}}-notification-mongodb/1.0.${notificationBuildNumber}
-          deploymentEnvironment: Environments/{{$app}}/gcp-gke-{{$app}}
+          deploymentEnvironment: Environments/{{$app}}/{{$appEnv}}
       - name: Deploy stateless services
         type: xlrelease.SequentialGroup
         tasks:
@@ -120,7 +123,7 @@ spec:
           type: xldeploy.Deploy
           server: XL Deploy
           deploymentPackage: {{$app}}/K8S/{{$app}}-registry/1.0.${storeBuildNumber}
-          deploymentEnvironment: Environments/{{$app}}/gcp-gke-{{$app}}
+          deploymentEnvironment: Environments/{{$app}}/{{$appEnv}}
         - name: Deploy microservices
           type: xlrelease.ParallelGroup
           tasks:
@@ -128,17 +131,17 @@ spec:
             type: xldeploy.Deploy
             server: XL Deploy
             deploymentPackage: {{$app}}/K8S/{{$app}}-invoice/1.0.${invoiceBuildNumber}
-            deploymentEnvironment: Environments/{{$app}}/gcp-gke-{{$app}}
+            deploymentEnvironment: Environments/{{$app}}/{{$appEnv}}
           - name: Deploy notification svc
             type: xldeploy.Deploy
             server: XL Deploy
             deploymentPackage: {{$app}}/K8S/{{$app}}-notification/1.0.${notificationBuildNumber}
-            deploymentEnvironment: Environments/{{$app}}/gcp-gke-{{$app}}
+            deploymentEnvironment: Environments/{{$app}}/{{$appEnv}}
           - name: Deploy store svc
             type: xldeploy.Deploy
             server: XL Deploy
             deploymentPackage: {{$app}}/K8S/{{$app}}-store/1.0.${storeBuildNumber}
-            deploymentEnvironment: Environments/{{$app}}/gcp-gke-{{$app}}
+            deploymentEnvironment: Environments/{{$app}}/{{$appEnv}}
     - name: Test
       type: xlrelease.Phase
       tasks:

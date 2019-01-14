@@ -28,6 +28,8 @@ spec:
             gke_master_pass: {{.K8SMasterPassword}}
           boundTemplates:
           - "../gcp-gke-{{$clusterName}}"
+        # - "../gcp-gke-{{$clusterName}}-env"  {{/* TODO change to new environment once XLD issue is fixed  */}}
+
         templates:
         - name: gcp-gke-{{$clusterName}}
           type: template.k8s.Master
@@ -36,6 +38,12 @@ spec:
           apiServerURL: 'https://{{"{{%outputVariables.endpoint%}}"}}'
           skipTLS: true
           instanceName: {{$app}}/gcp-gke-{{$clusterName}}
+        {{/* TODO change to new environment once XLD issue is fixed */}}
+        # - name: gcp-gke-{{$clusterName}}-env
+        #   type: template.udm.Environment
+        #   members:
+        #   - ../gcp-gke-{{$clusterName}}
+        #   instanceName: {{$app}}/gcp-gke-{{$clusterName}}
 
 {{end}}
   - name: K8S

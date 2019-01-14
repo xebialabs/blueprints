@@ -1,4 +1,7 @@
 {{$app := .AppName | kebabcase}}
+{{/* TODO change to new environment once XLD issue is fixed */}}
+{{/* $appEnv := printf "gcp-gke-%s" $app */}}
+{{$appEnv := printf "gcp-terraform" }}
 apiVersion: xl-release/v1
 kind: Templates
 spec:
@@ -25,40 +28,40 @@ spec:
         - name: Undeploy registry svc
           type: xldeploy.Undeploy
           server: XL Deploy
-          deployedApplication: Environments/{{$app}}/gcp-gke-{{$app}}/{{$app}}-registry
+          deployedApplication: Environments/{{$app}}/{{$appEnv}}/{{$app}}-registry
         - name: Undeploy invoice svc
           type: xldeploy.Undeploy
           server: XL Deploy
-          deployedApplication: Environments/{{$app}}/gcp-gke-{{$app}}/{{$app}}-invoice
+          deployedApplication: Environments/{{$app}}/{{$appEnv}}/{{$app}}-invoice
         - name: Undeploy notification svc
           type: xldeploy.Undeploy
           server: XL Deploy
-          deployedApplication: Environments/{{$app}}/gcp-gke-{{$app}}/{{$app}}-notification
+          deployedApplication: Environments/{{$app}}/{{$appEnv}}/{{$app}}-notification
         - name: Undeploy store svc
           type: xldeploy.Undeploy
           server: XL Deploy
-          deployedApplication: Environments/{{$app}}/gcp-gke-{{$app}}/{{$app}}-store
+          deployedApplication: Environments/{{$app}}/{{$appEnv}}/{{$app}}-store
       - name: Undeploy stateful services
         type: xlrelease.ParallelGroup
         tasks:
         - name: Undeploy invoice mysql svc
           type: xldeploy.Undeploy
           server: XL Deploy
-          deployedApplication: Environments/{{$app}}/gcp-gke-{{$app}}/{{$app}}-invoice-mysql
+          deployedApplication: Environments/{{$app}}/{{$appEnv}}/{{$app}}-invoice-mysql
         - name: Undeploy store mysql svc
           type: xldeploy.Undeploy
           server: XL Deploy
-          deployedApplication: Environments/{{$app}}/gcp-gke-{{$app}}/{{$app}}-store-mysql
+          deployedApplication: Environments/{{$app}}/{{$appEnv}}/{{$app}}-store-mysql
         - name: Undeploy notification mongodb svc
           type: xldeploy.Undeploy
           server: XL Deploy
-          deployedApplication: Environments/{{$app}}/gcp-gke-{{$app}}/{{$app}}-notification-mongodb
+          deployedApplication: Environments/{{$app}}/{{$appEnv}}/{{$app}}-notification-mongodb
       {{if eq .ProvisionCluster "true"}}
       # Un-provision namespace
       - name: Undeploy {{.Namespace}} namespace
         type: xldeploy.Undeploy
         server: XL Deploy
-        deployedApplication: Environments/{{$app}}/gcp-gke-{{$app}}/{{$app}}-namespace
+        deployedApplication: Environments/{{$app}}/{{$appEnv}}/{{$app}}-namespace
       {{end}}
     {{if eq .ProvisionCluster "true"}}
     # De-provision Infra
