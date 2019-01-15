@@ -1,22 +1,29 @@
+{{$app := .AppName | kebabcase}}
 apiVersion: xl-deploy/v1
 kind: Infrastructure
 spec:
-- name: aws
-  type: aws.Cloud
-  accesskey: {{.AWSAccessKey}}
-  accessSecret: {{.AWSAccessSecret}}
+- name: {{$app}}
+  type: core.Directory
+  children:
+  - name: aws
+    type: aws.Cloud
+    accesskey: {{.AWSAccessKey}}
+    accessSecret: {{.AWSAccessSecret}}
 
 ---
 apiVersion: xl-deploy/v1
 kind: Environments
 spec:
-- name: AWS Dictionary
-  type: udm.Dictionary
-  entries:
-    region: !value AWSRegion
-- name: AWS
-  type: udm.Environment
-  members:
-  - "~Infrastructure/aws"
-  dictionaries:
-  - "~Environments/AWS Dictionary"
+- name: {{$app}}
+  type: core.Directory
+  children:
+  - name: AWS Dictionary
+    type: udm.Dictionary
+    entries:
+      region: !value AWSRegion
+  - name: AWS
+    type: udm.Environment
+    members:
+    - Infrastructure/{{$app}}/aws
+    dictionaries:
+    - Environments/{{$app}}/AWS Dictionary
