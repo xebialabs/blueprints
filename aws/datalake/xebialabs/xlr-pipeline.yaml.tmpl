@@ -121,8 +121,10 @@ spec:
         type: xlrelease.GateTask
         team: Release Admin
         description: |
-          Please delete the Cognito domain and user pool manually by visiting below url
+          Please delete the Cognito domain and user pool manually by visiting below urllib2
+
           Domain => https://{{.AWSRegion}}.console.aws.amazon.com/cognito/users?region={{.AWSRegion}}#/pool/${COGNITO_USER_POOL_ID}/app-integration-domain
+          
           User Pool => https://{{.AWSRegion}}.console.aws.amazon.com/cognito/users?region={{.AWSRegion}}#/pool/${COGNITO_USER_POOL_ID}
 
           Please delete all the data lake log groups manually by visiting below url
