@@ -54,5 +54,5 @@ spec:
   - path: terraform/infrastructure/infrastructure.tf
   - path: terraform/infrastructure/outputs.tf
   - path: terraform/infrastructure/variables.tf
-  - path: terraform/service/service.tf
-  - path: terraform/service/variables.tf
+#   - path: terraform/service/service.tf
+#   - path: terraform/service/variables.tf

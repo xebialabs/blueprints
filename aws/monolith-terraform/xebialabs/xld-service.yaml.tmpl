@@ -1,34 +1,68 @@
 {{$app := .AppName | kebabcase}}
 {{$region := "{{AWSRegion}}"}}
-{{$aws_access_key := "{{AWSAccessKey}}"}}
-{{$aws_secret_key := "{{AWSSecretKey}}"}}
 {{$mysql_address := "{{MYSQL_DB_ADDRESS}}"}}
 {{$mysql_port := "{{MYSQL_DB_PORT}}"}}
+{{$executionRole := "{{EXECUTION_ROLE}}"}}
+{{$alb_tg_arn := "{{ALB_TG_ARN}}"}}
+
 apiVersion: xl-deploy/v1
 kind: Applications
 spec:
 - name: {{$app}}
   type: core.Directory
   children:
-    - name: {{$app}}-terraform-service
+    - name: {{$app}}-app-service
       type: udm.Application
       lastVersion: '1.0'
       children:
       - name: '1.0'
         type: udm.DeploymentPackage
         deployables:
-        - name: {{$app}}-terraform-service
-          type: terraform.Module
-          file: !file ../terraform/service
-          targets:
-            - 'aws_ecs_task_definition.ecs-task-definition'
-            - 'aws_ecs_service.ecs-service'
-          inputVariables:
-            app_name: '{{$app}}'
-            aws_access_key: '{{$aws_access_key}}'
-            aws_secret_key: '{{$aws_secret_key}}'
-            region: '{{$region}}'
-            mysql_master_password: {{.MySQLMasterPassword}}
-            public_port: {{.PublicPort}}
-            mysql_address: '{{$mysql_address}}'
-            mysql_port: '{{$mysql_port}}'
+        - name: {{$app}}-ecs-service
+          type: aws.ecs.ServiceSpec
+          serviceName: {{$app}}-ecs-service
+          desiredCount: 1
+          maxDrainRetryCount: 100
+          launchType: FARGATE
+          networkMode: awsvpc
+          assignPublicIp: true
+          executionRole: '{{$executionRole}}'
+          cpu: 2048
+          memory: 4096
+          subnets:
+          - 'Name:{{$app}}-ecs-subnet-ipv4-az-1a'
+          - 'Name:{{$app}}-ecs-subnet-ipv4-az-1b'
+          securityGroups:
+          - 'Name:{{$app}}-ecs-security-group'
+          loadBalancers:
+          - name: {{$app}}-app-alb
+            type: aws.ecs.LoadBalancerSpec
+            targetGroupArn: '{{$alb_tg_arn}}'
+            containerName: {{$app}}-app
+            containerPort: 8080
+          containerDefinitions:
+          - name: {{$app}}-app
+            containerName: {{$app}}-app
+            type: aws.ecs.ContainerDefinitionSpec
+            image: xebialabsunsupported/ecommerce-monolith
+            cpu: 1024
+            softMemoryLimit: 768
+            portMappings:
+            - name: port-mapping-8080
+              type: aws.ecs.PortSpec
+              containerPort: 8080
+            logConfiguration:
+            - name: cloudwatch-log-registry
+              type: aws.ecs.LogConfigurationSpec
+              logDriver: awslogs
+              options:
+                awslogs-group: "/ecs/ecommerce"
+                awslogs-region: '{{$region}}'
+                awslogs-stream-prefix: ecs-ecommerce
+            environment:
+              SPRING_PROFILES_ACTIVE: prod,swagger
+              SPRING_DATASOURCE_URL: jdbc:mysql://{{$mysql_address}}:{{$mysql_port}}/store?useUnicode=true&characterEncoding=utf8&useSSL=false
+              SPRING_DATASOURCE_USERNAME: store
+              SPRING_DATASOURCE_PASSWORD: {{.MySQLMasterPassword}} 
+              # JHIPSTER_SLEEP: 10 # gives time for the database to boot before the application
+              # JAVA_OPTS:  -Xmx256m -Xms256m
