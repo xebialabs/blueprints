@@ -1,7 +1,7 @@
 {{$app := .AppName | kebabcase}}
-# e-commerce microservice application on AWS EKS
+# e-commerce microservice application on GCP GKE
 
-The blueprint deploys an e-commerce microservice created using JHipster to AWS EKS.
+The blueprint deploys an e-commerce microservice created using JHipster to Google Kubernetes Engine.
 XL Deploy does the provisioning and deployment, while XL Release orchestrates everything.
 
 ## Prerequisites
@@ -137,7 +137,7 @@ Please note that you need to obtain a trial license or bring your own license fo
     3. Run `docker-compose up --build` on the `xl-platform` folder.
 
 2. Git clone [https://github.com/xebialabs/e-commerce-microservice/tree/blueprint-demo](https://github.com/xebialabs/e-commerce-microservice/tree/blueprint-demo).
-3. Generate the blueprint with `xl blueprint -t aws/microservice-ecommerce`.
+3. Generate the blueprint with `xl blueprint -t gcp/microservice-ecommerce`.
 
 
 To deploy this blueprint with the XebiaLabs DevOps Platform, follow the steps below:
