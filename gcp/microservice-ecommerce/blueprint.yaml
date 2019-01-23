@@ -15,7 +15,6 @@ spec:
   - name: AppName
     type: Input
     description: What is the name of the application?
-
   # GCP specific variables
   - name: GCPProjectID
     type: Input
@@ -27,7 +26,8 @@ spec:
   - name: K8SMasterPassword
     type: Input
     secret: true
-    description: What is the password for Kubernetes cluster?
+    description: What is the password for Kubernetes cluster? (minimum 16 characters)
+    pattern: "(\\S){16,}"
   - name: GCPRegion
     type: Select
     description: "Select the GCP region:"
