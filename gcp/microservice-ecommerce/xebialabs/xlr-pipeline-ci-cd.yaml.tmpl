@@ -71,24 +71,18 @@ spec:
         - name: Build {{$app}} store docker image
           type: jenkins.Build
           jenkinsServer: jenkins
-          jobName: devops-as-code-eks-blueprint-store-svc
+          jobName: devops-as-code-blueprint-store-svc
           owner: admin
-          variableMapping:
-            pythonScript.buildNumber: ${storeBuildNumber}
         - name: Build {{$app}} notification docker image
           type: jenkins.Build
           jenkinsServer: jenkins
-          jobName: devops-as-code-eks-blueprint-notification-svc
+          jobName: devops-as-code-blueprint-notification-svc
           owner: admin
-          variableMapping:
-            pythonScript.buildNumber: ${notificationBuildNumber}
         - name: Build {{$app}} invoice docker image
           type: jenkins.Build
           jenkinsServer: jenkins
-          jobName: devops-as-code-eks-blueprint-invoice-svc
+          jobName: devops-as-code-blueprint-invoice-svc
           owner: admin
-          variableMapping:
-            pythonScript.buildNumber: ${invoiceBuildNumber}
     {{end}}
     - name: Deploy {{$app}} application
       type: xlrelease.Phase

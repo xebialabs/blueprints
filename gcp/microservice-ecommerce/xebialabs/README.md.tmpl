@@ -1,7 +1,7 @@
 {{$app := .AppName | kebabcase}}
 # e-commerce microservice application on GCP GKE
 
-The blueprint deploys an e-commerce microservice created using JHipster to Google Kubernetes Engine.
+The blueprint deploys an e-commerce microservice created using JHipster to Google Kubernetes Engine using Terraform and XL-Deploy.
 XL Deploy does the provisioning and deployment, while XL Release orchestrates everything.
 
 ## Prerequisites
@@ -16,7 +16,7 @@ gcloud compute regions list
 gcloud compute zones list
 ```
 
-Follow gcloud init and select default Zone Ex. asia-south1
+Follow gcloud init and select default Zone Ex. europe-west1
 
 ```sh
 gcloud init
@@ -26,7 +26,7 @@ gcloud init
 
 ### Creating Google Cloud project and service account for terraform
 
-Best practice to use separate account "technical account" to manage infrastructure, this account can be used in automated code deployment like in Jenkins, CirceleCI or any other tool you may choose.
+Best practice to use separate account "technical account" to manage infrastructure, this account can be used in automated code deployment like in Terraform or XL-Deploy or any other tool you may choose.
 
 #### Set up environment
 
@@ -57,7 +57,7 @@ gcloud beta billing accounts list
 
 #### Create the Terraform service account
 
-Create the service account in the GCP project and download the JSON credentials:
+Create the service account in the GCP project and download the JSON credentials(This will be needed later for the blueprints):
 
 ```sh
 gcloud iam service-accounts create terraform \
@@ -130,16 +130,25 @@ gsutil versioning set on gs://${TF_ADMIN}
 
 ## Using the blueprint
 
-1. If you do not have XL Release and XL Deploy instances running, you can use this Docker Compose setup to spin them up. The setup also contains a preconfigured Jenkins instance.
+1. Git clone [https://github.com/xebialabs/e-commerce-microservice/tree/gke-blueprint](https://github.com/xebialabs/e-commerce-microservice/tree/gke-blueprint).
+2. CD into the "e-commerce-microservice" folder that you cloned and ensure that you are on the "gke-blueprint" branch.
+3. If you do not have XL Release and XL Deploy instances running, you can use the Docker Compose setup provided on the cloned repo to spin them up. The setup also contains a preconfigured Jenkins instance.
 Please note that you need to obtain a trial license or bring your own license for XL Release and XL Deploy. Follow the steps below to use the Docker Compose files.
 
-    1. Download the contents of https://github.com/xebialabs/e-commerce-microservice/tree/gke-blueprint/docker-compose/xebialabs into a folder such as `xl-platform`.
-    2. Copy the license for XL Release into `xl-platform/xl-release/default-conf/` and the license for XL Deploy into `xl-platform/xl-deploy/default-conf/`.
-    3. Run `docker-compose up --build` on the `xl-platform` folder.
+    1. CD into the folder "xebialabs-docker-setup" of the cloned repo.
+    2. Copy the license for XL Release into `xebialabs-docker-setup/xl-release/default-conf/` and the license for XL Deploy into `xebialabs-docker-setup/xl-deploy/default-conf/`.
+    3. If you are using Jenkins for CI/CD please set the following environment variables before starting the containers
 
-2. Git clone [https://github.com/xebialabs/e-commerce-microservice/tree/gke-blueprint](https://github.com/xebialabs/e-commerce-microservice/tree/gke-blueprint).
-3. Generate the blueprint with `xl blueprint -t gcp/microservice-ecommerce`.
+    ```
+    export GITHUB_USER=<your GitHub user name>
+    export DOCKER_USER=<your Docker user name>
+    export DOCKER_PASS=<your Docker password>
+    ``
+    4. Run `docker-compose up --build` on the `xebialabs-docker-setup` folder.
 
+4. Generate the blueprint with `xl blueprint -t gcp/microservice-ecommerce` or copy the generated content to the "e-commerce-microservice" folder
+5. Ensure the "account.json" you downloaded earlier is placed inside the "terraform" folder that is created by the blueprint.
+`
 
 To deploy this blueprint with the XebiaLabs DevOps Platform, follow the steps below:
 
@@ -150,3 +159,4 @@ To deploy this blueprint with the XebiaLabs DevOps Platform, follow the steps be
     ```
 
 2. Go to XL Release, look for the "{{$app}}-ci-cd" template, and start a new release from it.
+3. Once you are done, go to XL Release, look for the "{{$app}}-destroy" template, and start a new release from it to automatically rollback and destroy the resources you created.
