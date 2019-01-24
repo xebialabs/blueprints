@@ -11,33 +11,33 @@ spec:
       - name: {{$app}}-store-mysql
         type: udm.Application
         children:
-        - name: !value BUILD_ID
+        - name: 1.0.0
           type: udm.DeploymentPackage
           deployables:
           - name: {{$app}}-store-mysql
             type: k8s.ResourcesFile
-            file: !file ../store/build/kubernetes/store-mysql.yml
+            file: !file ../kubernetes/store/store-mysql.yml
       - name: {{$app}}-registry
         type: udm.Application
         children:
-        - name: !value BUILD_ID
+        - name: 1.0.0
           type: udm.DeploymentPackage
           deployables:
           - name: {{$app}}-application-config
             type: k8s.ResourcesFile
-            file: !file ../registry/kubernetes/application-configmap.yml
+            file: !file ../kubernetes/registry/application-configmap.yml
           - name: {{$app}}-jhipster-registry
             type: k8s.ResourcesFile
-            file: !file ../registry/kubernetes/jhipster-registry.yml
+            file: !file ../kubernetes/registry/jhipster-registry.yml
       - name: {{$app}}-store
         type: udm.Application
         children:
-        - name: !value BUILD_ID
+        - name: 1.0.0
           type: udm.DeploymentPackage
           deployables:
           - name: {{$app}}-store-deployment
             type: k8s.ResourcesFile
-            file: !file ../store/build/kubernetes/store-deployment.yml
+            file: !file ../kubernetes/store/store-deployment.yml
           - name: {{$app}}-store-svc
             type: k8s.ResourcesFile
-            file: !file ../store/build/kubernetes/store-service.yml
+            file: !file ../kubernetes/store/store-service.yml

@@ -65,6 +65,9 @@ spec:
     type: Input
     description: What is the name of the namespace? This should be same as the one used in Kubernetes files.
     default: xl-demo
+  - name: enableCICD
+    type: Confirm
+    description: Do you want to enable CI/CD integration with Jenkins?
   - name: StoreAdminUsername
     type: Input
     description: Store Admin username

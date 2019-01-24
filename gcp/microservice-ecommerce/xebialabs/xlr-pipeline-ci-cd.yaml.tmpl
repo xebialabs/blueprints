@@ -61,6 +61,7 @@ spec:
         deploymentPackage: {{$app}}/GKE-TERRAFORM/{{$app}}-terraform-gke/1.0.0
         deploymentEnvironment: Environments/{{$app}}/gcp-terraform
     {{end}}
+    {{if eq .enableCICD "true"}}
     - name: Build {{$app}} application
       type: xlrelease.Phase
       tasks:
@@ -88,6 +89,7 @@ spec:
           owner: admin
           variableMapping:
             pythonScript.buildNumber: ${invoiceBuildNumber}
+    {{end}}
     - name: Deploy {{$app}} application
       type: xlrelease.Phase
       tasks:
@@ -104,17 +106,17 @@ spec:
         - name: Deploy invoice mysql svc
           type: xldeploy.Deploy
           server: XL Deploy
-          deploymentPackage: {{$app}}/K8S/{{$app}}-invoice-mysql/1.0.${invoiceBuildNumber}
+          deploymentPackage: {{$app}}/K8S/{{$app}}-invoice-mysql/1.0.0
           deploymentEnvironment: Environments/{{$app}}/{{$appEnv}}
         - name: Deploy store mysql svc
           type: xldeploy.Deploy
           server: XL Deploy
-          deploymentPackage: {{$app}}/K8S/{{$app}}-store-mysql/1.0.${storeBuildNumber}
+          deploymentPackage: {{$app}}/K8S/{{$app}}-store-mysql/1.0.0
           deploymentEnvironment: Environments/{{$app}}/{{$appEnv}}
         - name: Deploy notification mongodb svc
           type: xldeploy.Deploy
           server: XL Deploy
-          deploymentPackage: {{$app}}/K8S/{{$app}}-notification-mongodb/1.0.${notificationBuildNumber}
+          deploymentPackage: {{$app}}/K8S/{{$app}}-notification-mongodb/1.0.0
           deploymentEnvironment: Environments/{{$app}}/{{$appEnv}}
       - name: Deploy stateless services
         type: xlrelease.SequentialGroup
@@ -122,7 +124,7 @@ spec:
         - name: Deploy registry svc
           type: xldeploy.Deploy
           server: XL Deploy
-          deploymentPackage: {{$app}}/K8S/{{$app}}-registry/1.0.${storeBuildNumber}
+          deploymentPackage: {{$app}}/K8S/{{$app}}-registry/1.0.0
           deploymentEnvironment: Environments/{{$app}}/{{$appEnv}}
         - name: Deploy microservices
           type: xlrelease.ParallelGroup
@@ -130,17 +132,17 @@ spec:
           - name: Deploy invoice svc
             type: xldeploy.Deploy
             server: XL Deploy
-            deploymentPackage: {{$app}}/K8S/{{$app}}-invoice/1.0.${invoiceBuildNumber}
+            deploymentPackage: {{$app}}/K8S/{{$app}}-invoice/1.0.0
             deploymentEnvironment: Environments/{{$app}}/{{$appEnv}}
           - name: Deploy notification svc
             type: xldeploy.Deploy
             server: XL Deploy
-            deploymentPackage: {{$app}}/K8S/{{$app}}-notification/1.0.${notificationBuildNumber}
+            deploymentPackage: {{$app}}/K8S/{{$app}}-notification/1.0.0
             deploymentEnvironment: Environments/{{$app}}/{{$appEnv}}
           - name: Deploy store svc
             type: xldeploy.Deploy
             server: XL Deploy
-            deploymentPackage: {{$app}}/K8S/{{$app}}-store/1.0.${storeBuildNumber}
+            deploymentPackage: {{$app}}/K8S/{{$app}}-store/1.0.0
             deploymentEnvironment: Environments/{{$app}}/{{$appEnv}}
     - name: Test
       type: xlrelease.Phase
