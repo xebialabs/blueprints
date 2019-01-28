@@ -137,13 +137,16 @@ Please note that you need to obtain a trial license or bring your own license fo
 
     1. CD into the folder "xebialabs-docker-setup" of the cloned repo.
     2. Copy the license for XL Release into `xebialabs-docker-setup/xl-release/default-conf/` and the license for XL Deploy into `xebialabs-docker-setup/xl-deploy/default-conf/`.
-    3. If you are using Jenkins for CI/CD please set the following environment variables before starting the containers
+    3. If you are using Jenkins for CI/CD please follow these additional steps
+        1. Set the following environment variables before starting the docker containers
 
-    ```
-    export GITHUB_USER=<your GitHub user name>
-    export DOCKER_USER=<your Docker user name>
-    export DOCKER_PASS=<your Docker password>
-    ``
+        ```
+        export GITHUB_USER=<your GitHub user name>
+        export DOCKER_USER=<your Docker user name>
+        export DOCKER_PASS=<your Docker password>
+        ```
+        2. Replace the occurrences of `xebialabsunsupported` in the `kubernetes/*-deployment.yml` files with your own DockerHub ID
+        3. Push the cloned repository to your GitHub account so that Jenkins can checkout `https://github.com/${GITHUB_USER}/e-commerce-microservice.git`
     4. Run `docker-compose up --build` on the `xebialabs-docker-setup` folder.
 
 4. Generate the blueprint with `xl blueprint -t gcp/microservice-ecommerce` or copy the generated content to the "e-commerce-microservice" folder
