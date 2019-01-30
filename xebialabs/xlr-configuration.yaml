@@ -1,0 +1,6 @@
+apiVersion: xl-release/v1
+kind: Templates
+spec:
+  - name: fdfd
+    type: xlrelease.Folder
+    children:
