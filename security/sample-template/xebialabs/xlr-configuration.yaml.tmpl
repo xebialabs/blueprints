@@ -1,0 +1,45 @@
+{{$app := .AppName | kebabcase}}
+{{$sonarServer := "Sonarqube Server"}}
+{{$fortifyServer := "Fortify Server"}}
+{{$checkmarxServer := "Checkmarx Server"}}
+{{$blackduckServer := "Blackduck Server"}}
+apiVersion: xl-release/v1
+kind: Templates
+spec:
+  - name: {{$app}}
+    type: xlrelease.Folder
+    children:
+  {{- if eq .ConfigureSonar "true"}}
+    - name: {{$sonarServer}}
+      type: sonar.Server
+      url: {{.SonarUrl}}
+      authenticationMethod: Basic
+      username: {{.SonarUsername}}
+      password: {{.SonarPassword}}
+  {{- end}}
+  {{- if eq .ConfigureFortify "true"}}
+    - name: {{$fortifyServer}}
+    {{- if eq .SelectedFortify "fortify"}}
+      type: fortify.Server
+    {{- else}}
+      type: fortifyOnDemand.Server
+    {{- end}}
+      url: {{.FortifyUrl}}
+      username: {{.FortifyUsername}}
+      password: {{.FortifyPassword}}
+  {{- end}}
+  {{- if eq .ConfigureCheckmarx "true"}}
+    - name: {{$checkmarxServer}}
+      type: checkmarx.Server
+      url: {{.CheckmarxUrl}}
+      username: {{.CheckmarxUsername}}
+      password: {{.CheckmarxPassword}}
+  {{- end}}
+  {{- if eq .ConfigureBlackduck "true"}}
+    - name: {{$blackduckServer}}
+      type: blackduck.Server
+      url: {{.BlackduckUrl}}
+      username: {{.BlackduckUsername}}
+      password: {{.BlackduckPassword}}
+      trustCertificate: true
+  {{- end}}

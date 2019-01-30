@@ -1,0 +1,141 @@
+apiVersion: xl/v1
+kind: Blueprint
+metadata:
+  projectName: Security and Compliance Demo Application
+  description: |
+    The blueprint creates a simple template to orchestrate Security and Compliance with XL Release.
+  author: XebiaLabs
+  version: 1.0
+spec:
+  parameters:
+  - name: AppName
+    type: Input
+    description: What is the Application name?
+  - name: ConfigureSonar
+    type: Confirm
+    description: Do you want to configure a Sonarqube compliance?
+  - name: SonarUrl
+    type: Input
+    dependsOnTrue: ConfigureSonar
+    description: What is the URL for the sonarqube, example https://sonarcloud.io ?
+    default: https://sonarcloud.io
+  - name: ConfigureSonarUsername
+    type: Confirm
+    dependsOnTrue: ConfigureSonar
+    description: Do you want to enter username for sonarqube?
+  - name: SonarUsername
+    type: Input
+    dependsOnTrue: ConfigureSonarUsername
+    description: What is the username for the sonarqube?
+    saveInXlVals: true
+    default: ""
+  - name: ConfigureSonarPassword
+    type: Confirm
+    dependsOnTrue: ConfigureSonar
+    description: Do you want to enter password for sonarqube?
+  - name: SonarPassword
+    type: Input
+    secret: true
+    dependsOnTrue: ConfigureSonarPassword
+    description: What is the password for the sonarqube?
+    default: ""
+  - name: SonarResource
+    type: Input
+    dependsOnTrue: ConfigureSonar
+    description: What is the project key for the sonarqube?
+  - name: ConfigureFortify
+    type: Confirm
+    description: Do you want to configure a fortify compliance?
+  - name: SelectedFortify
+    type: Select
+    description: "Select the Source Code Analysis Tool:"
+    options:
+      - fortify
+      - fortify on demand
+    default: fortify
+    dependsOnTrue: ConfigureFortify
+  - name: FortifyUrl
+    type: Input
+    dependsOnTrue: ConfigureFortify
+    description: What is the URL for the fortify, example https://api.emea.fortify.com?
+    default: https://api.emea.fortify.com
+  - name: FortifyUsername
+    type: Input
+    dependsOnTrue: ConfigureFortify
+    description: What is the username for the fortify?
+  - name: FortifyPassword
+    type: Input
+    secret: true
+    dependsOnTrue: ConfigureFortify
+    description: What is the password for the fortify?
+  - name: FortifyApplication
+    type: Input
+    dependsOnTrue: ConfigureFortify
+    description: What is the application name for the fortify?
+  - name: FortifyApplicationVersion
+    type: Input
+    dependsOnTrue: ConfigureFortify
+    description: What is the application version for the fortify?
+  - name: ConfigureCheckmarx
+    type: Confirm
+    description: Do you want to configure a Checkmarx compliance?
+  - name: SelectedCheckmarx
+    type: Select
+    description: "Select the compliance you want to configure:"
+    options:
+      - CxSAST
+      - CxOSA
+      - both
+    default: both
+    dependsOnTrue: ConfigureCheckmarx
+  - name: CheckmarxUrl
+    type: Input
+    dependsOnTrue: ConfigureCheckmarx
+    description: What is the URL for the checkmarx?
+  - name: CheckmarxUsername
+    type: Input
+    dependsOnTrue: ConfigureCheckmarx
+    description: What is the username for the checkmarx?
+  - name: CheckmarxPassword
+    type: Input
+    secret: true
+    dependsOnTrue: ConfigureCheckmarx
+    description: What is the password for the checkmarx?
+  - name: CheckmarxApplication
+    type: Input
+    dependsOnTrue: ConfigureCheckmarx
+    description: What is the project name for the checkmarx?
+  - name: CheckmarxTeam
+    type: Input
+    dependsOnTrue: ConfigureCheckmarx
+    description: What is the team name for the checkmarx?
+  - name: ConfigureBlackduck
+    type: Confirm
+    description: Do you want to configure a black duck compliance?
+  - name: BlackduckUrl
+    type: Input
+    dependsOnTrue: ConfigureBlackduck
+    description: What is the URL for the black duck?
+  - name: BlackduckUsername
+    type: Input
+    dependsOnTrue: ConfigureBlackduck
+    description: What is the username for the black duck?
+  - name: BlackduckPassword
+    type: Input
+    secret: true
+    dependsOnTrue: ConfigureBlackduck
+    description: What is the password for the black duck?
+  - name: BlackduckApplication
+    type: Input
+    dependsOnTrue: ConfigureBlackduck
+    description: What is the application name for the black duck?
+  - name: BlackduckApplicationVersion
+    type: Input
+    dependsOnTrue: ConfigureBlackduck
+    description: What is the application version for the black duck?
+
+  files:
+  - path: xebialabs/xlr-configuration.yaml.tmpl
+  - path: xebialabs/xlr-pipeline.yaml.tmpl
+  - path: xebialabs/xlr-dashboard.yaml.tmpl
+  - path: xebialabs.yaml

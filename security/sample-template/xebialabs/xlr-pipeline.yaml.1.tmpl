@@ -1,0 +1,175 @@
+{{$app := .AppName | kebabcase}}
+{{$sonarServer := "Sonarqube Server"}}
+{{$fortifyServer := "Fortify Server"}}
+apiVersion: xl-release/v1
+kind: Templates
+spec:
+  - name: {{$app}}
+    type: xlrelease.Folder
+    children:
+  {{- if eq .ConfigureSonar "true"}}
+    - name: {{$sonarServer}}
+      type: sonar.Server
+      url: !value SonarUrl
+      authenticationMethod: Basic
+      username: !value SonarUsername
+      password: {{.SonarPassword}}
+  {{- end}}
+  {{- if eq .ConfigureFortify "true"}}
+    - name: {{$fortifyServer}}
+    {{- if eq .SelectedFortify "fortify"}}
+      type: fortify.Server
+    {{- else}}
+      type: fortifyOnDemand.Server
+    {{- end}}
+      url: !value FortifyUrl
+      username: !value FortifyUsername
+      password: {{.FortifyPassword}}
+  {{- end}}
+    - name: {{$app}} security & compliance
+      type: xlrelease.Release
+      description: |
+        This XL Release template shows how to configure security and compliance.
+      tags:
+        - {{$app}}
+        - Security
+        - Compliance
+      phases:
+      - name: Security & Compliance
+        color: '#d94c3d'
+        type: xlrelease.Phase
+        tasks:
+      {{- if eq .ConfigureSonar "true"}}
+        - name: Sonarqube Compliance for {{$app}}
+          type: sonar.checkCompliance
+          sonarServer: {{$sonarServer}}
+          resource: {{.SonarResource}}
+      {{- end}}
+      {{- if eq .ConfigureFortify "true"}}
+        - name: Fortify Compliance for {{$app}}
+        {{- if eq .SelectedFortify "fortify"}}
+          type: fortify.checkCompliance
+          fortifyServer: {{$fortifyServer}}
+        {{- else}}
+          type: fortifyOnDemand.checkCompliance
+          fortifyOnDemandServer: {{$fortifyServer}}
+        {{- end}}
+          projectName: {{.FortifyApplication}}
+          projectVersion: {{.FortifyApplicationVersion}}
+      {{- end}}
+    - type: xlrelease.Dashboard
+      owner: !value XL_RELEASE_USERNAME
+      tiles:
+    {{- if eq .ConfigureSonar "true"}}
+      - name: SonarQube analysis summary
+        type: sonar.SonarSummaryTile
+        row: 3
+        col: 0
+        sonarServer: {{$sonarServer}}
+        resource: {{.SonarResource}}
+        metrics:
+          new_major_violations: New Major Issues
+          quality_gate_details: Quality Gate Details
+          new_code_smells: New Code Smells
+          new_coverage: Coverage on New Code
+          new_critical_violations: New Critical Issues
+          duplicated_lines_density: Duplicated Lines (%)
+          new_minor_violations: New Minor Issues
+          new_vulnerabilities: New Vulnerabilities
+          new_blocker_violations: New Blocker Issues
+    {{- end}}
+      parentTemplate: {{$app}} security & compliance
+    - name: Security and Compliance
+      type: xlrelease.BlankDashboard
+      owner: !value XL_RELEASE_USERNAME
+      tiles:
+    {{- if eq .ConfigureSonar "true"}}
+      - name: SonarQube metrics - Issues for {{$app}}
+        type: sonar.SonarComplianceTile
+        row: 0
+        col: 0
+        sonarServer: {{$sonarServer}}
+        metricUnit: INT
+        resource: {{.SonarResource}}
+        versionFilterRegex: '[^\n]+'
+        metrics:
+          violations: Issues
+      - name: SonarQube metrics - Coverage for {{$app}}
+        type: sonar.SonarComplianceTile
+        row: 0
+        col: 2
+        sonarServer: {{$sonarServer}}
+        metricUnit: PERCENT
+        resource: {{.SonarResource}}
+        versionFilterRegex: '[^\n]+'
+        metrics:
+          coverage: Coverage
+      - name: SonarQube metrics - Duplication for {{$app}}
+        type: sonar.SonarComplianceTile
+        row: 0
+        col: 4
+        sonarServer: {{$sonarServer}}
+        metricUnit: INT
+        resource: {{.SonarResource}}
+        versionFilterRegex: '[^\n]+'
+        metrics:
+          duplicated_lines: Duplicated Lines
+          ncloc: Lines of Code
+    {{- end}}
+    {{- if eq .ConfigureFortify "true"}}
+      {{- if eq .SelectedFortify "fortify"}}
+      - name: Fortify SSC application compliance
+        type: fortify.FortifyComplianceTile
+        row: 2
+        col: 0
+        width: 4
+        fortifyServer: {{$fortifyServer}}
+        timeFrame: LAST_YEAR
+        projectName: {{.FortifyApplication}}
+        standards:
+        - B40F9EE0-3824-4879-B9FE-7A789C89307C:FISMA
+        - 771C470C-9274-4580-8556-C12F5E4BEC51:GDPR
+        - 3C6ECB67-BBD9-4259-A8DB-B49328927248:OWASP Top 10 2017
+        - 1A2B4C7E-93B0-4502-878A-9BE40D2A25C4:OWASP Top 10 2013
+        - 4E8431F9-1BA1-41A8-BDBD-087D5826751A:PCI 3.2
+        - E2FB0D38-0192-4F03-8E01-FE2A12680CA3:PCI 3.0
+        - 92EB4481-1FD9-4165-8E16-F2DE6CB0BD63:SANS Top 25 2011
+        versionFilterRegex: '[^\n]+'
+      - name: Fortify SSC version summary
+        type: fortify.FortifySummaryTile
+        row: 2
+        col: 4
+        fortifyServer: {{$fortifyServer}}
+        projectName: {{.FortifyApplication}}
+        projectVersion: {{.FortifyApplicationVersion}}
+        metrics:
+          PercentCriticalPriorityIssues: Critical Priority Issues
+          Issues: Total Issues
+          PercentHighPriorityIssues: High Priority Issues
+      {{- else}}
+      - name: Fortify On Demand application compliance
+        type: fortifyOnDemand.FortifyOnDemandComplianceTile
+        row: 2
+        col: 0
+        width: 4
+        fortifyOnDemandServer: {{$fortifyServer}}
+        timeFrame: LAST_YEAR
+        projectName: {{.FortifyApplication}}
+        standards:
+        - owasp2017
+        - fisma
+        - owasp2013
+        - pci3_2
+        - pci3
+        - pci2
+        - sans2011
+        - sti4_3
+      - name: Fortify On Demand version summary
+        type: fortifyOnDemand.FortifyOnDemandSummaryTile
+        row: 2
+        col: 4
+        fortifyOnDemandServer: {{$fortifyServer}}
+        projectName: {{.FortifyApplication}}
+        projectVersion: {{.FortifyApplicationVersion}}
+      {{- end}}
+    {{- end}}
