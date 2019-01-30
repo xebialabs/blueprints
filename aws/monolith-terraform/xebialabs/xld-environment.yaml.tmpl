@@ -13,10 +13,6 @@ spec:
           type: terraform.TerraformClient
           workingDirectory: '/tmp/{{$app}}' # for local installation
           path: '/usr/local/bin' # for local installation
-    - name: AWS
-      type: aws.Cloud
-      accesskey: {{.AWSAccessKey}}
-      accessSecret: {{.AWSAccessSecret}}
 
 ---
 apiVersion: xl-deploy/v1
@@ -29,12 +25,9 @@ spec:
       type: udm.Dictionary
       entries:
         AWSRegion: {{.AWSRegion}}
-        AWSAccessKey: {{.AWSAccessKey}}
-        AWSSecretKey: {{.AWSAccessSecret}}
     - name: AWS
       type: udm.Environment
       members:
       - "~Infrastructure/{{$app}}/localhost/terraform-client"
-      - "~Infrastructure/{{$app}}/AWS"
       dictionaries:
       - "~Environments/{{$app}}/aws-dictionary"

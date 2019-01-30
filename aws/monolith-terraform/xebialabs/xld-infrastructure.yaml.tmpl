@@ -1,7 +1,5 @@
 {{$app := .AppName | kebabcase}}
 {{$region := "{{AWSRegion}}"}}
-{{$aws_access_key := "{{AWSAccessKey}}"}}
-{{$aws_secret_key := "{{AWSSecretKey}}"}}
 apiVersion: xl-deploy/v1
 kind: Applications
 spec:
@@ -20,14 +18,14 @@ spec:
           file: !file ../terraform/infrastructure
           inputVariables:
             app_name: '{{$app}}'
-            aws_access_key: '{{$aws_access_key}}'
-            aws_secret_key: '{{$aws_secret_key}}'
+            aws_access_key: {{.AWSAccessKey}}
+            aws_secret_key: {{.AWSAccessSecret}}
             region: '{{$region}}'
             mysql_master_password: {{.MySQLMasterPassword}}
             public_port: '{{.PublicPort}}'
           boundTemplates:
           - "../{{$app}}-ecs-dictionary"
-          - "../{{$app}}-ecs-cluster"
+          - "../{{$app}}-AWS"
         templates:
         - name: {{$app}}-ecs-dictionary
           type: template.udm.Dictionary
@@ -37,10 +35,15 @@ spec:
             MYSQL_DB_PORT: '{{"{{%outputVariables.mysql_port%}}"}}'
             EXECUTION_ROLE: '{{"{{%outputVariables.execution_role_arn%}}"}}'
             ALB_TG_ARN: '{{"{{%outputVariables.alb_tg_arn%}}"}}'
-        - name: {{$app}}-ecs-cluster
-          instanceName: {{$app}}/AWS/{{$app}}-ecs-cluster
-          type: template.aws.ecs.Cluster
-          clusterName: '{{$app}}-ecs-cluster'
-          clusterArn: '{{"{{%outputVariables.cluster_arn%}}"}}'
-          region: '{{$region}}'
+        - name: {{$app}}-AWS
+          instanceName: {{$app}}/{{$app}}-AWS
+          type: template.aws.Cloud
+          accesskey: {{.AWSAccessKey}}
+          accessSecret: {{.AWSAccessSecret}}
+          children:
+          - name: {{$app}}-ecs-cluster
+            type: template.aws.ecs.Cluster
+            clusterName: '{{$app}}-ecs-cluster'
+            clusterArn: '{{"{{%outputVariables.cluster_arn%}}"}}'
+            region: '{{$region}}'
 
