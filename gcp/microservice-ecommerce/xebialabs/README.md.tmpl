@@ -34,6 +34,8 @@ Best practice to use separate account "technical account" to manage infrastructu
 export TF_ADMIN=[GCP project ID]
 ```
 
+> NOTE: There will be a project number, a project name and a project ID when you initialize the project, and only ID should be exported as `TF_ADMIN` variable.
+
 #### Create the GCP Project
 
 Create a new project and link it to your billing account (You could do it from the GCP console GUI as well)
@@ -148,6 +150,8 @@ Please note that you need to obtain a trial license or bring your own license fo
         2. Replace the occurrences of `xebialabsunsupported` in the `kubernetes/*-deployment.yml` files with your own DockerHub ID
         3. Push the cloned repository to your GitHub account so that Jenkins can checkout `https://github.com/${GITHUB_USER}/e-commerce-microservice.git`
     4. Run `docker-compose up --build` on the `xebialabs-docker-setup` folder.
+
+> NOTE: If license files are not present at the time of the docker-compose run command, then xl-cli container will fail to create shared configurations in XLR which is needed for this blueprint.
 
 4. Generate the blueprint with `xl blueprint -t gcp/microservice-ecommerce` or copy the generated content to the "e-commerce-microservice" folder
 5. Ensure the "account.json" you downloaded earlier is placed inside the "terraform" folder that is created by the blueprint.
