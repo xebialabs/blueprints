@@ -27,10 +27,11 @@ spec:
           type: sonar.checkCompliance
           sonarServer: {{$sonarServer}}
           resource: {{.SonarResource}}
+          locked: true
       {{- end}}
       {{- if eq .ConfigureFortify "true"}}
         - name: Fortify Compliance for {{$app}}
-        {{- if eq .SelectedFortify "fortify"}}
+        {{- if eq .SelectedFortify "fortify ssc"}}
           type: fortify.checkCompliance
           fortifyServer: {{$fortifyServer}}
         {{- else}}
@@ -39,6 +40,7 @@ spec:
         {{- end}}
           projectName: {{.FortifyApplication}}
           projectVersion: {{.FortifyApplicationVersion}}
+          locked: true
       {{- end}}
       {{- if eq .ConfigureCheckmarx "true"}}
         {{- if eq .SelectedCheckmarx "both" "CxSAST"}}
@@ -47,6 +49,7 @@ spec:
           checkmarxServer: {{$checkmarxServer}}
           projectName: {{.CheckmarxApplication}}
           team: {{.CheckmarxTeam}}
+          locked: true
         {{- end}}
         {{- if eq .SelectedCheckmarx "both" "CxOSA"}}
         - name: CxOSA Compliance for {{$app}}
@@ -54,6 +57,7 @@ spec:
           checkmarxServer: {{$checkmarxServer}}
           projectName: {{.CheckmarxApplication}}
           team: {{.CheckmarxTeam}}
+          locked: true
         {{- end}}
       {{- end}}
       {{- if eq .ConfigureBlackduck "true"}}
@@ -62,6 +66,7 @@ spec:
           blackduckServer: {{$blackduckServer}}
           projectName: {{.BlackduckApplication}}
           versionName: {{.BlackduckApplicationVersion}}
+          locked: true
       {{- end}}
     - type: xlrelease.Dashboard
       owner: !value XL_RELEASE_USERNAME

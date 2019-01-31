@@ -50,9 +50,9 @@ spec:
     type: Select
     description: "Select the Source Code Analysis Tool:"
     options:
-      - fortify
+      - fortify ssc
       - fortify on demand
-    default: fortify
+    default: fortify ssc
     dependsOnTrue: ConfigureFortify
   - name: FortifyUrl
     type: Input

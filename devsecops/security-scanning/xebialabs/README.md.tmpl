@@ -1,7 +1,30 @@
 {{$app := .AppName | kebabcase}}
 ## Simple security and compliance template and dashboard
 
-The blueprint creates a simple template for security and compliance. It also creates required configuration and dashboard.
+Security and compliance are critical aspects of product release. Organizations struggle to track application release status information and understand security and compliance risks across many different applications, teams, and environments. When risk assessment, security testing, and compliance checks aren’t built into the Continuous Integration/Continuous Delivery (CI/CD) pipeline, releases fail and cause delays, security vulnerabilities threaten production, and IT governance violations result in expensive fines.
+
+This blueprint provides a way to integrate tools like Sonarqube, Fortify, Checkmarx, and Black duck into release pipeline.
+
+#### Sonarqube
+
+SonarQube is an open source platform for continuous inspection of code quality to perform automatic reviews with static analysis of code to detect bugs, code smells, and security vulnerabilities in application source code. 
+
+
+#### Fortify SSC
+
+Fortify Software Security Center (SSC) provides centralised management of their application security testing. Security teams use SSC to review and manage security testing activities, prioritize remediation efforts based on risk potential, measure improvements and generate cross portfolio management reports.
+
+#### Fortify on Demand
+
+Fortify on Demand provides software security analysis as a service. It can evaluate application code against selected security metrics.
+
+#### Checkmarx
+
+Checkmarx provides Checkmarx Static Application Security Testing (CxSAST) and Checkmarx Open Source Analysis (CxOSA). CxSAST automatically scan uncompiled code and identify security vulnerabilities. CxOSA provides a way to control and manage open source components and mitigate potential risks to the application, organizations and its users.
+
+### Black duck
+
+Black duck provides a complete open source management solution. It can identify potential security risks, license risks and operational risks for open source components.
 
 ### Prerequisites
 

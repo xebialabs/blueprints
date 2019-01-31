@@ -47,7 +47,7 @@ spec:
           ncloc: Lines of Code
     {{- end}}
     {{- if eq .ConfigureFortify "true"}}
-      {{- if eq .SelectedFortify "fortify"}}
+      {{- if eq .SelectedFortify "fortify ssc"}}
       - name: Fortify SSC application compliance for {{$app}}
         type: fortify.FortifyComplianceTile
         row: 2
