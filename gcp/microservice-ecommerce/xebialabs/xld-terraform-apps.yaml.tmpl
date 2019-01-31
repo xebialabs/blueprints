@@ -28,9 +28,10 @@ spec:
             gke_master_pass: {{.K8SMasterPassword}}
           boundTemplates:
           - "../gcp-gke-{{$clusterName}}"
-        # - "../gcp-gke-{{$clusterName}}-env"  {{/* TODO change to new environment once XLD issue is fixed  */}}
+          - "../gcp-gke-{{$clusterName}}-env"
 
         templates:
+        # creates the required XLD infrastructure entries
         - name: gcp-gke-{{$clusterName}}
           type: template.k8s.Master
           username: {{.K8SMasterUser}}
@@ -38,12 +39,12 @@ spec:
           apiServerURL: 'https://{{"{{%outputVariables.endpoint%}}"}}'
           skipTLS: true
           instanceName: {{$app}}/gcp-gke-{{$clusterName}}
-        {{/* TODO change to new environment once XLD issue is fixed */}}
-        # - name: gcp-gke-{{$clusterName}}-env
-        #   type: template.udm.Environment
-        #   members:
-        #   - ../gcp-gke-{{$clusterName}}
-        #   instanceName: {{$app}}/gcp-gke-{{$clusterName}}
+        # creates a new environment for Kubernetes deployments
+        - name: gcp-gke-{{$clusterName}}-env
+          type: template.udm.Environment
+          members:
+          - "../gcp-gke-{{$clusterName}}"
+          instanceName: {{$app}}/gcp-gke-{{$clusterName}}
 
 {{end}}
   - name: K8S

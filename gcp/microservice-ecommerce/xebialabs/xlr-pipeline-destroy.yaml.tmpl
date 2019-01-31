@@ -1,7 +1,6 @@
 {{$app := .AppName | kebabcase}}
-{{/* TODO change to new environment once XLD issue is fixed */}}
-{{/* $appEnv := printf "gcp-gke-%s" $app */}}
-{{$appEnv := printf "gcp-terraform" }}
+{{$clusterName := .ClusterName | kebabcase}}
+{{$appEnv := printf "gcp-gke-%s" $clusterName }}
 apiVersion: xl-release/v1
 kind: Templates
 spec:
