@@ -1,9 +1,9 @@
 {{$app := .AppName | kebabcase}}
 {{$region := "{{AWSRegion}}"}}
-{{$mysql_address := "{{MYSQL_DB_ADDRESS}}"}}
-{{$mysql_port := "{{MYSQL_DB_PORT}}"}}
-{{$executionRole := "{{EXECUTION_ROLE}}"}}
-{{$alb_tg_arn := "{{ALB_TG_ARN}}"}}
+{{$mysql_address := "{{mysql_address}}"}}
+{{$mysql_port := "{{mysql_port}}"}}
+{{$executionRole := "{{execution_role_arn}}"}}
+{{$alb_tg_arn := "{{alb_tg_arn}}"}}
 
 apiVersion: xl-deploy/v1
 kind: Applications

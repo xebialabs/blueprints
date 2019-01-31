@@ -24,17 +24,8 @@ spec:
             mysql_master_password: {{.MySQLMasterPassword}}
             public_port: '{{.PublicPort}}'
           boundTemplates:
-          - "../{{$app}}-ecs-dictionary"
           - "../{{$app}}-AWS"
         templates:
-        - name: {{$app}}-ecs-dictionary
-          type: template.udm.Dictionary
-          instanceName: {{$app}}/ecs-dictionary
-          entries:
-            MYSQL_DB_ADDRESS: '{{"{{%outputVariables.mysql_address%}}"}}'
-            MYSQL_DB_PORT: '{{"{{%outputVariables.mysql_port%}}"}}'
-            EXECUTION_ROLE: '{{"{{%outputVariables.execution_role_arn%}}"}}'
-            ALB_TG_ARN: '{{"{{%outputVariables.alb_tg_arn%}}"}}'
         - name: {{$app}}-AWS
           instanceName: {{$app}}/{{$app}}-AWS
           type: template.aws.Cloud
