@@ -19,6 +19,7 @@ spec:
   - name: MySQLMasterPassword
     type: Input
     description: What should be the password for MySQL? (minimum 8 characters)
+    pattern: "(\\S){8,}"
     secret: true
   - name: UseAWSCredentialsFromSystem
     type: Confirm
