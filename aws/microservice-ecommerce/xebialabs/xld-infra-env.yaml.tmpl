@@ -1,5 +1,6 @@
 {{$app := .AppName | kebabcase}}
 {{$clusterName := .ClusterName | kebabcase}}
+{{$nameSpace := .Namespace | kebabcase}}
 {{if eq .ProvisionCluster "true"}}
 # Provision AWS EKS cluster
 apiVersion: xl-deploy/v1
@@ -45,7 +46,7 @@ spec:
     apiServerURL: {{.ClusterEndpoint}}
     skipTLS: true
     children:
-    - name: {{.Namespace | kebabcase}}
+    - name: {{$nameSpace}}
       type: k8s.Namespace
       namespaceName: {{.Namespace}}
 ---
@@ -59,6 +60,6 @@ spec:
   - name: aws-eks-{{$app}}
     type: udm.Environment
     members:
-    - Infrastructure/{{$app}}/eks-{{$clusterName}}/{{.Namespace | kebabcase}}
+    - Infrastructure/{{$app}}/eks-{{$clusterName}}/{{$nameSpace}}
     - Infrastructure/{{$app}}/eks-{{$clusterName}}
 {{end}}

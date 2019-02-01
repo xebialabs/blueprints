@@ -38,7 +38,7 @@ spec:
     description: "Select the AWS region:"
     options:
       - eu-west-1
-      # commented out becouse of https://github.com/boto/boto3/issues/811
+      # commented out because of https://github.com/boto/boto3/issues/811
       # - us-east-1
       - us-east-2
       - us-west-2
@@ -54,6 +54,7 @@ spec:
     description: What is the endpoint for the cluster, example https://3219568049031C127A97DD725F241767.yl4.eu-west-1.eks.amazonaws.com
   - name: Namespace
     type: Input
+    dependsOnFalse: ProvisionCluster
     description: What is the name of the namespace? This should be same as the one used in Kubernetes files.
     default: xl-demo
   - name: StoreAdminUsername

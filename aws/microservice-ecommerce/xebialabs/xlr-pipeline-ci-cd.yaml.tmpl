@@ -22,7 +22,11 @@ spec:
       requiresValue: false
       showOnReleaseStart: false
       value:
+        {{- if eq .ProvisionCluster "true"}}
+        namespace: xl-demo
+        {{- else}}
         namespace: {{.Namespace}}
+        {{- end}}
         serviceName: store
     - key: lbHostnameOrIp
       type: xlrelease.StringVariable
@@ -103,7 +107,7 @@ spec:
           type: xldeploy.Deploy
           server: XL Deploy
           deploymentPackage: {{$app}}/EKS-CLOUDFORMATION/{{$app}}-k8s-configmap/1.0.0
-          deploymentEnvironment: Environments/{{$app}}/aws-eks-{{$app}}
+          deploymentEnvironment: Environments/{{$app}}/aws-eks-{{$app}}-kube-system
     {{end}}
     - name: Build {{$app}} application
       type: xlrelease.Phase
@@ -136,7 +140,7 @@ spec:
       type: xlrelease.Phase
       tasks:
       {{if eq .ProvisionCluster "true"}}
-      - name: Deploy {{.Namespace}} namespace
+      - name: Deploy xl-demo namespace
         type: xldeploy.Deploy
         server: XL Deploy
         deploymentPackage: {{$app}}/K8S/{{$app}}-namespace/1.0.0
