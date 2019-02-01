@@ -11,7 +11,8 @@ spec:
   parameters:
   - name: AppName
     type: Input
-    description: What is the Application name?
+    description: What is the Application name (maximum 25 characters)?
+    pattern: "(\\S){0,25}"
   - name: PublicPort
     type: Input
     description: At what port should the application be exposed?

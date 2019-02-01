@@ -25,9 +25,7 @@ spec:
       type: udm.Dictionary
       entries:
         AWSRegion: {{.AWSRegion}}
-        AWSAccessKey: {{.AWSAccessKey}}
-        AWSSecretKey: {{.AWSAccessSecret}}
-    - name: terraform-aws
+    - name: AWS
       type: udm.Environment
       members:
       - "~Infrastructure/{{$app}}/localhost/terraform-client"

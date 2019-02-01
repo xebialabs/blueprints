@@ -11,7 +11,8 @@ spec:
   parameters:
   - name: AppName
     type: Input
-    description: What is the Application name?
+    description: What is the Application name (maximum 25 characters)?
+    pattern: "(\\S){0,25}"
   - name: PublicPort
     type: Input
     description: At what port should the application be exposed?
@@ -19,6 +20,7 @@ spec:
   - name: MySQLMasterPassword
     type: Input
     description: What should be the password for MySQL? (minimum 8 characters)
+    pattern: "(\\S){8,}"
     secret: true
   - name: UseAWSCredentialsFromSystem
     type: Confirm
@@ -54,5 +56,3 @@ spec:
   - path: terraform/infrastructure/infrastructure.tf
   - path: terraform/infrastructure/outputs.tf
   - path: terraform/infrastructure/variables.tf
-  - path: terraform/service/service.tf
-  - path: terraform/service/variables.tf
