@@ -202,7 +202,7 @@ spec:
           numberOfContinueRetrials: 100
           pollingInterval: 10
           {{if eq .ProvisionCluster "true"}}
-          ciId: Infrastructure/{{$app}}/eks-{{$app}}/eks-cluster
+          ciId: Infrastructure/{{$app}}/eks-cluster
           {{else}}
           ciId: Infrastructure/{{$app}}/eks-{{$clusterName}}
           {{end}}
