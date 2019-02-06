@@ -56,7 +56,7 @@ spec:
               type: aws.ecs.LogConfigurationSpec
               logDriver: awslogs
               options:
-                awslogs-group: "/ecs/ecommerce"
+                awslogs-group: "/ecs/{{$app}}"
                 awslogs-region: '{{$region}}'
                 awslogs-stream-prefix: ecs-ecommerce
             environment:
