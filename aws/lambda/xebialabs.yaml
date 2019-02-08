@@ -1,0 +1,7 @@
+apiVersion: xl/v1
+kind: Import
+metadata:
+  imports:
+    - xld-aws-environment.yaml
+    - xld-aws-infrastructure.yaml
+    - xld-aws-application-lambda.yaml

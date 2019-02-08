@@ -1,0 +1,64 @@
+apiVersion: xl/v1
+kind: Blueprint
+metadata:
+  projectName: AWS Lambda and Credentials
+  description: |
+    This blueprint will configure one AWS Lamba application and one AWS credential set.
+  author: XebiaScrubs
+  version: 1.0
+parameters:
+- name: AwsInfrastructureDirectory
+  type: Input
+  description: "Infrastructure directory (default: AmazonAWS)"
+  default: "AmazonAWS"
+- name: AwsInfrastructureName
+  type: Input
+  description: "Infrastructure credential pair name (default: AmzAccount)"
+  default: AmzAccount
+- name: AwsEnvironmentDirectory
+  type: Input
+  description: 'Environment directory (default: aws-staging)'
+  default: aws-staging
+- name: AwsEnvironmentName
+  type: Input
+  description: 'Environment name (default: "AWSHosts")'
+  default: AWSHosts
+- name: AwsAccessKeyID
+  type: Input
+  description: AWS Access Key ID (example:AMZ1dF4Nz7)'
+- name: AwsAccessSecret
+  type: Input
+  description: 'AWS Region (example: wt9JK8VU5ue45)'
+- name: AwsRegion
+  type: Input
+  description: 'AWS Region (default: us-east-2)'
+  default: us-east-2
+- name: AwsAppDirectory
+  type: Input
+  description: 'Application directory (default: "Lambda functions")'
+  default: "Lambda Functions"
+- name: AwsAppName
+  type: Input
+  description: 'Application name (default: "LambdaDemo")'
+  default: "LambaDemo"
+- name: AwsLambdaFunctionName
+  type: Input
+  description: 'Lambda function name (should match filename without extension) (default: function)'
+  default: function
+- name: AwsLambdaInitFunction
+  type: Input
+  description: 'Lambda main function (handler) (default: lambda_handler)'
+  default: lambda_handler
+- name: AwsLambdaRuntime
+  type: Input
+  description: 'Lambda runtime (default: python3.7)'
+  default: python3.7
+- name: AwsRole
+  type: Input
+  description: "Lamba function\'s IAM role (example: arn:aws:iam::222333444:role/lambda_basic_execution)"
+
+files:
+- path: xld-aws-environment.yaml.tmpl
+- path: xld-aws-infrastructure.yaml.tmpl
+- path: xld-aws-application-lambda.yaml.tmpl
+- path: xebialabs.yaml

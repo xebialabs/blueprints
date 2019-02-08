@@ -1,0 +1,22 @@
+---
+apiVersion: xl-deploy/v1
+kind: Applications
+spec:
+- directory: Applications/{{.AwsAppDirectory}}
+  children:
+  - name: {{.AwsAppName}}
+    type: udm.Application
+    lastVersion: {{.AwsAppName}}-1
+    children:
+    - name: {{.AwsAppName}}-1
+      type: udm.DeploymentPackage
+      deployables:
+      - name: {{.AwsAppName}}
+        type: aws.lambda.FunctionZip
+        functionName: {{.AwsLambdaFunctionName}}
+        region: {{.AwsRegion}}
+        runtime: {{.AwsLambdaRuntime}}
+        role: {{.AwsRole}}
+        handler: {{.AwsLambdaInitFunction}}
+        description: Function Description
+        file: !file "artifacts/function.zip"

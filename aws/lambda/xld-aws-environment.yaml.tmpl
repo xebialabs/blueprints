@@ -1,0 +1,10 @@
+---
+apiVersion: xl-deploy/v1
+kind: Environments
+spec:
+- directory: Environments/{{.AwsEnvironmentDirectory}}
+  children:
+  - name: {{.AwsEnvironmentName}}
+    type: udm.Environment
+    members:
+    - Infrastructure/{.AwsInfrastructureDirectory}/{.AwsInfrastructureName}
