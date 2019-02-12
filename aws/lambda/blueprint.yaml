@@ -7,18 +7,10 @@ metadata:
   author: XebiaScrubs
   version: 1.0
 parameters:
-- name: AwsInfrastructureDirectory
-  type: Input
-  description: "Infrastructure directory (default: AmazonAWS)"
-  default: "AmazonAWS"
 - name: AwsInfrastructureName
   type: Input
   description: "Infrastructure credential pair name (default: AmzAccount)"
   default: AmzAccount
-- name: AwsEnvironmentDirectory
-  type: Input
-  description: 'Environment directory (default: aws-staging)'
-  default: aws-staging
 - name: AwsEnvironmentName
   type: Input
   description: 'Environment name (default: "AWSHosts")'
@@ -33,29 +25,26 @@ parameters:
   type: Input
   description: 'AWS Region (default: us-east-2)'
   default: us-east-2
-- name: AwsAppDirectory
+- name: AwsRoleArn
   type: Input
-  description: 'Application directory (default: "Lambda functions")'
-  default: "Lambda Functions"
+  description: "IAM role ARN (example: arn:aws:iam::222333444:role/lambda_basic_execution)"
 - name: AwsAppName
   type: Input
   description: 'Application name (default: "LambdaDemo")'
-  default: "LambaDemo"
+  default: "LambaDemoApp"
 - name: AwsLambdaFunctionName
   type: Input
-  description: 'Lambda function name (should match filename without extension) (default: function)'
-  default: function
+  description: 'Lambda function name (should match filename without extension) (default: lambda_handler)'
+  default: lambda_handler
 - name: AwsLambdaInitFunction
   type: Input
   description: 'Lambda main function (handler) (default: lambda_handler)'
   default: lambda_handler
 - name: AwsLambdaRuntime
   type: Input
-  description: 'Lambda runtime (default: python3.7)'
-  default: python3.7
-- name: AwsRole
-  type: Input
-  description: "Lamba function\'s IAM role (example: arn:aws:iam::222333444:role/lambda_basic_execution)"
+  description: 'Lambda runtime (default: python2.7)'
+  default: python2.7
+
 
 files:
 - path: xld-aws-environment.yaml.tmpl
