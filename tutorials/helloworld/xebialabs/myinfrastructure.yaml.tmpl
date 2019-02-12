@@ -1,0 +1,22 @@
+apiVersion: xl-deploy/v1
+kind: Infrastructure
+spec:
+- directory: Infrastructure/{{.infraName}}
+- name: Infrastructure/{{.infraName}}/MyLocalHost-DEV
+  type: overthere.SshHost
+  os: UNIX
+  temporaryDirectoryPath: /tmp
+  connectionType: SCP
+  address: {{.linuxNetworkAddress}}
+  port: {{.linuxPort}}
+  username: {{.linuxUsername}}
+  password: {{.linuxPassword}}
+- name: Infrastructure/{{.infraName}}/MyLocalHost-TEST
+  type: overthere.SshHost
+  os: UNIX
+  temporaryDirectoryPath: /tmp
+  connectionType: SCP
+  address: {{.linuxNetworkAddress}}
+  port: {{.linuxPort}}
+  username: {{.linuxUsername}}
+  password: {{.linuxPassword}}

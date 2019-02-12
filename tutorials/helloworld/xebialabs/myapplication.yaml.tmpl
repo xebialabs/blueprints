@@ -1,0 +1,12 @@
+apiVersion: xl-deploy/v1
+kind: Applications
+spec:
+# The folder structure needs to be defined explicitly because we can have different types at each level.
+- name: Applications/{{.appName}}
+  type: udm.Application
+- name: Applications/{{.appName}}/1.0
+  type: udm.DeploymentPackage
+  deployables:
+  - name: Say Hello World
+    type: cmd.Command
+    commandLine: echo "hello World"

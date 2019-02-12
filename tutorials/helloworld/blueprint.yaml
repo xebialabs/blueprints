@@ -1,0 +1,73 @@
+# The information below is boilerplate for the blueprint.
+apiVersion: xl/v1
+kind: Blueprint
+
+# This metadata helps the next user better understand what the blueprint is about.
+
+metadata:
+  projectName: HelloWorld
+  description: |
+    The blueprint creates a Hello World application, environment, and infrastructure for the purpose of illustrating how a 
+    blueprint works.  We also use XL Release to orchestrate the distribution of this software to environments, so you can 
+    also see how to plumb-in XLR into a blueprint.
+  author: XebiaLabs
+  version: 1.0
+  
+parameters:
+# The blueprint mechanism will prompt the user for these values.  The specification for these parameters start at the following location:
+# https://docs.xebialabs.com/xl-platform/concept/blueprint-yaml-format.html
+# See also the real-world example of how some of these are organized at:
+# https://github.com/xebialabs/blueprints/blob/master/aws/microservice-ecommerce/blueprint.yaml
+# The values below are going to substituted into different XLD and XLR places.  The questions are meant to help explain how the value will be used?
+# XLD substitutions
+
+- name: appName
+  description: What is the name of the Application?
+  type: Input
+  default: HelloWorldApp
+- name: envName
+  description: What is the name of your Environment?
+  type: Input
+  default: HelloWorldEnv
+- name: infraName
+  description: What is the name of your Infrastructure?
+  type: Input
+  default: HelloWorldInf
+- name: linuxNetworkAddress
+  description: What is the network address of your Linux instance?
+  type: Input
+  default: localhost
+- name: linuxPort
+  description: What is the SSH port to your Linux instance?
+  type: Input
+  default: 22
+- name: linuxUsername
+  description: What is the username of your Linux SSH user?
+  type: Input
+  default: root
+- name: linuxPassword
+  description: What is the password for the Linux SSH user?
+  type: Input
+  secret: true
+  default: screencast
+
+# XLR specific variables
+- name: relTemplateName
+  description: What is the name of your Release Template?
+  type: Input
+  default: HelloWorldTemplate
+- name: phase1Name
+  description: What is the name of your first phase?
+  type: Input
+  default: DEV
+- name: phase2Name
+  description: What is the name of your second phase?
+  type: Input
+  default: TEST
+
+files:
+- path: xebialabs/myapplication.yaml.tmpl
+- path: xebialabs/myenvironments.yaml.tmpl
+- path: xebialabs/myinfrastructure.yaml.tmpl
+- path: xebialabs/myrelease.yaml.tmpl
+- path: xebialabs/README.md.tmpl

@@ -1,0 +1,12 @@
+apiVersion: xl-deploy/v1
+kind: Environments
+spec:
+- directory: Environments/{{.envName}}
+- name: Environments/{{.envName}}/myDockerDEV
+  type: udm.Environment
+  members:
+  - Infrastructure/{{.infraName}}/MyLocalHost-DEV
+- name: Environments/{{.envName}}/myDockerTEST
+  type: udm.Environment
+  members:
+  - Infrastructure/{{.infraName}}/MyLocalHost-TEST

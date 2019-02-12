@@ -1,0 +1,46 @@
+apiVersion: xl-release/v1
+kind: Templates
+spec:
+- template: Hello World XLR Template
+  scheduledStartDate: 2019-02-06T14:00:00Z
+  dueDate: 2019-02-28T14:00:00Z
+  phases:
+  - phase: {{.phase1Name}}
+    tasks:
+    - name: Manual Start Task
+      type: xlrelease.Task
+    - name: Deploy to Dev
+      type: xldeploy.Deploy
+      server: XL Deploy
+      deploymentApplication: Applications/{{.appName}}
+      deploymentVersion: "1.0"
+      deploymentPackage: Applications/{{.appName}}/1.0
+      deploymentEnvironment: Environments/{{.envName}}/myDockerDEV
+    color: '#0099CC'
+  - phase: {{.phase2Name}}
+    tasks:
+    - name: Deploy to Test
+      type: xldeploy.Deploy
+      server: XL Deploy
+      deploymentApplication: Applications/{{.appName}}
+      deploymentVersion: "1.0"
+      deploymentPackage: Applications/{{.appName}}/1.0
+      deploymentEnvironment: Environments/{{.envName}}/myDockerTEST
+    - name: Manual End Task
+      type: xlrelease.Task
+    color: '#0099CC'
+  tags:
+  - HelloWorld-1.0
+- type: xlrelease.Dashboard
+  tiles:
+  - name: Release progress
+    type: xlrelease.ReleaseProgressTile
+  - name: Release summary
+    type: xlrelease.ReleaseSummaryTile
+  - name: Resource usage
+    type: xlrelease.ResourceUsageTile
+  - name: Release timeline
+    type: xlrelease.TimelineTile
+  - name: Release health
+    type: xlrelease.ReleaseHealthTile
+  parentTemplate: Hello World XLR Template
