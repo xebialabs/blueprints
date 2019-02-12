@@ -3,8 +3,8 @@ apiVersion: xl-deploy/v1
 kind: Environments
 spec:
 - directory: Environments/AWSEnvironment
-children:
-- name: {{.AwsEnvironmentName}}
-  type: udm.Environment
-  members:
-  - Infrastructure/AmazonAWS/{.AwsInfrastructureName}
+  children:
+  - name: {{.AwsEnvironmentName}}
+    type: udm.Environment
+    members:
+    - Infrastructure/AmazonAWS/{{.AwsInfrastructureName}}

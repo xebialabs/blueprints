@@ -51,3 +51,4 @@ files:
 - path: xld-aws-infrastructure.yaml.tmpl
 - path: xld-aws-application-lambda.yaml.tmpl
 - path: xebialabs.yaml
+- path: artifacts/lambda_handler.zip

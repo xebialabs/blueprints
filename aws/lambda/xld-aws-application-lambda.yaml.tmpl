@@ -16,8 +16,8 @@ spec:
       region: {{.AwsRegion}}
       runtime: python2.7
       role: {{.AwsRoleArn}}
-      handler: lambda_handler.lambda_handler
-      file: !file "artifacts/Applications/{{.AwsAppName}}/1.0/XldAwsLambdaFunction/lambda_handler.zip"
+      handler: {{.AwsLambdaFunctionName}}.{{.AwsLambdaInitFunction}}
+      file: !file "artifacts/{{.AwsLambdaFunctionName}}.zip"
     - name: XldAwsApiGateway
       type: aws.api.RestApiSpec
       apiName: XldAwsApiGateway
