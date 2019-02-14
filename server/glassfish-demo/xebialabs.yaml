@@ -5,5 +5,4 @@ metadata:
     - xebialabs/xld-infrastructure.yaml
     - xebialabs/xld-environment.yaml
     - xebialabs/xld-glassfish-sampleapp.yaml
-#    - xebialabs/xlr-configuration.yaml
     - xebialabs/xlr-pipeline.yaml

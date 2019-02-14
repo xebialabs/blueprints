@@ -9,7 +9,7 @@ metadata:
 parameters:
 - name: FolderName
   type: Input
-  description: What is the Folder name?
+  description: What is the Folder should the XLR template be stored?
 - name: AppName
   type: Input
   description: What is the Application name?
@@ -18,15 +18,19 @@ parameters:
   description: What is the Glass Fish Host name?
 - name: gfHost_USERNAME
   type: Input
+  secret: false
   description: What is the Glass Fish Host username?
 - name: gfHost_PASSWORD
   type: Input
+  secret: true
   description: What is the Glass Fish Host password?
 - name: DB_USERNAME
   type: Input
+  secret: false
   description: What is the DB username?
 - name: DB_PASSWORD
   type: Input
+  secret: true
   description: What is the DB password?
 - name: APPSERVER_PORT
   type: Input
@@ -41,7 +45,5 @@ files:
 - path: xebialabs/xld-infrastructure.yaml.tmpl
 - path: xebialabs/xld-environment.yaml.tmpl
 - path: xebialabs/xld-glassfish-sampleapp.yaml.tmpl
-- path: xebialabs/artifacts/Applications/glassfish/sample/1.0.0/sample.war/sample.war
-- path: xebialabs/values.xlvals.tmpl
-- path: xebialabs/secrets.xlvals.tmpl
+- path: xebialabs/artifacts/sample.war
 - path: xebialabs.yaml

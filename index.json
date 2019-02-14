@@ -3,6 +3,6 @@
   "aws/microservice-ecommerce",
   "aws/datalake",
   "docker/simple-demo-app",
-  "GlassFish",
-  "PetPortalServiceNowExtended"
+  "server/glassfish-demo",
+  "integration/PetPortalServiceNowExtended"
 ]

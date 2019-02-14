@@ -6,7 +6,6 @@ spec:
 - directory: {{.FolderName}}
   children:
   - template: {{.AppName}}-GlassFish-JIRA
-    scheduledStartDate: 2016-02-02T08:00:00Z
     phases:
     - phase: Dev
       tasks:
@@ -20,7 +19,7 @@ spec:
           pythonScript.issueId: ${ticket}
       - name: Deploy to DEV
         type: xldeploy.Deploy
-        server: XLD Server
+        server: XebiaLabs Internal
         deploymentPackage: glassfish/sample/1.0.0
         deploymentEnvironment: glassfish/DEVglassfish
       - name: Add comment to change request
