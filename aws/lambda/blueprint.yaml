@@ -20,7 +20,7 @@ parameters:
   description: AWS Access Key ID (example:AMZ1dF4Nz7)'
 - name: AwsAccessSecret
   type: Input
-  description: 'AWS Region (example: wt9JK8VU5ue45)'
+  description: 'AWS Access Secret (example: wt9JK8VU5ue45)'
 - name: AwsRegion
   type: Input
   description: 'AWS Region (default: us-east-2)'
@@ -31,7 +31,7 @@ parameters:
 - name: AwsAppName
   type: Input
   description: 'Application name (default: "LambdaDemo")'
-  default: "LambaDemoApp"
+  default: "LambaDemo"
 - name: AwsLambdaFunctionName
   type: Input
   description: 'Lambda function name (should match filename without extension) (default: lambda_handler)'
