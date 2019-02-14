@@ -18,7 +18,7 @@ parameters:
   description: What is the Glass Fish Host name?
 - name: gfHost_USERNAME
   type: Input
-  secret: false
+  saveInXlVals: true
   description: What is the Glass Fish Host username?
 - name: gfHost_PASSWORD
   type: Input
@@ -26,7 +26,7 @@ parameters:
   description: What is the Glass Fish Host password?
 - name: DB_USERNAME
   type: Input
-  secret: false
+  saveInXlVals: true
   description: What is the DB username?
 - name: DB_PASSWORD
   type: Input

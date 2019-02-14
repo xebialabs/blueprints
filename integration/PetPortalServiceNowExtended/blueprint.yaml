@@ -18,7 +18,7 @@ parameters:
   description: What is the Service Now URL?
 - name: SNOW_USERNAME
   type: Input
-  secret: false
+  saveInXlVals: true
   description: What is the Service Now User Name?
 - name: SNOW_PASSWORD
   type: Input
@@ -29,7 +29,7 @@ parameters:
   description: What is the JIRA URL?
 - name: JIRA_USERNAME
   type: Input
-  secret: false
+  saveInXlVals: true
   description: What is the JIRA User Name?
 - name: JIRA_PASSWORD
   type: Input
@@ -40,4 +40,3 @@ parameters:
 files:
 - path: xebialabs/xlr-configuration.yaml.tmpl
 - path: xebialabs/xlr-pipeline.yaml.tmpl
-- path: xebialabs.yaml
