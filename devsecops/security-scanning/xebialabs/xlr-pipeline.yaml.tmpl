@@ -31,7 +31,7 @@ spec:
       {{- end}}
       {{- if eq .ConfigureFortify "true"}}
         - name: Fortify Compliance for {{$app}}
-        {{- if eq .SelectedFortify "fortify ssc"}}
+        {{- if eq .SelectedFortify "Fortify SSC"}}
           type: fortify.checkCompliance
           fortifyServer: {{$fortifyServer}}
         {{- else}}

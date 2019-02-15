@@ -19,7 +19,7 @@ spec:
   {{- end}}
   {{- if eq .ConfigureFortify "true"}}
     - name: {{$fortifyServer}}
-    {{- if eq .SelectedFortify "fortify ssc"}}
+    {{- if eq .SelectedFortify "Fortify SSC"}}
       type: fortify.Server
     {{- else}}
       type: fortifyOnDemand.Server

@@ -10,75 +10,75 @@ spec:
   parameters:
   - name: AppName
     type: Input
-    description: What is the Application name?
+    description: What is the name of the Application?
   - name: ConfigureSonar
     type: Confirm
-    description: Do you want to configure a Sonarqube compliance?
+    description: Do you want to configure SonarQube in your compliance pipeline?
   - name: SonarUrl
     type: Input
     dependsOnTrue: ConfigureSonar
-    description: What is the URL for the sonarqube, example https://sonarcloud.io ?
+    description: What is the URL for SonarQube, example https://sonarcloud.io?
     default: https://sonarcloud.io
   - name: ConfigureSonarUsername
     type: Confirm
     dependsOnTrue: ConfigureSonar
-    description: Do you want to enter username for sonarqube?
+    description: Do you want to enter an username for SonarQube?
   - name: SonarUsername
     type: Input
     dependsOnTrue: ConfigureSonarUsername
-    description: What is the username for the sonarqube?
+    description: What is the username for SonarQube?
     saveInXlVals: true
     default: ""
   - name: ConfigureSonarPassword
     type: Confirm
     dependsOnTrue: ConfigureSonar
-    description: Do you want to enter password for sonarqube?
+    description: Do you want to enter a password for SonarQube?
   - name: SonarPassword
     type: Input
     secret: true
     dependsOnTrue: ConfigureSonarPassword
-    description: What is the password for the sonarqube?
+    description: What is the password for SonarQube?
     default: ""
   - name: SonarResource
     type: Input
     dependsOnTrue: ConfigureSonar
-    description: What is the project key for the sonarqube?
+    description: What is the project key for SonarQube?
   - name: ConfigureFortify
     type: Confirm
-    description: Do you want to configure a fortify compliance?
+    description: Do you want to configure Fortify in your compliance pipeline?
   - name: SelectedFortify
     type: Select
     description: "Select the Source Code Analysis Tool:"
     options:
-      - fortify ssc
-      - fortify on demand
-    default: fortify ssc
+      - Fortify SSC
+      - Fortify on Demand
+    default: Fortify SSC
     dependsOnTrue: ConfigureFortify
   - name: FortifyUrl
     type: Input
     dependsOnTrue: ConfigureFortify
-    description: What is the URL for the fortify, example https://api.emea.fortify.com?
+    description: What is the URL for Fortify, example https://api.emea.fortify.com?
     default: https://api.emea.fortify.com
   - name: FortifyUsername
     type: Input
     dependsOnTrue: ConfigureFortify
-    description: What is the username for the fortify?
+    description: What is the username for Fortify?
   - name: FortifyPassword
     type: Input
     secret: true
     dependsOnTrue: ConfigureFortify
-    description: What is the password for the fortify?
+    description: What is the password for Fortify?
   - name: FortifyApplication
     type: Input
     dependsOnTrue: ConfigureFortify
-    description: What is the application name for the fortify?
+    description: What is the application name for Fortify?
   - name: FortifyApplicationVersion
     type: Input
     dependsOnTrue: ConfigureFortify
-    description: What is the application version for the fortify?
+    description: What is the application version for Fortify?
   - name: ConfigureCheckmarx
     type: Confirm
-    description: Do you want to configure a Checkmarx compliance?
+    description: Do you want to configure Checkmarx in your compliance pipeline?
   - name: SelectedCheckmarx
     type: Select
     description: "Select the compliance you want to configure:"
@@ -91,48 +91,48 @@ spec:
   - name: CheckmarxUrl
     type: Input
     dependsOnTrue: ConfigureCheckmarx
-    description: What is the URL for the checkmarx?
+    description: What is the URL for Checkmarx?
   - name: CheckmarxUsername
     type: Input
     dependsOnTrue: ConfigureCheckmarx
-    description: What is the username for the checkmarx?
+    description: What is the username for Checkmarx?
   - name: CheckmarxPassword
     type: Input
     secret: true
     dependsOnTrue: ConfigureCheckmarx
-    description: What is the password for the checkmarx?
+    description: What is the password for Checkmarx?
   - name: CheckmarxApplication
     type: Input
     dependsOnTrue: ConfigureCheckmarx
-    description: What is the project name for the checkmarx?
+    description: What is the project name for Checkmarx?
   - name: CheckmarxTeam
     type: Input
     dependsOnTrue: ConfigureCheckmarx
-    description: What is the team name for the checkmarx?
+    description: What is the team name for Checkmarx?
   - name: ConfigureBlackduck
     type: Confirm
-    description: Do you want to configure a black duck compliance?
+    description: Do you want to configure Black Duck in your compliance pipeline?
   - name: BlackduckUrl
     type: Input
     dependsOnTrue: ConfigureBlackduck
-    description: What is the URL for the black duck?
+    description: What is the URL for Black Duck?
   - name: BlackduckUsername
     type: Input
     dependsOnTrue: ConfigureBlackduck
-    description: What is the username for the black duck?
+    description: What is the username for Black Duck?
   - name: BlackduckPassword
     type: Input
     secret: true
     dependsOnTrue: ConfigureBlackduck
-    description: What is the password for the black duck?
+    description: What is the password for Black Duck?
   - name: BlackduckApplication
     type: Input
     dependsOnTrue: ConfigureBlackduck
-    description: What is the application name for the black duck?
+    description: What is the application name for Black Duck?
   - name: BlackduckApplicationVersion
     type: Input
     dependsOnTrue: ConfigureBlackduck
-    description: What is the application version for the black duck?
+    description: What is the application version for Black Duck?
 
   files:
   - path: xebialabs/xlr-configuration.yaml.tmpl

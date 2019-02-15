@@ -1,13 +1,14 @@
 {{$app := .AppName | kebabcase}}
 ## Simple security and compliance template and dashboard
 
-Security and compliance are critical aspects of product release. Organizations struggle to track application release status information and understand security and compliance risks across many different applications, teams, and environments. When risk assessment, security testing, and compliance checks aren’t built into the Continuous Integration/Continuous Delivery (CI/CD) pipeline, releases fail and cause delays, security vulnerabilities threaten production, and IT governance violations result in expensive fines.
+Security and compliance are critical aspects of product release. 
+Organizations struggle to track application release status information and understand security & compliance risks across many different applications, teams, and environments. When risk assessment, security testing, and compliance checks aren’t built into the Continuous Integration/Continuous Delivery (CI/CD) pipeline, releases fail and cause delays, security vulnerabilities threaten production, and IT governance violations result in expensive fines.
 
-This blueprint provides a way to integrate tools like Sonarqube, Fortify, Checkmarx, and Black duck into release pipeline.
+This blueprint provides a way to integrate tools like SonarQube, Fortify, Checkmarx, and Black Duck into release pipeline.
 
 {{- if eq .ConfigureSonar "true"}}
 
-#### Sonarqube
+#### SonarQube
 
 SonarQube is an open source platform for continuous inspection of code quality to perform automatic reviews with static analysis of code to detect bugs, code smells, and security vulnerabilities in application source code. 
 
@@ -16,7 +17,7 @@ SonarQube is an open source platform for continuous inspection of code quality t
 
 #### Fortify SSC
 
-Fortify Software Security Center (SSC) provides centralised management of their application security testing. Security teams use SSC to review and manage security testing activities, prioritize remediation efforts based on risk potential, measure improvements and generate cross portfolio management reports.
+Fortify Software Security Center (SSC) provides centralized management of their application security testing. Security teams use SSC to review and manage security testing activities, prioritize remediation efforts based on risk potential, measure improvements and generate cross portfolio management reports.
 
 #### Fortify on Demand
 
@@ -34,7 +35,7 @@ Checkmarx provides Checkmarx Static Application Security Testing (CxSAST) and Ch
 
 ### Black duck
 
-Black duck provides a complete open source management solution. It can identify potential security risks, license risks and operational risks for open source components.
+Black Duck provides a complete open source management solution. It can identify potential security risks, license risks and operational risks for open source components.
 
 {{- end}}
 
