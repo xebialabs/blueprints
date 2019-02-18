@@ -1,19 +1,24 @@
 # Data Lake Solution on Amazon EC2
 
-To use this blueprint, run `xl blueprint` and select:
-
-    aws/datalake
-
-## Labels
-
-* Cloud
-* AWS
-
 ## Introduction
 
 AWS offers a sample Data Lake Solution that shows how you can store both structured and unstructured data in a centralized repository on Amazon Elastic Compute Cloud (EC2), which provides resizable compute capacity in the cloud.
 
 Use this blueprint to deploy the sample Data Lake Solution on EC2 using CloudFormation, which defines the infrastructure that will run on EC2. The release template that the blueprint generates will provision an EC2 instance, deploy the Data Lake Solution to it, and optionally tear the instance down.
+
+## Before you get started
+
+If you're new to XebiaLabs blueprints, check out:
+
+* [DevOps as Code overview](https://docs.xebialabs.com/xl-platform/concept/devops-as-code-overview.html)
+* [Getting started with DevOps as Code](https://docs.xebialabs.com/xl-platform/concept/getting-started-with-devops-as-code.html)
+* [Using the XebiaLabs Command-Line Interface (CLI)](https://docs.xebialabs.com/xl-platform/concept/xl-command-line-interface.html)
+
+## Usage
+
+To use this blueprint, run `xl blueprint` and select:
+
+    aws/datalake
 
 ## Tools and technologies
 
@@ -61,3 +66,8 @@ This blueprint will output:
 ## Tips and tricks
 
 * The YAML that the blueprint generates includes optional steps to remove the application and deprovision the infrastructure.
+
+## Labels
+
+* Cloud
+* AWS

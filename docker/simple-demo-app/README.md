@@ -1,16 +1,22 @@
 # Local Docker Deployment
 
-To use this blueprint, run `xl blueprint` and select:
-
-    docker/simple-demo-app
-
-## Labels
-
-* Docker
-
 ## Introduction
 
 Use this blueprint to deploy a Docker application with front-end and back-end services to Docker running locally. The release template that the blueprint generates will deploy the application and optionally undeploy it.
+
+## Before you get started
+
+If you're new to XebiaLabs blueprints, check out:
+
+* [DevOps as Code overview](https://docs.xebialabs.com/xl-platform/concept/devops-as-code-overview.html)
+* [Getting started with DevOps as Code](https://docs.xebialabs.com/xl-platform/concept/getting-started-with-devops-as-code.html)
+* [Using the XebiaLabs Command-Line Interface (CLI)](https://docs.xebialabs.com/xl-platform/concept/xl-command-line-interface.html)
+
+## Usage
+
+To use this blueprint, run `xl blueprint` and select:
+
+    docker/simple-demo-app
 
 ## Tools and technologies
 
@@ -52,3 +58,7 @@ This blueprint will output:
 
 * Before using this blueprint, ensure that you have a front-end and a back-end application service packaged in Docker containers.
 * The YAML that the blueprint generates includes optional steps to remove the application.
+
+## Labels
+
+* Docker

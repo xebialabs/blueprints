@@ -1,17 +1,22 @@
 # Run Your DevSecOps Pipeline
 
-To use this blueprint, run `xl blueprint` and select:
-
-    devsecops/security
-
-## Labels
-
-* DevSecOps
-* Security testing
-
 ## Introduction
 
 Use this blueprint to configure security scanning tools and an out-of-the-box security dashboard that provides immediate insight into code quality for teams, managers, and auditors.
+
+## Before you get started
+
+If you're new to XebiaLabs blueprints, check out:
+
+* [DevOps as Code overview](https://docs.xebialabs.com/xl-platform/concept/devops-as-code-overview.html)
+* [Getting started with DevOps as Code](https://docs.xebialabs.com/xl-platform/concept/getting-started-with-devops-as-code.html)
+* [Using the XebiaLabs Command-Line Interface (CLI)](https://docs.xebialabs.com/xl-platform/concept/xl-command-line-interface.html)
+
+## Usage
+
+To use this blueprint, run `xl blueprint` and select:
+
+    devsecops/security
 
 ## Tools and technologies
 
@@ -49,3 +54,8 @@ This blueprint will output:
 ## Tips and tricks
 
 * None.
+
+## Labels
+
+* DevSecOps
+* Security testing

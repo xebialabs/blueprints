@@ -1,19 +1,24 @@
 # Monolithic Application on Amazon ECS
 
-To use this blueprint, run `xl blueprint` and select:
-
-    aws/monolith
-
-## Labels
-
-* Cloud
-* AWS
-
 ## Introduction
 
 Amazon Elastic Container Service (ECS) is a container orchestration service for Docker-enabled applications. It works with AWS Fargate, a compute engine that allows you to run containers on ECS without having to manage servers or clusters.
 
 Use this blueprint to deploy a monolithic application on ECS with the Fargate launch type. The release template that the blueprint generates will provision a new ECS cluster and deploy a sample application to it.
+
+## Before you get started
+
+If you're new to XebiaLabs blueprints, check out:
+
+* [DevOps as Code overview](https://docs.xebialabs.com/xl-platform/concept/devops-as-code-overview.html)
+* [Getting started with DevOps as Code](https://docs.xebialabs.com/xl-platform/concept/getting-started-with-devops-as-code.html)
+* [Using the XebiaLabs Command-Line Interface (CLI)](https://docs.xebialabs.com/xl-platform/concept/xl-command-line-interface.html)
+
+## Usage
+
+To use this blueprint, run `xl blueprint` and select:
+
+    aws/monolith
 
 ## Tools and technologies
 
@@ -61,3 +66,8 @@ This blueprint will output:
 ## Tips and tricks
 
 The YAML that the blueprint generates includes optional steps to remove the application and deprovision the cluster.
+
+## Labels
+
+* Cloud
+* AWS
