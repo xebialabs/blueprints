@@ -4,7 +4,7 @@
 
 Amazon Elastic Container Service for Kubernetes (EKS) allows you to deploy, manage, and scale containerized applications in the cloud using Kubernetes.
 
-Use this blueprint to deploy a sample microservice-based microservice-based application on EKS. The release template that the blueprint generates connects to an existing EKS cluster or provisions a new cluster and deploys a sample application to it.
+Use this blueprint to deploy a sample microservice-based application on EKS. The release template that the blueprint generates connects to an existing EKS cluster or provisions a new cluster and deploys the sample application to it.
 
 ## Before you get started
 

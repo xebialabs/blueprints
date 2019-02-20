@@ -4,7 +4,7 @@
 
 Amazon Elastic Container Service (ECS) is a container orchestration service for Docker-enabled applications. It works with AWS Fargate, a compute engine that allows you to run containers on ECS without having to manage servers or clusters.
 
-Use this blueprint to deploy a monolithic application on ECS with the Fargate launch type. The release template that the blueprint generates will provision a new ECS cluster and deploy a sample application to it.
+Use this blueprint to deploy a sample monolithic application on ECS with the Fargate launch type. The release template that the blueprint generates will provision a new ECS cluster and deploy the sample application to it.
 
 ## Before you get started
 

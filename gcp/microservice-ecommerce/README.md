@@ -4,7 +4,7 @@
 
 Google Kubernetes Engine (GKE) allows you to deploy, manage, and scale containerized applications in the cloud using Kubernetes.
 
-Use this blueprint to deploy a sample microservice-based microservice-based application on GKE using Terraform, which defines the infrastructure that will run on GKE. The release template that the blueprint generates connects to an existing GKE cluster or provisions a new cluster and deploys a sample application to it.
+Use this blueprint to deploy a sample microservice-based application on GKE using Terraform, which defines the infrastructure that will run on GKE. The release template that the blueprint generates connects to an existing GKE cluster or provisions a new cluster and deploys a sample application to it.
 
 ## Before you get started
 
