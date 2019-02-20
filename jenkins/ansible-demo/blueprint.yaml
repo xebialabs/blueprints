@@ -7,9 +7,6 @@ metadata:
   author: XebiaLabs
   version: 1.0
 parameters:
-  - name: folderName
-    type: Input
-    description: What is the XL Release folder name?
   - name: ansibleHost
     type: Input
     description: What is the Ansible Host name?

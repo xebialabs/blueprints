@@ -2,10 +2,10 @@
 apiVersion: xl-release/v1
 kind: Templates
 spec:
-- directory: {{.folderName}}
+- directory: Jenkins-Ansible-Demo
   children:
     - template: PetPortal-JenkinsAnsible
-      scheduledStartDate: 2019-01-30T14:00:00Z
+      scheduledStartDate:
       phases:
       - phase: Environment Build
         tasks:
