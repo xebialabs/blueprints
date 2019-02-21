@@ -1,0 +1,6 @@
+web:
+  image: xebialabsunsupported/blueprint-server:latest
+  volumes:
+   - ./:/var/www/html/
+  ports:
+   - "9999:80"

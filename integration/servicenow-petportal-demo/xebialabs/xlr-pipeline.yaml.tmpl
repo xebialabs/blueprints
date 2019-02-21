@@ -10,6 +10,14 @@ spec:
     phases:
     - phase: Dev
       tasks:
+      - name: Open Change Request
+        type: jira.CreateIssue
+        jiraServer: XebiaLabs JIRA
+        project: SAN
+        ^title: Sample Project Ticket
+        ^description: This is for {{.AppName}} project
+        variableMapping:
+          pythonScript.issueId: ${ticket}
       - name: Build package
         type: jenkins.Build
         jenkinsServer: Jenkins
@@ -25,8 +33,15 @@ spec:
         type: qtp.RunTest
         precondition: |-
           import time
+          # pretend to run QTP testing
           time.sleep(5)
           result=False
+      - name: Add comment to change request
+        type: jira.UpdateIssue
+        jiraServer: XebiaLabs JIRA
+        issueId: ${ticket}
+        newStatus: RESOLVED
+        ^comment: Deployed application {{.AppName}} deplyed to environment PROD
       color: '#009CDB'
     - phase: Test
       tasks:
@@ -66,6 +81,7 @@ spec:
           plannedDuration: 1800
           script: |-
             import time
+            # Some actual tests could be put here
             time.sleep(5)
             print "Performing Smoke Tests"
         - name: Load Testing
@@ -74,6 +90,7 @@ spec:
           plannedDuration: 3600
           script: |-
             import time
+            # Some actual tests could be put here
             time.sleep(10)
             print "Performing  Load Tests"
       - name: Close Service Request
@@ -112,13 +129,18 @@ spec:
         - name: Service Request Complete Change Control Stated
           type: xlrelease.NotificationTask
           addresses:
-          - rbroker@xebialabs.com
+          - user@yourdomain.com
           subject: Service Request Complete Change Control Stated
           body: |-
             Tickets:
             * Service Request: ${serviceRequestTicket}
             * Change Request: ${changeRequestId}
           replyTo: xlrelease@xebialabs.com
+          precondition: |-
+            import time
+            # Configure SMTP Service and set email address
+            time.sleep(5)
+            result=False
         - name: Change Change Ticket Tag
           type: xlr.AddTag
           newTag: ${changeRequestId}
@@ -188,13 +210,18 @@ spec:
       - name: Release Complete In Production
         type: xlrelease.NotificationTask
         addresses:
-        - rbroker@xebialabs.com
+        - user@yourdomain.com
         subject: Release Complete In Production
         body: |-
           Tickets:
           * Service Request: ${serviceRequestTicket}
           * Change Request: ${changeRequestId}
         replyTo: xlrelease@xebialabs.com
+        precondition: |-
+          import time
+          # Configure SMTP Service and set email address
+          time.sleep(5)
+          result=False
       color: '#009CDB'
     tags:
     - snow

@@ -33,7 +33,7 @@ spec:
       tasks:
       - name: Verify application in TEST
         type: xlrelease.Task
-        description: Verify manually at [http://localhost:9980/sample/](http://localhost:9980/sample/)
+        description: Verify manually at [http://localhost:{{.APPSERVER_PORT}}/sample/](http://localhost:{{.APPSERVER_PORT}}/sample/)
         owner: admin
       - name: Perform Automated Testing
         type: xlrelease.ParallelGroup
@@ -43,6 +43,7 @@ spec:
           owner: admin
           script: |-
             import time
+            # Some actual tests could be put here
             time.sleep(5)
             print "Performing Smoke Tests"
         - name: Load Testing
@@ -50,6 +51,7 @@ spec:
           owner: admin
           script: |-
             import time
+            # Some actual tests could be put here
             time.sleep(10)
             print "Performing  Load Tests"
       - name: Add comment to change request

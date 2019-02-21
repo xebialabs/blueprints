@@ -1,0 +1,20 @@
+version: '2'
+services:
+  xld:
+    image: xebialabsunsupported/petportal-xld:8.5.2
+    volumes:
+      - ~/xl-licenses:/license
+    ports:
+     - "4516:4516"
+
+  xlr:
+    image: xebialabsunsupported/petportal-xlr:8.5.1
+    volumes:
+      - ~/xl-licenses:/license
+    ports:
+     - "5516:5516"
+
+  gfHost:
+    image: xebialabsunsupported/glassfish:latest
+    ports:
+      - "8080:8080"

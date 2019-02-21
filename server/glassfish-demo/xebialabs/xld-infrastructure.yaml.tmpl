@@ -10,8 +10,8 @@ spec:
     os: UNIX
     connectionType: SCP
     address: {{.gfHost}}
-    username: !value gfHost_USERNAME
-    password: !value gfHost_PASSWORD
+    username: {{.gfHost_USERNAME}}
+    password: {{.gfHost_PASSWORD}}
     children:
     - name: domain1
       type: glassfish.Domain
@@ -20,5 +20,4 @@ spec:
       servers:
       - name: server
         type: glassfish.StandaloneServer
-        disableInLoadBalancer: false
         host: Infrastructure/glassfish/{{.gfHost}}

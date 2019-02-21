@@ -4,17 +4,17 @@ spec:
 - name: XLD Server
   type: xldeploy.XLDeployServer
   url: http://xld:4516
-  username: !value XL_DEPLOY_USERNAME
-  password: !value XL_DEPLOY_PASSWORD
+  username: {{.XL_DEPLOY_USERNAME}}
+  password: {{.XL_DEPLOY_PASSWORD}}
 
 - name: SNOW
   type: servicenow.Server
   url: {{.SNOW_URL}}
-  username: !value SNOW_USERNAME
-  password: !value SNOW_PASSWORD
+  username: {{.SNOW_USERNAME}}
+  password: {{.SNOW_PASSWORD}}
 
 - name: XebiaLabs JIRA
   type: jira.Server
   url: {{.JIRA_URL}}
-  username: !value JIRA_USERNAME
-  password: !value JIRA_PASSWORD
+  username: {{.JIRA_USERNAME}}
+  password: {{.JIRA_PASSWORD}}

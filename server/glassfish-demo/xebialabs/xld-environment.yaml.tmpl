@@ -16,8 +16,8 @@ spec:
     type: udm.Dictionary
     entries:
       PETPORTAL_TITLE: The Pet Portal (C) Site
-      DB_USERNAME: !value DB_USERNAME
-      DB_PASSWORD: !value DB_PASSWORD
+      DB_USERNAME: {{.DB_USERNAME}}
+      DB_PASSWORD: {{.DB_PASSWORD}}
       APACHE_HOST: apache1
       APPSERVER_PORT: "{{.APPSERVER_PORT}}"
       PETCLINIC_CONTEXT_ROOT: {{.PETCLINIC_CONTEXT_ROOT}}

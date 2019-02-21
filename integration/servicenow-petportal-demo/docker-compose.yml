@@ -1,0 +1,58 @@
+jenkins:
+  image: xebialabsunsupported/docker-jenkins:2.129-alpine
+  volumes:
+   - /var/run/docker.sock:/var/run/docker.sock
+  links:
+   - xld
+   - socat
+  ports:
+   - "8080:8080"
+
+xld:
+  image: xebialabsunsupported/docker-xld:8.5.2
+  volumes:
+   - ~/xl-licenses:/license
+  links:
+   - mysql1
+   - socat
+   - jboss1
+   - apache1
+  ports:
+   - "4516:4516"
+
+xlr:
+  image: xebialabsunsupported/docker-xlr:8.5.1
+  volumes:
+   - ~/xl-licenses:/license
+   - ./xlr/plugins/xlr-xlrelease-plugin-2.3.4.jar:/opt/xebialabs/xl-release-server/default-plugins/__local__/xlr-xlrelease-plugin-2.3.4.jar
+  links:
+   - jenkins
+   - xld
+   - socat
+  ports:
+   - "5516:5516"
+
+socat:
+  image: bobrik/socat
+  ports:
+    - "2376:2375"
+  privileged: true
+  volumes:
+    - /var/run/docker.sock:/var/run/docker.sock
+  command: TCP4-LISTEN:2375,fork,reuseaddr UNIX-CLIENT:/var/run/docker.sock
+
+jboss1:
+  image: xebialabsunsupported/xl-docker-demo-jboss:9.0.2.Final
+  ports:
+   - "9990:9990"
+   - "8880:8080"
+
+mysql1:
+  image: xebialabsunsupported/xl-docker-demo-mysql:5.7.17
+
+apache1:
+  image: xebialabsunsupported/xl-docker-demo-apache:2.4.33-alpine
+  links:
+   - jboss1
+  ports:
+   - "80:80"

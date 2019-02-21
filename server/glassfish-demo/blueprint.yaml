@@ -1,23 +1,38 @@
 apiVersion: xl/v1
 kind: Blueprint
 metadata:
-  projectName: Extended ServiceNow Pipeline
+  projectName: Glass Fish Demo
   description: |
-    This is a more interesting release tempalte that uses ServiceNow.
+    This is a demo of XL Deploy and XL Release deploying a sample application to a Glass Fish server
   author: XebiaLabs
   version: 1.0
 parameters:
 - name: FolderName
   type: Input
+  default: GlassFish
   description: What is the Folder should the XLR template be stored?
+- name: JIRA_URL
+  type: Input
+  description: What is the JIRA URL?
+- name: JIRA_USERNAME
+  type: Input
+  saveInXlVals: true
+  description: What is the JIRA User Name?
+- name: JIRA_PASSWORD
+  type: Input
+  secret: true
+  description: What is the JIRA Password?
 - name: AppName
   type: Input
+  default: sample
   description: What is the Application name?
 - name: gfHost
   type: Input
+  default: gfHost
   description: What is the Glass Fish Host name?
 - name: gfHost_USERNAME
   type: Input
+  default: root
   saveInXlVals: true
   description: What is the Glass Fish Host username?
 - name: gfHost_PASSWORD
@@ -27,6 +42,7 @@ parameters:
 - name: DB_USERNAME
   type: Input
   saveInXlVals: true
+  default: dbuser
   description: What is the DB username?
 - name: DB_PASSWORD
   type: Input
@@ -34,13 +50,16 @@ parameters:
   description: What is the DB password?
 - name: APPSERVER_PORT
   type: Input
+  default: 8080
   description: What is the Glass Fish Server Port?
 - name: PETCLINIC_CONTEXT_ROOT
   type: Input
+  default: /sample
   description: What is the application Context Root?
 
 
 files:
+- path: xebialabs/xlr-configuration.yaml.tmpl
 - path: xebialabs/xlr-pipeline.yaml.tmpl
 - path: xebialabs/xld-infrastructure.yaml.tmpl
 - path: xebialabs/xld-environment.yaml.tmpl

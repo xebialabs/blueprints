@@ -3,6 +3,7 @@
   "aws/microservice-ecommerce",
   "aws/datalake",
   "docker/simple-demo-app",
+  "devsecops/security-scanning",
   "server/glassfish-demo",
-  "integration/PetPortalServiceNowExtended"
+  "integration/servicenow-petportal-demo"
 ]
