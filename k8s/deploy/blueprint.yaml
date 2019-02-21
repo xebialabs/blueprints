@@ -1,0 +1,50 @@
+# The information below is boilerplate for the blueprint.
+apiVersion: xl/v1
+kind: Blueprint
+
+# This metadata helps the next user better understand what the blueprint is about.
+
+metadata:
+  projectName: Kubernetes YAML
+  description: |
+    The blueprint creates an application package with XL YAML files and Kubernetes YAML
+  author: XebiaLabs
+  version: 1.0
+
+parameters:
+
+- name: AppName
+  type: Input
+  description: What is the application name?
+- name: AppVersion
+  type: Input
+  description: What is the application version?
+  default: '1.0.0'
+- name: AppReplicas
+  type: Input
+  description: How many replicas of the application to deploy?
+  default: 1
+- name: K8sUsername
+  type: Input
+  description: What is the kubernetes username?
+- name: K8sPassword
+  type: Input
+  secret: true
+  description: What is the kubernetes password?
+- name: K8sToken
+  type: Input
+  secret: true
+  description: What is the kubernetes token?
+- name: K8sApiServer
+  type: Input
+  description: What is the kubernetes API server url?
+  default: https://192.168.99.100:8443
+- name: Namespace
+  type: Input
+  description: What is the cluster namespace?
+  default: default
+
+files:
+- path: xebialabs/application.yaml.tmpl
+- path: xebialabs/infrastructure.yaml.tmpl
+- path: xebialabs/deployment.yaml.tmpl
