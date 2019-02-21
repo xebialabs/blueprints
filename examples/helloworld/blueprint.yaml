@@ -56,14 +56,6 @@ parameters:
   description: What is the name of your Release Template?
   type: Input
   default: HelloWorldTemplate
-- name: phase1Name
-  description: What is the name of your first phase?
-  type: Input
-  default: DEV
-- name: phase2Name
-  description: What is the name of your second phase?
-  type: Input
-  default: TEST
 
 files:
 - path: xebialabs/application.yaml.tmpl

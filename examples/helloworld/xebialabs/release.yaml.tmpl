@@ -1,11 +1,11 @@
 apiVersion: xl-release/v1
 kind: Templates
 spec:
-- template: Hello World XLR Template
+- template: {{.relTemplateName}}
   scheduledStartDate: 2019-02-06T14:00:00Z
   dueDate: 2019-02-28T14:00:00Z
   phases:
-  - phase: {{.phase1Name}}
+  - phase: DEV
     tasks:
     - name: Manual Start Task
       type: xlrelease.Task
@@ -17,7 +17,7 @@ spec:
       deploymentPackage: Applications/{{.appName}}/1.0
       deploymentEnvironment: Environments/{{.envName}}/myDockerDEV
     color: '#0099CC'
-  - phase: {{.phase2Name}}
+  - phase: TEST
     tasks:
     - name: Deploy to Test
       type: xldeploy.Deploy
