@@ -66,8 +66,7 @@ parameters:
   default: TEST
 
 files:
-- path: xebialabs/myapplication.yaml.tmpl
-- path: xebialabs/myenvironments.yaml.tmpl
-- path: xebialabs/myinfrastructure.yaml.tmpl
-- path: xebialabs/myrelease.yaml.tmpl
-- path: xebialabs/README.md.tmpl
+- path: xebialabs/application.yaml.tmpl
+- path: xebialabs/environments.yaml.tmpl
+- path: xebialabs/infrastructure.yaml.tmpl
+- path: xebialabs/release.yaml.tmpl
