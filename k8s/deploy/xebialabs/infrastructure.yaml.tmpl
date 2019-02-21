@@ -1,0 +1,28 @@
+{{$app := .AppName | kebabcase}}
+apiVersion: xl-deploy/v1
+kind: Infrastructure
+spec:
+- directory: Infrastructure/{{$app}}
+  children:
+  - name: k8s
+    type: k8s.Master
+    username: {{.K8sUsername}}
+    password: !value K8sPassword
+    token: {{.K8sToken}}
+    apiServerURL: {{.K8sApiServer}}
+    skipTLS: true
+    children:
+    - name: {{.Namespace | kebabcase}}
+      type: k8s.Namespace
+      namespaceName: {{.Namespace}}
+---
+apiVersion: xl-deploy/v1
+kind: Environments
+spec:
+- directory: Environments/{{$app}}
+  children:
+  - name: {{$app}}
+    type: udm.Environment
+    members:
+    - Infrastructure/{{$app}}/k8s/{{.Namespace | kebabcase}}
+    - Infrastructure/{{$app}}/k8s

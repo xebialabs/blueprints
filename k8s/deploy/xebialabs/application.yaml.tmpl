@@ -1,0 +1,15 @@
+{{$app := .AppName | kebabcase}}
+apiVersion: xl-deploy/v1
+kind: Applications
+spec:
+- directory: Applications/{{$app}}
+  children:
+  - name: {{$app}}
+    type: udm.Application
+    children:
+    - name: '{{.AppVersion}}'
+      type: udm.DeploymentPackage
+      deployables:
+      - name: {{$app}}
+        type: k8s.ResourcesFile
+        file: !file deployment.yaml

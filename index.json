@@ -1,0 +1,8 @@
+[
+  "aws/monolith",
+  "aws/microservice-ecommerce",
+  "aws/datalake",
+  "docker/simple-demo-app",
+  "devsecops/security-scanning",
+  "k8s/deploy"
+]
