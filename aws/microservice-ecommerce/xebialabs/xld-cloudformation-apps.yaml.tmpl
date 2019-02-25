@@ -5,7 +5,7 @@ spec:
 - name: {{$app}}
   type: core.Directory
   children:
-{{if eq .ProvisionCluster "true"}}
+{{if .ProvisionCluster }}
   - name: EKS-LAMBDA
     type: core.Directory
     children:
@@ -158,7 +158,7 @@ spec:
 {{end}}
   - name: K8S
     type: core.Directory
-{{if eq .ProvisionCluster "true"}}
+{{if .ProvisionCluster }}
     children:
     # Provision K8s namespace
     - name: {{$app}}-namespace

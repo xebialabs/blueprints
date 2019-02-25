@@ -22,7 +22,7 @@ spec:
       requiresValue: false
       showOnReleaseStart: false
       value:
-        {{- if eq .ProvisionCluster "true"}}
+        {{- if .ProvisionCluster }}
         namespace: xl-demo
         {{- else}}
         namespace: {{.Namespace}}
@@ -58,7 +58,7 @@ spec:
       showOnReleaseStart: false
       value: !value XL_DEPLOY_PASSWORD
     phases:
-    {{if eq .ProvisionCluster "true"}}
+    {{if .ProvisionCluster }}
     # Provision Infra
     - name: Provision Infrastructure
       color: '#ff9e3b'
@@ -139,7 +139,7 @@ spec:
     - name: Deploy {{$app}} application
       type: xlrelease.Phase
       tasks:
-      {{if eq .ProvisionCluster "true"}}
+      {{if .ProvisionCluster }}
       - name: Deploy xl-demo namespace
         type: xldeploy.Deploy
         server: XL Deploy
@@ -201,7 +201,7 @@ spec:
           server: XL Deploy
           numberOfContinueRetrials: 100
           pollingInterval: 10
-          {{if eq .ProvisionCluster "true"}}
+          {{if .ProvisionCluster }}
           ciId: Infrastructure/{{$app}}/eks-cluster
           {{else}}
           ciId: Infrastructure/{{$app}}/eks-{{$clusterName}}
