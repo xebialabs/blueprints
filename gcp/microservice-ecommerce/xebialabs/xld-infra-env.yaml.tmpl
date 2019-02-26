@@ -1,6 +1,6 @@
 {{$app := .AppName | kebabcase}}
 {{$clusterName := .ClusterName | kebabcase}}
-{{if eq .ProvisionCluster "true"}}
+{{if .ProvisionCluster }}
 # Provision GCP GKE cluster
 apiVersion: xl-deploy/v1
 kind: Infrastructure

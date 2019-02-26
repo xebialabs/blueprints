@@ -6,7 +6,7 @@ spec:
 - name: {{$app}}
   type: core.Directory
   children:
-{{if eq .ProvisionCluster "true"}}
+{{if .ProvisionCluster }}
 # Provision GKE cluster using Terraform templates
   - name: GKE-TERRAFORM
     type: core.Directory
@@ -49,7 +49,7 @@ spec:
 {{end}}
   - name: K8S
     type: core.Directory
-{{if eq .ProvisionCluster "true"}}
+{{if .ProvisionCluster }}
 # Provision K8s namespace
     children:
     - name: {{$app}}-namespace

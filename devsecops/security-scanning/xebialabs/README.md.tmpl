@@ -6,14 +6,14 @@ Organizations struggle to track application release status information and under
 
 This blueprint provides a way to integrate tools like SonarQube, Fortify, Checkmarx, and Black Duck into release pipeline.
 
-{{- if eq .ConfigureSonar "true"}}
+{{- if .ConfigureSonar }}
 
 #### SonarQube
 
 SonarQube is an open source platform for continuous inspection of code quality to perform automatic reviews with static analysis of code to detect bugs, code smells, and security vulnerabilities in application source code. 
 
 {{- end}}
-{{- if eq .ConfigureFortify "true"}}
+{{- if .ConfigureFortify }}
 
 #### Fortify SSC
 
@@ -24,14 +24,14 @@ Fortify Software Security Center (SSC) provides centralized management of their 
 Fortify on Demand provides software security analysis as a service. It can evaluate application code against selected security metrics.
 
 {{- end}}
-{{- if eq .ConfigureCheckmarx "true"}}
+{{- if .ConfigureCheckmarx }}
 
 #### Checkmarx
 
 Checkmarx provides Checkmarx Static Application Security Testing (CxSAST) and Checkmarx Open Source Analysis (CxOSA). CxSAST automatically scan uncompiled code and identify security vulnerabilities. CxOSA provides a way to control and manage open source components and mitigate potential risks to the application, organizations and its users.
 
 {{- end}}
-{{- if eq .ConfigureBlackduck "true"}}
+{{- if .ConfigureBlackduck }}
 
 ### Black duck
 
