@@ -1,7 +1,9 @@
 [
-  "aws/monolith",
-  "aws/microservice-ecommerce",
   "aws/datalake",
+  "aws/microservice-ecommerce",
+  "aws/monolith",
+  "aws/monolith-terraform",
+  "devsecops/security-scanning",
   "docker/simple-demo-app",
-  "devsecops/security-scanning"
+  "gcp/microservice-ecommerce"
 ]
