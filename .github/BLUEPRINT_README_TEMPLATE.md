@@ -8,9 +8,8 @@ Use this blueprint to ...
 
 If you're new to XebiaLabs blueprints, check out:
 
-* [DevOps as Code overview](https://docs.xebialabs.com/xl-platform/concept/devops-as-code-overview.html)
-* [Getting started with DevOps as Code](https://docs.xebialabs.com/xl-platform/concept/getting-started-with-devops-as-code.html)
-* [Using the XebiaLabs Command-Line Interface (CLI)](https://docs.xebialabs.com/xl-platform/concept/xl-command-line-interface.html)
+* [Get started with DevOps as Code](https://docs.xebialabs.com/xl-platform/concept/get-started-with-devops-as-code.html)
+* [Get started with blueprints](https://docs.xebialabs.com/xl-platform/concept/get-started-with-blueprints.html)
 
 ## Usage
 
