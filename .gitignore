@@ -119,6 +119,7 @@ Desktop.ini
 *.*~
 *~
 .merge_file*
+index.json
 
 ######################
 # Gradle Wrapper
