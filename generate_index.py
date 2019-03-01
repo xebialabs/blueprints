@@ -22,4 +22,4 @@ print('>> Found blueprint directories: %s' % (blueprint_dirs))
 with open(output_file, 'w') as f:
     json.dump(blueprint_dirs, f, indent=2, separators=(',', ': '), sort_keys=True)
     f.write('\n')  #add trailing newline for POSIX compatibility
-    print('>> Results written to file [%s]\n' % (output_file))
+    print('>> Results written to file "%s"\n' % (output_file))
