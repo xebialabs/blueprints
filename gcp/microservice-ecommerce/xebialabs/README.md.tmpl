@@ -16,7 +16,7 @@ gcloud compute regions list
 gcloud compute zones list
 ```
 
-Follow gcloud init and select default Zone Ex. europe-west1
+Follow gcloud init and select default Zone Ex. europe-west1, make sure you use the same zone as the one selected during blueprint execution.
 
 ```sh
 gcloud init
@@ -34,11 +34,11 @@ Best practice to use separate account "technical account" to manage infrastructu
 export TF_ADMIN=[GCP project ID]
 ```
 
-> NOTE: There will be a project number, a project name and a project ID when you initialize the project, and only ID should be exported as `TF_ADMIN` variable.
+> NOTE: If you are creating the Project via GUI instead of below commands, there will be a project number, a project name and a project ID when you initialize the project, and only ID should be exported as `TF_ADMIN` variable.
 
 #### Create the GCP Project
 
-Create a new project and link it to your billing account (You could do it from the GCP console GUI as well)
+Create a new project and link it to your billing account (You could do it from the GCP console GUI as well, in that case skip the below command)
 
 ```sh
 gcloud projects create ${TF_ADMIN} \
@@ -101,7 +101,7 @@ gcloud projects add-iam-policy-binding ${TF_ADMIN} \
  --role roles/iam.serviceAccountUser
 ```
 
-Enabled API for newly created projects
+Enable APIs for the newly created project
 
 ```sh
 gcloud services enable cloudresourcemanager.googleapis.com \
@@ -111,18 +111,19 @@ gcloud services enable cloudresourcemanager.googleapis.com \
     container.googleapis.com
 ```
 
-## Creating back-end storage to tfstate file in Cloud Storage
+## Creating back-end storage to store the `tfstate` file in Cloud Storage
 
-Terraform stores the state about infrastructure and configuration by default local file "terraform.tfstate. State is used by Terraform to map resources to configuration, track metadata.
+Terraform stores the state about infrastructure and configuration by default in a local file `terraform.tfstate`. State is used by Terraform to map resources to configuration and to track metadata.
 
 Terraform allows state file to be stored remotely, which works better in a team environment or automated deployments.
-We will used Google Storage and create new bucket where we can store state files.
+We will use Google Storage and create new bucket where we can store state files.
 
-Create the remote back-end bucket in Cloud Storage for storage of the terraform.tfstate file
+Create the remote back-end bucket in Cloud Storage for storage of the `terraform.tfstate` file
 
 ```sh
-gsutil mb -p ${TF_ADMIN} -l asia-southeast1 gs://${TF_ADMIN}
+gsutil mb -p ${TF_ADMIN} -l europe-west1 gs://${TF_ADMIN}
 ```
+Make sure you use the same zone as the one selected during blueprint execution in above command.
 
 Enable versioning for said remote bucket:
 
@@ -153,7 +154,7 @@ Please note that you need to obtain a trial license or bring your own license fo
 
 > NOTE: If license files are not present at the time of the docker-compose run command, then xl-cli container will fail to create shared configurations in XLR which is needed for this blueprint.
 
-4. Generate the blueprint with `xl blueprint -t gcp/microservice-ecommerce` or copy the generated content to the "e-commerce-microservice" folder
+4. Generate the blueprint with `xl blueprint -b gcp/microservice-ecommerce` or copy the generated content to the "e-commerce-microservice" folder
 5. Ensure the "account.json" you downloaded earlier is placed inside the "terraform" folder that is created by the blueprint.
 `
 
