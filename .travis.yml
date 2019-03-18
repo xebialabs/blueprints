@@ -1,0 +1,52 @@
+os:
+  - linux
+services:
+  - docker
+language: python
+python:
+  - "3.7"
+# addons:
+#   apt:
+#     sources:
+#       - google-chrome
+#     packages:
+#       - google-chrome-stable
+# cache:
+#   directories:
+#     - $HOME/.m2
+#     - $HOME/.gradle
+# env:
+#   global:
+#     - FOO=bar
+#   matrix:
+#     - JHI_APP=jdl-default JHI_ENTITY=jdl JHI_PROFILE=prod JHI_PROTRACTOR=1
+
+#----------------------------------------------------------------------
+# Install all tools and check configuration
+#----------------------------------------------------------------------
+before_install:
+  - python --version
+
+#----------------------------------------------------------------------
+# Install JHipster and generate project+entities
+#----------------------------------------------------------------------
+# install:
+#   - pip install -r requirements.txt
+
+#----------------------------------------------------------------------
+# Launch tests
+#----------------------------------------------------------------------
+script:
+  - python test.py
+
+#----------------------------------------------------------------------
+# Cache
+#----------------------------------------------------------------------
+
+notifications:
+  webhooks:
+    urls:
+      - https://webhooks.gitter.im/e/479b810ad42c816679fb
+    on_success: always  # options: [always|never|change] default: always
+    on_failure: always  # options: [always|never|change] default: always
+    on_start: false     # default: false
