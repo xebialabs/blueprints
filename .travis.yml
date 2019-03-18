@@ -22,4 +22,4 @@ before_install:
 # Launch tests
 #----------------------------------------------------------------------
 script:
-  - python integrations.py
+  - python integration_tests.py
