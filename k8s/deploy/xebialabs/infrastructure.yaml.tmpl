@@ -1,4 +1,5 @@
 {{$app := .AppName | kebabcase}}
+{{if eq .K8sAuth "basic"}}
 apiVersion: xl-deploy/v1
 kind: Infrastructure
 spec:
@@ -8,13 +9,48 @@ spec:
     type: k8s.Master
     username: {{.K8sUsername}}
     password: !value K8sPassword
-    token: {{.K8sToken}}
     apiServerURL: {{.K8sApiServer}}
     skipTLS: true
     children:
-    - name: {{.Namespace | kebabcase}}
+    - name: {{.K8sNamespace | kebabcase}}
       type: k8s.Namespace
-      namespaceName: {{.Namespace}}
+      namespaceName: {{.K8sNamespace}}
+
+{{else if eq .K8sAuth "token"}}
+apiVersion: xl-deploy/v1
+kind: Infrastructure
+spec:
+- directory: Infrastructure/{{$app}}
+  children:
+  - name: k8s
+    type: k8s.Master
+    token: !value K8sToken
+    apiServerURL: {{.K8sApiServer}}
+    skipTLS: true
+    children:
+    - name: {{.K8sNamespace | kebabcase}}
+      type: k8s.Namespace
+      namespaceName: {{.K8sNamespace}}
+
+{{else if eq .K8sAuth "tls"}}
+apiVersion: xl-deploy/v1
+kind: Infrastructure
+spec:
+- directory: Infrastructure/{{$app}}
+  children:
+  - name: k8s
+    type: k8s.Master
+    caCert: {{.K8sCA}}
+    tlsCert: {{.K8sClientCert}}
+    tlsPrivateKey: {{.K8sClientKey}}
+    apiServerURL: {{.K8sApiServer}}
+    skipTLS: false
+    children:
+    - name: {{.K8sNamespace | kebabcase}}
+      type: k8s.Namespace
+      namespaceName: {{.K8sNamespace}}
+
+{{end}}
 ---
 apiVersion: xl-deploy/v1
 kind: Environments
@@ -24,5 +60,5 @@ spec:
   - name: {{$app}}
     type: udm.Environment
     members:
-    - Infrastructure/{{$app}}/k8s/{{.Namespace | kebabcase}}
+    - Infrastructure/{{$app}}/k8s/{{.K8sNamespace | kebabcase}}
     - Infrastructure/{{$app}}/k8s

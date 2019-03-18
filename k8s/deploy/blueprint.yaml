@@ -11,40 +11,75 @@ metadata:
   author: XebiaLabs
   version: 1.0
 
-parameters:
+spec:
+  parameters:
+  - name: K8sAuth
+    type: Select
+    description: How would you like to authenticate?
+    options:
+      - basic
+      - token
+      - tls
+  - name: K8sUsername
+    type: Input
+    description: What is the kubernetes username?
+    dependsOnTrue: !expression "K8sAuth == 'basic'"
+  - name: K8sPassword
+    type: Input
+    secret: true
+    description: What is the kubernetes password?
+    dependsOnTrue: !expression "K8sAuth == 'basic'"
+  - name: K8sToken
+    type: Input
+    secret: true
+    description: What is the kubernetes token?
+    dependsOnTrue: !expression "K8sAuth == 'token'"
+  - name: K8sCA
+    type: Input
+    description: What is the kubernetes certificate authority data?
+    value: !fn k8s.config().ClusterCertificateAuthorityData
+    dependsOnTrue: !expression "K8sAuth == 'tls'"
+  - name: K8sClientCert
+    type: Input
+    description: What is the kubernetes client certificate?
+    value: !fn k8s.config().UserClientCertificateData
+    dependsOnTrue: !expression "K8sAuth == 'tls'"
+  - name: K8sClientKey
+    type: Input
+    description: What is the kubernetes user?
+    value: !fn k8s.config().UserClientKeyData
+    dependsOnTrue: !expression "K8sAuth == 'tls'"
+  - name: K8sApiServer
+    type: Input
+    description: What is the kubernetes API server url?
+    default: https://192.168.99.100:8443
+  - name: K8sNamespace
+    type: Input
+    description: What is the cluster namespace?
+    default: default
+  - name: HasYaml
+    type: Confirm
+    description: Are you providing your own deployment YAML?
+  - name: K8sYaml
+    type: Input
+    description: What is the path to your deployment YAML?
+    dependsOnTrue: HasYaml
+    default: xebialabs/deployment.yaml
+  - name: AppName
+    type: Input
+    description: What is the application name?
+  - name: AppVersion
+    type: Input
+    description: What is the application version?
+    default: '1.0.0'
+  - name: AppReplicas
+    type: Input
+    description: How many replicas of the application to deploy?
+    dependsOnFalse: HasYaml
+    default: 1
 
-- name: AppName
-  type: Input
-  description: What is the application name?
-- name: AppVersion
-  type: Input
-  description: What is the application version?
-  default: '1.0.0'
-- name: AppReplicas
-  type: Input
-  description: How many replicas of the application to deploy?
-  default: 1
-- name: K8sUsername
-  type: Input
-  description: What is the kubernetes username?
-- name: K8sPassword
-  type: Input
-  secret: true
-  description: What is the kubernetes password?
-- name: K8sToken
-  type: Input
-  secret: true
-  description: What is the kubernetes token?
-- name: K8sApiServer
-  type: Input
-  description: What is the kubernetes API server url?
-  default: https://192.168.99.100:8443
-- name: Namespace
-  type: Input
-  description: What is the cluster namespace?
-  default: default
-
-files:
-- path: xebialabs/application.yaml.tmpl
-- path: xebialabs/infrastructure.yaml.tmpl
-- path: xebialabs/deployment.yaml.tmpl
+  files:
+  - path: xebialabs/application.yaml.tmpl
+  - path: xebialabs/infrastructure.yaml.tmpl
+  - path: xebialabs/deployment.yaml.tmpl
+    dependsOnFalse: HasYaml
