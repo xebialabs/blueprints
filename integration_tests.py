@@ -97,8 +97,6 @@ def teardown_temp_directory(dirname):
 if __name__ == '__main__':
     blueprint_dirs = find_blueprint_file_directories_recursively()
 
-    blueprint_dirs = [blueprint_dir for blueprint_dir in blueprint_dirs if 'basic' in blueprint_dir]
-
     blueprint_to_test_dirs = {}
     for blueprint_dir in blueprint_dirs:
         blueprint_to_test_dirs[blueprint_dir] = '{}/__test__'.format(blueprint_dir)
