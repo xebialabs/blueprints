@@ -109,6 +109,11 @@ if __name__ == '__main__':
             errormsg('Missing test files under {}'.format(test_dir))
             sys.exit(1)
 
+        env = os.environ.copy()
+        env['PATH'] = '../:{}'.format(env['PATH'])
+
+        tempdir = 'temp'
+
         for test_file in test_files:
             print('Processing blueprint test {}'.format(test_file))
 
@@ -120,18 +125,15 @@ if __name__ == '__main__':
                 errormsg('Missing answers file {} for {}'.format(answers_file, test_dir))
                 sys.exit(1)
 
-            tempdir = 'temp'
             if not setup_temp_directory(tempdir):
                 errormsg('Could not creating temp directory')
                 sys.exit(1)
 
-            shutil.copyfile('./xl', '{}/xl'.format(tempdir))
-            os.chmod('{}/xl'.format(tempdir), 0o755)
-
             os.chdir(tempdir)
 
-            print('Executing ./xl blueprint -b ../{} -a ../{}'.format(blueprint_dir, answers_file))
-            result = subprocess.run(['../xl', 'blueprint', '-b', '../{}'.format(blueprint_dir), '-a', '../{}'.format(answers_file)], capture_output=True)
+            command = ['xlw', 'blueprint', '-b', '../{}'.format(blueprint_dir), '-a', '../{}'.format(answers_file)]
+            print('Executing {}'.format(' '.join(command)))
+            result = subprocess.run(command, capture_output=True, env=env)
             if not result.returncode == 0:
                 print(result.stdout)
                 print('ERROR: Test failed on {} with message "{}"'.format(answers_file, result.stderr.decode('utf8').strip()))
