@@ -1,71 +1,154 @@
 import glob
-import os.path
-import subprocess
+import os
 import re
 import shutil
+import subprocess
 import sys
 
 import yaml
 
-# Fetch latest xlwrapper
 
 regex = re.compile(r'/blueprint.ya?ml$')
 
-# Recursively scan for directories named '__test__'
-blueprint_files = []
-for filename in glob.iglob('**/blueprint.y*ml', recursive=True):
-    if regex.search(filename):
-        blueprint_files.append(filename)
 
-for blueprint_file in blueprint_files:
-    blueprint_dir = regex.sub('', blueprint_file)
-    test_dir = '{}/__test__'.format(blueprint_dir)
+def errormsg(message):
+    print('ERROR: {}'.format(message))
 
-    if os.path.exists(test_dir):
+
+def find_blueprint_file_directories_recursively(path=''):
+    """
+    Start at the given path and find all directories that contain blueprint.yml or blueprint.yaml.
+    """
+    blueprint_dirs = []
+    for filename in glob.iglob('{}**/blueprint.y*ml'.format(path), recursive=True):
+        if regex.search(filename):
+            blueprint_dirs.append(regex.sub('', filename))
+    return blueprint_dirs
+
+
+def fail_if_missing_test_dirs(expected_test_dirs):
+    missing_test_dirs = [test_dir for test_dir in expected_test_dirs if not os.path.exists(test_dir)]
+    if missing_test_dirs:
+        for missing_test_dir in missing_test_dirs:
+            errormsg('Missing test directory {}'.format(missing_test_dir))
+        sys.exit(1)
+
+
+def load_testdef_from_yaml_file(yaml_file):
+    """
+    Given a path to a yaml, return the its contents as a dictionary.
+    """
+    testdef = {}
+    try:
+        with open(yaml_file) as contents:
+            testdef = yaml.load(contents, Loader=yaml.Loader)
+    except Exception as e:
+        errormsg(e)
+        sys.exit(1)
+
+    return testdef
+
+
+def validate_testdef(testdef):
+    """
+    Validate the given testdef dictionary for required keys.
+    """
+    if not 'answers-file' in testdef:
+        errormsg("Missing 'answers-file' key in test definition")
+        sys.exit(1)
+
+
+def identify_missing_files(expected_files):
+    """
+    Extract the missing files from all those we expected to find.
+    """
+    return [filename for filename in expected_files if not os.path.exists('{}'.format(filename))]
+
+
+def setup_temp_directory(dirname):
+    """
+    Basic setup of the disposable temp directory.
+    """
+    try:
+        if os.path.exists(dirname):
+            shutil.rmtree(dirname)
+        os.mkdir(dirname, 0o755)
+        if os.path.exists(dirname):
+            return True
+    except:
+        pass
+    return False
+
+
+def teardown_temp_directory(dirname):
+    """
+    Basic teardown of the disposable temp directory.
+    """
+    try:
+        if os.path.exists(dirname):
+            shutil.rmtree(dirname)
+        if not os.path.exists(dirname):
+            return True
+    except:
+        pass
+    return False
+
+
+if __name__ == '__main__':
+    blueprint_dirs = find_blueprint_file_directories_recursively()
+
+    blueprint_dirs = [blueprint_dir for blueprint_dir in blueprint_dirs if 'basic' in blueprint_dir]
+
+    blueprint_to_test_dirs = {}
+    for blueprint_dir in blueprint_dirs:
+        blueprint_to_test_dirs[blueprint_dir] = '{}/__test__'.format(blueprint_dir)
+
+    fail_if_missing_test_dirs(blueprint_to_test_dirs.values())
+
+    for blueprint_dir, test_dir in blueprint_to_test_dirs.items():
         test_files = [filename for filename in glob.iglob('{}/test*.yaml'.format(test_dir))]
-        if len(test_files) == 0:
-            print('ERROR: No test files found under {}'.format(test_dir))
-            # sys.exit(1)
+        if not test_files:
+            errormsg('Missing test files under {}'.format(test_dir))
+            sys.exit(1)
 
         for test_file in test_files:
-            print('Processing blueprint file {}'.format(blueprint_file))
+            print('Processing blueprint test {}'.format(test_file))
 
-            testdef = {}
-            try:
-                with open(test_file) as test_file_contents:
-                    testdef = yaml.load(test_file_contents, Loader=yaml.Loader)
-            except Exception as e:
-                print(e)
-            
-            print(testdef)
+            testdef = load_testdef_from_yaml_file(test_file)
+            validate_testdef(testdef)
 
-            if 'answers-file' in testdef:
-                answers_file = '{}/{}'.format(test_dir, testdef['answers-file'])
-                if not os.path.exists(answers_file):
-                    print('ERROR: Missing answers file {} for {}'.format(answers_file, test_dir))
-                    sys.exit(1)
+            answers_file = '{}/{}'.format(test_dir, testdef['answers-file'])
+            if not os.path.exists(answers_file):
+                errormsg('Missing answers file {} for {}'.format(answers_file, test_dir))
+                sys.exit(1)
 
-            if os.path.exists('temp'):
-                shutil.rmtree('temp')
-            os.mkdir('temp')
-            os.chdir('temp')
+            tempdir = 'temp'
+            if not setup_temp_directory(tempdir):
+                errormsg('Could not creating temp directory')
+                sys.exit(1)
 
-            print('will run ../xlw -b ../{} --answers ../{}'.format(blueprint_dir, answers_file))
-            result = subprocess.run(['../xlw', '-b', '../{}'.format(blueprint_dir), '--answers', '../{}'.format(answers_file)], capture_output=True)
+            shutil.copyfile('./xl', '{}/xl'.format(tempdir))
+            os.chmod('{}/xl'.format(tempdir), 0o755)
+
+            os.chdir(tempdir)
+
+            print('Executing ./xl blueprint -b ../{} -a ../{}'.format(blueprint_dir, answers_file))
+            result = subprocess.run(['../xl', 'blueprint', '-b', '../{}'.format(blueprint_dir), '-a', '../{}'.format(answers_file)], capture_output=True)
             if not result.returncode == 0:
+                print(result.stdout)
                 print('ERROR: Test failed on {} with message "{}"'.format(answers_file, result.stderr.decode('utf8').strip()))
                 sys.exit(result.returncode)
-            else:
-                if 'expected-files' in testdef:
-                    print('Checking for expected files')
-                    for expected_file in testdef['expected-files']:
-                        if not os.path.exists(expected_file):
-                            print('ERROR: Expected file {} not found'.format(expected_file))
-                            sys.exit(1)
+
+            missing_files = identify_missing_files(testdef['expected-files'])
 
             os.chdir('..')
-            shutil.rmtree('temp', ignore_errors=True)
+            if not teardown_temp_directory(tempdir):
+                errormsg('Could not remove temp directory')
+                sys.exit(1)
 
-    else:
-        print('ERROR: No test found for blueprint {}'.format(blueprint_dir))
-        # sys.exit(1)
+            if missing_files:
+                for missing_file in missing_files:
+                    errormsg('Could not find expected file {}'.format(missing_file))
+                sys.exit(1)
+
+            print('Test passed')
