@@ -181,11 +181,23 @@ if __name__ == '__main__':
 
             missing_files = []
             if 'expected-files' in testdef:
+                if type(testdef['expected-files']) != list:
+                    errormsg('Expected a list for [expected-files], but got a {}'.format(type(testdef['expected-files'])))
+                    sys.exit(1)
                 missing_files = identify_missing_files(testdef['expected-files'])
             missing_xl_values = []
             if 'expected-xl-values' in testdef:
+                if type(testdef['expected-xl-values']) != dict:
+                    errormsg('Expected a dict for [expected-xl-values], but got a {}'.format(type(testdef['expected-xl-values'])))
+                    sys.exit(1)
                 configfile = parse_xlvals_file('xebialabs/values.xlvals')
                 missing_xl_values = identify_missing_xlvals(testdef['expected-xl-values'], configfile)
+            if 'expected-xl-secrets' in testdef:
+                if type(testdef['expected-xl-secrets']) != dict:
+                    errormsg('Expected a dict for [expected-xl-secrets], but got a {}'.format(type(testdef['expected-xl-secrets'])))
+                    sys.exit(1)
+                configfile = parse_xlvals_file('xebialabs/secrets.xlvals')
+                missing_xl_secrets = identify_missing_xlvals(testdef['expected-xl-secrets'], configfile)
 
             os.chdir('..')
             if not teardown_temp_directory(tempdir):
@@ -201,6 +213,11 @@ if __name__ == '__main__':
             if missing_xl_values:
                 for mk, mv in missing_xl_values.items():
                     errormsg('Could not find expected value in values.xlvals [{} : {}]'.format(mk, mv))
+                test_passed = False
+
+            if missing_xl_secrets:
+                for mk, mv in missing_xl_secrets.items():
+                    errormsg('Could not find expected value in secrets.xlvals [{} : {}]'.format(mk, mv))
                 test_passed = False
 
             if test_passed:
