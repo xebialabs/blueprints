@@ -139,7 +139,9 @@ if __name__ == '__main__':
                 print('ERROR: Test failed on {} with message "{}"'.format(answers_file, result.stderr.decode('utf8').strip()))
                 sys.exit(result.returncode)
 
-            missing_files = identify_missing_files(testdef['expected-files'])
+            missing_files = []
+            if 'expected-files' in testdef:
+                missing_files = identify_missing_files(testdef['expected-files'])
 
             os.chdir('..')
             if not teardown_temp_directory(tempdir):
