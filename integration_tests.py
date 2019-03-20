@@ -1,3 +1,4 @@
+import configparser
 import glob
 import os
 import re
@@ -63,6 +64,45 @@ def identify_missing_files(expected_files):
     Extract the missing files from all those we expected to find.
     """
     return [filename for filename in expected_files if not os.path.exists('{}'.format(filename))]
+
+
+def parse_xlvals_file(filepath):
+    """
+    Since .xlvals files are not true .ini files, we:
+    - read the file contents into a string
+    - prepend '[default]' to make in a valid .ini file
+    - parse it as a config file
+    """
+    data = ""
+    with open(filepath) as xlvals:
+        data = '[default]\n{}'.format(xlvals.read())
+
+    config = configparser.ConfigParser()
+    config.read_string(data)
+    return config
+
+
+def identify_missing_xlvals(expected_xl_values, configfile):
+    """
+    Compare the expected values to what's been read from the config file.
+    Will work with:
+    - values.xlvals
+    - secrets.xlvals
+    """
+    missing_values = {}
+    for ek,ev in expected_xl_values.items():
+        match = True
+        if configfile.has_option('default', ek):
+            val = configfile.get('default', ek)
+            if ev != val:
+                match = False
+        else:
+            match = False
+
+        if not match:
+            missing_values[ek] = ev
+
+    return missing_values
 
 
 def setup_temp_directory(dirname):
@@ -142,6 +182,10 @@ if __name__ == '__main__':
             missing_files = []
             if 'expected-files' in testdef:
                 missing_files = identify_missing_files(testdef['expected-files'])
+            missing_xl_values = []
+            if 'expected-xl-values' in testdef:
+                configfile = parse_xlvals_file('xebialabs/values.xlvals')
+                missing_xl_values = identify_missing_xlvals(testdef['expected-xl-values'], configfile)
 
             os.chdir('..')
             if not teardown_temp_directory(tempdir):
@@ -152,6 +196,11 @@ if __name__ == '__main__':
             if missing_files:
                 for missing_file in missing_files:
                     errormsg('Could not find expected file {}'.format(missing_file))
+                test_passed = False
+
+            if missing_xl_values:
+                for mk, mv in missing_xl_values.items():
+                    errormsg('Could not find expected value in values.xlvals [{} : {}]'.format(mk, mv))
                 test_passed = False
 
             if test_passed:
