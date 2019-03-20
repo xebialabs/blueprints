@@ -1,0 +1,18 @@
+# test the scenario with new cluster and CI-CD enabled
+answers-file: answers-01.yaml
+expected-files:
+  - xebialabs/xld-infra-env.yaml
+  - xebialabs/xld-cloudformation-apps.yaml
+  - xebialabs/xld-kubernetes-invoice-app.yaml
+  - xebialabs/xld-kubernetes-store-app.yaml
+  - xebialabs/xld-kubernetes-notification-app.yaml
+  - xebialabs/xlr-pipeline-ci-cd.yaml
+  - xebialabs/xlr-pipeline-destroy.yaml
+  - xebialabs/README.md
+#   - kubernetes/aws-auth-cm.yaml
+#   - cloudformation/cfn-secret-provider.zip
+#   - cloudformation/eks-master.yaml
+#   - cloudformation/eks-user.yaml
+#   - cloudformation/eks-vpc.yaml
+#   - cloudformation/eks-workers.yaml
+  - xebialabs.yaml

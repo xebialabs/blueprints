@@ -1,0 +1,12 @@
+AppName: test-project
+UseAWSCredentialsFromSystem: true
+AWSAccessKey: dummy
+AWSAccessSecret: dummy
+AWSRegion: asia-east1
+ProvisionCluster: true
+ClusterName: test-project
+ClusterEndpoint: http://test-project.com
+Namespace: xl-demo
+StoreAdminUsername: admin
+StoreAdminPassword: admin
+XLDUrlForXLR: http://xl-deploy:4516
