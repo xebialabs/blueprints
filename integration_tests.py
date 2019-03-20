@@ -192,6 +192,7 @@ if __name__ == '__main__':
                     sys.exit(1)
                 configfile = parse_xlvals_file('xebialabs/values.xlvals')
                 missing_xl_values = identify_missing_xlvals(testdef['expected-xl-values'], configfile)
+            missing_xl_secrets = []
             if 'expected-xl-secrets' in testdef:
                 if type(testdef['expected-xl-secrets']) != dict:
                     errormsg('Expected a dict for [expected-xl-secrets], but got a {}'.format(type(testdef['expected-xl-secrets'])))
