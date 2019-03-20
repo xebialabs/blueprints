@@ -2,9 +2,9 @@ import configparser
 import glob
 import os
 import re
-import shutil
 import subprocess
 import sys
+import tempfile
 
 import yaml
 
@@ -107,35 +107,6 @@ def identify_missing_xlvals(expected_xl_values, configfile):
     return missing_values
 
 
-def setup_temp_directory(dirname):
-    """
-    Basic setup of the disposable temp directory.
-    """
-    try:
-        if os.path.exists(dirname):
-            shutil.rmtree(dirname)
-        os.mkdir(dirname, 0o755)
-        if os.path.exists(dirname):
-            return True
-    except:
-        pass
-    return False
-
-
-def teardown_temp_directory(dirname):
-    """
-    Basic teardown of the disposable temp directory.
-    """
-    try:
-        if os.path.exists(dirname):
-            shutil.rmtree(dirname)
-        if not os.path.exists(dirname):
-            return True
-    except:
-        pass
-    return False
-
-
 if __name__ == '__main__':
     blueprint_dirs = find_blueprint_file_directories_recursively()
 
@@ -154,8 +125,6 @@ if __name__ == '__main__':
         env = os.environ.copy()
         env['PATH'] = '../:{}'.format(env['PATH'])
 
-        tempdir = 'temp'
-
         for test_file in test_files:
             print('Processing blueprint test {}'.format(test_file))
 
@@ -167,11 +136,13 @@ if __name__ == '__main__':
                 errormsg('Missing answers file {} for {}'.format(answers_file, test_dir))
                 sys.exit(1)
 
-            if not setup_temp_directory(tempdir):
-                errormsg('Could not creating temp directory')
+            try:
+                tempdir = tempfile.TemporaryDirectory(dir='.')
+            except:
+                errormsg('Unable to create temporary directory. Aborting')
                 sys.exit(1)
 
-            os.chdir(tempdir)
+            os.chdir(tempdir.name)
 
             command = ['xl', 'blueprint', '-b', '../{}'.format(blueprint_dir), '-a', '../{}'.format(answers_file)]
             print('Executing {}'.format(' '.join(command)))
@@ -203,7 +174,9 @@ if __name__ == '__main__':
                 missing_xl_secrets = identify_missing_xlvals(testdef['expected-xl-secrets'], configfile)
 
             os.chdir('..')
-            if not teardown_temp_directory(tempdir):
+            try:
+                tempdir.cleanup()
+            except:
                 errormsg('Could not remove temp directory')
                 sys.exit(1)
 
