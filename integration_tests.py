@@ -181,8 +181,11 @@ if __name__ == '__main__':
             print('Executing: {}'.format(' '.join(command)))
             result = subprocess.run(command, capture_output=True, env=env)
             if not result.returncode == 0:
-                print(result.stdout)
-                print('ERROR: Test failed on {} with message "{}"'.format(answers_file, result.stderr.decode('utf8').strip()))
+                if result.stdout:
+                    print('stdout: {}'.format(result.stdout))
+                errormsg('Test failed on {} with message "{}"'.format(answers_file, result.stderr.decode('utf8').strip()))
+                print(redtext('FAILED'))
+                os.chdir('..')
                 sys.exit(result.returncode)
 
             missing_files = []
