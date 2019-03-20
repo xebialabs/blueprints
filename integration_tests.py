@@ -123,6 +123,7 @@ def identify_missing_xlvals(expected_xl_values, configfile):
     missing_values = {}
     for ek,ev in expected_xl_values.items():
         match = True
+        val = None
         if configfile.has_option('default', ek):
             val = configfile.get('default', ek)
             if not type_aware_equals(ev, val):
@@ -131,7 +132,10 @@ def identify_missing_xlvals(expected_xl_values, configfile):
             match = False
 
         if not match:
-            missing_values[ek] = {'expected': ev, 'actual': val}
+            if val == None:
+                missing_values[ek] = {'expected': ev}
+            else:
+                missing_values[ek] = {'expected': ev, 'actual': val}
 
     return missing_values
 
@@ -217,12 +221,18 @@ if __name__ == '__main__':
 
             if missing_xl_values:
                 for mk, mv in missing_xl_values.items():
-                    errormsg("Could not find expected value in values.xlvals ({}) - expected '{}', got '{}'".format(mk, mv['expected'], mv['actual']))
+                    if 'actual' in mv :
+                        errormsg("Could not find expected value in values.xlvals ({}) - expected '{}', got '{}'".format(mk, mv['expected'], mv['actual']))
+                    else:
+                        errormsg("Could not find expected value in values.xlvals ({}) - expected '{}', but the entry is not in the file".format(mk, mv['expected']))
                 test_passed = False
 
             if missing_xl_secrets:
                 for mk, mv in missing_xl_secrets.items():
-                    errormsg("Could not find expected value in secrets.xlvals ({}) - expected '{}', got '{}'".format(mk, mv['expected'], mv['actual']))
+                    if 'actual' in mv:
+                        errormsg("Could not find expected value in secrets.xlvals ({}) - expected '{}', got '{}'".format(mk, mv['expected'], mv['actual']))
+                    else:
+                        errormsg("Could not find expected value in secrets.xlvals ({}) - expected '{}', but the entry is not in the file".format(mk, mv['expected']))
                 test_passed = False
 
             if test_passed:
