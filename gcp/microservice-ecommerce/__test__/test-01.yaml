@@ -1,0 +1,23 @@
+# test the scenario with new cluster and CI-CD enabled
+answers-file: answers-01.yaml
+expected-files:
+    - xebialabs.yaml
+    - xebialabs/README.md
+    - xebialabs/xld-infra-env.yaml
+    - xebialabs/xld-kubernetes-invoice-app.yaml
+    - xebialabs/xld-kubernetes-notification-app.yaml
+    - xebialabs/xld-kubernetes-store-app.yaml
+    - xebialabs/xld-terraform-apps.yaml
+    - xebialabs/xlr-pipeline-ci-cd.yaml
+    - xebialabs/xlr-pipeline-destroy.yaml
+    # - terraform/gke/main.tf
+    # - terraform/gke/outputs.tf
+    # - terraform/gke/variables.tf
+    # - terraform/vpc/main.tf
+    # - terraform/vpc/outputs.tf
+    # - terraform/vpc/variables.tf
+    # - terraform/.gitignore
+    # - terraform/backend.tf
+    # - terraform/main.tf
+    # - terraform/outputs.tf
+    # - terraform/variables.tf
