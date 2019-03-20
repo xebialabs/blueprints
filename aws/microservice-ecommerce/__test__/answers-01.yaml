@@ -1,5 +1,5 @@
 AppName: test-project
-UseAWSCredentialsFromSystem: true
+UseAWSCredentialsFromSystem: false
 AWSAccessKey: dummy
 AWSAccessSecret: dummy
 AWSRegion: asia-east1

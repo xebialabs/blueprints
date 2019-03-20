@@ -1,4 +1,4 @@
-# test the scenario with new cluster and CI-CD enabled
+# test the scenario with new cluster
 answers-file: answers-01.yaml
 expected-files:
   - xebialabs/xld-infra-env.yaml

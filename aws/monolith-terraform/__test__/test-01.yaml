@@ -1,0 +1,12 @@
+# test the default scenario
+answers-file: answers-01.yaml
+expected-files:
+  - xebialabs/xld-environment.yaml
+  - xebialabs/xld-infrastructure.yaml
+  - xebialabs/xld-service.yaml
+  - xebialabs/xlr-pipeline.yaml
+  - xebialabs/README.md
+  - xebialabs.yaml
+  - terraform/infrastructure/infrastructure.tf
+  - terraform/infrastructure/outputs.tf
+  - terraform/infrastructure/variables.tf
