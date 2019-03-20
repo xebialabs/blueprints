@@ -84,6 +84,29 @@ def parse_xlvals_file(filepath):
     return config
 
 
+def type_aware_equals(expected, actual):
+    """
+    Use the type of expected to convert actual before comparing.
+    """
+    if type(expected) == int:
+        try:
+            return expected == int(actual) 
+        except:
+            return False
+    elif type(expected) == float:
+        try:
+            return expected == float(actual)
+        except:
+            return False
+    elif type(expected) == bool:
+        try:
+            return expected == bool(actual)
+        except:
+            return False
+    else:
+        return '{}'.format(expected) == '{}'.format(actual)
+
+
 def identify_missing_xlvals(expected_xl_values, configfile):
     """
     Compare the expected values to what's been read from the config file.
@@ -96,13 +119,13 @@ def identify_missing_xlvals(expected_xl_values, configfile):
         match = True
         if configfile.has_option('default', ek):
             val = configfile.get('default', ek)
-            if ev != val:
+            if not type_aware_equals(ev, val):
                 match = False
         else:
             match = False
 
         if not match:
-            missing_values[ek] = ev
+            missing_values[ek] = {'expected': ev, 'actual': val}
 
     return missing_values
 
@@ -188,12 +211,12 @@ if __name__ == '__main__':
 
             if missing_xl_values:
                 for mk, mv in missing_xl_values.items():
-                    errormsg('Could not find expected value in values.xlvals [{} : {}]'.format(mk, mv))
+                    errormsg("Could not find expected value in values.xlvals ({}) - expected '{}', got '{}'".format(mk, mv['expected'], mv['actual']))
                 test_passed = False
 
             if missing_xl_secrets:
                 for mk, mv in missing_xl_secrets.items():
-                    errormsg('Could not find expected value in secrets.xlvals [{} : {}]'.format(mk, mv))
+                    errormsg("Could not find expected value in secrets.xlvals ({}) - expected '{}', got '{}'".format(mk, mv['expected'], mv['actual']))
                 test_passed = False
 
             if test_passed:
