@@ -148,9 +148,14 @@ if __name__ == '__main__':
                 errormsg('Could not remove temp directory')
                 sys.exit(1)
 
+            test_passed = True
             if missing_files:
                 for missing_file in missing_files:
                     errormsg('Could not find expected file {}'.format(missing_file))
-                sys.exit(1)
+                test_passed = False
 
-            print('Test passed')
+            if test_passed:
+                print('Test passed')
+            else:
+                print('Test failed')
+                sys.exit(1)
