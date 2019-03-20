@@ -11,9 +11,15 @@ import yaml
 
 regex = re.compile(r'/blueprint.ya?ml$')
 
+def redtext(message):
+    return "\033[0;31m{}\033[0m".format(message)
+
+def greentext(message):
+    return "\033[0;32m{}\033[0m".format(message)
+
 
 def errormsg(message):
-    print('ERROR: {}'.format(message))
+    print(redtext("ERROR: {}".format(message)))
 
 
 def find_blueprint_file_directories_recursively(path=''):
@@ -168,7 +174,7 @@ if __name__ == '__main__':
             os.chdir(tempdir.name)
 
             command = ['xl', 'blueprint', '-b', '../{}'.format(blueprint_dir), '-a', '../{}'.format(answers_file)]
-            print('Executing {}'.format(' '.join(command)))
+            print('Executing: {}'.format(' '.join(command)))
             result = subprocess.run(command, capture_output=True, env=env)
             if not result.returncode == 0:
                 print(result.stdout)
@@ -220,7 +226,8 @@ if __name__ == '__main__':
                 test_passed = False
 
             if test_passed:
-                print('Test passed')
+                print(greentext('SUCCESS'))
+                print('')
             else:
-                print('Test failed')
+                print(redtext('FAILED'))
                 sys.exit(1)
