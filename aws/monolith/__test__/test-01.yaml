@@ -1,0 +1,9 @@
+# test the default scenario
+answers-file: answers-01.yaml
+expected-files:
+  - xebialabs/xld-infrastructure.yaml
+  - xebialabs/xld-service.yaml
+  - xebialabs/xld-environment.yaml
+  - xebialabs/xlr-pipeline.yaml
+  - xebialabs/README.md
+  - xebialabs.yaml
