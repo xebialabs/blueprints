@@ -43,6 +43,8 @@ def load_testdef_from_yaml_file(yaml_file):
     try:
         with open(yaml_file) as contents:
             testdef = yaml.load(contents, Loader=yaml.Loader)
+        if testdef == None:
+            testdef = {}
     except Exception as e:
         errormsg(e)
         sys.exit(1)
