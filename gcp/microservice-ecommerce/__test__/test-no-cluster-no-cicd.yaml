@@ -2,7 +2,7 @@
 answers-file: answers-no-cluster-no-cicd.yaml
 expected-files:
     - xebialabs.yaml
-    - xebialabs/README.md
+    - xebialabs/USAGE.md
     - xebialabs/xld-infra-env.yaml
     - xebialabs/xld-kubernetes-invoice-app.yaml
     - xebialabs/xld-kubernetes-notification-app.yaml
