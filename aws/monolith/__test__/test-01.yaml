@@ -5,5 +5,5 @@ expected-files:
   - xebialabs/xld-service.yaml
   - xebialabs/xld-environment.yaml
   - xebialabs/xlr-pipeline.yaml
-  - xebialabs/README.md
+  - xebialabs/USAGE.md
   - xebialabs.yaml

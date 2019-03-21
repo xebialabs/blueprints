@@ -5,7 +5,7 @@ expected-files:
   - xebialabs/xld-infrastructure.yaml
   - xebialabs/xld-service.yaml
   - xebialabs/xlr-pipeline.yaml
-  - xebialabs/README.md
+  - xebialabs/USAGE.md
   - xebialabs.yaml
   - terraform/infrastructure/infrastructure.tf
   - terraform/infrastructure/outputs.tf

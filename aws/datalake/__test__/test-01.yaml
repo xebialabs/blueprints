@@ -1,14 +1,13 @@
 answers-file: answers-01.yaml
 expected-files:
   - xebialabs.yaml
-  - README.md
   - cloudformation/data-lake-api.yaml
   - cloudformation/data-lake-artifacts.zip
   - cloudformation/data-lake-deploy-federated.master.yaml
   - cloudformation/data-lake-deploy.master.yaml
   - cloudformation/data-lake-services.yaml
   - cloudformation/data-lake-storage.yaml
-  - xebialabs/README.md
+  - xebialabs/USAGE.md
   - xebialabs/xld-environment.yaml
   - xebialabs/xld-infrastructure.yaml
   - xebialabs/xlr-pipeline.yaml

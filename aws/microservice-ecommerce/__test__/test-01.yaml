@@ -8,7 +8,7 @@ expected-files:
   - xebialabs/xld-kubernetes-notification-app.yaml
   - xebialabs/xlr-pipeline-ci-cd.yaml
   - xebialabs/xlr-pipeline-destroy.yaml
-  - xebialabs/README.md
+  - xebialabs/USAGE.md
   - kubernetes/aws-auth-cm.yaml
   - cloudformation/cfn-secret-provider.zip
   - cloudformation/eks-master.yaml

@@ -72,7 +72,7 @@ spec:
   - path: cloudformation/data-lake-storage.yaml
   - path: cloudformation/data-lake-deploy-federated.master.yaml.tmpl
   - path: cloudformation/data-lake-deploy.master.yaml.tmpl
-  - path: xebialabs/README.md.tmpl
+  - path: xebialabs/USAGE.md.tmpl
   - path: xebialabs/xld-infrastructure.yaml.tmpl
   - path: xebialabs/xld-environment.yaml.tmpl
   - path: xebialabs/xlr-pipeline.yaml.tmpl

@@ -4,7 +4,7 @@ Blueprint definitions for xl-cli. These files will be synced to [https://dist.xe
 
 ## Adding new blueprint
 
-Simply create a folder and add required files & templates along with the `blueprint.yaml` file.
+Simply create a folder and add required files & templates along with the `blueprint.yaml` file. Refer the `CONTRIBUTING.md` file at the root of of this repository for more details.
 
 ## Publish
 
@@ -15,3 +15,7 @@ The official blueprints are hosted on our distribution site and are published us
 ## Generate `index.json` file manually
 
 In the publish step of the release, `index.json` file will be generated automatically based on the directory structure. If needed, `generate_index.py` script can be run manually to generate the `index.json` file on the root of the repository.
+
+## Unit tests
+
+Every blueprint has unit tests in the `__test__` folder. The tests are run in [Travis](https://travis-ci.org/xebialabs/blueprints) for pull requests.

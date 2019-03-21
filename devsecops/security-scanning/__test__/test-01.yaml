@@ -4,5 +4,5 @@ expected-files:
   - xebialabs/xlr-configuration.yaml
   - xebialabs/xlr-pipeline.yaml
   - xebialabs/xlr-dashboard.yaml
-  - xebialabs/README.md
+  - xebialabs/USAGE.md
   - xebialabs.yaml
