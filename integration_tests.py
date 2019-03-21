@@ -66,12 +66,26 @@ def validate_testdef(testdef):
         errormsg("Missing 'answers-file' key in test definition")
         sys.exit(1)
 
+    if 'expected-files' in testdef and 'not-expected-files' in testdef:
+        duplicates = [duplicate for duplicate in testdef['expected-files'] if duplicate in testdef['not-expected-files']]
+        if duplicates:
+            for duplicate in duplicates:
+                errormsg("Filename {} appears in both 'expected-files' and 'not-expected-files' sections".format(duplicate))
+            sys.exit(1)
+
 
 def identify_missing_files(expected_files):
     """
     Extract the missing files from all those we expected to find.
     """
     return [filename for filename in expected_files if not os.path.exists('{}'.format(filename))]
+
+
+def identify_not_missing_files(not_expected_files):
+    """
+    Identify any files we weren't expecting to find.
+    """
+    return [filename for filename in not_expected_files if os.path.exists('{}'.format(filename))]
 
 
 def parse_xlvals_file(filepath):
@@ -194,6 +208,12 @@ if __name__ == '__main__':
                     errormsg('Expected a list for [expected-files], but got a {}'.format(type(testdef['expected-files'])))
                     sys.exit(1)
                 missing_files = identify_missing_files(testdef['expected-files'])
+            unexpected_files = []
+            if 'not-expected-files' in testdef:
+                if type(testdef['not-expected-files']) != list:
+                    errormsg('Expected a list for [not-expected-files], but got a {}'.format(type(testdef['not-expected-files'])))
+                    sys.exit(1)
+                unexpected_files = identify_not_missing_files(testdef['not-expected-files'])
             missing_xl_values = []
             if 'expected-xl-values' in testdef:
                 if type(testdef['expected-xl-values']) != dict:
@@ -220,6 +240,11 @@ if __name__ == '__main__':
             if missing_files:
                 for missing_file in missing_files:
                     errormsg('Could not find expected file {}'.format(missing_file))
+                test_passed = False
+
+            if unexpected_files:
+                for unexpected_file in unexpected_files:
+                    errormsg('Found file that is not supposed to exist: {}'.format(unexpected_file))
                 test_passed = False
 
             if missing_xl_values:
