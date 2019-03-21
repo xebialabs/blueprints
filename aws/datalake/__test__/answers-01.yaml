@@ -2,7 +2,7 @@ S3BucketName: my-s3-bucket
 AdministratorName: admin
 AdministratorEmail: admin@test.com
 CognitoDomain: my-domain
-UseAWSCredentialsFromSystem: true
-AWSAccessKey: 10
-AWSAccessSecret: 10.12
-AWSRegion: east-us
+UseAWSCredentialsFromSystem: false
+AWSAccessKey: ANDGDJDHJHD4235
+AWSAccessSecret: ANDGDJDHJHD4235
+AWSRegion: us-east-2

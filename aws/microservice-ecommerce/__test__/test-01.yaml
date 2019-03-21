@@ -9,10 +9,10 @@ expected-files:
   - xebialabs/xlr-pipeline-ci-cd.yaml
   - xebialabs/xlr-pipeline-destroy.yaml
   - xebialabs/README.md
-#   - kubernetes/aws-auth-cm.yaml
-#   - cloudformation/cfn-secret-provider.zip
-#   - cloudformation/eks-master.yaml
-#   - cloudformation/eks-user.yaml
-#   - cloudformation/eks-vpc.yaml
-#   - cloudformation/eks-workers.yaml
+  - kubernetes/aws-auth-cm.yaml
+  - cloudformation/cfn-secret-provider.zip
+  - cloudformation/eks-master.yaml
+  - cloudformation/eks-user.yaml
+  - cloudformation/eks-vpc.yaml
+  - cloudformation/eks-workers.yaml
   - xebialabs.yaml

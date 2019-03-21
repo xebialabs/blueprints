@@ -1,8 +1,8 @@
 AppName: test-project
 UseAWSCredentialsFromSystem: false
-AWSAccessKey: dummy
-AWSAccessSecret: dummy
-AWSRegion: asia-east1
+AWSAccessKey: ANDGDJDHJHD4235
+AWSAccessSecret: ANDGDJDHJHD4235
+AWSRegion: eu-west-1
 ProvisionCluster: true
 ClusterName: test-project
 ClusterEndpoint: http://test-project.com

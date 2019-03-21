@@ -13,7 +13,7 @@ expected-files:
   - xebialabs/xld-infrastructure.yaml
   - xebialabs/xlr-pipeline.yaml
 expected-xl-values:
-  AWSRegion: east-us
+  AWSRegion: us-east-2
 expected-xl-secrets:
-  AWSAccessKey: 10
-  AWSAccessSecret: 10.12
+  AWSAccessKey: ANDGDJDHJHD4235
+  AWSAccessSecret: ANDGDJDHJHD4235
