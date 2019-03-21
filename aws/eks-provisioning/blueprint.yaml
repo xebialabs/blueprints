@@ -1,0 +1,133 @@
+apiVersion: xl/v1
+kind: Blueprint
+
+metadata:
+  projectName: Provision EKS cluster
+  description: |
+    The blueprint deploys an e-commerce microservice application to AWS EKS.
+    XL Deploy does the provisioning and deployment, while XL Release orchestrates everything.
+  author: XebiaLabs
+  version: 1.0
+
+spec:
+  parameters:
+  # General variables
+  - name: AppName
+    type: Input
+    description: What is the name of the application?
+
+  # AWS specific variables
+  - name: UseAWSCredentialsFromSystem
+    type: Confirm
+    description: Do you want to use AWS credentials from ~/.aws/credentials file?
+    dependsOnTrue: !fn aws.credentials().IsAvailable
+  - name: XLDServer
+    type: Input
+    description: "Type the name of existing XL Deploy shared configuration item in XL Release"
+    default: "XL Deploy"
+  - name: AWSAccessKey
+    type: Input
+    secret: true
+    description: What is the AWS Access Key ID?
+    dependsOnFalse: UseAWSCredentialsFromSystem
+    default: !fn aws.credentials().AccessKeyID
+  - name: AWSAccessSecret
+    type: Input
+    secret: true
+    description: What is the AWS Secret Access Key?
+    dependsOnFalse: UseAWSCredentialsFromSystem
+    default: !fn aws.credentials().SecretAccessKey
+  - name: AWSRegion #options are set manually because EKS service is not registered within AWS GO SDK
+    type: Select
+    description: "Select the AWS region:"
+    options:
+      - eu-central-1
+      - eu-west-1
+      - eu-west-2
+      - eu-west-3
+      - eu-north-1
+      # commented out because of https://github.com/boto/boto3/issues/811
+      # - us-east-1
+      - us-east-2
+      - us-west-2
+      - ap-south-1
+      - ap-northeast-1
+      - ap-northeast-2
+      - ap-southeast-1
+      - ap-southeast-2
+    default: eu-west-1
+  - name: EKSWorkerInstanceType
+    type: Select
+    description: "Select EKS workers instance type:"
+    options:
+      - "t2.medium"
+      - "t2.large"
+      - "t2.xlarge"
+      - "t2.2xlarge"
+      - "m3.medium"
+      - "m3.large"
+      - "m3.xlarge"
+      - "m3.2xlarge"
+      - "m4.large"
+      - "m4.xlarge"
+      - "m4.2xlarge"
+      - "m4.4xlarge"
+      - "m4.10xlarge"
+      - "m5.large"
+      - "m5.xlarge"
+      - "m5.2xlarge"
+      - "m5.4xlarge"
+      - "m5.12xlarge"
+      - "m5.24xlarge"
+      - "c4.large"
+      - "c4.xlarge"
+      - "c4.2xlarge"
+      - "c4.4xlarge"
+      - "c4.8xlarge"
+      - "c5.large"
+      - "c5.xlarge"
+      - "c5.2xlarge"
+      - "c5.4xlarge"
+      - "c5.9xlarge"
+      - "c5.18xlarge"
+    default: "t2.medium"
+  - name: EKSWorkerInstanceCount
+    type: Input
+    description: "Set max instances count in EKS workers AutoScaling group"
+    default: "4"
+  - name: AddIAMUser
+    description: "Do you want to add extra user to have an access to EKS via kubectl"
+    type: Confirm
+    default: true
+  - name: EKSUserARN
+    description: "Enter existent IAM user ARN to be used to access EKS cluster via kubectl"
+    type: Input
+    default: "arn:aws:iam::100000000000:user/username"
+    dependsOnTrue: AddIAMUser
+  - name: EKSUserName
+    description: "Enter existent IAM username to access EKS cluster via kubectl"
+    type: Input
+    default: "username"
+    dependsOnTrue: AddIAMUser
+  - name: ProvisionEFS
+    type: Confirm
+    description: "Do you want to provision an EFS?"
+    default: true
+  - name: SlackServer
+    type: Input
+    description: "Type the name of existing Slack shared configuration item in XL Release"
+    default: "Slack Server"
+
+  files:
+  - path: xebialabs/xld-infra-env.yaml.tmpl
+  - path: xebialabs/xld-cloudformation-apps.yaml.tmpl
+  - path: xebialabs/xlr-pipeline-ci-cd.yaml.tmpl
+  - path: xebialabs/xlr-pipeline-destroy.yaml.tmpl
+  - path: xebialabs/README.md.tmpl
+  - path: kubernetes/aws-auth-cm.yaml.tmpl
+  - path: cloudformation/eks-master.yaml
+  - path: cloudformation/eks-vpc.yaml
+  - path: cloudformation/efs.yaml
+    dependsOnTrue: ProvisionEFS
+  - path: cloudformation/eks-workers.yaml.tmpl
+  - path: xebialabs.yaml

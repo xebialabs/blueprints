@@ -1,0 +1,124 @@
+{{$app := .AppName | kebabcase}}
+apiVersion: xl-deploy/v1
+kind: Applications
+spec:
+- name: {{$app}}
+  type: core.Directory
+  children:
+  # Provision EKS cluster using Cloudformation templates
+  - name: EKS-CLOUDFORMATION
+    type: core.Directory
+    children:
+    - name: {{$app}}-cloudformation-eks-vpc
+      type: udm.Application
+      children:
+      - name: '1.0.0'
+        type: udm.DeploymentPackage
+        deployables:
+        - name: {{$app}}-eks-vpc
+          type: aws.cloudformation.Template
+          file: !file ../cloudformation/eks-vpc.yaml
+          capabilities:
+          - CAPABILITY_IAM
+          - CAPABILITY_NAMED_IAM
+          inputVariables:
+            ProjectName: {{$app}}
+            VPCStackName: {{$app}}-eks-vpc
+            AvailabilityZones: {{.AWSRegion}}a, {{.AWSRegion}}b
+    - name: {{$app}}-cloudformation-eks-master
+      type: udm.Application
+      children:
+      - name: '1.0.0'
+        type: udm.DeploymentPackage
+        deployables:
+        - name: {{$app}}-eks-master
+          type: aws.cloudformation.Template
+          file: !file ../cloudformation/eks-master.yaml
+          capabilities:
+          - CAPABILITY_IAM
+          - CAPABILITY_NAMED_IAM
+          inputVariables:
+            ProjectName: {{$app}}
+            VPCStackName: {{$app}}-eks-vpc
+    - name: {{$app}}-cloudformation-eks-workers
+      type: udm.Application
+      children:
+      - name: '1.0.0'
+        type: udm.DeploymentPackage
+        deployables:
+        - name: {{$app}}-eks-workers
+          type: aws.cloudformation.Template
+          file: !file ../cloudformation/eks-workers.yaml
+          capabilities:
+          - CAPABILITY_IAM
+          - CAPABILITY_NAMED_IAM
+          inputVariables:
+            ProjectName: {{$app}}
+            VPCStackName: {{$app}}-eks-vpc
+            ClusterStackName: {{$app}}-eks-master
+            ClusterName: {{$app}}-master
+            NodeGroupName: {{$app}}
+          boundTemplates:
+            - "../eks-cluster"
+            - "../aws-eks-{{$app}}"
+            - "../aws-eks-{{$app}}-kube-system"
+            - "../aws-eks-{{$app}}-dictionary"
+        # create infrastructure entry in XLD using the cluster info that was created
+        templates:
+        - name: eks-cluster
+          type: "template.k8s.Master"
+          apiServerURL: '{{"{{%outputVariables.ClusterEndpoint%}}"}}'
+          skipTLS: "true"
+          isEKS: "true"
+          clusterName: "{{$app}}-master"
+          accessKey: {{.AWSAccessKey}}
+          accessSecret: {{.AWSAccessSecret}}
+          instanceName: "{{$app}}/eks-cluster"
+          childTemplates:
+          # this namespace is needed for authentication to the cluster
+          - name: kube-system
+            type: "template.k8s.Namespace"
+            namespaceName: "kube-system"
+        # this dictionary is needed for aws-eks-{{$app}}-kube-system environment
+        - name: aws-eks-{{$app}}-dictionary
+          type: "template.udm.Dictionary"
+          instanceName: "{{$app}}/aws-eks-{{$app}}-dictionary"
+          entries:
+            NodeInstanceRole: '{{"{{%outputVariables.NodeInstanceRole%}}"}}'
+            EKS_USER_ARN: {{.EKSUserARN}}
+            EKS_USER_NAME: {{.EKSUserName}}
+        # create environment entry in XLD for the newly created clusters
+        - name: aws-eks-{{$app}}
+          type: "template.udm.Environment"
+          instanceName: "{{$app}}/aws-eks-{{$app}}"
+          members:
+            - "../eks-cluster"
+        - name: aws-eks-{{$app}}-kube-system
+          type: "template.udm.Environment"
+          instanceName: "{{$app}}/aws-eks-{{$app}}-kube-system"
+          members:
+            - "../eks-cluster/kube-system"
+          dictionaries:
+            - "../aws-eks-{{$app}}-dictionary"
+    - name: {{$app}}-cloudformation-efs
+      type: udm.Application
+      children:
+        - name: '1.0.0'
+          type: udm.DeploymentPackage
+          deployables:
+            - name: {{$app}}-efs
+              type: aws.cloudformation.Template
+              file: !file ../cloudformation/efs.yaml
+              inputVariables:
+                VPCStackName: {{$app}}-eks-vpc
+    # config map used to create custom user for authentication to the EKS cluster
+    - name: {{$app}}-k8s-configmap
+      type: udm.Application
+      children:
+      - name: '1.0.0'
+        type: udm.DeploymentPackage
+        deployables:
+        - name: {{$app}}-aws-auth
+          type: k8s.ResourcesFile
+          file: !file ../kubernetes/aws-auth-cm.yaml
+          delimiters: "## ##"

@@ -1,0 +1,28 @@
+{{$app := .AppName | kebabcase}}
+# Provision AWS EKS cluster
+apiVersion: xl-deploy/v1
+kind: Infrastructure
+spec:
+- name: {{$app}}
+  type: core.Directory
+  children:
+  - name: aws-{{$app}}
+    type: aws.Cloud
+    accesskey: {{.AWSAccessKey}}
+    accessSecret: {{.AWSAccessSecret}}
+    children:
+    - name: eks-cloudformation
+      type: aws.cloudformation.Stack
+      region: {{.AWSRegion}}
+---
+apiVersion: xl-deploy/v1
+kind: Environments
+spec:
+- name: {{$app}}
+  type: core.Directory
+  children:
+  - name: aws-cloudformation-{{$app}}
+    type: udm.Environment
+    members:
+    - Infrastructure/{{$app}}/aws-{{$app}}
+    - Infrastructure/{{$app}}/aws-{{$app}}/eks-cloudformation

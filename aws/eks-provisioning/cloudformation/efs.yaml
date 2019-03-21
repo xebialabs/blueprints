@@ -1,0 +1,69 @@
+Description: >
+  This template deploys an EFS file system.
+
+Parameters:
+  EnvironmentName:
+    AllowedPattern: ^[0-9a-zA-Z]+([0-9a-zA-Z-]*[0-9a-zA-Z])*$
+    Description: An environment name that will be prefixed to resource names.
+    Type: String
+    Default: "xl-up"
+  EFSNameTag:
+    MinLength: 1
+    Description: The name of the EFS volume.
+    Type: String
+    Default: xebialabs-EFSvolume
+  VPCStackName:
+    Type: String
+    Description: VPC Stack Name
+    Default: "eks-vpc"
+
+Resources:
+  MountTargetSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      VpcId:
+        Fn::ImportValue:
+          !Sub "${VPCStackName}-VPCID"
+      GroupDescription: Security group for mount target
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: '2049'
+          ToPort: '2049'
+          CidrIp:
+            Fn::ImportValue:
+              !Sub "${VPCStackName}-VPCCIDR"
+      Tags:
+        - Key: Name
+          Value: !Sub ${EnvironmentName}-EFS-Hosts
+  FileSystem:
+    Type: AWS::EFS::FileSystem
+    Properties:
+      FileSystemTags:
+        - Key: Name
+          Value:
+            Ref: EnvironmentName
+  MountTarget:
+    Type: AWS::EFS::MountTarget
+    Properties:
+      FileSystemId:
+        Ref: FileSystem
+      SubnetId:
+        Fn::ImportValue:
+         !Sub "${VPCStackName}-subnetAID"
+      SecurityGroups:
+        - Ref: MountTargetSecurityGroup
+  MountTarget2:
+    Type: AWS::EFS::MountTarget
+    Properties:
+      FileSystemId:
+        Ref: FileSystem
+      SubnetId:
+        Fn::ImportValue:
+          !Sub "${VPCStackName}-subnetBID"
+      SecurityGroups:
+        - Ref: MountTargetSecurityGroup
+
+Outputs:
+  Filesystem:
+    Description: A reference to the EFS FileSystem
+    Value: !Ref FileSystem

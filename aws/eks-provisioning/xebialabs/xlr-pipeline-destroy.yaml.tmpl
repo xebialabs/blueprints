@@ -1,0 +1,60 @@
+{{$app := .AppName | kebabcase}}
+apiVersion: xl-release/v1
+kind: Templates
+spec:
+- name: {{$app}}
+  type: xlrelease.Folder
+  children:
+  - name: {{$app}}-destroy
+    type: xlrelease.Release
+    description: |
+      This XL Release template shows how to undeploy an application, based on microservices architecture, to AWS EKS using XL Deploy.
+#    releaseTriggers:
+#      - name: Destroy EKS EFS schedule
+#        type: time.Schedule
+#        releaseTitle: Destroy EKS EFS schedule
+#        periodicity: 0 0 19 ? * MON,TUE,WED,THU,FRI *
+#        triggerTime: ${abcTest}
+    tags:
+    - AWS
+    - EKS
+    - {{$app}}
+#    scriptUsername: !value XL_RELEASE_USERNAME
+#    scriptUserPassword: !value XL_RELEASE_PASSWORD
+    phases:
+    # De-provision Infra
+    - name: Deprovision Infrastructure
+      color: '#ff9e3b'
+      type: xlrelease.Phase
+      tasks:
+      {{if .ProvisionEFS}}
+      - name: Deprovision AWS EFS
+        type: xlrelease.SequentialGroup
+        tasks:
+        - name: Deprovision EFS
+          type: xldeploy.Undeploy
+          server: {{.XLDServer}}
+          deployedApplication: Environments/{{$app}}/aws-cloudformation-{{$app}}/{{$app}}-cloudformation-efs
+      {{end}}
+      - name: Deprovision AWS EKS cluster
+        type: xlrelease.SequentialGroup
+        tasks:
+        - name: Deprovision EKS config map for workers
+          type: xldeploy.Undeploy
+          server: {{.XLDServer}}
+          deployedApplication: Environments/{{$app}}/aws-eks-{{$app}}-kube-system/{{$app}}-k8s-configmap
+        - name: Deprovision EKS workers nodes
+          type: xldeploy.Undeploy
+          server: {{.XLDServer}}
+          deployedApplication: Environments/{{$app}}/aws-cloudformation-{{$app}}/{{$app}}-cloudformation-eks-workers
+        - name: Deprovision EKS master node
+          type: xldeploy.Undeploy
+          server: {{.XLDServer}}
+          deployedApplication: Environments/{{$app}}/aws-cloudformation-{{$app}}/{{$app}}-cloudformation-eks-master
+      - name: Deprovision AWS VPC
+        type: xlrelease.ParallelGroup
+        tasks:
+        - name: Deprovision AWS VPC
+          type: xldeploy.Undeploy
+          server: {{.XLDServer}}
+          deployedApplication: Environments/{{$app}}/aws-cloudformation-{{$app}}/{{$app}}-cloudformation-eks-vpc
