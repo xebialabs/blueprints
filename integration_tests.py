@@ -11,8 +11,10 @@ import yaml
 
 regex = re.compile(r'/blueprint.ya?ml$')
 
+
 def redtext(message):
     return "\033[0;31m{}\033[0m".format(message)
+
 
 def greentext(message):
     return "\033[0;32m{}\033[0m".format(message)
@@ -49,7 +51,7 @@ def load_testdef_from_yaml_file(yaml_file):
     try:
         with open(yaml_file) as contents:
             testdef = yaml.load(contents, Loader=yaml.Loader)
-        if testdef == None:
+        if testdef is None:
             testdef = {}
     except Exception as e:
         errormsg(e)
@@ -62,7 +64,7 @@ def validate_testdef(testdef):
     """
     Validate the given testdef dictionary for required keys.
     """
-    if not 'answers-file' in testdef:
+    if 'answers-file' not in testdef:
         errormsg("Missing 'answers-file' key in test definition")
         sys.exit(1)
 
@@ -110,7 +112,7 @@ def type_aware_equals(expected, actual):
     """
     if type(expected) == int:
         try:
-            return expected == int(actual) 
+            return expected == int(actual)
         except:
             return False
     elif type(expected) == float:
@@ -135,7 +137,7 @@ def identify_missing_xlvals(expected_xl_values, configfile):
     - secrets.xlvals
     """
     missing_values = {}
-    for ek,ev in expected_xl_values.items():
+    for ek, ev in expected_xl_values.items():
         match = True
         val = None
         if configfile.has_option('default', ek):
@@ -146,7 +148,7 @@ def identify_missing_xlvals(expected_xl_values, configfile):
             match = False
 
         if not match:
-            if val == None:
+            if val is None:
                 missing_values[ek] = {'expected': ev}
             else:
                 missing_values[ek] = {'expected': ev, 'actual': val}
@@ -249,7 +251,7 @@ if __name__ == '__main__':
 
             if missing_xl_values:
                 for mk, mv in missing_xl_values.items():
-                    if 'actual' in mv :
+                    if 'actual' in mv:
                         errormsg("Could not find expected value in values.xlvals ({}) - expected '{}', got '{}'".format(mk, mv['expected'], mv['actual']))
                     else:
                         errormsg("Could not find expected value in values.xlvals ({}) - expected '{}', but the entry is not in the file".format(mk, mv['expected']))
