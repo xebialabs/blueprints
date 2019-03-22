@@ -91,7 +91,7 @@ spec:
             deploymentEnvironment: Environments/{{$app}}/aws-cloudformation-{{$app}}
       - name: Get EFS ID
         type: xld.GetCIMapPropertyKey
-        server: {{.XLDServer}
+        server: {{.XLDServer}}
         ciID: Infrastructure/{{$app}}/aws-{{$app}}/eks-cloudformation/{{$app}}-efs
         ciPropertyName: outputVariables
         ciPropertyNameKey: Filesystem
@@ -99,7 +99,7 @@ spec:
           pythonScript.ciPropertyValue: ${efs}
       - name: Get EKS Cluster name
         type: xld.GetCIMapPropertyKey
-        server: {{.XLDServer}
+        server: {{.XLDServer}}
         ciID: Infrastructure/{{$app}}/aws-{{$app}}/eks-cloudformation/{{$app}}-eks-master
         ciPropertyName: outputVariables
         ciPropertyNameKey: ClusterName
@@ -107,7 +107,7 @@ spec:
           pythonScript.ciPropertyValue: ${eksClusterName}
       - name: Get EKS Endpoint
         type: xld.GetCIMapPropertyKey
-        server: {{.XLDServer}
+        server: {{.XLDServer}}
         ciID: Infrastructure/{{$app}}/aws-{{$app}}/eks-cloudformation/{{$app}}-eks-master
         ciPropertyName: outputVariables
         ciPropertyNameKey: ClusterEndpoint

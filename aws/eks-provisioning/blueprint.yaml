@@ -2,9 +2,9 @@ apiVersion: xl/v1
 kind: Blueprint
 
 metadata:
-  projectName: Provision EKS cluster
+  projectName: Provision AWS EKS cluster and AWS EFS
   description: |
-    The blueprint deploys an e-commerce microservice application to AWS EKS.
+    The blueprint provisions AWS EKS and AWS EFS.
     XL Deploy does the provisioning and deployment, while XL Release orchestrates everything.
   author: XebiaLabs
   version: 1.0
