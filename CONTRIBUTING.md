@@ -19,7 +19,7 @@ Create a pull request with your proposed changes and request review from a contr
 
 We use Travis CI to run unit tests against the blueprints. The script in `integration_tests.py` is used for testing and it can also be run locally if you have a Python 3 development environment. Just run `python3 integration_tests.py` on the root of the repository.
 
-Tests are expected in a folder named `__test__` under each blueprint folder. You can have multiple test cases as long the each test case is in a YAML file with name that starts with `test`. The test file is structured as below for example
+Tests are expected in a folder named `__test__` under each blueprint folder. You can have multiple test cases as long as each test case is in a YAML file with a name that starts with `test`. The test file is structured as below:
 
 ```
 answers-file: answers-01.yaml
