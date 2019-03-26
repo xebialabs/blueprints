@@ -19,6 +19,7 @@ Resources:
     Description: Allows EKS to manage clusters on your behalf.
     Type: AWS::IAM::Role
     Properties:
+      RoleName: !Sub "${ProjectName}-ClusterRole"
       AssumeRolePolicyDocument:
         Version: 2012-10-17
         Statement:
@@ -34,6 +35,7 @@ Resources:
   ClusterControlPlaneSecurityGroup:
     Type: AWS::EC2::SecurityGroup
     Properties:
+      GroupName: !Sub "${ProjectName}-ClusterSecurityGroup"
       GroupDescription: Cluster communication with worker nodes
       VpcId:
         Fn::ImportValue:

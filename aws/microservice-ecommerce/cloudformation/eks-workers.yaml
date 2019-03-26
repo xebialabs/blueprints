@@ -1,6 +1,10 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Description: 'Amazon EKS - Workers for Microservices Application'
 
+Parameters:
+  ProjectName:
+    Type: String
+    Default: "app"
 
 Mappings:
     RegionMap:
@@ -116,15 +120,19 @@ Parameters:
     Default: app
 
 Resources:
+
   NodeInstanceProfile:
     Type: AWS::IAM::InstanceProfile
     Properties:
+      InstanceProfileName: !Sub "${ProjectName}-InstanceProfile"
       Path: "/"
       Roles:
       - !Ref NodeInstanceRole
+
   NodeInstanceRole:
     Type: AWS::IAM::Role
     Properties:
+      RoleName: !Sub "${ProjectName}-NodeInstanceRole"
       AssumeRolePolicyDocument:
         Version: '2012-10-17'
         Statement:
@@ -139,9 +147,11 @@ Resources:
         - arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy
         - arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy
         - arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly
+
   NodeSecurityGroup:
     Type: AWS::EC2::SecurityGroup
     Properties:
+      GroupName: !Sub "${ProjectName}-NodeSecurityGroup"
       GroupDescription: Security group for all nodes in the cluster
       VpcId:
         Fn::ImportValue:
@@ -149,6 +159,7 @@ Resources:
       Tags:
       - Key: !Sub "kubernetes.io/cluster/${ClusterName}"
         Value: 'owned'
+
   NodeSecurityGroupIngress:
     Type: AWS::EC2::SecurityGroupIngress
     DependsOn: NodeSecurityGroup
@@ -159,6 +170,7 @@ Resources:
       IpProtocol: '-1'
       FromPort: 0
       ToPort: 65535
+
   NodeSecurityGroupFromControlPlaneIngress:
     Type: AWS::EC2::SecurityGroupIngress
     DependsOn: NodeSecurityGroup
@@ -171,6 +183,7 @@ Resources:
       IpProtocol: tcp
       FromPort: 1025
       ToPort: 65535
+
   ControlPlaneEgressToNodeSecurityGroup:
     Type: AWS::EC2::SecurityGroupEgress
     DependsOn: NodeSecurityGroup
@@ -183,6 +196,7 @@ Resources:
       IpProtocol: tcp
       FromPort: 1025
       ToPort: 65535
+
   NodeSecurityGroupFromControlPlaneOn443Ingress:
     Type: AWS::EC2::SecurityGroupIngress
     DependsOn: NodeSecurityGroup
@@ -195,6 +209,7 @@ Resources:
       IpProtocol: tcp
       FromPort: 443
       ToPort: 443
+
   ControlPlaneEgressToNodeSecurityGroupOn443:
     Type: AWS::EC2::SecurityGroupEgress
     DependsOn: NodeSecurityGroup
@@ -207,6 +222,7 @@ Resources:
       IpProtocol: tcp
       FromPort: 443
       ToPort: 443
+
   ClusterControlPlaneSecurityGroupIngress:
     Type: AWS::EC2::SecurityGroupIngress
     DependsOn: NodeSecurityGroup
@@ -219,9 +235,11 @@ Resources:
       IpProtocol: tcp
       ToPort: 443
       FromPort: 443
+
   NodeGroup:
     Type: AWS::AutoScaling::AutoScalingGroup
     Properties:
+      AutoScalingGroupName: !Sub "${ProjectName}-AutoScalingGroup"
       DesiredCapacity: !Ref NodeAutoScalingGroupMaxSize
       LaunchConfigurationName: !Ref NodeLaunchConfig
       MinSize: !Ref NodeAutoScalingGroupMinSize
@@ -242,9 +260,11 @@ Resources:
       AutoScalingRollingUpdate:
         MinInstancesInService: '1'
         MaxBatchSize: '1'
+
   NodeLaunchConfig:
     Type: AWS::AutoScaling::LaunchConfiguration
     Properties:
+      LaunchConfigurationName: !Sub "${ProjectName}-LaunchConfiguration"
       AssociatePublicIpAddress: 'true'
       IamInstanceProfile: !Ref NodeInstanceProfile
       ImageId: !FindInMap ["RegionMap", Ref: "AWS::Region", "AmiId"]
