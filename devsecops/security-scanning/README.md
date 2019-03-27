@@ -31,6 +31,14 @@ This blueprint includes the following tools and technologies:
     * [Checkmarx Static Application Security Testing (SAST)](https://www.checkmarx.com/products/static-application-security-testing/)
     * [Checkmarx Open Source Security Analysis (OSA)](https://www.checkmarx.com/products/open-source-security-analysis/)
 
+## Minimum Required versions
+
+This blueprint version requires at least the below versions of the specified tools to work properly.
+
+XL Release: Version 8.6
+XL Deploy: Version 8.6.1
+XL CLI: Version 8.6
+
 ## Prerequisites
 
 To run the YAML that this blueprint generates, you need:
