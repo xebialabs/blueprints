@@ -1,0 +1,116 @@
+apiVersion: xl/v1
+kind: Blueprint
+
+metadata:
+  projectName: GCP-Microservice-GKE-with-JHipster
+  description: |
+    The blueprint deploys an e-commerce microservice application to GCP GKE.
+    XL Deploy does the provisioning and deployment, while XL Release orchestrates everything.
+  author: XebiaLabs
+  version: 1.0
+
+spec:
+  parameters:
+  # General variables
+  - name: AppName
+    type: Input
+    description: What is the name of the application?
+  # GCP specific variables
+  - name: GCPProjectID
+    type: Input
+    description: What is the GCP project ID?
+  - name: K8SMasterUser
+    type: Input
+    description: What is the username for Kubernetes cluster?
+    default: admin
+  - name: K8SMasterPassword
+    type: Input
+    secret: true
+    description: What is the password for Kubernetes cluster? (minimum 16 characters)
+    pattern: "(\\S){16,}"
+  - name: GCPRegion
+    type: Select
+    description: "Select the GCP region:"
+    options:
+      - asia-east1
+      - asia-east2
+      - asia-northeast1
+      - asia-south1
+      - asia-southeast1
+      - australia-southeast1
+      - europe-north1
+      - europe-west1
+      - europe-west2
+      - europe-west3
+      - europe-west4
+      - northamerica-northeast1
+      - southamerica-east1
+      - us-central1
+      - us-east1
+      - us-east4
+      - us-west1
+      - us-west2
+      
+  - name: ProvisionCluster
+    type: Confirm
+    description: Do you want to provision a new GCP GKE cluster?
+  - name: ClusterName
+    type: Input
+    description: What is the name of the cluster?
+  - name: ClusterEndpoint
+    type: Input
+    dependsOnFalse: ProvisionCluster
+    description: What is the endpoint for the cluster, example https://104.155.109.230
+  - name: Namespace
+    type: Input
+    description: What is the name of the namespace? This should be same as the one used in Kubernetes files.
+    default: xl-demo
+  - name: enableCICD
+    type: Confirm
+    description: Do you want to enable CI/CD integration with Jenkins?
+  - name: StoreAdminUsername
+    type: Input
+    description: Store Admin username
+    value: admin
+  - name: StoreAdminPassword
+    type: Input
+    description: Store Admin password
+    value: admin
+    secret: true
+  - name: XLDUrlForXLR
+    type: Input
+    description: XL Deploy URL for XL Release (This will only be used in the XL Release template)
+    default: http://xl-deploy:4516
+
+  files:
+  - path: xebialabs/xld-infra-env.yaml.tmpl
+  - path: xebialabs/xld-terraform-apps.yaml.tmpl
+  - path: xebialabs/xld-kubernetes-invoice-app.yaml.tmpl
+  - path: xebialabs/xld-kubernetes-store-app.yaml.tmpl
+  - path: xebialabs/xld-kubernetes-notification-app.yaml.tmpl
+  - path: xebialabs/xlr-pipeline-ci-cd.yaml.tmpl
+  - path: xebialabs/xlr-pipeline-destroy.yaml.tmpl
+  - path: xebialabs/README.md.tmpl
+  - path: terraform/gke/main.tf
+    dependsOnTrue: ProvisionCluster
+  - path: terraform/gke/outputs.tf
+    dependsOnTrue: ProvisionCluster
+  - path: terraform/gke/variables.tf
+    dependsOnTrue: ProvisionCluster
+  - path: terraform/vpc/main.tf
+    dependsOnTrue: ProvisionCluster
+  - path: terraform/vpc/outputs.tf
+    dependsOnTrue: ProvisionCluster
+  - path: terraform/vpc/variables.tf
+    dependsOnTrue: ProvisionCluster
+  - path: terraform/.gitignore
+    dependsOnTrue: ProvisionCluster
+  - path: terraform/backend.tf.tmpl
+    dependsOnTrue: ProvisionCluster
+  - path: terraform/main.tf
+    dependsOnTrue: ProvisionCluster
+  - path: terraform/outputs.tf
+    dependsOnTrue: ProvisionCluster
+  - path: terraform/variables.tf
+    dependsOnTrue: ProvisionCluster
+  - path: xebialabs.yaml

@@ -1,7 +1,8 @@
 ######################
 # Project Specific
 ######################
-
+account.json
+**/temp/**
 
 ######################
 # Node
@@ -118,6 +119,7 @@ Desktop.ini
 *.*~
 *~
 .merge_file*
+index.json
 
 ######################
 # Gradle Wrapper

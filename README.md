@@ -4,7 +4,7 @@ Blueprint definitions for xl-cli. These files will be synced to [https://dist.xe
 
 ## Adding new blueprint
 
-Simply create a folder and add required files & templates along with the `blueprint.yaml` file. Finally, update root `index.json` file to include the newly created folder.
+Simply create a folder and add required files & templates along with the `blueprint.yaml` file.
 
 ## Publish
 
@@ -12,10 +12,6 @@ Any changes that are dependent on a new XL CLI version should be done only on th
 
 The official blueprints are hosted on our distribution site and are published using the internal [Jenkins Job](https://jenkins-ng.xebialabs.com/jenkinsng/job/XL%20Devops%20As%20Code/job/Blueprints%20Release/) which is triggered manually.
 
-Run `publish.py` script to update the S3 bucket for development availabvle at [https://s3.amazonaws.com/xl-cli/blueprints](https://s3.amazonaws.com/xl-cli/blueprints)
+## Generate `index.json` file manually
 
-### Prerequisites
-
-- python & pip is needed for the publish script
-- For updating S3 bucket, you'll need to generate your local AWS credentials file as described [here](https://docs.aws.amazon.com/cli/latest/userguide/cli-config-files.html).
-- For using S3 API, you need to install `boto3` library using `pip install boto3` command
+In the publish step of the release, `index.json` file will be generated automatically based on the directory structure. If needed, `generate_index.py` script can be run manually to generate the `index.json` file on the root of the repository.

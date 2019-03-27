@@ -1,0 +1,60 @@
+{{$app := .AppName | kebabcase}}
+## Simple security and compliance template and dashboard
+
+Security and compliance are critical aspects of product release. 
+Organizations struggle to track application release status information and understand security & compliance risks across many different applications, teams, and environments. When risk assessment, security testing, and compliance checks aren’t built into the Continuous Integration/Continuous Delivery (CI/CD) pipeline, releases fail and cause delays, security vulnerabilities threaten production, and IT governance violations result in expensive fines.
+
+This blueprint provides a way to integrate tools like SonarQube, Fortify, Checkmarx, and Black Duck into release pipeline.
+
+{{- if .ConfigureSonar }}
+
+#### SonarQube
+
+SonarQube is an open source platform for continuous inspection of code quality to perform automatic reviews with static analysis of code to detect bugs, code smells, and security vulnerabilities in application source code. 
+
+{{- end}}
+{{- if .ConfigureFortify }}
+
+#### Fortify SSC
+
+Fortify Software Security Center (SSC) provides centralized management of their application security testing. Security teams use SSC to review and manage security testing activities, prioritize remediation efforts based on risk potential, measure improvements and generate cross portfolio management reports.
+
+#### Fortify on Demand
+
+Fortify on Demand provides software security analysis as a service. It can evaluate application code against selected security metrics.
+
+{{- end}}
+{{- if .ConfigureCheckmarx }}
+
+#### Checkmarx
+
+Checkmarx provides Checkmarx Static Application Security Testing (CxSAST) and Checkmarx Open Source Analysis (CxOSA). CxSAST automatically scan uncompiled code and identify security vulnerabilities. CxOSA provides a way to control and manage open source components and mitigate potential risks to the application, organizations and its users.
+
+{{- end}}
+{{- if .ConfigureBlackduck }}
+
+### Black duck
+
+Black Duck provides a complete open source management solution. It can identify potential security risks, license risks and operational risks for open source components.
+
+{{- end}}
+
+### Prerequisites
+
+If you do not have XL Release instances running, you can use this Docker Compose setup to spin them up. The setup also contains a preconfigured Jenkins instance and a dockerproxy container.
+Please note that you need to obtain a trial license or bring your own license for XL Release and XL Deploy. Follow the steps below to use the Docker Compose files.
+
+    1. Download the contents of https://github.com/xebialabs/e-commerce-microservice/tree/master/docker-compose/xebialabs into a folder such as `xl-platform`.
+    2. Copy the license for XL Release into `xl-platform/xl-release/default-conf/` and the license for XL Deploy into `xl-platform/xl-deploy/default-conf/`.
+    3. Run `docker-compose up --build` on the `xl-platform` folder.
+
+
+To deploy this blueprint with the XebiaLabs DevOps Platform, follow the steps below:
+
+1. Apply the generated YAML configurations using the XL CLI.
+
+    ```
+    xl apply -f xebialabs.yaml
+    ```
+
+2. Go to XL Release, look for the "{{$app}}" folder. Create release using template "{{$app}} security & compliance". Check latest status using "Security and Compliance" dashboard from "{{$app}}" folder.

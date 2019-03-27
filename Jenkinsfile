@@ -20,8 +20,8 @@ pipeline {
 
             steps {
                 checkout scm
-                sh "rsync -razv --delete --chmod=Du=rwx,Dg=rx,Do=rx,Fu=rw,Fg=r,Fo=r --exclude '.*' --exclude 'Jenkinsfile' --exclude 'publish.py' --exclude 'README.md' . ${env.DIST_SERVER_USER}@${env.DIST_SERVER_HOSTNAME}:${env.DIST_SERVER_BLUEPRINT_PATH}"
-
+                sh "python ./generate_index.py"
+                sh "rsync -razv --delete --chmod=Du=rwx,Dg=rx,Do=rx,Fu=rw,Fg=r,Fo=r --exclude '.*' --exclude 'Jenkinsfile' --exclude 'generate_index.py' --exclude 'README.md' . ${env.DIST_SERVER_USER}@${env.DIST_SERVER_HOSTNAME}:${env.DIST_SERVER_BLUEPRINT_PATH}"
             }
         }
     }

@@ -53,14 +53,14 @@ spec:
           type: xldeploy.Undeploy
           server: XL Deploy
           deployedApplication: Environments/{{$app}}/aws-eks-{{$app}}/{{$app}}-notification-mongodb
-      {{if eq .ProvisionCluster "true"}}
+      {{if .ProvisionCluster }}
       # Un-provision namespace
-      - name: Undeploy {{.Namespace}} namespace
+      - name: Undeploy xl-demo namespace
         type: xldeploy.Undeploy
         server: XL Deploy
         deployedApplication: Environments/{{$app}}/aws-eks-{{$app}}/{{$app}}-namespace
       {{end}}
-    {{if eq .ProvisionCluster "true"}}
+    {{if .ProvisionCluster }}
     # De-provision Infra
     - name: Deprovision Infrastructure
       color: '#ff9e3b'
@@ -72,7 +72,7 @@ spec:
         - name: Deprovision EKS config map for workers
           type: xldeploy.Undeploy
           server: XL Deploy
-          deployedApplication: Environments/{{$app}}/AWS-PREREQUISITE/{{$app}}-k8s-configmap
+          deployedApplication: Environments/{{$app}}/aws-eks-{{$app}}-kube-system/{{$app}}-k8s-configmap
         - name: Deprovision EKS workers nodes
           type: xldeploy.Undeploy
           server: XL Deploy

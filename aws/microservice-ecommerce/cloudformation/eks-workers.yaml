@@ -1,40 +1,6 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Description: 'Amazon EKS - Workers for Microservices Application'
 
-## The XLD infrastructure and environment are created via XLD Cloudformation plugin here
-Metadata:
-  XLD::Infrastructure:
-    - id: "{ProjectName}/eks-{ProjectName}"
-      type: "core.Directory"
-    - id: "{ProjectName}/eks-{ProjectName}/eks-cluster"
-      type: "k8s.Master"
-      apiServerURL: "{ClusterEndpoint}"
-      skipTLS: "true"
-      isEKS: "true"
-      clusterName: "{ClusterName}"
-      accessKey: "dummy"
-      accessSecret: "dummy"
-    - id: "{ProjectName}/eks-{ProjectName}/eks-cluster/kube-system"
-      type: "k8s.Namespace"
-      namespaceName: "kube-system"
-  XLD::Environments:
-    - id: "{ProjectName}/aws-eks-{ProjectName}-dictionary"
-      type: "udm.Dictionary"
-      entries:
-        NODES_ROLE_ARN: "{NodeInstanceRole}"
-        EKS_USER: "{EksUser}"
-        EKS_USER_ARN: "{EksUserArn}"
-        CLUSTER_ENDPOINT: "{ClusterEndpoint}"
-    - id: "{ProjectName}/aws-eks-{ProjectName}"
-      type: "udm.Environment"
-      members:
-      - ci ref: "Infrastructure/{ProjectName}/eks-{ProjectName}/eks-cluster"
-    - id: "{ProjectName}/AWS-PREREQUISITE"
-      type: "udm.Environment"
-      members:
-      - ci ref: "Infrastructure/{ProjectName}/eks-{ProjectName}/eks-cluster/kube-system"
-      dictionaries:
-      - ci ref: "Environments/{ProjectName}/aws-eks-{ProjectName}-dictionary"
 
 Mappings:
     RegionMap:

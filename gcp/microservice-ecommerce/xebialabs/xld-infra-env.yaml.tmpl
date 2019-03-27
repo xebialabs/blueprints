@@ -1,0 +1,64 @@
+{{$app := .AppName | kebabcase}}
+{{$clusterName := .ClusterName | kebabcase}}
+{{if .ProvisionCluster }}
+# Provision GCP GKE cluster
+apiVersion: xl-deploy/v1
+kind: Infrastructure
+spec:
+- name: {{$app}}
+  type: core.Directory
+  children:
+  - name: gcp-terraform
+    type: overthere.LocalHost
+    os: UNIX
+    children:
+    - name: terraform-client
+      type: terraform.TerraformClient
+      path: '/usr/local/bin' # for local installation
+      workingDirectory: '/tmp/{{$app}}' # for local installation
+
+---
+apiVersion: xl-deploy/v1
+kind: Environments
+spec:
+- name: {{$app}}
+  type: core.Directory
+  children:
+  - name: gcp-terraform
+    type: udm.Environment
+    members:
+    - Infrastructure/{{$app}}/gcp-terraform
+    - Infrastructure/{{$app}}/gcp-terraform/terraform-client
+
+{{else}}
+# Definition of existing GKE cluster
+apiVersion: xl-deploy/v1
+kind: Infrastructure
+spec:
+- name: {{$app}}
+  type: core.Directory
+  children:
+  - name: gcp-gke-{{$clusterName}}
+    type: k8s.Master
+    username: {{.K8SMasterUser}}
+    password: {{.K8SMasterPassword}}
+    apiServerURL: {{.ClusterEndpoint}}
+    skipTLS: true
+    children:
+    - name: {{.Namespace | kebabcase}}
+      type: k8s.Namespace
+      namespaceName: {{.Namespace}}
+---
+# Definition of existing GKE Environment
+apiVersion: xl-deploy/v1
+kind: Environments
+spec:
+- name: {{$app}}
+  type: core.Directory
+  children:
+  - name: gcp-gke-{{$app}}
+    type: udm.Environment
+    members:
+    - Infrastructure/{{$app}}/gcp-gke-{{$clusterName}}/{{.Namespace | kebabcase}}
+    - Infrastructure/{{$app}}/gcp-gke-{{$clusterName}}
+{{end}}
