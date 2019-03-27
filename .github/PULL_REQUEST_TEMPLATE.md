@@ -16,7 +16,7 @@ This section describes how to determine whether a blueprint has enough value to 
 This section describes how to determine whether the blueprint has the right technical quality to be included in the central XebiaLabs blueprints repository.
 
 - [ ] The branch from which the PR is created is up-to-date with the `development` branch.
-- [ ] The blueprint contains a `README.md` file at the root of the blueprint folder that describes the blueprint, using the README template in the `.github` folder.
+- [ ] The blueprint contains a `README.md` file at the root of the blueprint folder that describes the blueprint, using the README template in the `.github` folder of this repository.
 - [ ] The blueprint generates a `xebialabs/USAGE.md` file which, at a minimum, explains how to use the blueprint after it is generated (like adding any missing steps, creating accounts, setting up Docker containers, applying the YAML using `xl` CLI, running release. etc.). **N.B.:** Do not use this document to describe how to instantiate the blueprint. It will only be available to the user *after* the blueprint has been instantiated.
 - [ ] The blueprint generates a `docker/docker-compose.yml` file which can be used to spin up the required non-XebiaLabs products that the blueprints uses. This can be used to test and/or try out the blueprint without having to manually install those products.
 - [ ] The blueprint does not contain sensitive information such passwords, tokens, credentials or licenses.
@@ -29,8 +29,9 @@ This section describes how to determine whether the blueprint has the right tech
 
 This section describes how to determine whether the blueprint has been reviewed and tested well enough to be included in the central XebiaLabs blueprints repository.
 
-- [ ] The CI for the PR is green
+- [ ] Unit test is added in a `__test__` folder for each blueprint. Refer the `CONTRIBUTING.md` file at the root of of this repository for more details.
+- [ ] The Travis CI for the PR is green
 - [ ] The blueprint has been reviewed by someone else in the team.
-- [ ] Both README files have been reviewed by a technical writer and a product marketing manager.
+- [ ] Both README and USAGE files have been reviewed by a technical writer and a product marketing manager.
 - [ ] The blueprint has been manually tested with the `docker/docker-compose.yml` that is generated as part of it.
 - [ ] The blueprint works on Linux, Mac and Windows.

@@ -33,4 +33,5 @@ spec:
   - path: xebialabs/xld-environment.yaml.tmpl
   - path: xebialabs/xld-docker-apps.yaml.tmpl
   - path: xebialabs/xlr-pipeline.yaml.tmpl
+  - path: xebialabs/USAGE.md.tmpl
   - path: xebialabs.yaml

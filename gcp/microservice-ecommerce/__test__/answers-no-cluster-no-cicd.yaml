@@ -1,0 +1,13 @@
+AppName: test-project
+GCPProjectID: test-project
+K8SMasterUser: admin
+K8SMasterPassword: asdfghjklqwertyuiopzxcvbnm
+GCPRegion: asia-east1
+ProvisionCluster: false
+ClusterName: test-project
+ClusterEndpoint: http://test-project.com
+Namespace: xl-demo
+enableCICD: false
+StoreAdminUsername: admin
+StoreAdminPassword: admin
+XLDUrlForXLR: http://xl-deploy:4516
