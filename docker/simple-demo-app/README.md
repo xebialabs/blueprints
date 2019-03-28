@@ -58,7 +58,6 @@ This blueprint requires:
 
 This blueprint will output:
 
-* Sample Docker images
 * Release template
 * Docker infrastructure
 

@@ -10,3 +10,5 @@ expected-files:
   - terraform/infrastructure/infrastructure.tf
   - terraform/infrastructure/outputs.tf
   - terraform/infrastructure/variables.tf
+  - docker/docker-compose.yml
+  - docker/data/configure-xl-devops-platform.yaml

@@ -67,7 +67,6 @@ This blueprint requires:
 
 This blueprint will output:
 
-* Sample microservice-based application
 * Release templates
 * AWS CloudFormation templates
 * Infrastructure:
@@ -79,7 +78,7 @@ This blueprint will output:
 
 ## Tips and tricks
 
-* Jenkins is essential to use the release template that this blueprint generates. Before you execute the `xl apply` command, define a Jenkins server as a shared configuration in XL Release and put its name in the `xlr-pipeline-ci-cd.yaml` file.
+* Jenkins is essential to use the release template that this blueprint generates. Before you execute the `xl apply` command, define a Jenkins server as a shared configuration in XL Release and put its name in the `xlr-pipeline-ci-cd.yaml` file. If you use the provided docker-compose files this will be automatically setup for you.
 * The YAML that the blueprint generates includes optional steps to remove the application and deprovision the cluster.
 
 ## Labels

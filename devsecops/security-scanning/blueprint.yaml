@@ -140,3 +140,5 @@ spec:
   - path: xebialabs/xlr-dashboard.yaml.tmpl
   - path: xebialabs/USAGE.md.tmpl
   - path: xebialabs.yaml
+  # docker-compose setup for required tools
+  - path: docker/docker-compose.yml

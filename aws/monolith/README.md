@@ -62,7 +62,6 @@ This blueprint requires:
 
 This blueprint will output:
 
-* Sample monolithic application
 * Release template
 * Infrastructure:
     * Amazon ECS cluster

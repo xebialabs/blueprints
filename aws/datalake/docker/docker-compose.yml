@@ -1,0 +1,26 @@
+version: '3'
+services:
+  xl-deploy:
+    image: xebialabs/xl-deploy:8.6.1
+    ports:
+    - "4516:4516"
+    environment:
+    - ADMIN_PASSWORD=admin
+    - ACCEPT_EULA=Y
+
+  xl-release:
+    image: xebialabs/xl-release:8.6.1
+    ports:
+    - "5516:5516"
+    environment:
+    - ADMIN_PASSWORD=admin
+    - ACCEPT_EULA=Y
+
+  xl-cli:
+    image: xebialabsunsupported/xl-cli:8.6.1
+    depends_on:
+    - xl-deploy
+    - xl-release
+    command: ["apply", "--xl-deploy-url", "http://xl-deploy:4516/", "--xl-release-url", "http://xl-release:5516/", "-f", "/data/configure-xl-devops-platform.yaml"]
+    volumes:
+    - ./data/:/data:ro

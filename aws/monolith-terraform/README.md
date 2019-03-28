@@ -63,7 +63,6 @@ This blueprint requires:
 
 This blueprint will output:
 
-* Sample monolithic application
 * Release template
 * Terraform templates
 * Infrastructure:
