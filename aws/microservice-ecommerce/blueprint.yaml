@@ -101,3 +101,7 @@ spec:
   - path: cloudformation/eks-workers.yaml
     dependsOnTrue: ProvisionCluster
   - path: xebialabs.yaml
+  # docker-compose setup for required tools
+  - path: docker/docker-compose.yml
+  - path: docker/data/configure-xl-devops-platform.yaml
+  - path: docker/jenkins/jenkins.yaml

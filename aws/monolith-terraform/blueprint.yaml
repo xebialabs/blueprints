@@ -56,3 +56,6 @@ spec:
   - path: terraform/infrastructure/infrastructure.tf
   - path: terraform/infrastructure/outputs.tf
   - path: terraform/infrastructure/variables.tf
+  # docker-compose setup for required tools
+  - path: docker/docker-compose.yml
+  - path: docker/data/configure-xl-devops-platform.yaml

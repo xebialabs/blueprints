@@ -10,6 +10,9 @@ expected-files:
     - xebialabs/xld-terraform-apps.yaml
     - xebialabs/xlr-pipeline-ci-cd.yaml
     - xebialabs/xlr-pipeline-destroy.yaml
+    - docker/docker-compose.yml
+    - docker/data/configure-xl-devops-platform.yaml
+    - docker/jenkins/jenkins.yaml
 not-expected-files:
     - terraform/gke/main.tf
     - terraform/gke/outputs.tf

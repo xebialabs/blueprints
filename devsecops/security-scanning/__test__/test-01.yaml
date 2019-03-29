@@ -6,3 +6,4 @@ expected-files:
   - xebialabs/xlr-dashboard.yaml
   - xebialabs/USAGE.md
   - xebialabs.yaml
+  - docker/docker-compose.yml

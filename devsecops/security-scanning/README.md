@@ -58,6 +58,7 @@ This blueprint will output:
 
 * Release template
 * Security dashboard
+* A docker-compose setup for XL Release
 
 ## Tips and tricks
 

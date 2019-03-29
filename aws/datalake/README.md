@@ -71,6 +71,7 @@ This blueprint will output:
 * Sample Data Lake Solution
 * Release template
 * AWS CloudFormation templates
+* A docker-compose setup for XL Release & XL Deploy
 
 ## Tips and tricks
 

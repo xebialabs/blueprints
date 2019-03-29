@@ -11,6 +11,8 @@ expected-files:
   - xebialabs/xld-environment.yaml
   - xebialabs/xld-infrastructure.yaml
   - xebialabs/xlr-pipeline.yaml
+  - docker/docker-compose.yml
+  - docker/data/configure-xl-devops-platform.yaml
 expected-xl-values:
   AWSRegion: us-east-2
 expected-xl-secrets:

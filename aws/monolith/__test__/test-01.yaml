@@ -7,3 +7,5 @@ expected-files:
   - xebialabs/xlr-pipeline.yaml
   - xebialabs/USAGE.md
   - xebialabs.yaml
+  - docker/docker-compose.yml
+  - docker/data/configure-xl-devops-platform.yaml
