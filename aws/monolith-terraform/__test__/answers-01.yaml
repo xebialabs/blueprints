@@ -1,0 +1,7 @@
+AppName: test-project
+PublicPort: 80
+MySQLMasterPassword: asdfghjkqwert
+UseAWSCredentialsFromSystem: false
+AWSAccessKey: ANDGDJDHJHD4235
+AWSAccessSecret: ANDGDJDHJHD4235
+AWSRegion: us-west-1

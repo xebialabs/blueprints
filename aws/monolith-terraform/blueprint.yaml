@@ -51,8 +51,11 @@ spec:
   - path: xebialabs/xld-infrastructure.yaml.tmpl
   - path: xebialabs/xld-service.yaml.tmpl
   - path: xebialabs/xlr-pipeline.yaml.tmpl
-  - path: xebialabs/README.md.tmpl
+  - path: xebialabs/USAGE.md.tmpl
   - path: xebialabs.yaml
   - path: terraform/infrastructure/infrastructure.tf
   - path: terraform/infrastructure/outputs.tf
   - path: terraform/infrastructure/variables.tf
+  # docker-compose setup for required tools
+  - path: docker/docker-compose.yml
+  - path: docker/data/configure-xl-devops-platform.yaml

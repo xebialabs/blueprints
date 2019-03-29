@@ -87,7 +87,7 @@ spec:
   - path: xebialabs/xld-kubernetes-notification-app.yaml.tmpl
   - path: xebialabs/xlr-pipeline-ci-cd.yaml.tmpl
   - path: xebialabs/xlr-pipeline-destroy.yaml.tmpl
-  - path: xebialabs/README.md.tmpl
+  - path: xebialabs/USAGE.md.tmpl
   - path: kubernetes/aws-auth-cm.yaml
     dependsOnTrue: ProvisionCluster
   - path: cloudformation/cfn-secret-provider.zip
@@ -101,3 +101,7 @@ spec:
   - path: cloudformation/eks-workers.yaml
     dependsOnTrue: ProvisionCluster
   - path: xebialabs.yaml
+  # docker-compose setup for required tools
+  - path: docker/docker-compose.yml
+  - path: docker/data/configure-xl-devops-platform.yaml
+  - path: docker/jenkins/jenkins.yaml

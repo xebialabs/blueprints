@@ -58,9 +58,9 @@ This blueprint requires:
 
 This blueprint will output:
 
-* Sample Docker images
 * Release template
 * Docker infrastructure
+* A docker-compose setup for XL Release, XL Deploy & Docker proxy 
 
 ## Tips and tricks
 

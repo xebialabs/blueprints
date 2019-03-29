@@ -1,0 +1,9 @@
+# test the default scenario
+answers-file: answers-01.yaml
+expected-files:
+  - xebialabs/xlr-configuration.yaml
+  - xebialabs/xlr-pipeline.yaml
+  - xebialabs/xlr-dashboard.yaml
+  - xebialabs/USAGE.md
+  - xebialabs.yaml
+  - docker/docker-compose.yml
