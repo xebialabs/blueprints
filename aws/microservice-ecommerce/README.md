@@ -75,6 +75,7 @@ This blueprint will output:
     * AWS Lambda artifacts for the application
     * Networking infrastructure: Virtual Private Cloud (VPC), subnets, route table
     * Security infrastructure: IAM role
+* A docker-compose setup for XL Release, XL Deploy and Jenkins
 
 ## Tips and tricks
 

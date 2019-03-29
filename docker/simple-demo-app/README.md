@@ -60,6 +60,7 @@ This blueprint will output:
 
 * Release template
 * Docker infrastructure
+* A docker-compose setup for XL Release, XL Deploy & Docker proxy 
 
 ## Tips and tricks
 

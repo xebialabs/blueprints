@@ -55,12 +55,58 @@ To run the YAML that this blueprint generates, you need:
 
 This blueprint requires:
 
-* GCP project ID
+* GCP project ID (see section below for instructions)
 * A GCP region
 * The GKE cluster endpoint (if deploying to an existing cluster)
 * Kubernetes cluster credentials
 * The Kubernetes namespace
 * Jenkins credentials (if enabling CI integration)
+
+### Creating Google Cloud project
+
+#### Authenticate to gcloud
+Before configuring gcloud CLI you can check available Zones and Regions nearest to your location
+
+```sh
+gcloud compute regions list
+
+gcloud compute zones list
+```
+
+Follow gcloud init and select default Zone Ex. europe-west1, make sure you use the same zone as the one selected during blueprint execution.
+
+```sh
+gcloud init
+```
+
+#### Set up environment
+
+```sh
+export TF_ADMIN=[GCP project ID]
+```
+
+> NOTE: If you are creating the Project via GUI instead of below commands, there will be a project number, a project name and a project ID when you initialize the project, and only ID should be exported as `TF_ADMIN` variable.
+
+#### Create the GCP Project
+
+Create a new project and link it to your billing account (You could do it from the GCP console GUI as well, in that case skip the below command)
+
+```sh
+gcloud projects create ${TF_ADMIN} \
+--organization [YOUR_ORG_ID] \
+--set-as-default
+
+gcloud beta billing projects link ${TF_ADMIN} \
+--billing-account [YOUR_BILLING_ACCOUNT_ID]
+```
+
+> NOTE: value of YOUR_ORG_ID and YOUR_BILLING_ACCOUNT_ID you can find by running
+
+```sh
+gcloud organizations list
+
+gcloud beta billing accounts list
+```
 
 ## Output
 
@@ -72,6 +118,7 @@ This blueprint will output:
     * GKE cluster (master, nodes)
     * Networking infrastructure: Virtual Private Cloud (VPC), subnets
     * Security infrastructure
+* A docker-compose setup for XL JetPack and Jenkins
 
 ## Tips and tricks
 

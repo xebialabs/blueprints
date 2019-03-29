@@ -69,6 +69,7 @@ This blueprint will output:
     * Security infrastructure
     * Elastic Load Balancer (ELB) infrastructure
     * Amazon Relational Database Service (RDS)
+* A docker-compose setup for XL Release & XL Deploy
 
 ## Tips and tricks
 
