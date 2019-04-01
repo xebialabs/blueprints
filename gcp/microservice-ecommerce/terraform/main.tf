@@ -18,8 +18,6 @@ module "gke" {
   source                = "./gke"
   name                  = "${var.name}"
   region                = "${var.region}"
-  min_master_version    = "${var.min_master_version}"
-  node_version          = "${var.node_version}"
   gke_num_nodes         = "${var.gke_num_nodes}"
   vpc_name              = "${module.vpc.vpc_name}"
   subnet_name           = "${module.vpc.subnet_name}"
