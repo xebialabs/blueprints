@@ -27,16 +27,6 @@ variable "subnet_cidr" {
 
 # GKE variables
 
-variable "min_master_version" {
-  default     = "1.11.5-gke.5"
-  description = "Minimum GKE master version"
-}
-
-variable "node_version" {
-  default     = "1.11.5-gke.5"
-  description = "Minimum GKE node version"
-}
-
 variable "gke_num_nodes" {
   default = 2
   description = "Number of nodes in each GKE cluster zone"
