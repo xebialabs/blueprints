@@ -79,17 +79,29 @@ Follow gcloud init and select default Zone Ex. europe-west1, make sure you use t
 gcloud init
 ```
 
+> NOTE: You need to have proper permissions and privileges in the GCP account to execute these commands. If you are using a personal account you should be having these as you will be the admin. If you are using a company/enterprise account please check with your account administrator. 
+
 #### Set up environment
+
+> NOTE: If you are creating the Project via GUI instead of below commands, there will be a project number, a project name and a project ID when you initialize the project, and only ID should be exported as `TF_ADMIN` variable.
 
 ```sh
 export TF_ADMIN=[GCP project ID]
 ```
 
-> NOTE: If you are creating the Project via GUI instead of below commands, there will be a project number, a project name and a project ID when you initialize the project, and only ID should be exported as `TF_ADMIN` variable.
-
 #### Create the GCP Project
 
 Create a new project and link it to your billing account (You could do it from the GCP console GUI as well, in that case skip the below command)
+
+> NOTE: The value of YOUR_ORG_ID and YOUR_BILLING_ACCOUNT_ID can be found by running below commands
+
+```sh
+gcloud organizations list
+
+gcloud beta billing accounts list
+```
+
+Once you have the details run the below commands
 
 ```sh
 gcloud projects create ${TF_ADMIN} \
@@ -98,14 +110,6 @@ gcloud projects create ${TF_ADMIN} \
 
 gcloud beta billing projects link ${TF_ADMIN} \
 --billing-account [YOUR_BILLING_ACCOUNT_ID]
-```
-
-> NOTE: value of YOUR_ORG_ID and YOUR_BILLING_ACCOUNT_ID you can find by running
-
-```sh
-gcloud organizations list
-
-gcloud beta billing accounts list
 ```
 
 ## Output

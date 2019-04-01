@@ -1,5 +1,7 @@
 # XebiaLabs Blueprints
 
+[![Travis Build Status][travis-image]][travis-url-main]
+
 Blueprint definitions for xl-cli. These files will be synced to [https://dist.xebialabs.com/public/blueprints/](https://dist.xebialabs.com/public/blueprints/) and can be used as xl-cli blueprint repository (set by default).
 
 ## Adding new blueprint
@@ -67,3 +69,7 @@ aws/
 ```
 
 When committed, [Travis](https://travis-ci.org/xebialabs/blueprints) will test your blueprint along with all the others.
+
+
+[travis-image]: https://travis-ci.org/xebialabs/blueprints.svg?branch=development
+[travis-url-main]: https://travis-ci.org/xebialabs/blueprints/branches
