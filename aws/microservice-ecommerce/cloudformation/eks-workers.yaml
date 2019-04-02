@@ -1,17 +1,39 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Description: 'Amazon EKS - Workers for Microservices Application'
 
+Parameters:
+  ProjectName:
+    Type: String
+    Default: "app"
 
 Mappings:
     RegionMap:
         us-west-2:
-            "AmiId": "ami-0f54a2f7d2e9c88b3"
+            "AmiId": "ami-05a71d034119ffc12"
         us-east-1:
-            "AmiId": "ami-0a0b913ef3249b655"
+            "AmiId": "ami-03a1e71fb42fc37dd"
         us-east-2:
-            "AmiId": "ami-0958a76db2d150238"
+            "AmiId": "ami-093d55c2ba99ab2c8"
+        eu-central-1:
+            "AmiId": "ami-03bdf8079f6c013c5"
+        eu-north-1:
+            "AmiId": "ami-0be77fe86d741fc81"
         eu-west-1:
-            "AmiId": "ami-00c3b2d35bddd4f5c"
+            "AmiId": "ami-06368da7f495b68e9"
+        eu-west-2:
+            "AmiId": "ami-0f1f2189b4741bc60"
+        eu-west-3:
+            "AmiId": "ami-03a9acb0f6e0d424d"
+        ap-northeast-1:
+            "AmiId": "ami-0c9fb6a3fda95d373"
+        ap-northeast-2:
+            "AmiId": "ami-00ea4ea959f28b4cf"
+        ap-south-1:
+            "AmiId": "ami-0f07478f5c5eb9e20"
+        ap-southeast-1:
+            "AmiId": "ami-05dac5d0ada75e22f"
+        ap-southeast-2:
+            "AmiId": "ami-00513f18e1900ce1e"
 
 Parameters:
   ProjectName:
@@ -116,15 +138,19 @@ Parameters:
     Default: app
 
 Resources:
+
   NodeInstanceProfile:
     Type: AWS::IAM::InstanceProfile
     Properties:
+      InstanceProfileName: !Sub "${ProjectName}-InstanceProfile"
       Path: "/"
       Roles:
       - !Ref NodeInstanceRole
+
   NodeInstanceRole:
     Type: AWS::IAM::Role
     Properties:
+      RoleName: !Sub "${ProjectName}-NodeInstanceRole"
       AssumeRolePolicyDocument:
         Version: '2012-10-17'
         Statement:
@@ -139,9 +165,11 @@ Resources:
         - arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy
         - arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy
         - arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly
+
   NodeSecurityGroup:
     Type: AWS::EC2::SecurityGroup
     Properties:
+      GroupName: !Sub "${ProjectName}-NodeSecurityGroup"
       GroupDescription: Security group for all nodes in the cluster
       VpcId:
         Fn::ImportValue:
@@ -149,6 +177,7 @@ Resources:
       Tags:
       - Key: !Sub "kubernetes.io/cluster/${ClusterName}"
         Value: 'owned'
+
   NodeSecurityGroupIngress:
     Type: AWS::EC2::SecurityGroupIngress
     DependsOn: NodeSecurityGroup
@@ -159,6 +188,7 @@ Resources:
       IpProtocol: '-1'
       FromPort: 0
       ToPort: 65535
+
   NodeSecurityGroupFromControlPlaneIngress:
     Type: AWS::EC2::SecurityGroupIngress
     DependsOn: NodeSecurityGroup
@@ -171,6 +201,7 @@ Resources:
       IpProtocol: tcp
       FromPort: 1025
       ToPort: 65535
+
   ControlPlaneEgressToNodeSecurityGroup:
     Type: AWS::EC2::SecurityGroupEgress
     DependsOn: NodeSecurityGroup
@@ -183,6 +214,7 @@ Resources:
       IpProtocol: tcp
       FromPort: 1025
       ToPort: 65535
+
   NodeSecurityGroupFromControlPlaneOn443Ingress:
     Type: AWS::EC2::SecurityGroupIngress
     DependsOn: NodeSecurityGroup
@@ -195,6 +227,7 @@ Resources:
       IpProtocol: tcp
       FromPort: 443
       ToPort: 443
+
   ControlPlaneEgressToNodeSecurityGroupOn443:
     Type: AWS::EC2::SecurityGroupEgress
     DependsOn: NodeSecurityGroup
@@ -207,6 +240,7 @@ Resources:
       IpProtocol: tcp
       FromPort: 443
       ToPort: 443
+
   ClusterControlPlaneSecurityGroupIngress:
     Type: AWS::EC2::SecurityGroupIngress
     DependsOn: NodeSecurityGroup
@@ -219,9 +253,11 @@ Resources:
       IpProtocol: tcp
       ToPort: 443
       FromPort: 443
+
   NodeGroup:
     Type: AWS::AutoScaling::AutoScalingGroup
     Properties:
+      AutoScalingGroupName: !Sub "${ProjectName}-AutoScalingGroup"
       DesiredCapacity: !Ref NodeAutoScalingGroupMaxSize
       LaunchConfigurationName: !Ref NodeLaunchConfig
       MinSize: !Ref NodeAutoScalingGroupMinSize
@@ -242,9 +278,11 @@ Resources:
       AutoScalingRollingUpdate:
         MinInstancesInService: '1'
         MaxBatchSize: '1'
+
   NodeLaunchConfig:
     Type: AWS::AutoScaling::LaunchConfiguration
     Properties:
+      LaunchConfigurationName: !Sub "${ProjectName}-LaunchConfiguration"
       AssociatePublicIpAddress: 'true'
       IamInstanceProfile: !Ref NodeInstanceProfile
       ImageId: !FindInMap ["RegionMap", Ref: "AWS::Region", "AmiId"]
