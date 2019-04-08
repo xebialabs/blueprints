@@ -1,0 +1,3 @@
+answers-file: answers.yaml
+expected-files:
+    - xebialabs/docker-application.yaml
