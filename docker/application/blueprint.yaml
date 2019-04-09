@@ -6,6 +6,7 @@ metadata:
     This blueprint defines an application for a single Docker container
   author: XebiaLabs
   version: 1.0
+  instructions: Read xebialabs/USAGE-docker-application.md to learn how to use this blueprint.
 parameters:
 - name: DockerImageRepository
   type: Input
@@ -31,3 +32,4 @@ parameters:
   default: 8080
 files:
 - path: xebialabs/docker-application.yaml.tmpl
+- path: xebialabs/USAGE-docker-application.md

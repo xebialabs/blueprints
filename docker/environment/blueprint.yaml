@@ -6,6 +6,7 @@ metadata:
     This blueprint defines an environment to which Docker containers can be deployed
   author: XebiaLabs
   version: 1.0
+  instructions: Read xebialabs/USAGE-docker-environment.md to learn how to use this blueprint.
 parameters:
 - name: DockerURL
   type: Input
@@ -15,3 +16,4 @@ parameters:
 files:
 - path: xebialabs/docker-infrastructure.yaml.tmpl
 - path: xebialabs/docker-environment.yaml.tmpl
+- path: xebialabs/USAGE-docker-environment.md
