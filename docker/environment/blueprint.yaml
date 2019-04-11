@@ -7,13 +7,15 @@ metadata:
   author: XebiaLabs
   version: 1.0
   instructions: Read xebialabs/USAGE-docker-environment.md to learn how to use this blueprint.
-parameters:
-- name: DockerURL
-  type: Input
-  default: http://dockerproxy:2375
-  description: What is the URL of the Docker engine?
+spec:
+  parameters:
+  - name: DockerURL
+    type: Input
+    default: http://dockerproxy:2375
+    description: What is the URL of the Docker engine?
 
-files:
-- path: xebialabs/docker-infrastructure.yaml.tmpl
-- path: xebialabs/docker-environment.yaml.tmpl
-- path: xebialabs/USAGE-docker-environment.md
+  files:
+  - path: xebialabs/docker-infrastructure.yaml.tmpl
+  - path: xebialabs/docker-environment.yaml.tmpl
+  - path: xebialabs/USAGE-docker-environment.md
+  - path: docker/docker-compose.yml
