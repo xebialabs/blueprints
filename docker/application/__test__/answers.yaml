@@ -1,0 +1,5 @@
+DockerImageRepository: nginx
+DockerImageTag: nginx
+ExposePort: true
+ContainerPort: 80
+HostPort: 8080
