@@ -60,41 +60,48 @@ spec:
     type: Select
     description: "Select EKS workers instance type:"
     options:
-      - "t2.medium"
-      - "t2.large"
-      - "t2.xlarge"
-      - "t2.2xlarge"
-      - "m3.medium"
-      - "m3.large"
-      - "m3.xlarge"
-      - "m3.2xlarge"
-      - "m4.large"
-      - "m4.xlarge"
-      - "m4.2xlarge"
-      - "m4.4xlarge"
-      - "m4.10xlarge"
-      - "m5.large"
-      - "m5.xlarge"
-      - "m5.2xlarge"
-      - "m5.4xlarge"
-      - "m5.12xlarge"
-      - "m5.24xlarge"
-      - "c4.large"
-      - "c4.xlarge"
-      - "c4.2xlarge"
-      - "c4.4xlarge"
-      - "c4.8xlarge"
-      - "c5.large"
-      - "c5.xlarge"
-      - "c5.2xlarge"
-      - "c5.4xlarge"
-      - "c5.9xlarge"
-      - "c5.18xlarge"
-    default: "t2.medium"
+      - t2.medium
+      - t2.large
+      - t2.xlarge
+      - t2.2xlarge
+      - t3.nano
+      - t3.micro
+      - t3.small
+      - t3.medium
+      - t3.large
+      - t3.xlarge
+      - t3.2xlarge
+      - m3.medium
+      - m3.large
+      - m3.xlarge
+      - m3.2xlarge
+      - m4.large
+      - m4.xlarge
+      - m4.2xlarge
+      - m4.4xlarge
+      - m4.10xlarge
+      - m5.large
+      - m5.xlarge
+      - m5.2xlarge
+      - m5.4xlarge
+      - m5.12xlarge
+      - m5.24xlarge
+      - c4.large
+      - c4.xlarge
+      - c4.2xlarge
+      - c4.4xlarge
+      - c4.8xlarge
+      - c5.large
+      - c5.xlarge
+      - c5.2xlarge
+      - c5.4xlarge
+      - c5.9xlarge
+      - c5.18xlarge
+    default: t2.xlarge
   - name: EKSWorkerInstanceCount
     type: Input
     description: "Set max instances count in EKS workers AutoScaling group"
-    default: "4"
+    default: "3"
   - name: AddIAMUser
     description: "Do you want to add extra user to have an access to EKS via kubectl"
     type: Confirm
