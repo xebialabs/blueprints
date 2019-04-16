@@ -34,6 +34,14 @@ This blueprint includes the following tools and technologies:
 * Application or framework:
     * [JHipster](https://github.com/xebialabs/e-commerce-monolith)
 
+## Minimum Required versions
+
+This blueprint version requires at least the below versions of the specified tools to work properly.
+
+XL Release: Version 8.6
+XL Deploy: Version 8.6.1
+XL CLI: Version 8.6
+
 ## Prerequisites
 
 To run the YAML that this blueprint generates, you need:
@@ -55,7 +63,6 @@ This blueprint requires:
 
 This blueprint will output:
 
-* Sample monolithic application
 * Release template
 * Terraform templates
 * Infrastructure:
@@ -64,6 +71,7 @@ This blueprint will output:
     * Security infrastructure
     * Elastic Load Balancer (ELB) infrastructure
     * Amazon Relational Database Service (RDS)
+* A docker-compose setup for XL JetPack
 
 ## Tips and tricks
 

@@ -38,6 +38,14 @@ This blueprint includes the following tools and technologies:
 * Application or framework:
     * [JHipster](https://github.com/xebialabs/e-commerce-microservice/)
 
+## Minimum Required versions
+
+This blueprint version requires at least the below versions of the specified tools to work properly.
+
+XL Release: Version 8.6
+XL Deploy: Version 8.6.1
+XL CLI: Version 8.6
+
 ## Prerequisites
 
 To run the YAML that this blueprint generates, you need:
@@ -59,7 +67,6 @@ This blueprint requires:
 
 This blueprint will output:
 
-* Sample microservice-based application
 * Release templates
 * AWS CloudFormation templates
 * Infrastructure:
@@ -68,10 +75,11 @@ This blueprint will output:
     * AWS Lambda artifacts for the application
     * Networking infrastructure: Virtual Private Cloud (VPC), subnets, route table
     * Security infrastructure: IAM role
+* A docker-compose setup for XL Release, XL Deploy and Jenkins
 
 ## Tips and tricks
 
-* Jenkins is essential to use the release template that this blueprint generates. Before you execute the `xl apply` command, define a Jenkins server as a shared configuration in XL Release and put its name in the `xlr-pipeline-ci-cd.yaml` file.
+* Jenkins is essential to use the release template that this blueprint generates. Before you execute the `xl apply` command, define a Jenkins server as a shared configuration in XL Release and put its name in the `xlr-pipeline-ci-cd.yaml` file. If you use the provided docker-compose files this will be automatically setup for you.
 * The YAML that the blueprint generates includes optional steps to remove the application and deprovision the cluster.
 
 ## Labels

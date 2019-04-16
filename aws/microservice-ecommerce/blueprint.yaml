@@ -37,18 +37,19 @@ spec:
     type: Select
     description: "Select the AWS region:"
     options:
-      - eu-central-1
-      - eu-west-1
-      - eu-west-2
-      - eu-west-3
-      - eu-north-1
+    # This needs to be updated in the RegionMap of cloudformation/eks-workers.yaml as well
+      - us-west-2
       # commented out because of https://github.com/boto/boto3/issues/811
       # - us-east-1
       - us-east-2
-      - us-west-2
-      - ap-south-1
+      - eu-central-1
+      - eu-north-1
+      - eu-west-1
+      - eu-west-2
+      - eu-west-3
       - ap-northeast-1
       - ap-northeast-2
+      - ap-south-1
       - ap-southeast-1
       - ap-southeast-2
   - name: ProvisionCluster
@@ -87,7 +88,7 @@ spec:
   - path: xebialabs/xld-kubernetes-notification-app.yaml.tmpl
   - path: xebialabs/xlr-pipeline-ci-cd.yaml.tmpl
   - path: xebialabs/xlr-pipeline-destroy.yaml.tmpl
-  - path: xebialabs/README.md.tmpl
+  - path: xebialabs/USAGE.md.tmpl
   - path: kubernetes/aws-auth-cm.yaml
     dependsOnTrue: ProvisionCluster
   - path: cloudformation/cfn-secret-provider.zip
@@ -101,3 +102,7 @@ spec:
   - path: cloudformation/eks-workers.yaml
     dependsOnTrue: ProvisionCluster
   - path: xebialabs.yaml
+  # docker-compose setup for required tools
+  - path: docker/docker-compose.yml
+  - path: docker/data/configure-xl-devops-platform.yaml
+  - path: docker/jenkins/jenkins.yaml

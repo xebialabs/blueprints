@@ -8,14 +8,6 @@ variable "region" {
   description = "Region of resources"
 }
 
-variable "min_master_version" {
-  description = "Number of nodes in each GKE cluster zone"
-}
-
-variable "node_version" {
-  description = "Number of nodes in each GKE cluster zone"
-}
-
 variable "gke_num_nodes" {
   description = "Number of nodes in each GKE cluster zone"
 }

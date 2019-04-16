@@ -6,8 +6,6 @@ resource "google_container_cluster" "primary" {
     "${var.region}-c",
   ]
 
-  min_master_version = "${var.min_master_version}"
-  node_version       = "${var.node_version}"
   initial_node_count = "${var.gke_num_nodes}"
   network            = "${var.vpc_name}"
   subnetwork         = "${var.subnet_name}"
