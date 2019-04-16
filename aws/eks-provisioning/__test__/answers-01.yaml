@@ -8,5 +8,6 @@ EKSWorkerInstanceType: t2.medium
 EKSWorkerInstanceCount: 3
 AddIAMUser: true
 EKSUserARN: arn:aws:iam::100000000000:user/username
+EKSUserName: username
 ProvisionEFS: true
 SlackServer: Slack Server
