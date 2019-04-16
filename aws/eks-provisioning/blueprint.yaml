@@ -104,7 +104,7 @@ spec:
     type: Input
     default: "arn:aws:iam::100000000000:user/username"
     dependsOnTrue: AddIAMUser
-  - name: fEKSUserName
+  - name: EKSUserName
     description: "Enter existent IAM username to access EKS cluster via kubectl"
     type: Input
     default: "username"
