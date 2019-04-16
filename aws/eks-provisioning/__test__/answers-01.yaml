@@ -1,0 +1,12 @@
+AppName: test-project
+UseAWSCredentialsFromSystem: false
+  XLDServer: XL Deploy
+AWSAccessKey: ANDGDJDHJHD4235
+AWSAccessSecret: ANDGDJDHJHD4235
+AWSRegion: eu-west-1
+EKSWorkerInstanceType: t2.medium
+EKSWorkerInstanceCount: 3
+AddIAMUser: true
+EKSUserARN: arn:aws:iam::100000000000:user/username
+ProvisionEFS: true
+SlackServer: Slack Server
