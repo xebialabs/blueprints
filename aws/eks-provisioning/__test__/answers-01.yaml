@@ -1,6 +1,6 @@
 AppName: test-project
 UseAWSCredentialsFromSystem: false
-  XLDServer: XL Deploy
+XLDServer: XL Deploy
 AWSAccessKey: ANDGDJDHJHD4235
 AWSAccessSecret: ANDGDJDHJHD4235
 AWSRegion: eu-west-1
