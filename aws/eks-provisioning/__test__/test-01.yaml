@@ -1,7 +1,6 @@
 # test the default scenario
 answers-file: answers-01.yaml
 expected-files:
-  - xebialabs/xld-infrastructure.yaml
   - xebialabs/xld-infra-env.yaml
   - xebialabs/xld-cloudformation-apps.yaml
   - xebialabs/xlr-pipeline-ci-cd.yaml
