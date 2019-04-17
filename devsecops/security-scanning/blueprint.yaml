@@ -6,6 +6,7 @@ metadata:
     The blueprint creates a simple template to orchestrate Security and Compliance with XL Release.
   author: XebiaLabs
   version: 1.0
+  instructions: Please read the generated file "xebialabs/USAGE.md" for further usage instructions.
 spec:
   parameters:
   - name: AppName
