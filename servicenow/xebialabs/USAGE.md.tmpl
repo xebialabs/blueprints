@@ -1,0 +1,19 @@
+The blueprint supplies two yaml files with sample templates for usage with the ServiceNow application from the appstore.
+
+To deploy this blueprint with the XebiaLabs DevOps Platform, follow the steps below:
+
+1. Apply the generated YAML configurations using the XL CLI.
+
+    ```
+    xl apply -f xebialabs.yaml
+    ```
+
+2. Go to XL Release, look for the ServiceNow folder with templates, and start a new release from it.
+
+## Minimum Required versions
+
+This blueprint version requires at least the below versions of the specified tools to work properly.
+
+XL Release: Version 8.6
+XL Release ServiceNow plugin: Version 8.6.0
+ServiceNow with XL release integration app installed.

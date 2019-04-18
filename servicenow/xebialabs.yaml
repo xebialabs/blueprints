@@ -1,0 +1,6 @@
+apiVersion: xl/v1
+kind: Import
+metadata:
+  imports:
+    - xebialabs/agile_ITSM_sample.yaml
+    - xebialabs/ITSM_sample.yaml

@@ -1,0 +1,30 @@
+apiVersion: xl/v1
+kind: Blueprint
+metadata:
+  projectName: ServiceNow Demo Application
+  description: |
+    The blueprint supplies two yaml files with sample templates for usage with the ServiceNow application from the appstore.
+  author: XebiaLabs
+  version: 1.0
+spec:
+  parameters:
+  - name: ServerName
+    type: Input
+    description: Provide a name for the ServiceNow server?
+  - name: ServiceNowURL
+    type: Input
+    description: What is the ServiceNow URL?
+    default: http://your-instance.service-now.com/
+  - name: ServiceNowUser
+    type: Input
+    description: What is the user name of the ServiceNow user?
+    default: admin
+  - name: ServiceNowPassword
+    type: Input
+    description: What is the password of the ServiceNow user?
+
+  files:
+  - path: xebialabs/agile_ITSM_sample.yaml.tmpl
+  - path: xebialabs/ITSM_sample.yaml.tmpl
+  - path: xebialabs/USAGE.md.tmpl
+  - path: xebialabs.yaml

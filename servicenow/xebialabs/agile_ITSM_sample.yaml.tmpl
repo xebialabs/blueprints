@@ -1,0 +1,266 @@
+---
+apiVersion: xl-release/v1
+kind: Templates
+spec:
+- directory: ServiceNow
+  children:
+  - name: {{.ServerName}}
+    type: servicenow.Server
+    url: {{.ServiceNowURL}}
+    username: {{.ServiceNowUser}}
+    password: {{.ServiceNowPassword}}
+    useServicenowApp: true
+  - template: ITSM & agile from ServiceNow
+    description: ITSM & agile started from a story in ServiceNow;
+    phases:
+    - phase: Devlopment
+      tasks:
+      - name: Inform Servicenow start Dev
+        type: servicenow.UpdateStory
+        servicenowServer: {{.ServerName}}
+        state: Work in progress
+        workNotes: We started dev!
+        sysId: ${id}
+      - name: Find scrum task
+        type: servicenow.FindScrumTaskByStory
+        servicenowServer: {{.ServerName}}
+        shortDescription: Coding
+        story: ${id}
+        variableMapping:
+          pythonScript.sysId: ${scrumTaskSysId}
+      - name: Deploy to Dev (XL Deploy)
+        type: xldeploy.Deploy
+        owner: admin
+      - name: Close scrum task
+        type: servicenow.UpdateScrumTask
+        servicenowServer: {{.ServerName}}
+        state: Complete
+        workNotes: Coding done, deployed to dev
+        taskType: Coding
+        sysId: ${scrumTaskSysId}
+      color: '#0099CC'
+    - phase: Test
+      tasks:
+      - name: Deploy to TEST (XL Deploy)
+        type: xldeploy.Deploy
+        owner: admin
+      - name: Inform Servicenow ready for test
+        type: servicenow.UpdateStory
+        servicenowServer: {{.ServerName}}
+        state: Ready for testing
+        workNotes: Deployment to Test started
+        sysId: ${id}
+      - name: Wait for story being  set to testing
+        type: servicenow.PollingCheckStatus
+        servicenowServer: {{.ServerName}}
+        tableName: rm_story
+        sysId: ${id}
+        checkForStatus: Testing
+      - name: Functional testing
+        type: xlrelease.Task
+      - name: Close story
+        type: servicenow.UpdateStory
+        servicenowServer: {{.ServerName}}
+        state: Complete
+        workNotes: All done.
+        sysId: ${id}
+      - name: Create change request
+        type: servicenow.CreateChangeRequest
+        servicenowServer: {{.ServerName}}
+        shortDescription: New Coolstore deployment from story ${number}
+        ciSysId: Coolstore
+        assignmentGroup: Change Management
+        priority: 4 - Low
+        variableMapping:
+          pythonScript.sysId: ${changeSysId}
+      - name: Ask for approval to move to PROD
+        type: servicenow.UpdateChangeRequest
+        servicenowServer: {{.ServerName}}
+        state: Assess
+        sysId: ${changeSysId}
+      color: '#FD8D10'
+    - phase: Production
+      tasks:
+      - name: Wait for approval to deploy to PROD
+        type: servicenow.PollingCheckStatus
+        servicenowServer: {{.ServerName}}
+        sysId: ${changeSysId}
+        statusField: approval
+        checkForStatus: Approved
+      - name: Set change to Implement
+        type: servicenow.UpdateChangeRequest
+        servicenowServer: {{.ServerName}}
+        state: Implement
+        sysId: ${changeSysId}
+      - name: Find Change task
+        type: servicenow.FindChangeTaskByParent
+        servicenowServer: {{.ServerName}}
+        shortDescription: Implement
+        parent: ${changeSysId}
+        variableMapping:
+          pythonScript.sysId: ${cTaskSysId}
+      - name: Deploy to PROD
+        type: xldeploy.Deploy
+        owner: admin
+      - name: Find Server
+        type: servicenow.FindCIByName
+        servicenowServer: {{.ServerName}}
+        ciName: Apache server
+        variableMapping:
+          pythonScript.sysId: ${serverId}
+      - name: Update Coolstore applicationversion
+        type: servicenow.UpdateApplicationVersion
+        servicenowServer: {{.ServerName}}
+        ciName: CoolStore
+        environment: Production
+        version: ${newCiVersion}
+        variableMapping:
+          pythonScript.sysId: ${ci_id}
+      - name: Create coolstore ${newCiName}
+        type: servicenow.Application
+        servicenowServer: {{.ServerName}}
+        ciName: Coolstore ${newCiName}
+        environment: Production
+        version: ${newCiVersion}
+        variableMapping:
+          pythonScript.sysId: ${cartSysId}
+      - name: Close change task
+        type: servicenow.UpdateChangeTask
+        servicenowServer: {{.ServerName}}
+        state: Closed Complete
+        sysId: ${cTaskSysId}
+        closeNotes: Finished by XL Release
+      - name: Close change
+        type: servicenow.UpdateChangeRequest
+        servicenowServer: {{.ServerName}}
+        ciSysId: ${cartSysId}
+        state: Closed
+        sysId: ${changeSysId}
+        closeCode: successful
+        closeNotes: Successful by XL Release.
+      - name: Publish release notes
+        type: servicenow.PublishArticle
+        servicenowServer: {{.ServerName}}
+        knowledgeBase: IT
+        articleCategory: Announcements
+        shortDescription: Release notes CoolStore ${newCiVersion}
+        articleText: |-
+          Release of CoolStore ${newCiVersion} done based on story: ${number}<br>
+          <br>
+          This ends the demo....<br>
+      color: '#08B153'
+    variables:
+    - type: xlrelease.StringVariable
+      key: id
+      requiresValue: false
+      showOnReleaseStart: false
+    - type: xlrelease.StringVariable
+      key: number
+      requiresValue: false
+      showOnReleaseStart: false
+    - type: xlrelease.StringVariable
+      key: ci_id
+      requiresValue: false
+      showOnReleaseStart: false
+    - type: xlrelease.StringVariable
+      key: scrumTaskSysId
+      requiresValue: false
+      showOnReleaseStart: false
+    - type: xlrelease.StringVariable
+      key: cartSysId
+      requiresValue: false
+      showOnReleaseStart: false
+    - type: xlrelease.StringVariable
+      key: serverId
+      requiresValue: false
+      showOnReleaseStart: false
+    - type: xlrelease.StringVariable
+      key: cTaskSysId
+      requiresValue: false
+      showOnReleaseStart: false
+    - type: xlrelease.StringVariable
+      key: newCiName
+      value: The HUB
+    - type: xlrelease.StringVariable
+      key: newCiVersion
+      value: "3.2"
+    - type: xlrelease.StringVariable
+      key: changeSysId
+      requiresValue: false
+      showOnReleaseStart: false
+    riskProfile: Default risk profile
+  - type: xlrelease.Dashboard
+    owner: admin
+    tiles:
+    - name: Release progress
+      type: xlrelease.ReleaseProgressTile
+    - name: Release summary
+      type: xlrelease.ReleaseSummaryTile
+    - name: Resource usage
+      type: xlrelease.ResourceUsageTile
+    - name: Release timeline
+      type: xlrelease.TimelineTile
+    - name: Release health
+      type: xlrelease.ReleaseHealthTile
+    - name: ServiceNow linked tasks
+      type: servicenow.ServiceNowQueryTile
+      row: 2
+      col: 2
+      tableName: task
+      query: x_xlbv_xl_release_identifier=${release.id}
+      detailsViewColumns:
+        number: number
+        short_description: short_description
+        state: state
+        priority: priority
+        sys_class_name: sys_class_name
+        assigned_to: assigned_to.display_value
+    parentTemplate: ITSM & agile from ServiceNow
+---
+apiVersion: xl-release/v1
+kind: Permissions
+spec:
+- directory: ServiceNow
+  teams:
+  - name: Template Owner
+    users:
+    - admin
+    permissions:
+    - template#edit
+    - template#lock_task
+    - template#view
+    - folder#view
+    - template#edit_triggers
+    - template#edit_precondition
+    - template#edit_security
+    - template#create_release
+    - template#edit_failure_handler
+  - name: Release Admin
+    users:
+    - admin
+    permissions:
+    - release#edit_precondition
+    - release#edit
+    - release#reassign_task
+    - release#edit_security
+    - release#view
+    - release#lock_task
+    - release#start
+    - release#edit_blackout
+    - release#edit_failure_handler
+    - folder#view
+    - release#abort
+    - release#edit_task
+  - name: Folder Owner
+    users:
+    - admin
+    permissions:
+    - folder#edit_variables
+    - group#edit
+    - folder#edit_configuration
+    - folder#view
+    - dashboard#edit
+    - folder#edit_security
+    - folder#edit
+    - dashboard#view
+    - group#view
