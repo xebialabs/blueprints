@@ -9,7 +9,11 @@ spec:
     url: {{.ServiceNowURL}}
     username: {{.ServiceNowUser}}
     password: {{.ServiceNowPassword}}
-    useServicenowApp: true
+    {{- if eq .ServiceNowApp}}
+      useServicenowApp: true
+    {{- else}}
+      useServicenowApp: false
+    {{- end}}
   - template: ITSM from ServiceNow
     description: ITSM started from a change request in ServiceNow;
     phases:

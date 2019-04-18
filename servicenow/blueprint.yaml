@@ -22,6 +22,9 @@ spec:
   - name: ServiceNowPassword
     type: Input
     description: What is the password of the ServiceNow user?
+  - name: ServiceNowApp
+    type: Confirm
+    description: Will you be using the ServiceNow app?
 
   files:
   - path: xebialabs/agile_ITSM_sample.yaml.tmpl
