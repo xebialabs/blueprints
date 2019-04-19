@@ -18,9 +18,9 @@ spec:
   - name: ServiceNowUser
     type: Input
     description: What is the user name of the ServiceNow user?
-    default: admin
   - name: ServiceNowPassword
     type: Input
+    secret: true
     description: What is the password of the ServiceNow user?
   - name: ServiceNowApp
     type: Confirm
