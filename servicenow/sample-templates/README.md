@@ -49,7 +49,6 @@ This blueprint requires:
 * The ServiceNow server name
 * The ServiceNow url
 * The ServiceNow username and password
-* The port where the application should be exposed
 * If you installed the ServiceNow store app 'XL Release Integration'
 
 ## Output
