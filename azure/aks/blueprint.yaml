@@ -32,11 +32,12 @@ spec:
     options:
       - southeastasia
   files:
-  - path: xebialabs/xld-infra-env.yaml.tmpl
-  - path: xebialabs/xld-terraform-apps.yaml.tmpl
-  - path: xebialabs/USAGE.md.tmpl
+  - path: docker/docker-compose.yml
+  - path: terraform/.gitignore
   - path: terraform/main.tf
   - path: terraform/output.tf
   - path: terraform/variables.tf
-  - path: terraform/.gitignore
+  - path: xebialabs/xld-infra-env.yaml.tmpl
+  - path: xebialabs/xld-terraform-apps.yaml.tmpl
+  - path: xebialabs/USAGE.md.tmpl
   - path: xebialabs.yaml

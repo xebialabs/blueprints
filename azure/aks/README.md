@@ -4,7 +4,7 @@
 
 ### Authenticate to Azure
 
-### Creating Google Cloud project and service account for terraform
+### Creating a functional user under your subscription
 
 We need to configure the provider with the subscription_id, client_id, client_secret and tenant_id. 
 
@@ -22,15 +22,7 @@ $ az ad sp create-for-rbac --role="Contributor" --scopes="/subscriptions/your_su
 xl blueprint -b `pwd`
 ```
 
-To deploy this blueprint with the XebiaLabs DevOps Platform, follow the steps below:
-
-1. Apply the generated YAML configurations using the XL CLI.
-
-```sh
-xl apply -f xebialabs.yaml
-```
-
-
+To deploy this blueprint with the XebiaLabs DevOps Platform, read the `USAGE.md` in the generated files.
 
 ## Minimum Required versions
 
