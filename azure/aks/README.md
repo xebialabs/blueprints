@@ -66,12 +66,6 @@ To use this blueprint, run `xl blueprint` and select:
 
     azure/aks
 
-1. Run and answer all the questions.
-
-```sh 
-$ xl blueprint
-```
-
 To deploy this blueprint, read the usage instruction in the `USAGE.md` amongst the generated files.
 
 ## Minimum Required versions
