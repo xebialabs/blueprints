@@ -1,5 +1,5 @@
 # test the scenario with neither cluster nor CI-CD enabled
-answers-file: answers-no-cluster-no-cicd.yaml
+answers-file: answers.yaml
 expected-files:
     - xebialabs.yaml
     - xebialabs/USAGE.md
