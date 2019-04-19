@@ -16,7 +16,7 @@ If you're new to XebiaLabs blueprints, check out:
 
 To use this blueprint, run `xl blueprint` and select:
 
-    servicenow
+    servicenow/sample-templates
 
 ## Tools and technologies
 
