@@ -9,7 +9,7 @@ spec:
     url: {{.ServiceNowURL}}
     username: {{.ServiceNowUser}}
     password: {{.ServiceNowPassword}}
-    {{if eq .ServiceNowApp}}
+    {{if .ServiceNowApp}}
       useServicenowApp: true
     {{else}}
       useServicenowApp: false
