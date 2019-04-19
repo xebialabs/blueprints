@@ -10,10 +10,9 @@ metadata:
 
 spec:
   parameters:
-  # General variables
-  - name: AppName
+  - name: ClusterName
     type: Input
-    description: What is the name of the Release?
+    description: What is the name of the cluster?
   - name: client_id
     type: Input
     description: What is the client_id for the Azure subscription?
@@ -32,10 +31,6 @@ spec:
     description: "Select the resource group location:"
     options:
       - southeastasia
-  - name: ClusterName
-    type: Input
-    description: What is the name of the cluster?
-
   files:
   - path: xebialabs/xld-infra-env.yaml.tmpl
   - path: xebialabs/xld-terraform-apps.yaml.tmpl
