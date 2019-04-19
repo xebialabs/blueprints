@@ -21,48 +21,15 @@ spec:
     - name: Undeploy Application
       type: xlrelease.Phase
       tasks:
-      - name: Undeploy stateless services
-        type: xlrelease.ParallelGroup
-        tasks:
-        - name: Undeploy registry svc
-          type: xldeploy.Undeploy
-          server: XL Deploy
-          deployedApplication: Environments/{{$app}}/{{$appEnv}}/{{$app}}-registry
-        - name: Undeploy invoice svc
-          type: xldeploy.Undeploy
-          server: XL Deploy
-          deployedApplication: Environments/{{$app}}/{{$appEnv}}/{{$app}}-invoice
-        - name: Undeploy notification svc
-          type: xldeploy.Undeploy
-          server: XL Deploy
-          deployedApplication: Environments/{{$app}}/{{$appEnv}}/{{$app}}-notification
-        - name: Undeploy store svc
-          type: xldeploy.Undeploy
-          server: XL Deploy
-          deployedApplication: Environments/{{$app}}/{{$appEnv}}/{{$app}}-store
-      - name: Undeploy stateful services
-        type: xlrelease.ParallelGroup
-        tasks:
-        - name: Undeploy invoice mysql svc
-          type: xldeploy.Undeploy
-          server: XL Deploy
-          deployedApplication: Environments/{{$app}}/{{$appEnv}}/{{$app}}-invoice-mysql
-        - name: Undeploy store mysql svc
-          type: xldeploy.Undeploy
-          server: XL Deploy
-          deployedApplication: Environments/{{$app}}/{{$appEnv}}/{{$app}}-store-mysql
-        - name: Undeploy notification mongodb svc
-          type: xldeploy.Undeploy
-          server: XL Deploy
-          deployedApplication: Environments/{{$app}}/{{$appEnv}}/{{$app}}-notification-mongodb
-      {{if .ProvisionCluster }}
+      - name: Undeploy k8s svc
+        type: xldeploy.Undeploy
+        server: XL Deploy
+        deployedApplication: Environments/{{$app}}/gke-env/{{$app}}-k8s-app
       # Un-provision namespace
       - name: Undeploy {{.Namespace}} namespace
         type: xldeploy.Undeploy
         server: XL Deploy
-        deployedApplication: Environments/{{$app}}/{{$appEnv}}/{{$app}}-namespace
-      {{end}}
-    {{if .ProvisionCluster }}
+        deployedApplication: Environments/{{$app}}/gke-env/{{$app}}-namespace
     # De-provision Infra
     - name: Deprovision Infrastructure
       color: '#ff9e3b'
@@ -72,4 +39,3 @@ spec:
         type: xldeploy.Undeploy
         server: XL Deploy
         deployedApplication: Environments/{{$app}}/gcp-terraform/{{$app}}-terraform-gke
-    {{end}}

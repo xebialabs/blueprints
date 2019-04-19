@@ -54,14 +54,11 @@ spec:
         server: XL Deploy
         deploymentPackage: {{$app}}/K8S/{{$app}}-namespace/1.0.0
         deploymentEnvironment: Environments/{{$app}}/gke-env
-      - name: Deploy k8s service
-        type: xlrelease.SequentialGroup
-        tasks:
-        - name: Deploy app svc
-          type: xldeploy.Deploy
-          server: XL Deploy
-          deploymentPackage: {{$app}}/K8S/{{$app}}-k8s-app/1.0.0
-          deploymentEnvironment: Environments/{{$app}}/gke-env
+      - name: Deploy app svc
+        type: xldeploy.Deploy
+        server: XL Deploy
+        deploymentPackage: {{$app}}/K8S/{{$app}}-k8s-app/1.0.0
+        deploymentEnvironment: Environments/{{$app}}/gke-env
     - name: Test
       type: xlrelease.Phase
       tasks:
@@ -73,6 +70,7 @@ spec:
           server: XL Deploy
           numberOfContinueRetrials: 100
           pollingInterval: 10
+          continueIfStepFails: true
           ciId: Infrastructure/{{$app}}/gke-{{$clusterName}}-cluster-GKECluster
           taskName: describeService
           variableMapping:
@@ -105,21 +103,20 @@ spec:
           import time
 
           time.sleep(60)
-          instances_url = 'http://${lbHostnameOrIp}:80/nginx_status'
+          instances_url = 'http://${lbHostnameOrIp}'
           values = {}
 
-
-          def make_req(url, body=None, token=None):
-              req = urllib2.Request(url, json.dumps(body) if body else None, headers={'Content-type': 'application/json', 'Accept': 'application/json', 'Authorization': 'Bearer %s' % token})
+          def make_req(url):
+              req = urllib2.Request(url, None, headers={'Accept': 'text/html'})
               opener = urllib2.build_opener()
               response = opener.open(req)
-              return json.loads(response.read())
+              return response.getcode()
 
-          resp = make_req(instances_url)
-          if len(resp['applications']) == 4:
-              print "All instances are registered"
+          resp_code = make_req(instances_url)
+          if resp_code == 200:
+              print "Service is deployed"
           else:
-              print "Not all instances are registered. Only {0} are registered".format(len(resp['applications']))
+              print "Service not deployed. Response code = {0}\n".format(resp_code)
               exit(1)
         # end of script
       - name: Verify application
@@ -129,4 +126,4 @@ spec:
           The {{$app}} app is now live on GKE!
           Check out the web site and complete this task when done.
 
-          URL => http://${lbHostnameOrIp}:8080
+          URL => http://${lbHostnameOrIp}
