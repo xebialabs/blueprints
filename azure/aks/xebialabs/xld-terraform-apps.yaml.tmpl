@@ -41,6 +41,7 @@ spec:
           children:
           - name: default
             type: template.k8s.Namespace
+
         # creates a new environment for Kubernetes deployments
         - name: aks-{{$clusterName}}-env
           type: template.udm.Environment

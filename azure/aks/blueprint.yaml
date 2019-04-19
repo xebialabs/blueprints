@@ -4,8 +4,7 @@ kind: Blueprint
 metadata:
   projectName: Azure-AKS
   description: |
-    The blueprint provisions a Azure AKS cluster
-    XL Deploy does the provisioning and deployment.
+    The blueprint provisions a Azure AKS cluster. XL Deploy does the provisioning.
   author: XebiaLabs
   version: 1.0
 
@@ -40,6 +39,7 @@ spec:
   files:
   - path: xebialabs/xld-infra-env.yaml.tmpl
   - path: xebialabs/xld-terraform-apps.yaml.tmpl
+  - path: xebialabs/USAGE.md.tmpl
   - path: terraform/main.tf
   - path: terraform/output.tf
   - path: terraform/variables.tf

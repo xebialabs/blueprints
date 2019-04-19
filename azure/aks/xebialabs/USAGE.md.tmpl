@@ -1,0 +1,29 @@
+{{$app := .AppName | kebabcase}}
+## Provision simple AKS cluster on Azure
+
+### Prerequisites
+
+You need to have XL JetPack or XL Deploy running. 
+
+To deploy this blueprint, follow the steps below:
+
+1. Apply the generated YAML configurations using the XL CLI.
+
+    ```
+    xl apply -f xebialabs.yaml
+    ```
+
+2. Go to XL Deploy, look for the `{{$app}}` folder. Select the `1.0.0` item underneath, click on the ellipsis and select 'Deploy'. Select the terraform environment, press 'Deploy'.
+
+3. After the deployment process is complete, an AKS cluster will have been provisioned on Azure and a configured `K8s.master` environment will have been registered in XL Deploy, ready to be deployed to.
+
+4. Execute any subsequent k8s blueprints to deploy application to your new cluster.
+
+5. Whenever you want to deprovision the AKS cluster, you can go to the terraform environment under Environment, select the `{{$app}}-aks` item, press the ellipsis and select 'Undeploy' and follow the instructions on screen.
+
+## Minimum Required versions
+
+This blueprint version requires at least the below versions of the specified tools to work properly.
+
+XL Deploy: Version 8.6.1
+XL CLI: Version 8.6
