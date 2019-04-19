@@ -1,10 +1,9 @@
-{{$app := .ReleaseName | kebabcase}}
 {{$clusterName := .ClusterName | kebabcase}}
 
 apiVersion: xl-deploy/v1
 kind: Infrastructure
 spec:
-- name: {{$app}}
+- name: {{$clusterName}}
   type: core.Directory
   children:
   - name: terraform
@@ -14,18 +13,18 @@ spec:
     - name: terraform-client
       type: terraform.TerraformClient
       path: '/usr/local/bin' # for local installation
-      workingDirectory: '/tmp/{{$app}}' # for local installation
+      workingDirectory: '/tmp/{{$clusterName}}' # for local installation
 
 ---
 
 apiVersion: xl-deploy/v1
 kind: Environments
 spec:
-- name: {{$app}}
+- name: {{$clusterName}}
   type: core.Directory
   children:
   - name: terraform
     type: udm.Environment
     members:
-    - Infrastructure/{{$app}}/terraform
-    - Infrastructure/{{$app}}/terraform/terraform-client
+    - Infrastructure/{{$clusterName}}/terraform
+    - Infrastructure/{{$clusterName}}/terraform/terraform-client

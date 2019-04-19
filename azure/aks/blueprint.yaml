@@ -11,7 +11,7 @@ metadata:
 spec:
   parameters:
   # General variables
-  - name: ReleaseName
+  - name: AppName
     type: Input
     description: What is the name of the Release?
   - name: client_id

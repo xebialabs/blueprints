@@ -1,7 +1,6 @@
-ReleaseName: bob
+ClusterName: bobs-cluster
 client_id: 123
 tenant_id: 456
 subscription_id: 789
 client_secret: 007
 resource_group_location: southeastasia
-ClusterName: bobs cluster

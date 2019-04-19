@@ -1,22 +1,21 @@
-{{$app := .ReleaseName | kebabcase}}
 {{$clusterName := .ClusterName | kebabcase}}
 
 apiVersion: xl-deploy/v1
 kind: Applications
 spec:
-- name: {{$app}}
+- name: {{$clusterName}}
   type: core.Directory
   children:
   - name: aks-terraform
     type: core.Directory
     children:
-    - name: {{$app}}-aks-terraform
+    - name: {{$clusterName}}-aks-terraform
       type: udm.Application
       children:
       - name: '1.0.0'
         type: udm.DeploymentPackage
         deployables:
-        - name: {{$app}}-aks
+        - name: {{$clusterName}}-aks-terraform-module
           type: terraform.Module
           file: !file ../terraform
           inputVariables:
@@ -37,7 +36,7 @@ spec:
           apiServerURL: '{{"{{%outputVariables.host%}}"}}'
           token: '{{"{{%outputVariables.token%}}"}}'
           skipTLS: true
-          instanceName: {{$app}}/aks-{{$clusterName}}
+          instanceName: {{$clusterName}}/aks-{{$clusterName}}
           children:
           - name: default
             type: template.k8s.Namespace
@@ -48,4 +47,4 @@ spec:
           members:
           - "../aks-{{$clusterName}}"
           - "../aks-{{$clusterName}}/default"
-          instanceName: {{$app}}/aks-{{$clusterName}}
+          instanceName: {{$clusterName}}/aks-{{$clusterName}}
