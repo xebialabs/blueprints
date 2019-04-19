@@ -1,0 +1,7 @@
+# test the default scenario
+answers-file: answers-01.yaml
+expected-files:
+  - xebialabs/agile_ITSM_sample.yaml
+  - xebialabs/ITSM_sample.yaml
+  - xebialabs/USAGE.md
+  - xebialabs.yaml

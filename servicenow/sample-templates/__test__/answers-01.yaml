@@ -1,0 +1,5 @@
+ServerName: test_servers
+ServiceNowURL: http://your-instance.service-now.com/
+ServiceNowUser: admin
+ServiceNowPassword: admin
+ServiceNowApp: 
