@@ -3,9 +3,10 @@ kind: Blueprint
 metadata:
   projectName: ServiceNow Demo Application
   description: |
-    The blueprint supplies two yaml files with sample templates for usage with the ServiceNow application from the appstore.
+    The blueprint supplies two yaml files with sample templates for usage with the XL Release ServiceNow plugin and optionnaly the ServiceNow application 'XL Release Integration' from teh appstore.
   author: XebiaLabs
   version: 1.0
+  instructions: Please read the generated file "xebialabs/USAGE.md" for further usage instructions.
 spec:
   parameters:
   - name: ServerName
