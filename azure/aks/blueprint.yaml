@@ -1,0 +1,47 @@
+apiVersion: xl/v1
+kind: Blueprint
+
+metadata:
+  projectName: Azure-AKS
+  description: |
+    The blueprint provisions a Azure AKS cluster
+    XL Deploy does the provisioning and deployment.
+  author: XebiaLabs
+  version: 1.0
+
+spec:
+  parameters:
+  # General variables
+  - name: ReleaseName
+    type: Input
+    description: What is the name of the Release?
+  - name: client_id
+    type: Input
+    description: What is the client_id for the Azure subscription?
+  - name: tenant_id
+    type: Input
+    description: What is the tenant_id for the Azure subscription?
+  - name: subscription_id
+    type: Input
+    description: What is the subscription_id for the Azure subscription?
+  - name: client_secret
+    type: Input
+    secret: true
+    description: What is the client_secret for Azure subscription?
+  - name: resource_group_location
+    type: Select
+    description: "Select the resource group location:"
+    options:
+      - southeastasia
+  - name: ClusterName
+    type: Input
+    description: What is the name of the cluster?
+
+  files:
+  - path: xebialabs/xld-infra-env.yaml.tmpl
+  - path: xebialabs/xld-terraform-apps.yaml.tmpl
+  - path: terraform/main.tf
+  - path: terraform/output.tf
+  - path: terraform/variables.tf
+  - path: terraform/.gitignore
+  - path: xebialabs.yaml
