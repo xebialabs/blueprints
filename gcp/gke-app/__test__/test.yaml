@@ -8,7 +8,7 @@ expected-files:
     - xebialabs/xld-terraform-apps.yaml
     - xebialabs/xlr-pipeline-ci-cd.yaml
     - xebialabs/xlr-pipeline-destroy.yaml
-    - kubernetes/app.yaml.tmpl
+    - kubernetes/app.yaml
     - docker/docker-compose.yml
     - docker/data/configure-xl-devops-platform.yaml
     - terraform/gke/main.tf
