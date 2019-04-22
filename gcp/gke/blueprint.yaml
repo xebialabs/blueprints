@@ -61,7 +61,7 @@ spec:
   files:
   # docker-compose setup for required tools
   - path: docker/docker-compose.yaml
-  - path: configure-xl-devops-platform.yaml
+  - path: docker/configure-xl-devops-platform.yaml
   # Terraform files
   - path: terraform/gke/main.tf
   - path: terraform/gke/outputs.tf
@@ -75,7 +75,7 @@ spec:
   - path: terraform/outputs.tf
   - path: terraform/variables.tf
   # XebiaLabs files
-  - path: xebialabs/USAGE.md
+  - path: xebialabs/USAGE.md.tmpl
   - path: xebialabs/xld-infra-env.yaml.tmpl
   - path: xebialabs/xld-terraform-apps.yaml.tmpl
   - path: xebialabs/xlr-pipeline-create.yaml.tmpl

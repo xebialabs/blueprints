@@ -1,7 +1,7 @@
 version: '2.3'
 services:
   xl-deploy:
-    build: xl-deploy
+    image: xebialabs/xl-jetpack-deploy:8.6.1
     container_name: xld
     ports:
     - 4516:4516
@@ -10,7 +10,7 @@ services:
     - ACCEPT_EULA=Y
 
   xl-release:
-    build: xl-release
+    image: xebialabs/xl-jetpack-release:8.6.1
     container_name: xlr
     ports:
     - 5516:5516
@@ -19,18 +19,3 @@ services:
     environment:
     - ADMIN_PASSWORD=admin
     - ACCEPT_EULA=Y
-
-  # jenkins:
-  #   build: jenkins
-  #   container_name: jenkins
-  #   volumes:
-  #     - /var/run/docker.sock:/var/run/docker.sock
-  #     - ./jenkins/jenkins.yaml:/var/jenkins_home/casc_configs/jenkins.yaml
-  #   environment:
-  #     - CASC_JENKINS_CONFIG=/var/jenkins_home/casc_configs/jenkins.yaml
-  #     - GITHUB_USER=${GITHUB_USER}
-  #     - DOCKER_USER=${DOCKER_USER}
-  #     - DOCKER_PASS=${DOCKER_PASS}
-  #   ports:
-  #     - 8080:8080
-  #     - 55888:55888
