@@ -1,0 +1,52 @@
+{{$cluster := .ClusterName | kebabcase}}
+apiVersion: xl-release/v1
+kind: Templates
+spec:
+- name: {{$cluster}}
+  type: xlrelease.Folder
+  children:
+  - name: {{$cluster}}-create
+    type: xlrelease.Release
+    description: |
+      This XL Release template shows how to deploy an application, based on microservices architecture, to GCP GKE using XL Deploy and Terraform.
+    tags:
+    - GCP
+    - GKE
+    - Terraform
+    - {{$cluster}}
+    scriptUsername: !value XL_RELEASE_USERNAME
+    scriptUserPassword: !value XL_RELEASE_PASSWORD
+    variables:
+    - key: control
+      type: xlrelease.MapStringStringVariable
+      requiresValue: false
+      showOnReleaseStart: false
+      value:
+        namespace: {{.Namespace}}
+        serviceName: store
+    - key: lbHostnameOrIp
+      type: xlrelease.StringVariable
+      requiresValue: false
+      showOnReleaseStart: false
+ 
+    phases:
+    # Provision Infra
+    - name: Provision Infrastructure
+      color: '#ff9e3b'
+      type: xlrelease.Phase
+      tasks:
+      - name: Provision GCP GKE cluster
+        type: xldeploy.Deploy
+        server: XL Deploy
+        deploymentPackage: {{$cluster}}/GKE-TERRAFORM/{{$cluster}}-terraform-gke/1.0.0
+        deploymentEnvironment: Environments/{{$cluster}}/gcp-terraform
+    
+    - name: Test
+      type: xlrelease.Phase
+      tasks:
+      - name: Verify application
+        type: xlrelease.GateTask
+        team: Release Admin
+        description: |
+          The GKE Cluster: {{$cluster}} is now available in GKE!
+          Go to your GCP console and validate your cluster is available and complete the task when done.

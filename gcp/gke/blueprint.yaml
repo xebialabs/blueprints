@@ -1,0 +1,83 @@
+apiVersion: xl/v1
+kind: Blueprint
+
+metadata:
+  projectName: GCP-GKE
+  description: |
+    The blueprint deploys a GCP GKE Cluster.
+    XL Deploy does the provisioning and deployment, while XL Release orchestrates everything.
+  author: XebiaLabs
+  version: 1.0
+
+spec:
+  parameters:
+  # GCP specific variables
+  - name: ClusterName
+    type: Input
+    description: What is the name of the cluster?
+  - name: K8SMasterUser
+    type: Input
+    description: What is the username for Kubernetes cluster?
+    default: admin
+  - name: K8SMasterPassword
+    type: Input
+    secret: true
+    description: What is the password for Kubernetes cluster? (minimum 16 characters)
+    pattern: "(\\S){16,}"
+  - name: GCPProjectID
+    type: Input
+    description: What is the GCP project ID?
+  - name: GCPRegion
+    type: Select
+    description: "Select the GCP region:"
+    options:
+      - asia-east1
+      - asia-east2
+      - asia-northeast1
+      - asia-south1
+      - asia-southeast1
+      - australia-southeast1
+      - europe-north1
+      - europe-west1
+      - europe-west2
+      - europe-west3
+      - europe-west4
+      - northamerica-northeast1
+      - southamerica-east1
+      - us-central1
+      - us-east1
+      - us-east4
+      - us-west1
+      - us-west2
+  - name: Namespace
+    type: Input
+    description: What is the name of the namespace? This should be same as the one used in Kubernetes files.
+    default: xl-demo
+  - name: XLDUrlForXLR
+    type: Input
+    description: XL Deploy URL for XL Release (This will only be used in the XL Release template)
+    default: http://xl-deploy:4516
+
+  files:
+  # docker-compose setup for required tools
+  - path: docker/docker-compose.yaml
+  - path: configure-xl-devops-platform.yaml
+  # Terraform files
+  - path: terraform/gke/main.tf
+  - path: terraform/gke/outputs.tf
+  - path: terraform/gke/variables.tf
+  - path: terraform/vpc/main.tf
+  - path: terraform/vpc/outputs.tf
+  - path: terraform/vpc/variables.tf
+  - path: terraform/.gitignore
+  - path: terraform/backend.tf.tmpl
+  - path: terraform/main.tf
+  - path: terraform/outputs.tf
+  - path: terraform/variables.tf
+  # XebiaLabs files
+  - path: xebialabs/USAGE.md
+  - path: xebialabs/xld-infra-env.yaml.tmpl
+  - path: xebialabs/xld-terraform-apps.yaml.tmpl
+  - path: xebialabs/xlr-pipeline-create.yaml.tmpl
+  - path: xebialabs/xlr-pipeline-destroy.yaml.tmpl
+  - path: xebialabs.yaml

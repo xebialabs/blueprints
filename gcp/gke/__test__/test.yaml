@@ -1,0 +1,23 @@
+# test the default scenario
+answers-file: answers.yaml
+expected-files:
+  - xebialabs.yaml
+  - xebialabs/USAGE.md
+  - xebialabs/xld-infra-env.yaml
+  - xebialabs/xld-terraform-apps.yaml
+  - xebialabs/xlr-pipeline-ci-cd.yaml
+  - xebialabs/xlr-pipeline-destroy.yaml
+  - terraform/gke/main.tf
+  - terraform/gke/outputs.tf
+  - terraform/gke/variables.tf
+  - terraform/vpc/main.tf
+  - terraform/vpc/outputs.tf
+  - terraform/vpc/variables.tf
+  - terraform/.gitignore
+  - terraform/backend.tf
+  - terraform/main.tf
+  - terraform/outputs.tf
+  - terraform/variables.tf
+  - docker/docker-compose.yml
+  - docker/configure-xl-devops-platform.yaml
+  

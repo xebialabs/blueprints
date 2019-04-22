@@ -1,0 +1,59 @@
+{{$cluster := .ClusterName | kebabcase}}
+apiVersion: xl-deploy/v1
+kind: Applications
+spec:
+- name: {{$cluster}}
+  type: core.Directory
+  children:
+  # Provision GKE cluster using Terraform templates
+  - name: GKE-TERRAFORM
+    type: core.Directory
+    children:
+    - name: {{$cluster}}-terraform-gke
+      type: udm.Application
+      children:
+      - name: '1.0.0'
+        type: udm.DeploymentPackage
+        deployables:
+        - name: {{$cluster}}-gke
+          type: terraform.Module
+          file: !file ../terraform
+          inputVariables:
+            project_id: {{.GCPProjectID}}
+            name: {{$cluster}}
+            region: {{.GCPRegion}}
+            gke_master_user: {{.K8SMasterUser}}
+            gke_master_pass: {{.K8SMasterPassword}}
+          boundTemplates:
+          - "../gcp-gke-{{$cluster}}"
+          - "../gcp-gke-{{$cluster}}-env"
+
+        templates:
+        # creates the required XLD infrastructure entries
+        - name: gcp-gke-{{$cluster}}
+          type: template.k8s.Master
+          username: {{.K8SMasterUser}}
+          password: {{.K8SMasterPassword}}
+          apiServerURL: 'https://{{"{{%outputVariables.endpoint%}}"}}'
+          skipTLS: true
+          instanceName: {{$cluster}}/gcp-gke-{{$cluster}}
+        # creates a new environment for Kubernetes deployments
+        - name: gcp-gke-{{$cluster}}-env
+          type: template.udm.Environment
+          members:
+          - "../gcp-gke-{{$cluster}}"
+          instanceName: {{$cluster}}/gcp-gke-{{$cluster}}
+
+  - name: K8S
+    type: core.Directory
+    # Provision K8s namespace
+    children:
+    - name: {{$cluster}}-namespace
+      type: udm.Application
+      children:
+      - name: '1.0.0'
+        type: udm.DeploymentPackage
+        deployables:
+        - name: {{.Namespace}}
+          type: k8s.NamespaceSpec
+          namespaceName: '{{.Namespace}}'
