@@ -1,5 +1,5 @@
 # XL Blueprint for creating K8 Clusters (GKE) in GCP
-Use this blueprint to provision a K8 Cluster in the Google Cloud (GCP)
+Use this blueprint to provision a K8 cluster in the Google Cloud (GCP)
 
 ## Before you get started
 If you're new to XebiaLabs blueprints, check out:
@@ -18,7 +18,7 @@ gcloud compute regions list
 gcloud compute zones list
 ```
 
-Follow gcloud init and select default Zone Ex. europe-west1, make sure you use the same zone as the one selected during blueprint execution.
+Follow gcloud init and select default Zone Ex. europe-west1. Make sure you use this same zone during blueprint execution.
 
 ```sh
 gcloud init
@@ -26,13 +26,13 @@ gcloud init
 
 ### Creating Google Cloud project and service account for terraform
 
-Best practice to use separate account "technical account" to manage infrastructure, this account can be used in automated code deployment like in Terraform or XL-Deploy or any other tool you may choose.
+The best practice is to use a separate "technical account" to manage infrastructure. This account can be used in automated code deployment like in Terraform or XL-Deploy or any other tool you choose.
 
-> NOTE: You need to have proper permissions and privileges in the GCP account to execute these commands. If you are using a personal account you should be having these as you will be the admin. If you are using a company/enterprise account please check with your account administrator. 
+> NOTE: You need to have proper permissions and privileges in the GCP account to execute these commands. If you are using a personal account, you will need administrative privileges. If you are using a company/enterprise account, please check with your account administrator. 
 
-#### Set up environment
+#### Set up your environment
 
-> NOTE: If you are creating the Project via GUI instead of below commands, there will be a project number, a project name and a project ID when you initialize the project, and only ID should be exported as `TF_ADMIN` variable.
+> NOTE: If you are creating the Project via GUI instead of the below commands, there will be a project number, a project name and a project ID when you initialize the project. Export the project ID as `TF_ADMIN` variable.
 
 ```sh
 export TF_ADMIN=[GCP project ID]
@@ -40,7 +40,7 @@ export TF_ADMIN=[GCP project ID]
 
 #### Create the GCP Project
 
-Create a new project and link it to your billing account (You could do it from the GCP console GUI as well, in that case skip the below command)
+Create a new project and link it to your billing account (you could do it from the GCP console GUI as well, in that case skip the below command)
 
 > NOTE: The value of YOUR_ORG_ID and YOUR_BILLING_ACCOUNT_ID can be found by running below commands
 
@@ -115,12 +115,11 @@ gcloud services enable cloudresourcemanager.googleapis.com \
     container.googleapis.com
 ```
 
-## Creating back-end storage to store the `tfstate` file in Cloud Storage
+## Creating back-end storage for the `tfstate` file in Cloud Storage
 
-Terraform stores the state about infrastructure and configuration by default in a local file `terraform.tfstate`. State is used by Terraform to map resources to configuration and to track metadata.
+Terraform stores the infrastructure and configuration state by default in a local file `terraform.tfstate`. State is used by Terraform to map resources to configuration and to track metadata.
 
-Terraform allows state file to be stored remotely, which works better in a team environment or automated deployments.
-We will use Google Storage and create new bucket where we can store state files.
+The state file may be stored remotely, which works better for team environments or automated deployments.  We will use Google Storage and create new bucket where we can store state files.
 
 Create the remote back-end bucket in Cloud Storage for storage of the `terraform.tfstate` file.
 Make sure you use the same zone as the one selected during blueprint execution in above command.
@@ -143,7 +142,7 @@ To use this blueprint, run `xl blueprint` and select:
 
 To deploy this blueprint, read the usage instruction in the `USAGE.md` amongst the generated files.
 
-## Minimum Required versions
+## Minimum required versions
 
 This blueprint version requires at least the below versions of the specified tools to work properly.
 
