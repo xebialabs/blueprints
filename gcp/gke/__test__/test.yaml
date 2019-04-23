@@ -18,6 +18,6 @@ expected-files:
   - terraform/main.tf
   - terraform/outputs.tf
   - terraform/variables.tf
-  - docker/docker-compose.yml
+  - docker/docker-compose.yaml
   - docker/configure-xl-devops-platform.yaml
   
