@@ -53,6 +53,42 @@ spec:
   - name: ClusterName
     type: Input
     description: What is the name of the cluster?
+  - name: GKENumNodes
+    type: Input
+    default: 2
+    description: What is the number of nodes in each GKE cluster zone?
+  - name: GKENodeMachineType
+    type: Select
+    description: What is the machine type of the GKE nodes?
+    options:
+      - n1-standard-1
+      - n1-standard-2
+      - n1-standard-4
+      - n1-standard-8
+      - n1-standard-16
+      - n1-standard-32
+      - n1-standard-64
+      - n1-standard-96
+      - n1-highmem-2
+      - n1-highmem-4
+      - n1-highmem-8
+      - n1-highmem-16
+      - n1-highmem-32
+      - n1-highmem-64
+      - n1-highmem-96
+      - n1-highcpu-2
+      - n1-highcpu-4
+      - n1-highcpu-8
+      - n1-highcpu-16
+      - n1-highcpu-32
+      - n1-highcpu-64
+      - n1-highcpu-96
+      - f1-micro
+      - g1-small
+      - n1-ultramem-40
+      - n1-ultramem-80
+      - n1-ultramem-160
+      - n1-megamem-96
   - name: Namespace
     type: Input
     description: What is the name of the namespace?
@@ -60,7 +96,7 @@ spec:
   - name: XLDUrlForXLR
     type: Input
     description: XL Deploy URL for XL Release (This will only be used in the XL Release template)
-    default: http://localhost:4516 #####################################
+    default: http://xl-deploy:4516 #####################################
 
   files:
   - path: xebialabs/xld-infra-env.yaml.tmpl
