@@ -1,7 +1,7 @@
 ClusterName: testgke
 K8SMasterUser: admin
 K8SMasterPassword: password12345678
-GCPProjectID: tech-marketing-236315
+GCPProjectID: test-project
 GCPRegion: us-east1
 Namespace: xl-demo
 XLDUrlForXLR: http://xl-deploy:4516
