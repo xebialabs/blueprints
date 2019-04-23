@@ -5,7 +5,7 @@ expected-files:
   - xebialabs/USAGE.md
   - xebialabs/xld-infra-env.yaml
   - xebialabs/xld-terraform-apps.yaml
-  - xebialabs/xlr-pipeline-ci-cd.yaml
+  - xebialabs/xlr-pipeline-create.yaml
   - xebialabs/xlr-pipeline-destroy.yaml
   - terraform/gke/main.tf
   - terraform/gke/outputs.tf
