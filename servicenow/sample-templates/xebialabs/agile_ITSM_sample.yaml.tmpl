@@ -10,9 +10,9 @@ spec:
     username: {{.ServiceNowUser}}
     password: {{.ServiceNowPassword}}
     {{if .ServiceNowApp}}
-      useServicenowApp: true
+    useServicenowApp: true
     {{else}}
-      useServicenowApp: false
+    useServicenowApp: false
     {{end}}
   - template: ITSM & agile from ServiceNow
     description: ITSM & agile started from a story in ServiceNow;
@@ -32,8 +32,8 @@ spec:
         story: ${id}
         variableMapping:
           pythonScript.sysId: ${scrumTaskSysId}
-      - name: Deploy to Dev (XL Deploy)
-        type: xldeploy.Deploy
+      - name: Deploy to Dev
+        type: xlrelease.Task
         owner: admin
       - name: Close scrum task
         type: servicenow.UpdateScrumTask
@@ -45,8 +45,8 @@ spec:
       color: '#0099CC'
     - phase: Test
       tasks:
-      - name: Deploy to TEST (XL Deploy)
-        type: xldeploy.Deploy
+      - name: Deploy to TEST
+        type: xlrelease.Task
         owner: admin
       - name: Inform Servicenow ready for test
         type: servicenow.UpdateStory
@@ -104,7 +104,7 @@ spec:
         variableMapping:
           pythonScript.sysId: ${cTaskSysId}
       - name: Deploy to PROD
-        type: xldeploy.Deploy
+        type: xlrelease.Task
         owner: admin
       - name: Find Server
         type: servicenow.FindCIByName

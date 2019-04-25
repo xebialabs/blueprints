@@ -10,9 +10,9 @@ spec:
     username: {{.ServiceNowUser}}
     password: {{.ServiceNowPassword}}
     {{if .ServiceNowApp}}
-      useServicenowApp: true
+    useServicenowApp: true
     {{else}}
-      useServicenowApp: false
+    useServicenowApp: false
     {{end}}
   - template: ITSM from ServiceNow
     description: ITSM started from a change request in ServiceNow;
@@ -23,11 +23,9 @@ spec:
         type: servicenow.UpdateChangeRequest
         servicenowServer: {{.ServerName}}
         sysId: ${id}
-      - name: Deploy to TEST (XL Deploy)
-        type: xldeploy.Deploy
-        owner: admin
-      - name: Functional testing
+      - name: Deploy and test
         type: xlrelease.Task
+        owner: admin
       - name: Ask for approval to move to PROD
         type: servicenow.UpdateChangeRequest
         servicenowServer: {{.ServerName}}
@@ -55,7 +53,7 @@ spec:
         variableMapping:
           pythonScript.sysId: ${cTaskSysId}
       - name: Deploy to PROD
-        type: xldeploy.Deploy
+        type: xlrelease.Task
         owner: admin
       - name: Find Server
         type: servicenow.FindCIByName
