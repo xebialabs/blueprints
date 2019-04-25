@@ -1,0 +1,20 @@
+AppName: azure-project
+ResourceGroup: azure-rg
+AdminUsername: adminuser
+AdminUsernameSSHKeyPath: ../azure/microservice-ecommerce/__test__/answers-no-cluster-no-cicd.yaml
+AKSRegion: westeurope
+ProvisionCluster: false
+ClusterEndpoint: https://test.com
+PasswordToken: abcdefgh
+ClusterName: azure-cluster
+Namespace: xl-demo
+ClientID: A
+ClientSecret: B
+SubscriptionID: C
+TenantID: D
+enableCICD: false
+XLDUrlForXLR: http://xl-deploy:4516
+StorageAccountName: storageuser
+StorageContainerName: terraform-state
+StorageAccessKey: abcdefgh
+

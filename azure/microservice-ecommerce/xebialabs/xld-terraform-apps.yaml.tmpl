@@ -1,0 +1,66 @@
+{{$app := .AppName | kebabcase}}
+{{$clusterName := .ClusterName | kebabcase}}
+apiVersion: xl-deploy/v1
+kind: Applications
+spec:
+- name: {{$app}}
+  type: core.Directory
+  children:
+{{if .ProvisionCluster }}
+# Provision AKS cluster using Terraform templates
+  - name: AKS-TERRAFORM
+    type: core.Directory
+    children:
+    - name: {{$app}}-terraform
+      type: udm.Application
+      children:
+      - name: '1.0.0'
+        type: udm.DeploymentPackage
+        deployables:
+        - name: {{$app}}
+          type: terraform.Module
+          file: !file ../terraform
+          inputVariables:
+            name: {{$app}}
+            resource_group: {{.ResourceGroup}}
+            cluster_name: {{.ClusterName}}
+            location: {{.AKSRegion}}
+            client_id: {{.ClientID}}
+            client_secret: !value ClientSecret
+            subscription_id: {{.SubscriptionID}}
+            tenant_id: {{.TenantID}}
+          boundTemplates:
+          - "../{{$clusterName}}"
+          - "../{{$clusterName}}-env"
+
+        templates:
+        # creates the required XLD infrastructure entries
+        - name: {{$clusterName}}
+          type: template.k8s.Master
+          apiServerURL: '{{"{{%outputVariables.host%}}"}}'
+          skipTLS: true
+          token: '{{"{{%outputVariables.password%}}"}}'
+          instanceName: {{$app}}/{{$clusterName}}
+        # creates a new environment for Kubernetes deployments
+        - name: {{$clusterName}}-env
+          type: template.udm.Environment
+          members:
+          - "../{{$clusterName}}"
+          instanceName: {{$app}}/{{$clusterName}}
+
+{{end}}
+  - name: K8S
+    type: core.Directory
+{{if .ProvisionCluster }}
+# Provision K8s namespace
+    children:
+    - name: {{$app}}-namespace
+      type: udm.Application
+      children:
+      - name: '1.0.0'
+        type: udm.DeploymentPackage
+        deployables:
+        - name: {{.Namespace}}
+          type: k8s.NamespaceSpec
+          namespaceName: '{{.Namespace}}'
+{{end}}
