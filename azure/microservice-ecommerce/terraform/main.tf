@@ -1,5 +1,3 @@
-# Configure the Azure Cloud provider
-
 provider "azurerm" {
   version = "=1.24.0"
 
