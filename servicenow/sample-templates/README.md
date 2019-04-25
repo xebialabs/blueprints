@@ -57,6 +57,7 @@ This blueprint will output two YAML files:
 
 * ITSM template
 * ITSM & agile template
+* A docker-compose setup for XL Release
 
 ## Tips and tricks
     
