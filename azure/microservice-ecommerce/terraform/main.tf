@@ -9,8 +9,6 @@ provider "azurerm" {
   tenant_id       = "${var.tenant_id}"
 }
 
-# export ARM_ACCESS_KEY="xCddE4AHqOfkhlAcV0t+q8T3nJmsndstFa+nsbE/wyQU27f7tO2dTktzw1IH0rzpCa9Qc16dxykwnBePyOYTMQ=="
-
 module "aks" {
   source              = "./aks"
   resource_group      = "${var.resource_group}"
