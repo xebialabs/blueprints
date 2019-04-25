@@ -1,0 +1,12 @@
+apiVersion: xl-deploy/v1
+kind: Applications
+spec:
+  - name: {{ .KubernetesApplicationName }}
+    type: udm.Application
+    children:
+      - name: {{ .KubernetesDeploymentPackageVersion }}
+        type: udm.DeploymentPackage
+        deployables:
+          - name: {{ .KubernetesApplicationName }}
+            type: k8s.ResourcesFile
+            file: !file {{ .KubernetesResourcesFile }}

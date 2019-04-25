@@ -1,0 +1,4 @@
+answers-file: answers.yaml
+expected-files:
+    - xebialabs/kubernetes-environment.yaml
+    - xebialabs/kubernetes-infrastructure.yaml

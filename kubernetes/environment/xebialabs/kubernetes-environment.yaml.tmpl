@@ -1,0 +1,8 @@
+apiVersion: xl-deploy/v1
+kind: Environments
+spec:
+  - name: {{ .KubernetesName }}
+    type: udm.Environment
+    members:
+    - ~Infrastructure/{{ .KubernetesName }}
+    - ~Infrastructure/{{ .KubernetesName }}/{{ .KubernetesNamespace }}
