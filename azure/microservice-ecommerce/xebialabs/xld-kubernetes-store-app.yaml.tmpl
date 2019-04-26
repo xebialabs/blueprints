@@ -1,0 +1,43 @@
+{{$app := .AppName | kebabcase}}
+apiVersion: xl-deploy/v1
+kind: Applications
+spec:
+- name: {{$app}}
+  type: core.Directory
+  children:
+    - name: K8S
+      type: core.Directory
+      children:
+      - name: {{$app}}-store-mysql
+        type: udm.Application
+        children:
+        - name: 1.0.0
+          type: udm.DeploymentPackage
+          deployables:
+          - name: {{$app}}-store-mysql
+            type: k8s.ResourcesFile
+            file: !file ../kubernetes/store/store-mysql.yml
+      - name: {{$app}}-registry
+        type: udm.Application
+        children:
+        - name: 1.0.0
+          type: udm.DeploymentPackage
+          deployables:
+          - name: {{$app}}-application-config
+            type: k8s.ResourcesFile
+            file: !file ../kubernetes/registry/application-configmap.yml
+          - name: {{$app}}-jhipster-registry
+            type: k8s.ResourcesFile
+            file: !file ../kubernetes/registry/jhipster-registry.yml
+      - name: {{$app}}-store
+        type: udm.Application
+        children:
+        - name: 1.0.0
+          type: udm.DeploymentPackage
+          deployables:
+          - name: {{$app}}-store-deployment
+            type: k8s.ResourcesFile
+            file: !file ../kubernetes/store/store-deployment.yml
+          - name: {{$app}}-store-svc
+            type: k8s.ResourcesFile
+            file: !file ../kubernetes/store/store-service.yml
