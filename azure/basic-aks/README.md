@@ -14,13 +14,15 @@ If you're new to XebiaLabs blueprints, check out:
 
 ### Authenticate to Azure
 
-You must extract your Azure login credentials so the blueprint can create the cluster.
+> Note: This blueprint requires your Azure login credentials in order to create the cluster.
 
 ### Creating a functional user under your subscription
 
 We need to configure the Azure provider with the `subscription_id`, `client_id`, `client_secret` and `tenant_id`. If you do not have these details you can use the `az` command line tool to obtain them.
 
-Make sure you've download the [AZ CLI](https://docs.microsoft.com/en-us/cli/azure/) and you're [signed in](https://docs.microsoft.com/en-us/cli/azure/authenticate-azure-cli?view=azure-cli-latest).
+> Note: Make sure you have the [AZ CLI](https://docs.microsoft.com/en-us/cli/azure/) and you're [signed in](https://docs.microsoft.com/en-us/cli/azure/authenticate-azure-cli?view=azure-cli-latest).
+
+Once you are signed in, run the command below to see a list of accounts you can access:
 
 ```plain
 $ az account list
@@ -44,10 +46,10 @@ Which will show you something like:
 ]
 ```
 
-The `id` you see here is your `subscription_id`. You copy that value and paste it in the command below to create a functional user that has privileges to spin up a managed K8s cluster.
+The `id` you see here is your `subscription_id`. Copy that value and paste it in the command below to create a functional user that has privileges to spin up a managed K8s cluster.
 
 ```plain
-$ az ad sp create-for-rbac --role="Contributor" --scopes="/subscriptions/your_subscription_id"
+$ az ad sp create-for-rbac --role="Contributor" --scopes="/subscriptions/SUBSCRIPTION_ID"
 ```
 
 This will output something like this:
@@ -62,7 +64,12 @@ This will output something like this:
 }
 ```
 
-In this output, `appId` is your `client_id`, `password` is your `client_secret` and `tenant` is your `tenant_id`. You already retrieved your `subscription_id` in the previous step.
+In this output:
+* `appId` is your `client_id`
+* `password` is your `client_secret`
+* `tenant` is your `tenant_id`
+
+You already retrieved your `subscription_id` in the previous step.
 
 ## Usage
 
