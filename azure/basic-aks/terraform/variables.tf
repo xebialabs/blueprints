@@ -1,4 +1,3 @@
-
 variable "cluster_name" {
   description = "Name of the cluster"
 }
@@ -27,3 +26,7 @@ variable "resource_group_location" {
   description = "Geographic location of the cluster"
 }
 
+variable "linux_profile_admin_user" {
+  description = "The default Linux admin user for logging into the master"
+  default     = "adminuser"
+}

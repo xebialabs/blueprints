@@ -38,7 +38,7 @@ resource "azurerm_kubernetes_cluster" "k8s" {
   }
 
   linux_profile {
-    admin_username = "adminuser"
+    admin_username = "${var.linux_profile_admin_user}"
 
     ssh_key {
       key_data = "${trimspace(tls_private_key.key.public_key_openssh)}"
