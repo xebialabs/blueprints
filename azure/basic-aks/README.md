@@ -76,7 +76,7 @@ You already retrieved your `subscription_id` in the previous step.
 To use this blueprint, run `xl blueprint` in an empty directory and select:
 
 ```plain
-azure/aks
+azure/basic-aks
 ```
 
 To deploy this blueprint, read the usage instruction in `xebialbs/USAGE.md` amongst the generated files.

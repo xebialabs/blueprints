@@ -4,7 +4,7 @@ kind: Blueprint
 metadata:
   projectName: Azure-AKS-Basic
   description: |
-    The blueprint provisions a very basi Azure AKS cluster. XL Deploy does the provisioning.
+    The blueprint provisions a very basic Azure AKS cluster. XL Deploy does the provisioning.
   author: XebiaLabs
   version: 1.0
 
