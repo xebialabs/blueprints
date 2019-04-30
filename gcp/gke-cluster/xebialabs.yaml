@@ -4,6 +4,3 @@ metadata:
   imports:
     - xebialabs/xld-infra-env.yaml
     - xebialabs/xld-terraform-apps.yaml
-    - xebialabs/xld-kubernetes-app.yaml
-    - xebialabs/xlr-pipeline-ci-cd.yaml
-    - xebialabs/xlr-pipeline-destroy.yaml
