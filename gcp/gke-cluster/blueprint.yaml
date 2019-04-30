@@ -7,14 +7,9 @@ metadata:
     The blueprint provisions a GCP GKE Cluster using Terraform and XL Deploy.
   author: XebiaLabs
   version: 1.0
-
+  instructions: Read xebialabs/USAGE.md to learn how to use this blueprint.
 spec:
   parameters:
-  # General variables
-  - name: AppName
-    type: Input
-    description: What is the name of the application?
-  # GCP specific variables
   - name: GCPProjectID
     type: Input
     description: What is the GCP project ID?
@@ -27,6 +22,9 @@ spec:
     secret: true
     description: What is the password for Kubernetes cluster? (minimum 16 characters)
     pattern: "(\\S){16,}"
+  - name: ClusterName
+    type: Input
+    description: What is the name of the cluster?
   - name: GCPRegion
     type: Select
     description: "Select the GCP region:"
@@ -49,9 +47,6 @@ spec:
       - us-east4
       - us-west1
       - us-west2
-  - name: ClusterName
-    type: Input
-    description: What is the name of the cluster?
   - name: GKENumNodes
     type: Input
     default: 2
@@ -90,9 +85,11 @@ spec:
       - n1-megamem-96
 
   files:
+  # XebiaLabs specific files
   - path: xebialabs/xld-infra-env.yaml.tmpl
   - path: xebialabs/xld-terraform-apps.yaml.tmpl
   - path: xebialabs/USAGE.md.tmpl
+  # Terraform specific files
   - path: terraform/gke/main.tf
   - path: terraform/gke/outputs.tf
   - path: terraform/gke/variables.tf
@@ -104,8 +101,6 @@ spec:
   - path: terraform/main.tf
   - path: terraform/outputs.tf
   - path: terraform/variables.tf
-  - path: kubernetes/app.yaml.tmpl
   - path: xebialabs.yaml
   # docker-compose setup for required tools
   - path: docker/docker-compose.yml
-  - path: docker/data/configure-xl-devops-platform.yaml
