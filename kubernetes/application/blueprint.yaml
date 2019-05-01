@@ -25,6 +25,8 @@ spec:
     description: "What is the path of the Kubernetes YAML file that you want to deploy?"
 
   files:
+  # XebiaLabs
   - path: xebialabs/USAGE-kubernetes-application.md
   - path: xebialabs/kubernetes-application.yaml.tmpl
+  # Kubernetes
   - path: kubernetes/nginx.yaml.tmpl

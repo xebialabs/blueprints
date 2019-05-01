@@ -10,10 +10,6 @@ metadata:
 
 spec:
   parameters:
-  - name: ClusterName
-    type: Input
-    description: What do you want to name the cluster?
-
   # ############################################################################
   # Access and authorization
   # ############################################################################
@@ -23,7 +19,7 @@ spec:
 
   - name: ClientSecret
     type: Input
-    description: What is the secret for the above client id?
+    description: What is the secret (password) for that client id?
     secret: true
 
   - name: SubscriptionID
@@ -78,17 +74,16 @@ spec:
     - southafricanorth
     - southafricawest
 
+  - name: ClusterName
+    type: Input
+    description: What do you want to name the cluster?
+
   files:
-    # XebiaLabs
-  - path: xebialabs.yaml
-  - path: README.md
-  - path: xebialabs/USAGE.md.tmpl
-  - path: xebialabs/xld-infra-env.yaml.tmpl
-  - path: xebialabs/xld-terraform-apps.yaml.tmpl
-    # Terraform
+  # XebiaLabs
+  - path: xebialabs/USAGE-azure-basic-aks-cluster.md.tmpl
+  - path: xebialabs/azure-basic-aks-cluster.yaml.tmpl
+  # Terraform
   - path: terraform/.gitignore
   - path: terraform/main.tf
   - path: terraform/output.tf
   - path: terraform/variables.tf
-    # Docker
-  - path: docker/docker-compose.yml
