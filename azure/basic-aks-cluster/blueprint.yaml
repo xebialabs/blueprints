@@ -1,0 +1,94 @@
+apiVersion: xl/v1
+kind: Blueprint
+
+metadata:
+  projectName: Azure-AKS-Basic
+  description: |
+    The blueprint provisions a very basic Azure AKS cluster. XL Deploy does the provisioning.
+  author: XebiaLabs
+  version: 1.0
+
+spec:
+  parameters:
+  - name: ClusterName
+    type: Input
+    description: What do you want to name the cluster?
+
+  # ############################################################################
+  # Access and authorization
+  # ############################################################################
+  - name: ClientID
+    type: Input
+    description: What is the client id (appId) of an existing Service Principal in Azure?
+
+  - name: ClientSecret
+    type: Input
+    description: What is the secret for the above client id?
+    secret: true
+
+  - name: SubscriptionID
+    type: Input
+    description: What is your existing Azure subscription id?
+
+  - name: TenantID
+    type: Input
+    description: What is your existing Azure tenant id?
+
+  # ############################################################################
+  # Resource group under which the cluster will be created
+  # ############################################################################
+  - name: ResourceGroup
+    type: Input
+    description: What do you want to name the resource group?
+
+  - name: ResourceGroupLocation
+    type: Select
+    description: "Select where this resource group will go:"
+    options:
+    - eastasia
+    - southeastasia
+    - centralus
+    - eastus
+    - eastus2
+    - westus
+    - northcentralus
+    - southcentralus
+    - northeurope
+    - westeurope
+    - japanwest
+    - japaneast
+    - brazilsouth
+    - australiaeast
+    - australiasoutheast
+    - southindia
+    - centralindia
+    - westindia
+    - canadacentral
+    - canadaeast
+    - uksouth
+    - ukwest
+    - westcentralus
+    - westus2
+    - koreacentral
+    - koreasouth
+    - francecentral
+    - francesouth
+    - australiacentral
+    - australiacentral2
+    - southafricanorth
+    - southafricawest
+
+  files:
+    # XebiaLabs
+  - path: xebialabs.yaml
+  - path: README.md
+  - path: xebialabs/USAGE.md.tmpl
+  - path: xebialabs/xld-infra-env.yaml.tmpl
+  - path: xebialabs/xld-terraform-apps.yaml.tmpl
+    # Terraform
+  - path: terraform/.gitignore
+  - path: terraform/main.tf
+  - path: terraform/output.tf
+  - path: terraform/variables.tf
+    # Docker
+  - path: docker/docker-compose.yml
