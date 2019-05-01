@@ -85,22 +85,18 @@ spec:
       - n1-megamem-96
 
   files:
-  # XebiaLabs specific files
-  - path: xebialabs/xld-infra-env.yaml.tmpl
-  - path: xebialabs/xld-terraform-apps.yaml.tmpl
-  - path: xebialabs/USAGE.md.tmpl
-  # Terraform specific files
-  - path: terraform/gke/main.tf
-  - path: terraform/gke/outputs.tf
-  - path: terraform/gke/variables.tf
-  - path: terraform/vpc/main.tf
-  - path: terraform/vpc/outputs.tf
-  - path: terraform/vpc/variables.tf
-  - path: terraform/.gitignore
-  - path: terraform/backend.tf.tmpl
-  - path: terraform/main.tf
-  - path: terraform/outputs.tf
-  - path: terraform/variables.tf
-  - path: xebialabs.yaml
-  # docker-compose setup for required tools
-  - path: docker/docker-compose.yml
+  # XebiaLabs
+  - path: xebialabs/USAGE-gcp-basic-gke-cluster.md.tmpl
+  - path: xebialabs/gcp-basic-gke-cluster.yaml.tmpl
+  # Terraform
+  - path: terraform-gcp-basic-gke-cluster/gke/main.tf
+  - path: terraform-gcp-basic-gke-cluster/gke/outputs.tf
+  - path: terraform-gcp-basic-gke-cluster/gke/variables.tf
+  - path: terraform-gcp-basic-gke-cluster/vpc/main.tf
+  - path: terraform-gcp-basic-gke-cluster/vpc/outputs.tf
+  - path: terraform-gcp-basic-gke-cluster/vpc/variables.tf
+  - path: terraform-gcp-basic-gke-cluster/.gitignore
+  - path: terraform-gcp-basic-gke-cluster/main.tf
+  - path: terraform-gcp-basic-gke-cluster/outputs.tf
+  - path: terraform-gcp-basic-gke-cluster/variables.tf
+

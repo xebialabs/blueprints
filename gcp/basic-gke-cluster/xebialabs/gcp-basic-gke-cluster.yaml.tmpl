@@ -1,0 +1,50 @@
+{{$clusterName := .ClusterName | kebabcase}}
+
+apiVersion: xl-deploy/v1
+kind: Infrastructure
+spec:
+- name: terraform-host-for-{{$clusterName}}
+  type: overthere.LocalHost
+  os: UNIX
+  children:
+  - name: terraform-client
+    type: terraform.TerraformClient
+    path: '/usr/local/bin'
+    workingDirectory: '/opt/xebialabs/terraform-for-{{$clusterName}}'
+
+---
+
+apiVersion: xl-deploy/v1
+kind: Environments
+spec:
+  - name: terraform-for-{{$clusterName}}
+    type: udm.Environment
+    members:
+    - ~Infrastructure/terraform-host-for-{{$clusterName}}/terraform-client
+
+---
+
+apiVersion: xl-deploy/v1
+kind: Applications
+spec:
+- name: basic-gke-cluster-terraform-for-{{$clusterName}}
+  type: udm.Application
+  lastVersion: '1.0.0'
+  children:
+  - name: '1.0.0'
+    type: udm.DeploymentPackage
+    deployables:
+    - name: basic-gke-cluster-terraform-module-for-{{$clusterName}}
+      type: terraform.Module
+      file: !file ../terraform-gcp-basic-gke-cluster
+      environmentPath: gke-env
+      automaticDictionary: true
+      generateCIsFromResources: true 
+      inputVariables:
+        project_id: {{.GCPProjectID}}
+        name: {{$clusterName}}
+        region: {{.GCPRegion}}
+        gke_master_user: {{.K8SMasterUser}}
+        gke_master_pass: {{.K8SMasterPassword}}
+        gke_num_nodes: {{.GKENumNodes}}
+        gke_node_machine_type: {{.GKENodeMachineType}}
