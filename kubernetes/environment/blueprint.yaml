@@ -3,7 +3,7 @@ kind: Blueprint
 metadata:
   projectName: Create infrastructure and environment for Kubernetes
   description: |
-    This blueprint defines an environment for a Kubernetes cluster
+    This blueprint defines an environment for a Kubernetes cluster based on the information in your ~/.kube/config file
   author: XebiaLabs
   version: 1.0
   instructions: Read xebialabs/USAGE-kubernetes-environment.md to learn how to use this blueprint.
@@ -43,6 +43,6 @@ spec:
     description: "Which namespace in the Kubernetes cluster should be used?"
 
   files:
-  - path: xebialabs/kubernetes-infrastructure.yaml.tmpl
-  - path: xebialabs/kubernetes-environment.yaml.tmpl
+  # XebiaLabs
   - path: xebialabs/USAGE-kubernetes-environment.md
+  - path: xebialabs/kubernetes-environment.yaml.tmpl
