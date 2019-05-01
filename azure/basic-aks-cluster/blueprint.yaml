@@ -12,7 +12,7 @@ spec:
   parameters:
   - name: ClusterName
     type: Input
-    description: What is the name of the application (in XLD/XLR)?
+    description: What do you want to name the cluster?
 
   # ############################################################################
   # Access and authorization
