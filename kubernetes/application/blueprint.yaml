@@ -1,0 +1,32 @@
+apiVersion: xl/v1
+kind: Blueprint
+metadata:
+  projectName: Define a Kubernetes application
+  description: |
+    This blueprint defines an application that can be deployed to Kubernetes
+  author: XebiaLabs
+  version: 1.0
+  instructions: Read xebialabs/USAGE-kubernetes-application.md to learn how to use this blueprint.
+spec:
+  parameters:
+  - name: KubernetesApplicationName
+    type: Input
+    default: nginx
+    description: "What is the name of the application that you want to deploy?"
+
+  - name: KubernetesDeploymentPackageVersion
+    type: Input
+    default: 'latest'
+    description: "What is the version of the application that you want to deploy?"
+
+  - name: KubernetesResourcesFile
+    type: Input
+    default: '../kubernetes/nginx.yaml'
+    description: "What is the path of the Kubernetes YAML file that you want to deploy?"
+
+  files:
+  # XebiaLabs
+  - path: xebialabs/USAGE-kubernetes-application.md
+  - path: xebialabs/kubernetes-application.yaml.tmpl
+  # Kubernetes
+  - path: kubernetes/nginx.yaml.tmpl
