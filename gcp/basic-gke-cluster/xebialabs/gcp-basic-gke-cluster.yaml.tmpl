@@ -17,10 +17,10 @@ spec:
 apiVersion: xl-deploy/v1
 kind: Environments
 spec:
-  - name: terraform-for-{{$clusterName}}
-    type: udm.Environment
-    members:
-    - ~Infrastructure/terraform-host-for-{{$clusterName}}/terraform-client
+- name: terraform-for-{{$clusterName}}
+  type: udm.Environment
+  members:
+  - ~Infrastructure/terraform-host-for-{{$clusterName}}/terraform-client
 
 ---
 
@@ -29,7 +29,6 @@ kind: Applications
 spec:
 - name: basic-gke-cluster-terraform-for-{{$clusterName}}
   type: udm.Application
-  lastVersion: '1.0.0'
   children:
   - name: '1.0.0'
     type: udm.DeploymentPackage
@@ -37,9 +36,6 @@ spec:
     - name: basic-gke-cluster-terraform-module-for-{{$clusterName}}
       type: terraform.Module
       file: !file ../terraform-gcp-basic-gke-cluster
-      environmentPath: gke-env
-      automaticDictionary: true
-      generateCIsFromResources: true 
       inputVariables:
         project_id: {{.GCPProjectID}}
         name: {{$clusterName}}
@@ -48,3 +44,23 @@ spec:
         gke_master_pass: {{.K8SMasterPassword}}
         gke_num_nodes: {{.GKENumNodes}}
         gke_node_machine_type: {{.GKENodeMachineType}}
+      boundTemplates:
+        - "../{{$clusterName}} infrastructure"
+        - "../{{$clusterName}} environment"
+    templates:
+    - name: "{{$clusterName}} infrastructure"
+      type: template.k8s.Master
+      instanceName: {{$clusterName}}
+      apiServerURL: 'https://{{"{{%outputVariables.endpoint%}}"}}'
+      username: {{.K8SMasterUser}}
+      password: {{.K8SMasterPassword}}
+      skipTLS: true
+      children:
+      - name: default
+        type: template.k8s.Namespace
+    - name: "{{$clusterName}} environment"
+      type: template.udm.Environment
+      instanceName: {{$clusterName}}
+      members:
+      - "../{{$clusterName}} infrastructure"
+      - "../{{$clusterName}} infrastructure/default"
