@@ -1,4 +1,4 @@
-# Microservice Application on Google Kubernetes Engine
+# Basic Google Kubernetes Engine cluster
 
 ## Introduction
 
