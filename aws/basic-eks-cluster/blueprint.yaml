@@ -44,7 +44,7 @@ spec:
       # - us-east-1
       - us-east-2
       - eu-central-1
-      - eu-north-1
+      # - eu-north-1 # doesn't seem to work
       - eu-west-1
       - eu-west-2
       - eu-west-3
@@ -122,11 +122,6 @@ spec:
     - p3.2xlarge
     - p3.8xlarge
     - p3.16xlarge
-
-  - name: XLDUrlForXLR
-    type: Input
-    description: XL Deploy URL for XL Release (This will only be used in the XL Release template)
-    default: http://xl-deploy:4516
 
   files:
   - path: xebialabs/xld-infra-env.yaml.tmpl

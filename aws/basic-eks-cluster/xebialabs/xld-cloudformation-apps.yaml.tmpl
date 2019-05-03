@@ -125,6 +125,9 @@ spec:
           - name: kube-system
             type: "template.k8s.Namespace"
             namespaceName: "kube-system"
+          - name: default
+            type: template.k8s.Namespace
+            namespaceName: "default"
         # this dictionary is needed for aws-eks-{{$app}}-kube-system environment
         - name: aws-eks-{{$app}}-dictionary
           type: "template.udm.Dictionary"
@@ -139,6 +142,7 @@ spec:
           instanceName: "{{$app}}/aws-eks-{{$app}}"
           members:
             - "../eks-cluster"
+            - "../eks-cluster/default"
         - name: aws-eks-{{$app}}-kube-system
           type: "template.udm.Environment"
           instanceName: "{{$app}}/aws-eks-{{$app}}-kube-system"
@@ -157,16 +161,3 @@ spec:
           type: k8s.ResourcesFile
           file: !file ../kubernetes/aws-auth-cm.yaml
           delimiters: "## ##"
-#  - name: K8S
-#    type: core.Directory
-#    children:
-#    # Provision K8s namespace
-#    - name: {{$app}}-namespace
-#      type: udm.Application
-#      children:
-#      - name: '1.0.0'
-#        type: udm.DeploymentPackage
-#        deployables:
-#        - name: xl-demo
-#          type: k8s.NamespaceSpec
-#          namespaceName: 'xl-demo'

@@ -26,7 +26,6 @@ This blueprint includes the following tools and technologies:
 
 * Target:
     * [Amazon Elastic Container Service for Kubernetes (EKS)](https://aws.amazon.com/eks/)
-    * [AWS Fargate](https://aws.amazon.com/fargate/)
     * [Amazon Simple Storage Service (S3)](https://aws.amazon.com/s3/)
 * Tools:
     * [XebiaLabs Release Orchestration](https://xebialabs.com/products/xl-release/)

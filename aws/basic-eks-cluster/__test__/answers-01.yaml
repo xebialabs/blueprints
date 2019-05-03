@@ -7,6 +7,3 @@ ClusterName: test-project
 NodeInstanceType: t2.small
 NodeAutoScalingGroupMinSize: 1
 NodeAutoScalingGroupMaxSize: 3
-StoreAdminUsername: admin
-StoreAdminPassword: admin
-XLDUrlForXLR: http://xl-deploy:4516
