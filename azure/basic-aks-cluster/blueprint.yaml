@@ -78,12 +78,17 @@ spec:
     type: Input
     description: What do you want to name the cluster?
 
+  # Hidden prefix
+  - name: Prefix
+    type: Input
+    value: azure-basic-aks-cluster-terraform-for-
+
   files:
   # XebiaLabs
   - path: xebialabs/USAGE-azure-basic-aks-cluster.md.tmpl
   - path: xebialabs/azure-basic-aks-cluster.yaml.tmpl
   # Terraform
-  - path: terraform/.gitignore
-  - path: terraform/main.tf
-  - path: terraform/output.tf
-  - path: terraform/variables.tf
+  - path: terraform-azure-basic-aks-cluster/.gitignore
+  - path: terraform-azure-basic-aks-cluster/main.tf
+  - path: terraform-azure-basic-aks-cluster/output.tf
+  - path: terraform-azure-basic-aks-cluster/variables.tf
