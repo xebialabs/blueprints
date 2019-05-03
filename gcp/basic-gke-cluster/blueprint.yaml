@@ -87,7 +87,7 @@ spec:
   # Hidden prefix
   - name: Prefix
     type: Input
-    value: gcp-basic-eks-cluster-terraform-for-
+    value: gcp-gke-
 
   files:
   # XebiaLabs

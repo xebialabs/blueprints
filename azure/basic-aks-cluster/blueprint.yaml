@@ -81,7 +81,7 @@ spec:
   # Hidden prefix
   - name: Prefix
     type: Input
-    value: azure-basic-aks-cluster-terraform-for-
+    value: azure-aks-
 
   files:
   # XebiaLabs
