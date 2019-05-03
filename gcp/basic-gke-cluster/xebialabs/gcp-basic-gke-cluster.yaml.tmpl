@@ -3,37 +3,37 @@
 apiVersion: xl-deploy/v1
 kind: Infrastructure
 spec:
-- name: terraform-host-for-{{$clusterName}}
+- name: {{ .Prefix }}terraform-host
   type: overthere.LocalHost
   os: UNIX
   children:
   - name: terraform-client
     type: terraform.TerraformClient
     path: '/usr/local/bin'
-    workingDirectory: '/opt/xebialabs/terraform-for-{{$clusterName}}'
+    workingDirectory: '/tmp/{{ .Prefix }}terraform'
 
 ---
 
 apiVersion: xl-deploy/v1
 kind: Environments
 spec:
-- name: terraform-for-{{$clusterName}}
+- name: {{ .Prefix }}terraform
   type: udm.Environment
   members:
-  - ~Infrastructure/terraform-host-for-{{$clusterName}}/terraform-client
+  - ~Infrastructure/{{ .Prefix }}terraform-host/terraform-client
 
 ---
 
 apiVersion: xl-deploy/v1
 kind: Applications
 spec:
-- name: basic-gke-cluster-terraform-for-{{$clusterName}}
+- name: {{ .Prefix }}{{$clusterName}}
   type: udm.Application
   children:
   - name: '1.0.0'
     type: udm.DeploymentPackage
     deployables:
-    - name: basic-gke-cluster-terraform-module-for-{{$clusterName}}
+    - name: {{ .Prefix }}{{$clusterName}}
       type: terraform.Module
       file: !file ../terraform-gcp-basic-gke-cluster
       inputVariables:
@@ -45,8 +45,8 @@ spec:
         gke_num_nodes: {{.GKENumNodes}}
         gke_node_machine_type: {{.GKENodeMachineType}}
       boundTemplates:
-        - "../{{$clusterName}} infrastructure"
-        - "../{{$clusterName}} environment"
+      - "../{{$clusterName}} infrastructure"
+      - "../{{$clusterName}} environment"
     templates:
     - name: "{{$clusterName}} infrastructure"
       type: template.k8s.Master

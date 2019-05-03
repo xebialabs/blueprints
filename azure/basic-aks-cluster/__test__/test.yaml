@@ -1,6 +1,6 @@
 answers-file: answers.yaml
 expected-files:
 - xebialabs/USAGE-azure-basic-aks-cluster.md
-- terraform/main.tf
-- terraform/output.tf
-- terraform/variables.tf
+- terraform-azure-basic-aks-cluster/main.tf
+- terraform-azure-basic-aks-cluster/output.tf
+- terraform-azure-basic-aks-cluster/variables.tf
