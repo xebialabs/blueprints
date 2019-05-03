@@ -1,0 +1,146 @@
+apiVersion: xl/v1
+kind: Blueprint
+
+metadata:
+  projectName: AWS-EKS-Cluster
+  description: |
+    The blueprint deploys a simple AWS EKS Cluster.
+    XL Deploy does the provisioning and deployment, while XL Release orchestrates everything.
+  author: XebiaLabs
+  version: 1.0
+
+spec:
+  parameters:
+  # General variables
+  - name: AppName
+    type: Input
+    description: What is the name of the application?
+
+  # AWS specific variables
+  - name: UseAWSCredentialsFromSystem
+    type: Confirm
+    description: Do you want to use AWS credentials from ~/.aws/credentials file?
+    dependsOnTrue: !fn aws.credentials().IsAvailable
+  - name: AWSAccessKey
+    type: Input
+    secret: true
+    description: What is the AWS Access Key ID?
+    dependsOnFalse: UseAWSCredentialsFromSystem
+    default: !fn aws.credentials().AccessKeyID
+  - name: AWSAccessSecret
+    type: Input
+    secret: true
+    description: What is the AWS Secret Access Key?
+    dependsOnFalse: UseAWSCredentialsFromSystem
+    default: !fn aws.credentials().SecretAccessKey
+
+  - name: AWSRegion #options are set manually because EKS service is not registered within AWS GO SDK
+    type: Select
+    description: "Select the AWS region:"
+    options:
+    # This needs to be updated in the RegionMap of cloudformation/eks-workers.yaml as well
+      - us-west-2
+      # commented out because of https://github.com/boto/boto3/issues/811
+      # - us-east-1
+      - us-east-2
+      - eu-central-1
+      - eu-north-1
+      - eu-west-1
+      - eu-west-2
+      - eu-west-3
+      - ap-northeast-1
+      - ap-northeast-2
+      - ap-south-1
+      - ap-southeast-1
+      - ap-southeast-2
+
+  - name: ClusterName
+    type: Input
+    description: What is the name of the cluster?
+
+  - name: NodeAutoScalingGroupDesiredSize
+    type: Input
+    description: What is the desired number of nodes in the cluster?
+    pattern: "([0-9])+"
+
+  - name: NodeInstanceType
+    type: Select
+    description: What EC2 instance type do you want to use for the nodes?
+    options:
+    - t2.small
+    - t2.medium
+    - t2.large
+    - t2.xlarge
+    - t2.2xlarge
+    - m3.medium
+    - m3.large
+    - m3.xlarge
+    - m3.2xlarge
+    - m4.large
+    - m4.xlarge
+    - m4.2xlarge
+    - m4.4xlarge
+    - m4.10xlarge
+    - m5.large
+    - m5.xlarge
+    - m5.2xlarge
+    - m5.4xlarge
+    - m5.12xlarge
+    - m5.24xlarge
+    - c4.large
+    - c4.xlarge
+    - c4.2xlarge
+    - c4.4xlarge
+    - c4.8xlarge
+    - c5.large
+    - c5.xlarge
+    - c5.2xlarge
+    - c5.4xlarge
+    - c5.9xlarge
+    - c5.18xlarge
+    - i3.large
+    - i3.xlarge
+    - i3.2xlarge
+    - i3.4xlarge
+    - i3.8xlarge
+    - i3.16xlarge
+    - r3.xlarge
+    - r3.2xlarge
+    - r3.4xlarge
+    - r3.8xlarge
+    - r4.large
+    - r4.xlarge
+    - r4.2xlarge
+    - r4.4xlarge
+    - r4.8xlarge
+    - r4.16xlarge
+    - x1.16xlarge
+    - x1.32xlarge
+    - p2.xlarge
+    - p2.8xlarge
+    - p2.16xlarge
+    - p3.2xlarge
+    - p3.8xlarge
+    - p3.16xlarge
+
+  - name: XLDUrlForXLR
+    type: Input
+    description: XL Deploy URL for XL Release (This will only be used in the XL Release template)
+    default: http://xl-deploy:4516
+
+  files:
+  - path: xebialabs/xld-infra-env.yaml.tmpl
+  - path: xebialabs/xld-cloudformation-apps.yaml.tmpl
+  - path: xebialabs/xlr-pipeline-ci-cd.yaml.tmpl
+  - path: xebialabs/xlr-pipeline-destroy.yaml.tmpl
+  - path: xebialabs/USAGE.md.tmpl
+  - path: kubernetes/aws-auth-cm.yaml
+  - path: cloudformation/cfn-secret-provider.zip
+  - path: cloudformation/eks-master.yaml
+  - path: cloudformation/eks-user.yaml
+  - path: cloudformation/eks-vpc.yaml
+  - path: cloudformation/eks-workers.yaml
+  - path: xebialabs.yaml
+  # docker-compose setup for required tools
+  - path: docker/docker-compose.yml
+  - path: docker/data/configure-xl-devops-platform.yaml
