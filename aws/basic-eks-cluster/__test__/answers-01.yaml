@@ -5,5 +5,4 @@ AWSAccessSecret: ANDGDJDHJHD4235
 AWSRegion: eu-west-1
 ClusterName: test-project
 NodeInstanceType: t2.small
-NodeAutoScalingGroupMinSize: 1
-NodeAutoScalingGroupMaxSize: 3
+NodeAutoScalingGroupDesiredSize: "3"
