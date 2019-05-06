@@ -31,7 +31,7 @@ services:
     depends_on:
     - xl-deploy
     - xl-release
-    command: ["apply", "--xl-deploy-url", "http://xl-deploy:{{.XLDeployPort}}/", "--xl-release-url", "http://xl-release:{{.XLReleasePort}}/", "-f", "/data/configure-xl-devops-platform.yaml"]
+    command: ["apply", "--xl-deploy-url", "http://xl-deploy:4516/", "--xl-release-url", "http://xl-release:5516/", "-f", "/data/configure-xl-devops-platform.yaml"]
     volumes:
     - ./data/:/data:ro
   {{- end }}
