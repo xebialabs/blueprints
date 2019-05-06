@@ -8,6 +8,7 @@ metadata:
     Refer to https://docs.aws.amazon.com/solutions/latest/data-lake-solution
   author: XebiaLabs
   version: 1.0
+  instructions: Please read the generated file "xebialabs/USAGE.md" for further usage instructions.
 spec:
   parameters:
   - name: S3BucketName
