@@ -1,0 +1,8 @@
+apiVersion: xl-release/v1
+kind: Templates
+spec:
+- name: XL Deploy
+  type: xldeploy.XLDeployServer
+  url: http://xl-deploy:{{ .XLDeployPort}}
+  username: admin
+  password: admin

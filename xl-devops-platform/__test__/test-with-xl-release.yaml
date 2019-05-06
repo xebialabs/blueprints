@@ -1,0 +1,6 @@
+answers-file: answers-with-xl-release.yaml
+expected-files:
+- xebialabs/config.yaml
+- xebialabs/USAGE-docker-compose.md
+- docker/docker-compose.yml
+- docker/data/configure-xl-devops-platform.yaml
