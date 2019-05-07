@@ -1,6 +1,6 @@
-# Basic Azure Kubernetes cluster setup
+## Introduction
 
-This example comprises a minimum of moving parts in setting up the cluster.
+Use this blueprint to deploy a basic Microsoft Azure Kubernetes cluster that includes a minimum number of moving parts.
 
 ## Before you get started
 
@@ -10,17 +10,23 @@ If you're new to XebiaLabs blueprints, check out:
 * [Get started with blueprints](https://docs.xebialabs.com/xl-platform/concept/get-started-with-blueprints.html)
 * [Get started with XL JetPack](https://docs.xebialabs.com/xl-platform/concept/get-started-with-xl-jetpack.html)
 
+## Minimum required versions
+
+This blueprint version requires at least the below versions of the specified tools to work properly.
+
+- XL Deploy: Version 8.6.1
+- XL CLI: Version 8.6
+
 ## Prerequisites
+To run the YAML that this blueprint generates, you need:
+* Azure login credentials in order to create the cluster
+* [Azure CLI](https://docs.microsoft.com/en-us/cli/azure/). Ensure that you are [signed in](https://docs.microsoft.com/en-us/cli/azure/authenticate-azure-cli?view=azure-cli-latest).
 
-### Authenticate to Azure
+### Create a functional user under your subscription
 
-> Note: This blueprint requires your Azure login credentials in order to create the cluster.
+You must configure the Azure provider with the `subscription_id`, `client_id`, `client_secret` and `tenant_id`. If you do not have these details you can use the `az` command line tool to obtain them.
 
-### Creating a functional user under your subscription
-
-We need to configure the Azure provider with the `subscription_id`, `client_id`, `client_secret` and `tenant_id`. If you do not have these details you can use the `az` command line tool to obtain them.
-
-> Note: Make sure you have the [AZ CLI](https://docs.microsoft.com/en-us/cli/azure/) and you're [signed in](https://docs.microsoft.com/en-us/cli/azure/authenticate-azure-cli?view=azure-cli-latest).
+> Note: Ensure that you have the [AZ CLI](https://docs.microsoft.com/en-us/cli/azure/) and you are [signed in](https://docs.microsoft.com/en-us/cli/azure/authenticate-azure-cli?view=azure-cli-latest).
 
 Once you are signed in, run the command below to see a list of accounts you can access:
 
@@ -28,7 +34,7 @@ Once you are signed in, run the command below to see a list of accounts you can 
 $ az account list
 ```
 
-Which will show you something like:
+Example results:
 ```json
 [
   {
@@ -52,7 +58,7 @@ The `id` you see here is your `subscription_id`. Copy that value and paste it in
 $ az ad sp create-for-rbac --role="Contributor" --scopes="/subscriptions/SUBSCRIPTION_ID"
 ```
 
-This will output something like this:
+Example results:
 
 ```json
 {
@@ -69,7 +75,7 @@ In this output:
 * `password` is your `client_secret`
 * `tenant` is your `tenant_id`
 
-You already retrieved your `subscription_id` in the previous step.
+> Note: You already retrieved your `subscription_id` in the previous step.
 
 ## Usage
 
@@ -79,11 +85,11 @@ To use this blueprint, run `xl blueprint` in an empty directory and select:
 azure/basic-aks
 ```
 
-To deploy this blueprint, read the usage instruction in `xebialbs/USAGE.md` amongst the generated files.
+To deploy this blueprint, read the usage instruction in `xebialbs/USAGE.md` included with the generated files.
 
-## Minimum Required versions
+## Labels
+* Cloud
+* Azure
+* Kubernetes
 
-This blueprint version requires at least the below versions of the specified tools to work properly.
 
-- XL Deploy: Version 8.6.1
-- XL CLI: Version 8.6
