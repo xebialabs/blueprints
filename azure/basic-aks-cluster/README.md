@@ -1,6 +1,8 @@
 ## Introduction
 
-Use this blueprint to deploy a basic Microsoft Azure Kubernetes cluster that includes a minimum number of moving parts.
+Use this blueprint to deploy a basic Microsoft Azure Kubernetes cluster.
+
+<!--can we add more descriptive info as in this other blueprint: https://github.com/xebialabs/blueprints/tree/master/gcp/microservice-ecommerce-->
 
 ## Before you get started
 
@@ -9,6 +11,17 @@ If you're new to XebiaLabs blueprints, check out:
 * [Get started with DevOps as Code](https://docs.xebialabs.com/xl-platform/concept/get-started-with-devops-as-code.html)
 * [Get started with blueprints](https://docs.xebialabs.com/xl-platform/concept/get-started-with-blueprints.html)
 * [Get started with XL JetPack](https://docs.xebialabs.com/xl-platform/concept/get-started-with-xl-jetpack.html)
+
+## Usage
+
+To use this blueprint, run `xl blueprint` in an empty directory and select:
+
+```plain
+azure/basic-aks
+```
+
+## Tools and technologies
+<!--Dev create this section for consistency with other blueprint readmes (see https://github.com/xebialabs/blueprints/tree/master/gcp/microservice-ecommerce for example)-->
 
 ## Minimum required versions
 
@@ -77,19 +90,13 @@ In this output:
 
 > Note: You already retrieved your `subscription_id` in the previous step.
 
-## Usage
+## Output
+This blueprint will output:
 
-To use this blueprint, run `xl blueprint` in an empty directory and select:
-
-```plain
-azure/basic-aks
-```
-
-To deploy this blueprint, read the usage instruction in `xebialbs/USAGE.md` included with the generated files.
+<!--Details about what is output. Dev please add info similar to this blueprint: https://github.com/xebialabs/blueprints/tree/master/gcp/microservice-ecommerce-->
 
 ## Labels
 * Cloud
+* Microsoft
 * Azure
 * Kubernetes
-
-
