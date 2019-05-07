@@ -26,9 +26,7 @@ To run the YAML that this blueprint generates, you need:
 
 You must configure the Azure provider with the `subscription_id`, `client_id`, `client_secret` and `tenant_id`. If you do not have these details you can use the `az` command line tool to obtain them.
 
-> Note: Ensure that you have the [AZ CLI](https://docs.microsoft.com/en-us/cli/azure/) and you are [signed in](https://docs.microsoft.com/en-us/cli/azure/authenticate-azure-cli?view=azure-cli-latest).
-
-Once you are signed in, run the command below to see a list of accounts you can access:
+Assuming you are signed in, run the command below to see a list of accounts you can access:
 
 ```plain
 $ az account list
