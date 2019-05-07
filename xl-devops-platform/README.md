@@ -12,3 +12,5 @@ xl blueprint -b /path/to/this/blueprint
 ```
 
 Read the generated `xebialabs/USAGE-docker-compose.yaml` file for further instructions.
+
+<!--need to conform to BLUEPRINT_README_TEMPLATE in the .github folder of this repo.-->

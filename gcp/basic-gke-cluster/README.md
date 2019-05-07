@@ -1,4 +1,4 @@
-# Basic Google Kubernetes Engine cluster
+# Basic Google Kubernetes Engine Cluster
 
 ## Introduction
 
@@ -18,7 +18,7 @@ If you're new to XebiaLabs blueprints, check out:
 
 To use this blueprint, run `xl blueprint` and select:
 
-    gcp/gke-cluster
+    `gcp/basic-gke-cluster`
 
 ## Tools and technologies
 
@@ -31,12 +31,12 @@ This blueprint includes the following tools and technologies:
     * [Kubernetes](https://kubernetes.io/)
     * [Terraform](https://www.terraform.io/)
 
-## Minimum Required versions
+## Minimum required versions
 
 This blueprint version requires at least the below versions of the specified tools to work properly.
 
-XL Deploy: Version 8.6.1
-XL CLI: Version 8.6.1
+* XL Deploy: Version 8.6.1
+* XL CLI: Version 8.6.1
 
 ## Prerequisites
 
@@ -47,15 +47,15 @@ To run the YAML that this blueprint generates, you need:
 
 ## Information required
 
-This blueprint requires:
+This blueprint requires a:
 
-* GCP project ID (see section below for instructions)
-* A GCP region
+* GCP project ID
+* GCP region
 
-### Creating Google Cloud project
+### Create a Google Cloud project
 
 #### Authenticate to gcloud
-Before configuring gcloud CLI you can check available Zones and Regions nearest to your location
+Before configuring gcloud CLI you can check for available Zones and Regions nearest to your location:
 
 ```sh
 gcloud compute regions list
@@ -63,17 +63,17 @@ gcloud compute regions list
 gcloud compute zones list
 ```
 
-Follow gcloud init and select default Zone Ex. europe-west1, make sure you use the same zone as the one selected during blueprint execution.
+Follow `gcloud init` and select default Zone (for example, `europe-west1`). Make sure you use the same zone as the one selected during blueprint execution.
 
 ```sh
 gcloud init
 ```
 
-> NOTE: You need to have proper permissions and privileges in the GCP account to execute these commands. If you are using a personal account you should be having these as you will be the admin. If you are using a company/enterprise account please check with your account administrator. 
+> Note: You must have the appropriate permissions in the GCP account to execute these commands. If you are using a personal account, you should have these permissions, as you are the admin. If you are using a company/enterprise account, check with your account administrator.
 
 #### Set up environment
 
-> NOTE: If you are creating the Project via GUI instead of below commands, there will be a project number, a project name and a project ID when you initialize the project, and only ID should be exported as `TF_ADMIN` variable.
+> Note: If you are creating the Project using the GUI instead of the commands below, there will be a project number, a project name and a project ID when you initialize the project, and only ID should be exported as `TF_ADMIN` variable.
 
 ```sh
 export TF_ADMIN=[GCP project ID]
@@ -81,9 +81,9 @@ export TF_ADMIN=[GCP project ID]
 
 #### Create the GCP Project
 
-Create a new project and link it to your billing account (You could do it from the GCP console GUI as well, in that case skip the below command)
+Create a new project and link it to your billing account. You can alternatively choose to do this from the GCP console GUI. In this case, skip the following command.
 
-> NOTE: The value of YOUR_ORG_ID and YOUR_BILLING_ACCOUNT_ID can be found by running below commands
+The value of YOUR_ORG_ID and YOUR_BILLING_ACCOUNT_ID can be retrieved by running below commands:
 
 ```sh
 gcloud organizations list
@@ -91,7 +91,7 @@ gcloud organizations list
 gcloud beta billing accounts list
 ```
 
-Once you have the details run the below commands
+Once you have the details, run the following commands:
 
 ```sh
 gcloud projects create ${TF_ADMIN} \

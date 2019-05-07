@@ -1,9 +1,8 @@
-# Blueprint Name
+# Docker Environment
 
 ## Introduction
 
 Use this blueprint to define an environment for your Docker engine in XL Deploy.
-
 
 ## Before you get started
 
@@ -11,12 +10,13 @@ If you're new to XebiaLabs blueprints, check out:
 
 * [Get started with DevOps as Code](https://docs.xebialabs.com/xl-platform/concept/get-started-with-devops-as-code.html)
 * [Get started with blueprints](https://docs.xebialabs.com/xl-platform/concept/get-started-with-blueprints.html)
+* [Get started with XL JetPack](https://docs.xebialabs.com/xl-platform/concept/get-started-with-xl-jetpack.html)
 
 ## Usage
 
 To use this blueprint, run `xl blueprint` and select:
 
-    `[docker/environment]`
+    `docker/environment`
 
 ## Tools and technologies
 
@@ -48,4 +48,4 @@ None
 
 ## Labels
 
-* `docker`
+* Docker
