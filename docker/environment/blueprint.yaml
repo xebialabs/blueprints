@@ -17,4 +17,3 @@ spec:
   files:
   - path: xebialabs/docker-environment.yaml.tmpl
   - path: xebialabs/USAGE-docker-environment.md
-  - path: docker/docker-compose.yml
