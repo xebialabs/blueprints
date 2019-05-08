@@ -18,6 +18,8 @@ To use this blueprint, run `xl blueprint` and select:
 
     `[docker/environment]`
 
+If you accept the defaults, the environment will refer to a Docker proxy that is running in the same Docker instance as the XL Deploy container. Use the [xl-devops-platform](https://github.com/xebialabs/blueprints/tree/development/xl-devops-platform) blueprint to create a Docker Compose that sets up XL Deploy and the Docker proxy correctly for this functionality to work.
+
 ## Tools and technologies
 
 This blueprint includes the following tools and technologies:
@@ -27,7 +29,9 @@ This blueprint includes the following tools and technologies:
 
 ## Prerequisites
 
-None
+This blueprint requires:
+
+* A running Docker engine
 
 ## Information required
 

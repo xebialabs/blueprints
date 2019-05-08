@@ -15,7 +15,9 @@ If you're new to XebiaLabs blueprints, check out:
 
 To use this blueprint, run `xl blueprint` and select:
 
-    `[docker/single-container-application]`
+    `[docker/application]`
+
+If you accept the defaults, a container that runs the [nginx image](https://hub.docker.com/_/nginx) will be deployed.
 
 ## Tools and technologies
 
