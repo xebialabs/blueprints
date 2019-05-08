@@ -33,7 +33,7 @@ This blueprint includes the following tools and technologies:
 
 ## Minimum required versions
 
-This blueprint version requires at least the below versions of the specified tools to work properly.
+This blueprint version requires at least the following versions of the specified tools to work properly:
 
 * XL Deploy: Version 8.6.1
 * XL CLI: Version 8.6.1
@@ -55,7 +55,8 @@ This blueprint requires a:
 ### Create a Google Cloud project
 
 #### Authenticate to gcloud
-Before configuring gcloud CLI you can check for available Zones and Regions nearest to your location:
+
+Before running the `gcloud init` command, you can check for available zones and regions nearest to your location:
 
 ```sh
 gcloud compute regions list
@@ -63,7 +64,7 @@ gcloud compute regions list
 gcloud compute zones list
 ```
 
-Follow `gcloud init` and select default Zone (for example, `europe-west1`). Make sure you use the same zone as the one selected during blueprint execution.
+Run `gcloud init` and select a default zone (for example, `europe-west1`). Make sure you use the same zone as the one that you select when you answer the blueprint's questions.
 
 ```sh
 gcloud init
@@ -73,17 +74,19 @@ gcloud init
 
 #### Set up environment
 
-> Note: If you are creating the Project using the GUI instead of the commands below, there will be a project number, a project name and a project ID when you initialize the project, and only ID should be exported as `TF_ADMIN` variable.
+> Note: If you are creating the project using the GUI instead of the commands below, there will be a project number, a project name and a project ID when you initialize the project, and only ID should be exported as `TF_ADMIN` variable.
 
 ```sh
 export TF_ADMIN=[GCP project ID]
 ```
 
-#### Create the GCP Project
+#### Create the GCP project
 
-Create a new project and link it to your billing account. You can alternatively choose to do this from the GCP console GUI. In this case, skip the following command.
+Create a new project and link it to your billing account using the `gcloud` command.
 
-The value of YOUR_ORG_ID and YOUR_BILLING_ACCOUNT_ID can be retrieved by running below commands:
+> Note: You can also create the project using the GCP console GUI. See the GUI documentation for details.
+
+First, retrieve the values of YOUR_ORG_ID and YOUR_BILLING_ACCOUNT_ID by executing the following commands:
 
 ```sh
 gcloud organizations list
@@ -91,7 +94,7 @@ gcloud organizations list
 gcloud beta billing accounts list
 ```
 
-Once you have the details, run the following commands:
+Using these details, run the following commands:
 
 ```sh
 gcloud projects create ${TF_ADMIN} \

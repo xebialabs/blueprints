@@ -31,7 +31,7 @@ This blueprint includes the following tools and technologies:
 
 ## Minimum required versions
 
-This blueprint version requires at least the below versions of the specified tools to work properly.
+This blueprint version requires at least the following versions of the specified tools to work properly:
 
 * [product/version]
 

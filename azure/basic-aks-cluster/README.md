@@ -21,16 +21,20 @@ azure/basic-aks
 ```
 
 ## Tools and technologies
+
+None
+
 <!--Dev create this section for consistency with other blueprint readmes (see https://github.com/xebialabs/blueprints/tree/master/gcp/microservice-ecommerce for example)-->
 
 ## Minimum required versions
 
-This blueprint version requires at least the below versions of the specified tools to work properly.
+This blueprint version requires at least the following versions of the specified tools to work properly:
 
 - XL Deploy: Version 8.6.1
-- XL CLI: Version 8.6
+- XL CLI: Version 8.6.0
 
 ## Prerequisites
+
 To run the YAML that this blueprint generates, you need:
 * Azure login credentials in order to create the cluster
 * [Azure CLI](https://docs.microsoft.com/en-us/cli/azure/). Ensure that you are [signed in](https://docs.microsoft.com/en-us/cli/azure/authenticate-azure-cli?view=azure-cli-latest).
@@ -90,12 +94,15 @@ In this output:
 
 > Note: You already retrieved your `subscription_id` in the previous step.
 
+<!--
 ## Output
+
 This blueprint will output:
 
 <!--Details about what is output. Dev please add info similar to this blueprint: https://github.com/xebialabs/blueprints/tree/master/gcp/microservice-ecommerce-->
 
 ## Labels
+
 * Cloud
 * Microsoft
 * Azure

@@ -1,7 +1,7 @@
 {{$app := .AppName | kebabcase}}
 ## Simple security and compliance template and dashboard
 
-Security and compliance are critical aspects of product release. 
+Security and compliance are critical aspects of product release.
 Organizations struggle to track application release status information and understand security & compliance risks across many different applications, teams, and environments. When risk assessment, security testing, and compliance checks aren’t built into the Continuous Integration/Continuous Delivery (CI/CD) pipeline, releases fail and cause delays, security vulnerabilities threaten production, and IT governance violations result in expensive fines.
 
 This blueprint provides a way to integrate tools like SonarQube, Fortify, Checkmarx, and Black Duck into release pipeline.
@@ -10,7 +10,7 @@ This blueprint provides a way to integrate tools like SonarQube, Fortify, Checkm
 
 #### SonarQube
 
-SonarQube is an open source platform for continuous inspection of code quality to perform automatic reviews with static analysis of code to detect bugs, code smells, and security vulnerabilities in application source code. 
+SonarQube is an open source platform for continuous inspection of code quality to perform automatic reviews with static analysis of code to detect bugs, code smells, and security vulnerabilities in application source code.
 
 {{- end}}
 {{- if .ConfigureFortify }}
@@ -58,10 +58,10 @@ To deploy this blueprint with the XebiaLabs DevOps Platform, follow the steps be
 
 2. Go to XL Release, look for the "{{$app}}" folder. Create release using template "{{$app}} security & compliance". Check latest status using "Security and Compliance" dashboard from "{{$app}}" folder.
 
-## Minimum Required versions
+## Minimum required versions
 
-This blueprint version requires at least the below versions of the specified tools to work properly.
+This blueprint version requires at least the following versions of the specified tools to work properly:
 
-XL Release: Version 8.6
+XL Release: Version 8.6.0
 XL Deploy: Version 8.6.1
-XL CLI: Version 8.6
+XL CLI: Version 8.6.0
