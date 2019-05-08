@@ -17,7 +17,7 @@ To use this blueprint, run `xl blueprint` and select:
 
     `[docker/application]`
 
-If you accept the defaults, a container that runs the [nginx image](https://hub.docker.com/_/nginx) will be deployed.
+If you accept the defaults, a package with a container that runs the [nginx image](https://hub.docker.com/_/nginx) will be defined.
 
 ## Tools and technologies
 
