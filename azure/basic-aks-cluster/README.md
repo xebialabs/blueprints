@@ -2,7 +2,7 @@
 
 Use this blueprint to deploy a basic Microsoft Azure Kubernetes cluster.
 
-<!--can we add more descriptive info as in this other blueprint: https://github.com/xebialabs/blueprints/tree/master/gcp/microservice-ecommerce-->
+Use this blueprint to provision a simple AKS cluster using Terraform, which defines the infrastructure that will run on AKS.
 
 ## Before you get started
 
