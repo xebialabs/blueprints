@@ -31,7 +31,6 @@ This blueprint includes the following tools and technologies:
     * [Kubernetes](https://kubernetes.io/)
     * [Terraform](https://www.terraform.io/)
 
-<!--Dev create this section for consistency with other blueprint readmes (see https://github.com/xebialabs/blueprints/tree/master/gcp/microservice-ecommerce for example)-->
 
 ## Minimum required versions
 
