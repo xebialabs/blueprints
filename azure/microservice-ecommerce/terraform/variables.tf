@@ -26,13 +26,11 @@ variable "node_count" {
 variable "admin_username" {
   # * AdminUsername
   description = "The username for the cluster (cannot be 'admin')"
-  default     = "jjohnson"
 }
 
 variable "ssh_public_key_path" {
   # * AdminUsernameSSHKeyPath
-  description = ""
-  default     = "{{.AdminUsernameSSHKeyPath | trim}}"
+  description = "The SSH key for the admin user"
 }
 
 variable "client_id" {

@@ -29,6 +29,8 @@ spec:
             client_secret: !value ClientSecret
             subscription_id: {{.SubscriptionID}}
             tenant_id: {{.TenantID}}
+            admin_username: {{.AdminUsername}}
+            ssh_public_key_path: {{.AdminUsernameSSHKeyPath}}
           boundTemplates:
           - "../{{$clusterName}}"
           - "../{{$clusterName}}-env"
