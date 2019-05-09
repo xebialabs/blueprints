@@ -130,11 +130,10 @@ Example:
 az storage account create --name ACCOUNT_NAME \
                           --resource-group EXISTING_RESOURCE_GROUP \
                           --location LOCATION \
-                          --sku Standard_LRS \
-                          --subscription SUBSCRIPTION_ID
+                          --sku Standard_LRS
 ```
 
-> **Note:** Make sure the `location` you choose for the Storage Account is the same as the one you will use in the blueprint and the one you used to create the Resource Group
+> **Note:** Make sure the `location` you choose for the Storage Account is the same as the one you will use in the blueprint and the one you used to create the Resource Group. Use the same Resource Group you created earlier to use for the blueprint.
 > **Note:** Take note of the name you give the Storage Account; you will be asked for it by the blueprint
 
 ##### 3.3.1 Get the Storage account keys in order to create the Storage Container
@@ -200,6 +199,11 @@ Now `cd` into `e-commerce-microservice` and run `xl blueprint`, then select:
 ```plain
 azure/microservice-ecommerce
 ```
+
+TODO: 
+Note about subscription ID
+Note about SSH key path
+Note about password token
 
 #### 5.1 Output
 

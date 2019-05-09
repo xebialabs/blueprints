@@ -76,12 +76,12 @@ spec:
   - name: ClusterEndpoint
     type: Input
     description: What is the endpoint for the cluster, example https://104.155.109.230
-    dependsOnFalse: ProvisionCluster
+    dependsOnTrue: !expression "!ProvisionCluster"
 
   - name: PasswordToken
     type: Input
     description: What is the token for accessing the cluster
-    dependsOnFalse: ProvisionCluster
+    dependsOnTrue: !expression "!ProvisionCluster"
     secret: true
 
   - name: ClusterName
