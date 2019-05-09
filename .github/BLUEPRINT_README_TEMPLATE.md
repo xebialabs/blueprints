@@ -10,6 +10,7 @@ If you're new to XebiaLabs blueprints, check out:
 
 * [Get started with DevOps as Code](https://docs.xebialabs.com/xl-platform/concept/get-started-with-devops-as-code.html)
 * [Get started with blueprints](https://docs.xebialabs.com/xl-platform/concept/get-started-with-blueprints.html)
+* [Get started with XL JetPack](https://docs.xebialabs.com/xl-platform/concept/get-started-with-xl-jetpack.html)
 
 ## Usage
 
@@ -27,6 +28,12 @@ This blueprint includes the following tools and technologies:
     * [tools that the blueprint invokes]
 * Application or framework:
     * [application that the blueprint deploys, if applicable]
+
+## Minimum required versions
+
+This blueprint version requires at least the following versions of the specified tools to work properly:
+
+* [product/version]
 
 ## Prerequisites
 
