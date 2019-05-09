@@ -24,7 +24,7 @@ gcloud init
 
 Best practice to use separate account "technical account" to manage infrastructure, this account can be used in automated code deployment like in Terraform or XL-Deploy or any other tool you may choose.
 
-> NOTE: You need to have proper permissions and privileges in the GCP account to execute these commands. If you are using a personal account you should be having these as you will be the admin. If you are using a company/enterprise account please check with your account administrator. 
+> NOTE: You need to have proper permissions and privileges in the GCP account to execute these commands. If you are using a personal account you should be having these as you will be the admin. If you are using a company/enterprise account please check with your account administrator.
 
 #### Set up environment
 
@@ -75,23 +75,23 @@ Grant the service account permission to view the Admin Project and manage Cloud 
 gcloud projects add-iam-policy-binding ${TF_ADMIN} \
 --member serviceAccount:terraform@${TF_ADMIN}.iam.gserviceaccount.com \
  --role roles/viewer
- 
+
 gcloud projects add-iam-policy-binding ${TF_ADMIN} \
 --member serviceAccount:terraform@${TF_ADMIN}.iam.gserviceaccount.com \
  --role roles/storage.admin
-  
+
 gcloud projects add-iam-policy-binding ${TF_ADMIN} \
 --member serviceAccount:terraform@${TF_ADMIN}.iam.gserviceaccount.com \
  --role roles/compute.admin
-  
+
 gcloud projects add-iam-policy-binding ${TF_ADMIN} \
 --member serviceAccount:terraform@${TF_ADMIN}.iam.gserviceaccount.com \
  --role roles/compute.networkAdmin
-  
+
 gcloud projects add-iam-policy-binding ${TF_ADMIN} \
 --member serviceAccount:terraform@${TF_ADMIN}.iam.gserviceaccount.com \
  --role roles/container.admin
-  
+
 gcloud projects add-iam-policy-binding ${TF_ADMIN} \
 --member serviceAccount:terraform@${TF_ADMIN}.iam.gserviceaccount.com \
  --role roles/container.clusterAdmin
@@ -153,9 +153,9 @@ To deploy this blueprint with the XebiaLabs DevOps Platform, follow the steps be
 
 3. You can log into XL Deploy and provision a GKE cluster using the Application created
 
-## Minimum Required versions
+## Minimum required versions
 
-This blueprint version requires at least the below versions of the specified tools to work properly.
+This blueprint version requires at least the following versions of the specified tools to work properly:
 
 XL Deploy: Version 8.6.1
-XL CLI: Version 8.6
+XL CLI: Version 8.6.0

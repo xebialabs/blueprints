@@ -35,13 +35,13 @@ This blueprint includes the following tools and technologies:
 * Application or framework:
     * [JHipster](https://github.com/xebialabs/e-commerce-microservice/)
 
-## Minimum Required versions
+## Minimum required versions
 
-This blueprint version requires at least the below versions of the specified tools to work properly.
+This blueprint version requires at least the following versions of the specified tools to work properly:
 
-XL Release: Version 8.6
+XL Release: Version 8.6.0
 XL Deploy: Version 8.6.1
-XL CLI: Version 8.6
+XL CLI: Version 8.6.0
 
 ## Prerequisites
 
@@ -79,7 +79,7 @@ Follow gcloud init and select default Zone Ex. europe-west1, make sure you use t
 gcloud init
 ```
 
-> NOTE: You need to have proper permissions and privileges in the GCP account to execute these commands. If you are using a personal account you should be having these as you will be the admin. If you are using a company/enterprise account please check with your account administrator. 
+> NOTE: You need to have proper permissions and privileges in the GCP account to execute these commands. If you are using a personal account you should be having these as you will be the admin. If you are using a company/enterprise account please check with your account administrator.
 
 #### Set up environment
 
