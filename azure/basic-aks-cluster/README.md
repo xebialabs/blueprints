@@ -106,7 +106,9 @@ In this output:
 
 This blueprint will output:
 
-<!--Details about what is output. Dev please add info similar to this blueprint: https://github.com/xebialabs/blueprints/tree/master/gcp/microservice-ecommerce-->
+* Terraform templates
+* Infrastructure:
+    * AKS cluster (master, nodes)
 
 ## Labels
 
