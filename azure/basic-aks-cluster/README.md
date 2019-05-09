@@ -1,6 +1,6 @@
 ## Introduction
 
-Use this blueprint to deploy a basic Microsoft Azure Kubernetes cluster.
+Azure Kubernetes Service (AKS) allows you to deploy, manage, and scale containerized applications in the cloud using Kubernetes.
 
 Use this blueprint to provision a simple AKS cluster using Terraform, which defines the infrastructure that will run on AKS.
 
