@@ -17,7 +17,7 @@ If you're new to XebiaLabs blueprints, check out:
 To use this blueprint, run `xl blueprint` in an empty directory and select:
 
 ```plain
-azure/basic-aks
+azure/basic-aks-cluster
 ```
 
 ## Tools and technologies
