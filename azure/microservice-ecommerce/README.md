@@ -97,7 +97,7 @@ If you don't already have a Service Principal, create one using the GUI or the C
 > * [**GUI:** How to: Use the portal to create an Azure AD application and service principal that can access resources](https://docs.microsoft.com/en-us/azure/active-directory/develop/howto-create-service-principal-portal)
 > * [**CLI:** Create an Azure service principal with Azure CLI](https://docs.microsoft.com/en-us/cli/azure/create-an-azure-service-principal-azure-cli?view=azure-cli-latest)
 
-> **Note:** Regardless of how you create the Service Principal, take note of the `appId`, `password` and `tenant` id; you will be asked for it by the blueprint
+> **Note:** Regardless of how you create the Service Principal, take note of the fields `appId`, `password` and `tenant`; you will be asked for it by the blueprint
 
 #### 3.2 Create a Resource Group for the Storage Account
 

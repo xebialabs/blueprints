@@ -30,7 +30,7 @@ spec:
             subscription_id: {{.SubscriptionID}}
             tenant_id: {{.TenantID}}
             admin_username: {{.AdminUsername}}
-            ssh_public_key_path: {{.AdminUsernameSSHKeyPath}}
+            ssh_public_key_path: {{.AdminUsernameSSHKeyPath | trim}}
           boundTemplates:
           - "../{{$clusterName}}"
           - "../{{$clusterName}}-env"
