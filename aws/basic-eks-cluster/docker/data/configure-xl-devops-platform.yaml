@@ -6,12 +6,4 @@ spec:
   url: http://xl-deploy:4516
   username: admin
   password: admin
----
-apiVersion: xl-release/v1
-kind: Templates
-spec:
-- name: jenkins
-  type: jenkins.Server
-  url: http://jenkins:8080
-  username: admin
-  password: admin
+
