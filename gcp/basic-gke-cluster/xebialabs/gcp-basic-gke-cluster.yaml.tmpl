@@ -1,0 +1,66 @@
+{{$clusterName := .ClusterName | kebabcase}}
+
+apiVersion: xl-deploy/v1
+kind: Infrastructure
+spec:
+- name: {{ .Prefix }}terraform-host
+  type: overthere.LocalHost
+  os: UNIX
+  children:
+  - name: terraform-client
+    type: terraform.TerraformClient
+    path: '/usr/local/bin'
+    workingDirectory: '/tmp/{{ .Prefix }}terraform'
+
+---
+
+apiVersion: xl-deploy/v1
+kind: Environments
+spec:
+- name: {{ .Prefix }}terraform
+  type: udm.Environment
+  members:
+  - ~Infrastructure/{{ .Prefix }}terraform-host/terraform-client
+
+---
+
+apiVersion: xl-deploy/v1
+kind: Applications
+spec:
+- name: {{ .Prefix }}{{$clusterName}}
+  type: udm.Application
+  children:
+  - name: '1.0.0'
+    type: udm.DeploymentPackage
+    deployables:
+    - name: {{ .Prefix }}{{$clusterName}}
+      type: terraform.Module
+      file: !file ../terraform-gcp-basic-gke-cluster
+      inputVariables:
+        project_id: {{.GCPProjectID}}
+        name: {{$clusterName}}
+        region: {{.GCPRegion}}
+        gke_master_user: {{.K8SMasterUser}}
+        gke_master_pass: {{.K8SMasterPassword}}
+        gke_num_nodes: {{.GKENumNodes}}
+        gke_node_machine_type: {{.GKENodeMachineType}}
+      boundTemplates:
+      - "../{{$clusterName}} infrastructure"
+      - "../{{$clusterName}} environment"
+    templates:
+    - name: "{{$clusterName}} infrastructure"
+      type: template.k8s.Master
+      instanceName: {{$clusterName}}
+      apiServerURL: 'https://{{"{{%outputVariables.endpoint%}}"}}'
+      username: {{.K8SMasterUser}}
+      password: {{.K8SMasterPassword}}
+      skipTLS: true
+      children:
+      - name: default
+        type: template.k8s.Namespace
+    - name: "{{$clusterName}} environment"
+      type: template.udm.Environment
+      instanceName: {{$clusterName}}
+      members:
+      - "../{{$clusterName}} infrastructure"
+      - "../{{$clusterName}} infrastructure/default"

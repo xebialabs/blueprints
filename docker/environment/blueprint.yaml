@@ -15,7 +15,5 @@ spec:
     description: What is the URL of the Docker engine?
 
   files:
-  - path: xebialabs/docker-infrastructure.yaml.tmpl
   - path: xebialabs/docker-environment.yaml.tmpl
   - path: xebialabs/USAGE-docker-environment.md
-  - path: docker/docker-compose.yml

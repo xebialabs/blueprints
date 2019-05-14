@@ -1,9 +1,8 @@
-# Blueprint Name
+# Docker Environment
 
 ## Introduction
 
 Use this blueprint to define an environment for your Docker engine in XL Deploy.
-
 
 ## Before you get started
 
@@ -11,12 +10,15 @@ If you're new to XebiaLabs blueprints, check out:
 
 * [Get started with DevOps as Code](https://docs.xebialabs.com/xl-platform/concept/get-started-with-devops-as-code.html)
 * [Get started with blueprints](https://docs.xebialabs.com/xl-platform/concept/get-started-with-blueprints.html)
+* [Get started with XL JetPack](https://docs.xebialabs.com/xl-platform/concept/get-started-with-xl-jetpack.html)
 
 ## Usage
 
 To use this blueprint, run `xl blueprint` and select:
 
-    `[docker/environment]`
+    `docker/environment`
+
+If you accept the defaults, the environment will refer to a Docker proxy that is running in the same Docker instance as the XL Deploy container. Use the [xl-devops-platform](https://github.com/xebialabs/blueprints/tree/development/xl-devops-platform) blueprint to create a Docker Compose that sets up XL Deploy and the Docker proxy correctly for this functionality to work.
 
 ## Tools and technologies
 
@@ -27,7 +29,9 @@ This blueprint includes the following tools and technologies:
 
 ## Prerequisites
 
-None
+This blueprint requires:
+
+* A running Docker engine
 
 ## Information required
 
@@ -48,4 +52,4 @@ None
 
 ## Labels
 
-* `docker`
+* Docker

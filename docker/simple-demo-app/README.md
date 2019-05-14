@@ -31,13 +31,13 @@ This blueprint includes the following tools and technologies:
     * [Sample application API component](https://hub.docker.com/r/xebialabsunsupported/rest-o-rant-api)
     * [Sample application web component](https://hub.docker.com/r/xebialabsunsupported/rest-o-rant-web)
 
-## Minimum Required versions
+## Minimum required versions
 
-This blueprint version requires at least the below versions of the specified tools to work properly.
+This blueprint version requires at least the following versions of the specified tools to work properly:
 
-XL Release: Version 8.6
+XL Release: Version 8.6.0
 XL Deploy: Version 8.6.1
-XL CLI: Version 8.6
+XL CLI: Version 8.6.0
 
 ## Prerequisites
 
@@ -60,7 +60,7 @@ This blueprint will output:
 
 * Release template
 * Docker infrastructure
-* A docker-compose setup for XL Release, XL Deploy & Docker proxy 
+* A docker-compose setup for XL Release, XL Deploy & Docker proxy
 
 ## Tips and tricks
 

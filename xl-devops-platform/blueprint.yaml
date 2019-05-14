@@ -1,0 +1,58 @@
+apiVersion: xl/v1
+kind: Blueprint
+
+metadata:
+  projectName: Docker compose
+  description: Creates the necessary `docker-compose.yaml` needed to run your specific setup.
+  author: XebiaLabs
+  version: 1.0
+  instructions: Read xebialabs/USAGE.md to learn how to use this blueprint.
+spec:
+  parameters:
+  - name: UseXLDeployFlag
+    type: Confirm
+    description: Do you want to install XL Deploy?
+    default: true
+
+  - name: XLDeployPort
+    type: Input
+    description: "Host port for XL Deploy:"
+    default: 4516
+    dependsOnTrue: UseXLDeployFlag
+
+  - name: UseXLReleaseFlag
+    type: Confirm
+    description: Do you want to install XL Release?
+    default: true
+
+  - name: XLReleasePort
+    type: Input
+    description: "Host port for XL Release:"
+    default: 5516
+    dependsOnTrue: UseXLReleaseFlag
+
+  - name: JetPackOrEnterprise
+    type: Select
+    description: "Do you want to use JetPack or XL Enterprise:"
+    options:
+    - JetPack
+    - XL Enterprise
+
+  - name: XLVersion
+    type: Select
+    description: "Select the version of XL you want to use:"
+    options:
+    - 8.6.1
+    dependsOnTrue: !expression "UseXLDeployFlag == true || UseXLReleaseFlag == true"
+
+  - name: UseDockerProxyFlag
+    type: Confirm
+    description: Do you want to be able to deploy to your local Docker instance?
+    default: true
+
+  files:
+  - path: xebialabs/USAGE-docker-compose.md.tmpl
+  - path: xebialabs/config.yaml.tmpl
+  - path: docker/docker-compose.yml.tmpl
+  - path: docker/data/configure-xl-devops-platform.yaml.tmpl
+    dependsOnTrue: UseXLReleaseFlag

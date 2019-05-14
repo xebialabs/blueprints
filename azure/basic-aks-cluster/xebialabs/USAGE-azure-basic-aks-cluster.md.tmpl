@@ -1,0 +1,34 @@
+{{$clusterName := .ClusterName | kebabcase}}
+
+## Notes
+* This example does not create a namespace, but uses the `default` namespace
+* This example creates an admin user called `adminuser` and generates that user's private key:
+  * You can find the key `admin_private_key` under the XL Deploy dictionary `Environments` > `{{$clusterName}}` > `{{$clusterName}}-terraform-module-dictionary`
+* You will also find the cluster API host url and access token under the same dictionary
+
+## Provision simple AKS cluster on Azure
+
+### Prerequisites
+
+To deploy this blueprint, follow the steps below:
+
+1. Apply the generated YAML configurations using the XL CLI. Open up a terminal in the folder where you generated the configuration. Then run:
+
+```plain
+xl apply -f xebialabs/azure-basic-aks-cluster.yaml
+```
+
+2. Go to XL Deploy, look for the `basic-aks-cluster-terraform-for-{{$clusterName}}` folder under `Applications`. Select the `1.0.0` item underneath, click on the ellipsis and select 'Deploy'. Select the `terraform` environment (there should be only one), press 'Deploy'.
+
+3. After the deployment process is complete, an AKS cluster will have been provisioned on Azure and a configured `K8s.master` environment will have been registered in XL Deploy.
+
+4. In order to deploy to the k8s cluster, you can execute any k8s blueprints to generate configurations, apply those and deploy the application to your new cluster using XL Deploy.
+
+5. To deprovision the AKS cluster, go to the terraform environment under `Environment`, select the `basic-aks-cluster-terraform-for-{{$clusterName}}` item, press the ellipsis and select 'Undeploy'. Follow the instructions on screen.
+
+## Minimum required versions
+
+This blueprint version requires at least the following versions of the specified tools to work properly:
+
+- XL Deploy: Version 8.6.1
+- XL CLI: Version 8.6.0
