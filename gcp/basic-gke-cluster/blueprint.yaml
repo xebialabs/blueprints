@@ -107,5 +107,4 @@ spec:
   - path: terraform-gcp-basic-gke-cluster/variables.tf
   # docker-compose setup for required tools
   - path: docker/docker-compose.yml
-  - path: docker/data/configure-xl-devops-platform.yaml
 
