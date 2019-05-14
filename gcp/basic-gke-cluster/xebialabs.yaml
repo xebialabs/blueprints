@@ -1,0 +1,5 @@
+apiVersion: xl/v1
+kind: Import
+metadata:
+  imports:
+    - xebialabs/gcp-basic-gke-cluster.yaml
