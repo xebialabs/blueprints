@@ -1,5 +1,6 @@
 answers-file: answers.yaml
 expected-files:
+- xebialabs.yaml
 - xebialabs/USAGE-gcp-basic-gke-cluster.md
 - xebialabs/gcp-basic-gke-cluster.yaml
 - terraform-gcp-basic-gke-cluster/gke/main.tf
@@ -12,3 +13,4 @@ expected-files:
 - terraform-gcp-basic-gke-cluster/main.tf
 - terraform-gcp-basic-gke-cluster/outputs.tf
 - terraform-gcp-basic-gke-cluster/variables.tf
+- docker/docker-compose.yml
