@@ -10,8 +10,10 @@ data:
       groups:
         - system:bootstrappers
         - system:nodes
+  {{if .AddIAMUser }}
   mapUsers: |
-    - userarn: ##EksUserArn##
-      username: ##EksUser##
+    - userarn: ##EKS_USER_ARN##
+      username: ##EKS_USER_NAME##
       groups:
         - system:masters
+  {{end}}

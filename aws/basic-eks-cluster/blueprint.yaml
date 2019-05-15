@@ -4,7 +4,7 @@ kind: Blueprint
 metadata:
   projectName: AWS-EKS-Cluster
   description: |
-    The blueprint deploys a simple AWS EKS Cluster.
+    The blueprint deploys a simple AWS EKS Cluster (with EFS if requested).
     XL Deploy does the provisioning and deployment, while XL Release orchestrates everything.
   author: XebiaLabs
   version: 1.0
@@ -66,6 +66,7 @@ spec:
   - name: NodeInstanceType
     type: Select
     description: What EC2 instance type do you want to use for the nodes?
+    default: t2.xlarge
     options:
     - t2.small
     - t2.medium
@@ -123,6 +124,29 @@ spec:
     - p3.8xlarge
     - p3.16xlarge
 
+  - name: AddIAMUser
+    description: "Do you want to add extra user to have an access to EKS via kubectl"
+    type: Confirm
+    default: true
+
+  - name: EKSUserARN
+    description: "Enter existent IAM user ARN to be used to access EKS cluster via kubectl"
+    type: Input
+    default: "arn:aws:iam::100000000000:user/username"
+    pattern: ^arn:aws:iam::\d{12}:(?:root|user\/[A-Za-z0-9]+)$
+    dependsOnTrue: AddIAMUser
+
+  - name: EKSUserName
+    description: "Enter existent IAM username to access EKS cluster via kubectl"
+    type: Input
+    default: "username"
+    dependsOnTrue: AddIAMUser
+
+  - name: ProvisionEFS
+    type: Confirm
+    description: "Do you want to provision an EFS?"
+    default: true
+
   files:
   - path: xebialabs/xld-infra-env.yaml.tmpl
   - path: xebialabs/xld-cloudformation-apps.yaml.tmpl
@@ -134,7 +158,9 @@ spec:
   - path: cloudformation/eks-master.yaml
   - path: cloudformation/eks-user.yaml
   - path: cloudformation/eks-vpc.yaml
-  - path: cloudformation/eks-workers.yaml
+  - path: cloudformation/eks-workers.yaml.tmpl
+  - path: cloudformation/efs.yaml
+    dependsOnTrue: ProvisionEFS
   - path: xebialabs.yaml
   # docker-compose setup for required tools
   - path: docker/docker-compose.yml

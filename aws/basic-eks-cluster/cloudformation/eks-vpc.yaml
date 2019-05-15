@@ -27,7 +27,7 @@ Resources:
     Properties:
       CidrBlock: 10.0.0.0/16
       EnableDnsSupport: 'true'
-      EnableDnsHostnames: 'false'
+      EnableDnsHostnames: 'true'
       InstanceTenancy: default
       Tags:
       - Key: Name
@@ -138,3 +138,9 @@ Outputs:
     Export:
       Name:
         Fn::Sub: "${AWS::StackName}-subnetBID"
+  VPCCIDR:
+    Value: !GetAtt VPC.CidrBlock
+    Description: VPC CIDR Block
+    Export:
+      Name:
+        Fn::Sub: "${AWS::StackName}-VPCCIDR" 
