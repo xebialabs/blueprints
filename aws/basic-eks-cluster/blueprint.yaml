@@ -154,7 +154,7 @@ spec:
   - path: xebialabs/xlr-pipeline-ci-cd.yaml.tmpl
   - path: xebialabs/xlr-pipeline-destroy.yaml.tmpl
   - path: xebialabs/USAGE.md.tmpl
-  - path: kubernetes/aws-auth-cm.yaml.tmpl
+  - path: kubernetes/aws-auth-cm.yaml
   - path: cloudformation/cfn-secret-provider.zip
   - path: cloudformation/eks-master.yaml
   - path: cloudformation/eks-user.yaml
