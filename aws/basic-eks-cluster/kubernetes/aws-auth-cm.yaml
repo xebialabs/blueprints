@@ -12,8 +12,8 @@ data:
         - system:nodes
   {{if .AddIAMUser }}
   mapUsers: |
-    - userarn: ##EKS_USER_ARN##
-      username: ##EKS_USER_NAME##
+    - userarn: ##EksUserArn##
+      username: ##EksUser##
       groups:
         - system:masters
   {{end}}

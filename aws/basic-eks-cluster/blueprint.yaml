@@ -14,7 +14,8 @@ spec:
   # General variables
   - name: AppName
     type: Input
-    description: What is the name of the application?
+    description: What is the name of the application? (16 characters max)
+    pattern: ^[a-zA-Z0-9-]{1,16}$
 
   # AWS specific variables
   - name: UseAWSCredentialsFromSystem
@@ -133,7 +134,7 @@ spec:
     description: "Enter existent IAM user ARN to be used to access EKS cluster via kubectl"
     type: Input
     default: "arn:aws:iam::100000000000:user/username"
-    pattern: ^arn:aws:iam::\d{12}:(?:root|user\/[A-Za-z0-9]+)$
+    pattern: ^arn:aws:(?:iam|sts)::\d{12}:(?:[A-Za-z0-9-_\/\(\)]+)$
     dependsOnTrue: AddIAMUser
 
   - name: EKSUserName
