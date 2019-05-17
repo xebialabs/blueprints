@@ -138,7 +138,7 @@ spec:
     dependsOnTrue: AddIAMUser
 
   - name: EKSUserName
-    description: "Enter existent IAM username to access EKS cluster via kubectl"
+    description: "Enter existing IAM username to access EKS cluster via kubectl"
     type: Input
     default: "username"
     dependsOnTrue: AddIAMUser
