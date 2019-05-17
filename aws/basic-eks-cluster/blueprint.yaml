@@ -67,7 +67,7 @@ spec:
   - name: NodeInstanceType
     type: Select
     description: What EC2 instance type do you want to use for the nodes?
-    default: t2.xlarge
+    default: t2.medium
     options:
     - t2.small
     - t2.medium
@@ -125,24 +125,6 @@ spec:
     - p3.8xlarge
     - p3.16xlarge
 
-  - name: AddIAMUser
-    description: "Do you want to add extra user to have an access to EKS via kubectl"
-    type: Confirm
-    default: true
-
-  - name: EKSUserARN
-    description: "Enter existing IAM user ARN to be used to access EKS cluster via kubectl"
-    type: Input
-    default: "arn:aws:iam::100000000000:user/username"
-    pattern: ^arn:aws:(?:iam|sts)::\d{12}:(?:[A-Za-z0-9-_\/\(\)]+)$
-    dependsOnTrue: AddIAMUser
-
-  - name: EKSUserName
-    description: "Enter existing IAM username to access EKS cluster via kubectl"
-    type: Input
-    default: "username"
-    dependsOnTrue: AddIAMUser
-
   - name: ProvisionEFS
     type: Confirm
     description: "Do you want to provision an EFS?"
@@ -159,7 +141,7 @@ spec:
   - path: cloudformation/eks-master.yaml
   - path: cloudformation/eks-user.yaml
   - path: cloudformation/eks-vpc.yaml
-  - path: cloudformation/eks-workers.yaml.tmpl
+  - path: cloudformation/eks-workers.yaml
   - path: cloudformation/efs.yaml
     dependsOnTrue: ProvisionEFS
   - path: xebialabs.yaml

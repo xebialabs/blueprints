@@ -101,6 +101,9 @@ spec:
             ClusterStackName: {{$app}}-eks-master
             ClusterName: {{$app}}-master
             NodeGroupName: {{$app}}
+            NodeInstanceType: {{.NodeInstanceType}}
+            NodeAutoScalingGroupMaxSize: {{add .NodeAutoScalingGroupDesiredSize 1}}
+            NodeAutoScalingGroupDesiredSize: {{.NodeAutoScalingGroupDesiredSize}}
           boundTemplates:
             - "../eks-cluster"
             - "../aws-eks-{{$app}}"

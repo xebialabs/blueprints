@@ -49,7 +49,7 @@ Parameters:
   NodeInstanceType:
     Description: EC2 instance type for the node instances
     Type: String
-    Default: "{{.NodeInstanceType}}"
+    Default: t2.medium
     AllowedValues:
     - t2.small
     - t2.medium
@@ -110,11 +110,15 @@ Parameters:
   NodeAutoScalingGroupMinSize:
     Type: Number
     Description: Minimum size of Node Group ASG.
-    Default: "{{.NodeAutoScalingGroupDesiredSize}}"
+    Default: 1
   NodeAutoScalingGroupMaxSize:
     Type: Number
     Description: Maximum size of Node Group ASG.
-    Default: "{{.NodeAutoScalingGroupDesiredSize}}"
+    Default: 4
+  NodeAutoScalingGroupDesiredSize:
+    Type: Number
+    Description: Desired size of Node Group ASG.
+    Default: 3
   NodeVolumeSize:
     Type: Number
     Description: Node volume size
@@ -254,6 +258,7 @@ Resources:
     Properties:
       AutoScalingGroupName: !Sub "${ProjectName}-AutoScalingGroup"
       LaunchConfigurationName: !Ref NodeLaunchConfig
+      DesiredCapacity: !Ref NodeAutoScalingGroupDesiredSize
       MinSize: !Ref NodeAutoScalingGroupMinSize
       MaxSize: !Ref NodeAutoScalingGroupMaxSize
       VPCZoneIdentifier:

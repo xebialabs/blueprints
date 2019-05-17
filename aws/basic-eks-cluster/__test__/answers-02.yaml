@@ -6,7 +6,4 @@ AWSRegion: eu-west-1
 ClusterName: test-project
 NodeInstanceType: t2.small
 NodeAutoScalingGroupDesiredSize: "3"
-AddIAMUser: true
-EKSUserARN: arn:aws:iam::123456789012:user/Test
-EKSUserName: Test
 ProvisionEFS: true
