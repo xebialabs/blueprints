@@ -131,7 +131,7 @@ spec:
     default: true
 
   - name: EKSUserARN
-    description: "Enter existent IAM user ARN to be used to access EKS cluster via kubectl"
+    description: "Enter existing IAM user ARN to be used to access EKS cluster via kubectl"
     type: Input
     default: "arn:aws:iam::100000000000:user/username"
     pattern: ^arn:aws:(?:iam|sts)::\d{12}:(?:[A-Za-z0-9-_\/\(\)]+)$
