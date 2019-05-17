@@ -1,13 +1,12 @@
----
-AWSTemplateFormatVersion: '2010-09-09'
-Description: 'This template deploys an EFS file system.'
+Description: >
+  This template deploys an EFS file system.
 
 Parameters:
   EnvironmentName:
     AllowedPattern: ^[0-9a-zA-Z]+([0-9a-zA-Z-]*[0-9a-zA-Z])*$
     Description: An environment name that will be prefixed to resource names.
     Type: String
-    Default: "xl-cluster"
+    Default: "xl-up"
   EFSNameTag:
     MinLength: 1
     Description: The name of the EFS volume.
@@ -18,7 +17,7 @@ Parameters:
     Description: VPC Stack Name
     Default: "eks-vpc"
 
- Resources:
+Resources:
   MountTargetSecurityGroup:
     Type: AWS::EC2::SecurityGroup
     Properties:
@@ -50,7 +49,7 @@ Parameters:
         Ref: FileSystem
       SubnetId:
         Fn::ImportValue:
-         !Sub "${VPCStackName}-subnetAID"
+          !Sub "${VPCStackName}-subnetAID"
       SecurityGroups:
         - Ref: MountTargetSecurityGroup
   MountTarget2:
@@ -64,7 +63,7 @@ Parameters:
       SecurityGroups:
         - Ref: MountTargetSecurityGroup
 
- Outputs:
+Outputs:
   Filesystem:
     Description: A reference to the EFS FileSystem
     Value: !Ref FileSystem
