@@ -1,6 +1,8 @@
-Description: >
-  This template deploys an EFS file system.
- Parameters:
+---
+AWSTemplateFormatVersion: '2010-09-09'
+Description: 'This template deploys an EFS file system.'
+
+Parameters:
   EnvironmentName:
     AllowedPattern: ^[0-9a-zA-Z]+([0-9a-zA-Z-]*[0-9a-zA-Z])*$
     Description: An environment name that will be prefixed to resource names.
