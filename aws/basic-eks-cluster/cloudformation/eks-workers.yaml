@@ -115,10 +115,6 @@ Parameters:
     Type: Number
     Description: Maximum size of Node Group ASG.
     Default: 4
-  NodeAutoScalingGroupDesiredSize:
-    Type: Number
-    Description: Desired size of Node Group ASG.
-    Default: 3
   NodeVolumeSize:
     Type: Number
     Description: Node volume size
@@ -258,7 +254,6 @@ Resources:
     Properties:
       AutoScalingGroupName: !Sub "${ProjectName}-AutoScalingGroup"
       LaunchConfigurationName: !Ref NodeLaunchConfig
-      DesiredCapacity: !Ref NodeAutoScalingGroupDesiredSize
       MinSize: !Ref NodeAutoScalingGroupMinSize
       MaxSize: !Ref NodeAutoScalingGroupMaxSize
       VPCZoneIdentifier:
