@@ -69,7 +69,6 @@ spec:
     description: What EC2 instance type do you want to use for the nodes?
     default: t2.medium
     options:
-    - t2.small
     - t2.medium
     - t2.large
     - t2.xlarge
@@ -127,7 +126,7 @@ spec:
 
   - name: ProvisionEFS
     type: Confirm
-    description: "Do you want to provision an EFS?"
+    description: "Do you want to provision Amazon Elastic File System?"
     default: true
 
   files:

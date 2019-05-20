@@ -163,6 +163,7 @@ spec:
               file: !file ../cloudformation/efs.yaml
               inputVariables:
                 VPCStackName: {{$app}}-eks-vpc
+                EnvironmentName: {{$app}}-env
     {{- end}}
 
     # config map used to create custom user for authentication to the EKS cluster

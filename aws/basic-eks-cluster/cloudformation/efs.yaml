@@ -7,11 +7,6 @@ Parameters:
     Description: An environment name that will be prefixed to resource names.
     Type: String
     Default: "xl-up"
-  EFSNameTag:
-    MinLength: 1
-    Description: The name of the EFS volume.
-    Type: String
-    Default: xebialabs-EFSvolume
   VPCStackName:
     Type: String
     Description: VPC Stack Name
