@@ -127,7 +127,7 @@ spec:
   - name: ProvisionEFS
     type: Confirm
     description: "Do you want to provision Amazon Elastic File System?"
-    default: true
+    default: false
 
   files:
   - path: xebialabs/xld-infra-env.yaml.tmpl
