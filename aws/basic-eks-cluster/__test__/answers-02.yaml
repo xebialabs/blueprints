@@ -6,4 +6,4 @@ AWSRegion: eu-west-1
 ClusterName: test-project
 NodeInstanceType: t2.medium
 NodeAutoScalingGroupDesiredSize: "3"
-ProvisionEFS: false
+ProvisionEFS: true

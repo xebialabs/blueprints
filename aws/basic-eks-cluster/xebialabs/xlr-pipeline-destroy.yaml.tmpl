@@ -21,6 +21,15 @@ spec:
       color: '#ff9e3b'
       type: xlrelease.Phase
       tasks:
+      {{if .ProvisionEFS}}
+      - name: Deprovision AWS EFS
+        type: xlrelease.SequentialGroup
+        tasks:
+        - name: Deprovision EFS
+          type: xldeploy.Undeploy
+          server: XL Deploy
+          deployedApplication: Environments/{{$app}}/aws-cloudformation-{{$app}}/{{$app}}-cloudformation-efs
+        {{end}}
       - name: Deprovision AWS EKS cluster
         type: xlrelease.SequentialGroup
         tasks:

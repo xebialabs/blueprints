@@ -102,8 +102,8 @@ spec:
             ClusterName: {{$app}}-master
             NodeGroupName: {{$app}}
             NodeInstanceType: {{.NodeInstanceType}}
+            NodeAutoScalingGroupMinSize: {{.NodeAutoScalingGroupDesiredSize}}
             NodeAutoScalingGroupMaxSize: {{add .NodeAutoScalingGroupDesiredSize 1}}
-            NodeAutoScalingGroupDesiredSize: {{.NodeAutoScalingGroupDesiredSize}}
           boundTemplates:
             - "../eks-cluster"
             - "../aws-eks-{{$app}}"
@@ -150,6 +150,22 @@ spec:
             - "../eks-cluster/kube-system"
           dictionaries:
             - "../aws-eks-{{$app}}-dictionary"
+
+    {{- if .ProvisionEFS }}
+    - name: {{$app}}-cloudformation-efs
+      type: udm.Application
+      children:
+        - name: '1.0.0'
+          type: udm.DeploymentPackage
+          deployables:
+            - name: {{$app}}-efs
+              type: aws.cloudformation.Template
+              file: !file ../cloudformation/efs.yaml
+              inputVariables:
+                VPCStackName: {{$app}}-eks-vpc
+                EnvironmentName: {{$app}}-env
+    {{- end}}
+
     # config map used to create custom user for authentication to the EKS cluster
     - name: {{$app}}-k8s-configmap
       type: udm.Application

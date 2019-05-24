@@ -1,5 +1,5 @@
 AWSTemplateFormatVersion: '2010-09-09'
-Description: 'Amazon EKS - Workers for Microservices Application'
+Description: 'Amazon EKS - Worker nodes'
 
 Mappings:
     RegionMap:
@@ -115,10 +115,6 @@ Parameters:
     Type: Number
     Description: Maximum size of Node Group ASG.
     Default: 4
-  NodeAutoScalingGroupDesiredSize:
-    Type: Number
-    Description: Desired size of Node Group ASG.
-    Default: 3
   NodeVolumeSize:
     Type: Number
     Description: Node volume size
@@ -137,7 +133,6 @@ Parameters:
     Default: app
 
 Resources:
-
   NodeInstanceProfile:
     Type: AWS::IAM::InstanceProfile
     Properties:
@@ -164,6 +159,7 @@ Resources:
         - arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy
         - arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy
         - arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly
+        - arn:aws:iam::aws:policy/AmazonElasticFileSystemFullAccess
 
   NodeSecurityGroup:
     Type: AWS::EC2::SecurityGroup
@@ -257,7 +253,6 @@ Resources:
     Type: AWS::AutoScaling::AutoScalingGroup
     Properties:
       AutoScalingGroupName: !Sub "${ProjectName}-AutoScalingGroup"
-      DesiredCapacity: !Ref NodeAutoScalingGroupDesiredSize
       LaunchConfigurationName: !Ref NodeLaunchConfig
       MinSize: !Ref NodeAutoScalingGroupMinSize
       MaxSize: !Ref NodeAutoScalingGroupMaxSize
