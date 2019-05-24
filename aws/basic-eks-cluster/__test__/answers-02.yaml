@@ -4,6 +4,6 @@ AWSAccessKey: ANDGDJDHJHD4235
 AWSAccessSecret: ANDGDJDHJHD4235
 AWSRegion: eu-west-1
 ClusterName: test-project
-NodeInstanceType: t2.small
+NodeInstanceType: t2.medium
 NodeAutoScalingGroupDesiredSize: "3"
 ProvisionEFS: true
