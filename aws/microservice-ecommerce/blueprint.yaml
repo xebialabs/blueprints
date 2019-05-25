@@ -8,6 +8,7 @@ metadata:
     XL Deploy does the provisioning and deployment, while XL Release orchestrates everything.
   author: XebiaLabs
   version: 1.0
+  instructions: Please read the generated file "xebialabs/USAGE.md" for further usage instructions.
 
 spec:
   parameters:

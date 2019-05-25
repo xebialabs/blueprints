@@ -6,7 +6,8 @@ metadata:
   description: Creates the necessary `docker-compose.yaml` needed to run your specific setup.
   author: XebiaLabs
   version: 1.0
-  instructions: Read xebialabs/USAGE.md to learn how to use this blueprint.
+  instructions: Please read the generated file "xebialabs/USAGE.md" for further usage instructions.
+  
 spec:
   parameters:
   - name: UseXLDeployFlag
