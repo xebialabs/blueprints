@@ -14,27 +14,34 @@ spec:
   parameters:
   - name: AppName
     type: Input
-    description: What do you want to name the application in XLD/XLR?
+    description: What do you want to name the application?
 
-  - name: ResourceGroup
-    # Resource group names only allow alphanumeric characters, periods, underscores, hyphens and parenthesis and cannot end in a period
+  - name: ProvisionCluster
+    type: Confirm
+    description: Do you want to provision a new Azure AKS cluster?
+
+  # ############################################################################
+  # Own cluster
+  # ############################################################################
+  - name: ClusterEndpoint
     type: Input
-    description: "What do you want to name the Resource Group in Azure (Note: can be DESTROYED by Terraform at a later stage)?"
-    pattern: "^[\\w._()-]{2,50}[\\w_()-]$"
+    description: What is the endpoint for the existing cluster, example https://104.155.109.230
+    dependsOnTrue: !expression "!ProvisionCluster"
 
-  - name: AdminUsername
-    # Cannot be 'admin'
+  - name: PasswordToken
     type: Input
-    description: What username do you want to use to access the cluster (cannot be 'admin')?
-    pattern: "^[[:alpha:]]+$"
+    description: What is the token for accessing the existing cluster
+    dependsOnTrue: !expression "!ProvisionCluster"
+    secret: true
+  # ############################################################################
 
-  - name: AdminUsernameSSHKeyPath
-    type: File
-    description: What is the path to the public SSH key for the above user?
-
+  # ############################################################################
+  # New cluster
+  # ############################################################################
   - name: AKSRegion
     type: Select
-    description: "Select the AKS region:"
+    description: "Select the AKS region for the cluster:"
+    dependsOnTrue: ProvisionCluster
     options:
     - eastasia
     - southeastasia
@@ -69,49 +76,71 @@ spec:
     - southafricanorth
     - southafricawest
 
-  - name: ProvisionCluster
-    type: Confirm
-    description: Do you want to provision a new Azure AKS cluster?
-
-  - name: ClusterEndpoint
+    # ############################################################################
+  # Authentication
+  # ############################################################################
+  - name: SubscriptionID
     type: Input
-    description: What is the endpoint for the cluster, example https://104.155.109.230
-    dependsOnTrue: !expression "!ProvisionCluster"
+    description: "Enter you Azure subscription id:"
+    dependsOnTrue: ProvisionCluster
 
-  - name: PasswordToken
+  - name: TenantID
     type: Input
-    description: What is the token for accessing the cluster
-    dependsOnTrue: !expression "!ProvisionCluster"
+    description: "Enter your Azure tenant id:"
+    dependsOnTrue: ProvisionCluster
+
+  - name: ClientID
+    type: Input
+    description: "Enter your Azure client id:"
+    dependsOnTrue: ProvisionCluster
+
+  - name: ClientSecret
+    type: Input
+    description: "Enter your Azure client secret:"
     secret: true
+    dependsOnTrue: ProvisionCluster
+
+  # ############################################################################
+  # For the Terraform backend storage
+  # ############################################################################
+  - name: ResourceGroup
+    # Resource group names only allow alphanumeric characters, periods, underscores, hyphens and parenthesis and cannot end in a period
+    type: Input
+    description: "Enter a new name for the Resource Group that will be created to house this cluster:"
+    pattern: "^[\\w._()-]{2,50}[\\w_()-]$"
+    dependsOnTrue: ProvisionCluster
+
+  - name: StorageAccountName
+    type: Input
+    description: "Enter the Storage Account where Terraform will store its state (see README.md step 3.2):"
+    dependsOnTrue: ProvisionCluster
+
+  - name: StorageAccessKey
+    type: Input
+    description: "Enter the Storage Account key for accessing the storage (see README.md step 3.3):"
+    dependsOnTrue: ProvisionCluster
+
+  - name: StorageContainerName
+    type: Input
+    description: "Enter the Storage Container name (see README.md step 3.4):"
+    default: terraform-state
+    dependsOnTrue: ProvisionCluster
+  # ############################################################################
 
   - name: ClusterName
     type: Input
     description: What name do you want to give the cluster?
     pattern: "^[[:alpha:]][\\w-]{1,29}[\\w]$"
+    # dependsOnTrue: ProvisionCluster
 
   - name: Namespace
     type: Input
-    value: xl-demo
+    default: xl-demo
 
-  # ############################################################################
-  # Authentication
-  # ############################################################################
-  - name: ClientID
+  - name: XLDUrlForXLR
     type: Input
-    description: What is the client id (appId) of an existing Service Principal in Azure?
-
-  - name: ClientSecret
-    type: Input
-    description: What is the secret for the above client id?
-    secret: true
-
-  - name: SubscriptionID
-    type: Input
-    description: What is your existing Azure subscription id?
-
-  - name: TenantID
-    type: Input
-    description: What is your existing Azure tenant id?
+    description: XL Deploy URL for XL Release (This will only be used in the XL Release template)
+    default: http://xl-deploy:4516
 
   # ############################################################################
   # Jenkins
@@ -130,31 +159,7 @@ spec:
     description: Store Admin password
     value: admin
     secret: true
-
   # ############################################################################
-  # For the Terraform backend storage
-  # ############################################################################
-  - name: StorageAccountName
-    type: Input
-    description: Existing Azure storage account where Terraform will store its state (see README.md on how to create this)
-    dependsOnTrue: ProvisionCluster
-
-  - name: StorageContainerName
-    type: Input
-    description: "Container within the storage account:"
-    default: terraform-state
-    dependsOnTrue: ProvisionCluster
-
-  - name: StorageAccessKey
-    type: Input
-    description: "One of the Azure access keys for accessing the storage:"
-    dependsOnTrue: ProvisionCluster
-  # ############################################################################
-
-  - name: XLDUrlForXLR
-    type: Input
-    description: XL Deploy URL for XL Release (This will only be used in the XL Release template)
-    default: http://xl-deploy:4516
 
   files:
   - path: xebialabs.yaml
@@ -183,6 +188,12 @@ spec:
   - path: terraform/aks/variables.tf
     dependsOnTrue: ProvisionCluster
   - path: terraform/aks/outputs.tf
+    dependsOnTrue: ProvisionCluster
+  - path: terraform/vpc/main.tf
+    dependsOnTrue: ProvisionCluster
+  - path: terraform/vpc/variables.tf
+    dependsOnTrue: ProvisionCluster
+  - path: terraform/vpc/outputs.tf
     dependsOnTrue: ProvisionCluster
   # docker-compose setup for required tools
   - path: docker/docker-compose.yml.tmpl

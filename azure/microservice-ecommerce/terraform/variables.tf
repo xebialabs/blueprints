@@ -1,4 +1,4 @@
-variable "resource_group" {
+variable "resource_group_name" {
   # * ResourceGroup
   description = "A resource group is a collection of resources that share the same lifecycle, permissions, and policies"
 }
@@ -26,11 +26,7 @@ variable "node_count" {
 variable "admin_username" {
   # * AdminUsername
   description = "The username for the cluster (cannot be 'admin')"
-}
-
-variable "ssh_public_key_path" {
-  # * AdminUsernameSSHKeyPath
-  description = "The SSH key for the admin user"
+  default     = "adminuser"
 }
 
 variable "client_id" {

@@ -22,15 +22,13 @@ spec:
           file: !file ../terraform
           inputVariables:
             name: {{$app}}
-            resource_group: {{.ResourceGroup}}
+            resource_group_name: {{.ResourceGroup}}
             cluster_name: {{.ClusterName}}
             location: {{.AKSRegion}}
             client_id: {{.ClientID}}
             client_secret: !value ClientSecret
             subscription_id: {{.SubscriptionID}}
             tenant_id: {{.TenantID}}
-            admin_username: {{.AdminUsername}}
-            ssh_public_key_path: {{.AdminUsernameSSHKeyPath | trim}}
           boundTemplates:
           - "../{{$clusterName}}"
           - "../{{$clusterName}}-env"

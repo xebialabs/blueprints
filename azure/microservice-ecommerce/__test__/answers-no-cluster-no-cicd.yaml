@@ -1,7 +1,5 @@
 AppName: azure-project
 ResourceGroup: azure-rg
-AdminUsername: adminuser
-AdminUsernameSSHKeyPath: ../azure/microservice-ecommerce/__test__/answers-no-cluster-no-cicd.yaml
 AKSRegion: westeurope
 ProvisionCluster: false
 ClusterEndpoint: https://test.com

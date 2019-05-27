@@ -1,4 +1,4 @@
-# Microservice Application on Google Kubernetes Engine
+# Microservice Application on Azure Kubernetes Service
 
 ## Introduction
 
@@ -42,109 +42,173 @@ XL CLI: Version 8.6
 To run the YAML that this blueprint generates, you need:
 
 * XebiaLabs Release Orchestration and Deployment Automation up and running
-* Access to an Azure account account to deploy the application to
+* Access to an Azure account to deploy the application to
 * A Jenkins server up and running (only if you want to publish your own Docker images)
 
 ## Information required
 
-This blueprint requires:
+This blueprint will ask for the following information:
 
-* Azure Service Principal (see section below for instructions)
-* Azure Resource Group (see section below for instructions)
-* An Azure region
-* The AKS cluster endpoint (if deploying to an existing cluster)
-* Azure Storage Account for the Terraform state if creating a new cluster (see section below for instructions)
+* Azure Service Principal (see step 2.2)
+* Azure Resource Group (see step 3.1)
+* An Azure region (e.g. `westus`)
+* The AKS cluster endpoint if you are deploying to an existing cluster
+* Azure Storage Account for the Terraform state if creating a new cluster (see step 3.2)
 * Kubernetes cluster credentials
 * The Kubernetes namespace
-* Jenkins credentials (if enabling CI integration)
+
+**Important notes:**
+
+* Use the same location/region in all of the follow steps (e.g. `westus`)
+* The blueprint will deploy a Jenkins server for you if you want to test out the CI/CD features
+  * The default login is: `admin`/`admin`
+* You will either use your own existing Kubernetes cluster or have the blueprint create on for you
 
 ## Steps
 
 ### Step 1: Install the Azure CLI (`az`) binary
 
-> **Follow these instructions to install the Azure CLI on your platform:**
->
-> * https://docs.microsoft.com/en-us/cli/azure/install-azure-cli?view=azure-cli-latest
+Follow [these instructions](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli?view=azure-cli-latest) to install the Azure CLI on your platform.
 
-> **Note:** All examples below use the CLI
+#### 1.1: Log in
 
-### Step 2: Log into Azure
+Run the following command to log in:
 
 ```plain
 az login
 ```
 
-Follow the prompts to log in
+Follow the prompts to complete the authentication.
 
-> **Note:** You need to have proper permissions and privileges in the Azure account to execute these commands. If you are using a personal account you should be having these as you will be the admin. If you are using a company/enterprise account please check with your account administrator.
+**Note:** You need to have the proper permissions and privileges in the Azure account to execute these commands. If you are using a personal account you should be having these as you will be the admin. If you are using a company/enterprise account please check with your account administrator.
 
-### Step 3: Set up the environment
+### Step 2: Create a Service Principal and obtain special Azure properties to be used in the blueprint
 
-> **Please take note of the following:**
->
-> * You need an existing **Service Principal** in order for the blueprint to create resources
-> * You will need a **Resource Group** in order to create the **Storage Account** if you need to store Terraform state
-> * If you are creating a new Kubernetes cluster, the blueprint will create a **new Resource Group** to hold that cluster
+**Note:** This step is only necessary if you want the blueprint to create a Kubernetes cluster for you.
 
-> **Important:** Running `terraform destroy` will completely remove the **new Resource Group** you specify in the blueprint (and all resources associated with it). So don't give the name of an existing Resource Group unless you're willing to lose it.
+When you run the blueprint, it will prompt you for the following four Azure properties:
 
-#### 3.1 Create a Service Principal
+1. `subscription id`
+2. `tenant id`
+3. `client id`
+4. `client secret`
 
-If you don't already have a Service Principal, create one using the GUI or the CLI:
+If you are familiar with Azure, you will probably have these values or know how to find them. If not, Step 2 will explain how to create the necessary accounts/objects and obtain these values.
 
-> **See:**
->
-> * [**GUI:** How to: Use the portal to create an Azure AD application and service principal that can access resources](https://docs.microsoft.com/en-us/azure/active-directory/develop/howto-create-service-principal-portal)
-> * [**CLI:** Create an Azure service principal with Azure CLI](https://docs.microsoft.com/en-us/cli/azure/create-an-azure-service-principal-azure-cli?view=azure-cli-latest)
+**See:**
 
-> **Note:** Regardless of how you create the Service Principal, take note of the fields `appId`, `password` and `tenant`; you will be asked for it by the blueprint
+* [Application and service principal objects in Azure Active Directory](https://docs.microsoft.com/en-us/azure/active-directory/develop/app-objects-and-service-principals)
 
-#### 3.2 Create a Resource Group for the Storage Account
+#### 2.1 Obtain the `subscription id`
 
-> **See:**
->
-> * [**CLI:** az group create](https://docs.microsoft.com/en-us/cli/azure/group?view=azure-cli-latest#az-group-create)
+Run the command below to see the list of subscriptions you can access:
 
-This will be the Resource Group for the Terraform state. It should **NOT** be the same as the Resource Group specified in the blueprint.
+```plain
+az account list
+```
 
-Example:
+This will output something like:
+
+```json
+[
+  {
+    "cloudName": "AzureCloud",
+    "id": "5dses33-f595-3333-6666-77788889997",
+    "isDefault": true,
+    "name": "Free Trial",
+    "state": "Enabled",
+    "tenantId": "7f3c634b-3ds4-23fe-8aa7-dme3jdwejqdxv",
+    "user": {
+      "name": "user@email.com",
+      "type": "user"
+    }
+  }
+]
+```
+
+In this output:
+
+* `id` is the `subscription id` for the blueprint
+
+Note it down for use in the blueprint and substitute `SUBSCRIPTION_ID` in the next step where you will create a functional user that has privileges to spin up a managed K8s cluster.
+
+#### 2.2: Create the Service Principal and obtain the `tenant id`, `client id` and `client secret`
+
+Run:
+
+```plain
+az ad sp create-for-rbac --role="Contributor" --name NAME --scopes="/subscriptions/SUBSCRIPTION_ID"
+```
+
+This will output something like this:
+
+```json
+{
+  "appId": "99999-0000-8888-7777-888877776755",
+  "displayName": "azure-cli-2019-04-19-17-32-40",
+  "name": "http://azure-cli-2019-04-19-17-32-40",
+  "password": "77778888-7788-9998-92fc-huoui89889",
+  "tenant": "7f3c634b-3ds4-23fe-8aa7-dme3jdwejqdxv"
+}
+```
+
+In this output:
+
+* `tenant` is the `tenant id` for the blueprint
+* `appId` is the `client id` for the blueprint
+* `password` is the `client secret` for the blueprint
+
+Note these down for use in the blueprint.
+
+**See:**
+
+* [Create an Azure service principal](https://docs.microsoft.com/en-us/cli/azure/create-an-azure-service-principal-azure-cli?view=azure-cli-latest)
+
+### Step 3: Set up Terraform's backend storage for creating the Kubernetes cluster
+
+**Note:** This step is only necessary if you want the blueprint to create a Kubernetes cluster for you.
+
+In this step, you will create the necessary storage objects so that Terraform can store its internal state with Azure and keep track of the cluster it will build.
+
+#### 3.1: Create a Resource Group
+
+Run:
+
 ```plain
 az group create --name RESOURCE_GROUP \
                 --location LOCATION
 ```
 
-#### 3.3 Create a Storage Account to store the Terraform state
+**See:**
 
-> **Note:** This step is only necessary if you want the blueprint to create the Kubernetes cluster for you
+* [Create a resource group](https://docs.microsoft.com/en-us/cli/azure/group?view=azure-cli-latest#az-group-create)
 
-If you don't already have a Storage account, create one using the GUI or the CLI:
+#### 3.2: Create a Storage Account
 
-> **See:**
->
-> * [**GUI:** Create a storage account](https://docs.microsoft.com/en-us/azure/storage/common/storage-quickstart-create-account?tabs=azure-portal)
-> * [**CLI:** Create a storage account](https://docs.microsoft.com/en-us/azure/storage/common/storage-quickstart-create-account?tabs=azure-cli)
-> * [Documentation and syntax](https://docs.microsoft.com/en-us/cli/azure/storage/account?view=azure-cli-latest#az-storage-account-create)
+Run:
 
-Example:
 ```plain
-az storage account create --name ACCOUNT_NAME \
-                          --resource-group EXISTING_RESOURCE_GROUP \
+az storage account create --name STORAGE_ACCOUNT_NAME \
+                          --resource-group RESOURCE_GROUP \
                           --location LOCATION \
                           --sku Standard_LRS
 ```
 
-> **Note:** Make sure the `location` you choose for the Storage Account is the same as the one you will use in the blueprint and the one you used to create the Resource Group. Use the same Resource Group you created earlier to use for the blueprint.
-> **Note:** Take note of the name you give the Storage Account; you will be asked for it by the blueprint
+**See:**
 
-##### 3.3.1 Get the Storage account keys in order to create the Storage Container
+* [Create a storage account](https://docs.microsoft.com/en-us/azure/storage/common/storage-quickstart-create-account?tabs=azure-cli)
 
-> **See:**
->
-> * [CLI: az storage account keys](https://docs.microsoft.com/en-us/cli/azure/storage/account/keys?view=azure-cli-latest)
+#### 3.3: Obtain a key in order to create a Storage Container
 
-Example
+Run:
+
 ```plain
-az storage account keys list --account-name ACCOUNT_NAME
+az storage account keys list --account-name STORAGE_ACCOUNT_NAME
+```
+
+This will output something like this:
+
+```json
 [
   {
     "keyName": "key1",
@@ -159,34 +223,45 @@ az storage account keys list --account-name ACCOUNT_NAME
 ]
 ```
 
-> **Note:** Copy one of the key `value`s to use in creating the Storage Container
+Note one of the account keys down for use in the next step and in the blueprint.
 
-##### 3.3.2 Create a Storage Container (if you don't already have one)
+**See:**
 
-> [**CLI:** azure storage container create](https://docs.microsoft.com/en-us/cli/azure/storage/container?view=azure-cli-latest#az-storage-container-create)
+* [Storage account keys](https://docs.microsoft.com/en-us/cli/azure/storage/account/keys?view=azure-cli-latest)
 
-Example:
+#### 3.4: Create a Storage Container
+
+> **Note:** For this step, name the container `terraform-state`, as this is also the default in the blueprint. If you want to give it a different name, remember to use that name when prompted by the blueprint.
+
+Run:
+
 ```plain
 az storage container create --name terraform-state \
                             --account-key ACCOUNT_KEY \
-                            --account-name ACCOUNT_NAME
+                            --account-name STORAGE_ACCOUNT_NAME
 ```
+
+**See:**
+
+* [Create a storage container](https://docs.microsoft.com/en-us/cli/azure/storage/container?view=azure-cli-latest#az-storage-container-create)
 
 ### Step 4: Clone the `e-commerce-microservice` repository
 
-#### 4.1 With Jenkins CI/CD
+**Note:** If you plan to set up the Jenkins CI/CD pipeline, you will first need to fork the XebiaLabs `e-commerce-microservice` repository.
+
+#### 4.1: With Jenkins CI/CD
 If you plan to use the Jenkins CI/CD part of the blueprint, first fork the https://github.com/xebialabs/e-commerce-microservice.git repo.
 
 > **Note:** You will use your GitHub username as the `GITHUB_USER` environment variable when deploying in the next stage.
 
-Make sure you have cloned the https://github.com/$GITHUB_USER/e-commerce-microservice.git (`gke-blueprint` branch) by running:
+Make sure you clone the https://github.com/$GITHUB_USER/e-commerce-microservice.git (`gke-blueprint` branch) by running:
 
 ```plain
 git clone -b gke-blueprint https://github.com/$GITHUB_USER/e-commerce-microservice.git
 ```
 
-#### 4.2 Without Jenkins CI/CD
-Make sure you have cloned the https://github.com/xebialabs/e-commerce-microservice.git (`gke-blueprint` branch) by running:
+#### 4.2: Without Jenkins CI/CD
+Make sure you clone the https://github.com/xebialabs/e-commerce-microservice.git (`gke-blueprint` branch) by running:
 
 ```plain
 git clone -b gke-blueprint https://github.com/xebialabs/e-commerce-microservice.git
@@ -200,12 +275,7 @@ Now `cd` into `e-commerce-microservice` and run `xl blueprint`, then select:
 azure/microservice-ecommerce
 ```
 
-TODO: 
-Note about subscription ID
-Note about SSH key path
-Note about password token
-
-#### 5.1 Output
+#### 5.1: Output
 
 The blueprint will output:
 
@@ -216,7 +286,7 @@ The blueprint will output:
     * Security infrastructure
 * A docker-compose setup for XL JetPack and Jenkins
 
-> **Note:** You will find more instructions in `xebialabs/USAGE.md` after you have run the blueprint
+**Note:** You will find more instructions in `xebialabs/USAGE.md` after you have run the blueprint.
 
 ## Notes
 

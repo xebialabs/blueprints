@@ -1,4 +1,4 @@
-variable "resource_group" {
+variable "resource_group_name" {
   description = "A resource group is a collection of resources that share the same lifecycle, permissions, and policies"
 }
 
@@ -22,10 +22,6 @@ variable "admin_username" {
   description = "The username for the cluster (cannot be 'admin')"
 }
 
-variable "ssh_public_key_path" {
-  description = ""
-}
-
 variable "client_id" {
   description = "The appId of the Service Principal"
 }
@@ -36,5 +32,9 @@ variable "client_secret" {
 
 variable "dns_prefix" {
   description = "DNS name prefix to use with the hosted Kubernetes API server FQDN. You will use this to connect to the Kubernetes API when managing containers after creating the cluster"
+}
+
+variable "subnet_id" {
+
 }
 
