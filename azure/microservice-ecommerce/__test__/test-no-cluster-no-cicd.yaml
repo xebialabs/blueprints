@@ -12,8 +12,8 @@ expected-files:
     - xebialabs/xlr-pipeline-destroy.yaml
     - docker/docker-compose.yml
     - docker/data/configure-xl-devops-platform.yaml
-    - docker/jenkins/jenkins.yaml
 not-expected-files:
+    - docker/jenkins/jenkins.yaml
     - terraform/aks/main.tf
     - terraform/aks/outputs.tf
     - terraform/aks/variables.tf
