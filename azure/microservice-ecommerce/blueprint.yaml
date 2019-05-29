@@ -106,7 +106,7 @@ spec:
   - name: ResourceGroup
     # Resource group names only allow alphanumeric characters, periods, underscores, hyphens and parenthesis and cannot end in a period
     type: Input
-    description: "Enter a new name for the Resource Group that will be created to house this cluster:"
+    description: "The blueprint will create a new Resource Group for the cluster. Please supply a name:"
     pattern: "^[\\w._()-]{2,50}[\\w_()-]$"
     dependsOnTrue: ProvisionCluster
 
@@ -199,3 +199,4 @@ spec:
   - path: docker/docker-compose.yml.tmpl
   - path: docker/data/configure-xl-devops-platform.yaml
   - path: docker/jenkins/jenkins.yaml
+    dependsOnTrue: enableCICD

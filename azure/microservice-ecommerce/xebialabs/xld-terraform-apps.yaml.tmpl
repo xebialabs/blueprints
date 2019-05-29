@@ -30,12 +30,12 @@ spec:
             subscription_id: {{.SubscriptionID}}
             tenant_id: {{.TenantID}}
           boundTemplates:
-          - "../{{$clusterName}}"
+          - "../{{$clusterName}}-master"
           - "../{{$clusterName}}-env"
 
         templates:
         # creates the required XLD infrastructure entries
-        - name: {{$clusterName}}
+        - name: {{$clusterName}}-master
           type: template.k8s.Master
           apiServerURL: '{{"{{%outputVariables.host%}}"}}'
           skipTLS: true
