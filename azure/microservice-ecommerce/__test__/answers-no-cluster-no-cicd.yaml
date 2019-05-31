@@ -5,7 +5,6 @@ ProvisionCluster: false
 ClusterEndpoint: https://test.com
 PasswordToken: abcdefgh
 ClusterName: azure-cluster
-Namespace: xl-demo
 ClientID: A
 ClientSecret: B
 SubscriptionID: C
