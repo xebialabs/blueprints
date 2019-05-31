@@ -50,7 +50,7 @@ spec:
       - us-east4
       - us-west1
       - us-west2
-      
+
   - name: ProvisionCluster
     type: Confirm
     description: Do you want to provision a new GCP GKE cluster?
