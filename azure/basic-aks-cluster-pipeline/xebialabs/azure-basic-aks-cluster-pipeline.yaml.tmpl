@@ -64,3 +64,11 @@ spec:
         type: xldeploy.Undeploy
         server: XL Deploy
         deployedApplication: Environments/{{.Prefix}}terraform/nginx
+
+    - name: Deprovision Infrastructure
+      type: xlrelease.Phase
+      tasks:
+      - name: Deprovision Azure AKS cluster
+        type: xldeploy.Undeploy
+        server: XL Deploy
+        deployedApplication: Environments/{{.Prefix}}terraform/{{.Prefix}}{{$clusterName}}
