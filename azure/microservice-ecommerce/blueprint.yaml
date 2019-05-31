@@ -135,7 +135,7 @@ spec:
 
   - name: Namespace
     type: Input
-    default: xl-demo
+    value: xl-demo
 
   - name: XLDUrlForXLR
     type: Input
