@@ -107,7 +107,7 @@ spec:
     # Resource group names only allow alphanumeric characters, periods, underscores, hyphens and parenthesis and cannot end in a period
     type: Input
     description: "The blueprint will create a new Resource Group for the cluster. Please supply a name:"
-    pattern: "^[\\w._()-]{2,50}[\\w_()-]$"
+    pattern: "[\\w._()-]{2,50}[\\w_()-]"
     dependsOnTrue: ProvisionCluster
 
   - name: StorageAccountName
@@ -130,7 +130,7 @@ spec:
   - name: ClusterName
     type: Input
     description: What name do you want to give the cluster?
-    pattern: "^[[:alpha:]][\\w-]{1,29}[\\w]$"
+    pattern: "[a-zA-Z][\\w-]{1,29}[\\w]"
     # dependsOnTrue: ProvisionCluster
 
   - name: Namespace
