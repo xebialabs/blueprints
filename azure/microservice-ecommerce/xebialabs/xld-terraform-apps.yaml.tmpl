@@ -39,6 +39,7 @@ spec:
           type: template.k8s.Master
           apiServerURL: '{{"{{%outputVariables.host%}}"}}'
           skipTLS: true
+          token: '{{"{{%outputVariables.password%}}"}}'
           instanceName: {{$app}}/azure-aks-{{$clusterName}}
         # creates a new environment for Kubernetes deployments
         - name: azure-aks-{{$clusterName}}-env
