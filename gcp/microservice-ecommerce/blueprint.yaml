@@ -50,7 +50,7 @@ spec:
       - us-east4
       - us-west1
       - us-west2
-      
+
   - name: ProvisionCluster
     type: Confirm
     description: Do you want to provision a new GCP GKE cluster?
@@ -63,8 +63,7 @@ spec:
     description: What is the endpoint for the cluster, example https://104.155.109.230
   - name: Namespace
     type: Input
-    description: What is the name of the namespace? This should be same as the one used in Kubernetes files.
-    default: xl-demo
+    value: xl-demo
   - name: enableCICD
     type: Confirm
     description: Do you want to enable CI/CD integration with Jenkins?
