@@ -3,7 +3,6 @@ ResourceGroup: azure-rg
 AKSRegion: westeurope
 ProvisionCluster: true
 ClusterName: azure-cluster
-Namespace: xl-demo
 ClientID: A
 ClientSecret: B
 SubscriptionID: C
