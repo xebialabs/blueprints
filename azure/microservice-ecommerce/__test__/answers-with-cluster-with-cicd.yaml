@@ -1,0 +1,18 @@
+AppName: azure-project
+ResourceGroup: azure-rg
+AKSRegion: westeurope
+ProvisionCluster: true
+ClusterName: azure-cluster
+Namespace: xl-demo
+ClientID: A
+ClientSecret: B
+SubscriptionID: C
+TenantID: D
+enableCICD: true
+StoreAdminUsername: admin
+StoreAdminPassword: admin
+XLDUrlForXLR: http://xl-deploy:4516
+StorageAccountName: storageuser
+StorageContainerName: terraform-state
+StorageAccessKey: abcdefgh
+

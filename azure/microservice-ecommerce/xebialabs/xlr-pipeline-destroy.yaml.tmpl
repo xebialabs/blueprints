@@ -1,0 +1,75 @@
+{{$app := .AppName | kebabcase}}
+{{$clusterName := .ClusterName | kebabcase}}
+{{$appEnv := printf "azure-aks-%s" $clusterName}}
+apiVersion: xl-release/v1
+kind: Templates
+spec:
+- name: {{$app}}
+  type: xlrelease.Folder
+  children:
+  - name: {{$app}}-destroy
+    type: xlrelease.Release
+    description: |
+      This XL Release template shows how to undeploy an application, based on microservices architecture, to Azure AKS using XL Deploy and Terraform.
+    tags:
+    - Azure
+    - AKS
+    - {{$app}}
+    scriptUsername: !value XL_RELEASE_USERNAME
+    scriptUserPassword: !value XL_RELEASE_PASSWORD
+    phases:
+    - name: Undeploy Application
+      type: xlrelease.Phase
+      tasks:
+      - name: Undeploy stateless services
+        type: xlrelease.ParallelGroup
+        tasks:
+        - name: Undeploy registry svc
+          type: xldeploy.Undeploy
+          server: XL Deploy
+          deployedApplication: Environments/{{$app}}/{{$appEnv}}/{{$app}}-registry
+        - name: Undeploy invoice svc
+          type: xldeploy.Undeploy
+          server: XL Deploy
+          deployedApplication: Environments/{{$app}}/{{$appEnv}}/{{$app}}-invoice
+        - name: Undeploy notification svc
+          type: xldeploy.Undeploy
+          server: XL Deploy
+          deployedApplication: Environments/{{$app}}/{{$appEnv}}/{{$app}}-notification
+        - name: Undeploy store svc
+          type: xldeploy.Undeploy
+          server: XL Deploy
+          deployedApplication: Environments/{{$app}}/{{$appEnv}}/{{$app}}-store
+      - name: Undeploy stateful services
+        type: xlrelease.ParallelGroup
+        tasks:
+        - name: Undeploy invoice mysql svc
+          type: xldeploy.Undeploy
+          server: XL Deploy
+          deployedApplication: Environments/{{$app}}/{{$appEnv}}/{{$app}}-invoice-mysql
+        - name: Undeploy store mysql svc
+          type: xldeploy.Undeploy
+          server: XL Deploy
+          deployedApplication: Environments/{{$app}}/{{$appEnv}}/{{$app}}-store-mysql
+        - name: Undeploy notification mongodb svc
+          type: xldeploy.Undeploy
+          server: XL Deploy
+          deployedApplication: Environments/{{$app}}/{{$appEnv}}/{{$app}}-notification-mongodb
+      {{if .ProvisionCluster }}
+      # Un-provision namespace
+      - name: Undeploy {{.Namespace}} namespace
+        type: xldeploy.Undeploy
+        server: XL Deploy
+        deployedApplication: Environments/{{$app}}/{{$appEnv}}/{{$app}}-namespace
+      {{end}}
+    {{if .ProvisionCluster }}
+    # De-provision Infra
+    - name: Deprovision Infrastructure
+      color: '#ff9e3b'
+      type: xlrelease.Phase
+      tasks:
+      - name: Deprovision Azure AKS cluster
+        type: xldeploy.Undeploy
+        server: XL Deploy
+        deployedApplication: Environments/{{$app}}/gcp-terraform/{{$app}}-terraform-aks
+    {{end}}

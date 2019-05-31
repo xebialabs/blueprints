@@ -1,0 +1,8 @@
+terraform {
+  backend "azurerm" {
+    storage_account_name = "{{.StorageAccountName}}"
+    container_name       = "{{.StorageContainerName}}"
+    key                  = "terraform.tfstate"
+    access_key           = "{{.StorageAccessKey}}"
+  }
+}
