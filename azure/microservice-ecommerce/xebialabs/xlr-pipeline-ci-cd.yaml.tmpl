@@ -1,6 +1,6 @@
 {{$app := .AppName | kebabcase}}
 {{$clusterName := .ClusterName | kebabcase}}
-{{$appEnv := .ClusterName | kebabcase}}
+{{$appEnv := printf "azure-aks-%s" $clusterName}}
 apiVersion: xl-release/v1
 kind: Templates
 spec:
@@ -55,8 +55,8 @@ spec:
       - name: Provision Azure AKS cluster
         type: xldeploy.Deploy
         server: XL Deploy
-        deploymentPackage: {{$app}}/AKS-TERRAFORM/{{$app}}-terraform/1.0.0
-        deploymentEnvironment: Environments/{{$app}}/terraform
+        deploymentPackage: {{$app}}/AKS-TERRAFORM/{{$app}}-terraform-aks/1.0.0
+        deploymentEnvironment: Environments/{{$app}}/azure-terraform
     {{end}}
     {{if .enableCICD }}
     - name: Build {{$app}} application
@@ -146,7 +146,7 @@ spec:
           server: XL Deploy
           numberOfContinueRetrials: 100
           pollingInterval: 10
-          ciId: Infrastructure/{{$app}}/{{$clusterName}}
+          ciId: Infrastructure/{{$app}}/azure-aks-{{$clusterName}}
           taskName: describeService
           variableMapping:
             pythonScript.xlDeployTaskId: ${taskId}

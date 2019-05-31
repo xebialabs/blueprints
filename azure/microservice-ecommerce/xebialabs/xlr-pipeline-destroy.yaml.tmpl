@@ -1,6 +1,6 @@
 {{$app := .AppName | kebabcase}}
 {{$clusterName := .ClusterName | kebabcase}}
-{{$appEnv := .ClusterName | kebabcase}}
+{{$appEnv := printf "azure-aks-%s" $clusterName}}
 apiVersion: xl-release/v1
 kind: Templates
 spec:
@@ -71,5 +71,5 @@ spec:
       - name: Deprovision Azure AKS cluster
         type: xldeploy.Undeploy
         server: XL Deploy
-        deployedApplication: Environments/{{$app}}/terraform/{{$app}}-terraform
+        deployedApplication: Environments/{{$app}}/gcp-terraform/{{$app}}-terraform-aks
     {{end}}

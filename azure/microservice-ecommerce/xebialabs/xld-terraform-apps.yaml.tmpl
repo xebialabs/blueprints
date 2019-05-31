@@ -11,13 +11,13 @@ spec:
   - name: AKS-TERRAFORM
     type: core.Directory
     children:
-    - name: {{$app}}-terraform
+    - name: {{$app}}-terraform-aks
       type: udm.Application
       children:
       - name: '1.0.0'
         type: udm.DeploymentPackage
         deployables:
-        - name: {{$app}}
+        - name: {{$app}}-aks
           type: terraform.Module
           file: !file ../terraform
           inputVariables:
@@ -30,23 +30,22 @@ spec:
             subscription_id: {{.SubscriptionID}}
             tenant_id: {{.TenantID}}
           boundTemplates:
-          - "../{{$clusterName}}-master"
-          - "../{{$clusterName}}-env"
+          - "../azure-aks-{{$clusterName}}"
+          - "../azure-aks-{{$clusterName}}-env"
 
         templates:
         # creates the required XLD infrastructure entries
-        - name: {{$clusterName}}-master
+        - name: azure-aks-{{$clusterName}}
           type: template.k8s.Master
           apiServerURL: '{{"{{%outputVariables.host%}}"}}'
           skipTLS: true
-          token: '{{"{{%outputVariables.password%}}"}}'
-          instanceName: {{$app}}/{{$clusterName}}
+          instanceName: {{$app}}/azure-aks-{{$clusterName}}
         # creates a new environment for Kubernetes deployments
-        - name: {{$clusterName}}-env
+        - name: azure-aks-{{$clusterName}}-env
           type: template.udm.Environment
           members:
-          - "../{{$clusterName}}"
-          instanceName: {{$app}}/{{$clusterName}}
+          - "../azure-aks-{{$clusterName}}"
+          instanceName: {{$app}}/azure-aks-{{$clusterName}}
 
 {{end}}
   - name: K8S

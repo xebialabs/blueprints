@@ -8,7 +8,7 @@ spec:
 - name: {{$app}}
   type: core.Directory
   children:
-  - name: terraform
+  - name: azure-terraform
     type: overthere.LocalHost
     os: UNIX
     children:
@@ -24,11 +24,11 @@ spec:
 - name: {{$app}}
   type: core.Directory
   children:
-  - name: terraform
+  - name: azure-terraform
     type: udm.Environment
     members:
-    - Infrastructure/{{$app}}/terraform
-    - Infrastructure/{{$app}}/terraform/terraform-client
+    - Infrastructure/{{$app}}/azure-terraform
+    - Infrastructure/{{$app}}/azure-terraform/terraform-client
 
 {{else}}
 # Definition of existing AKS cluster
@@ -38,7 +38,7 @@ spec:
 - name: {{$app}}
   type: core.Directory
   children:
-  - name: {{$clusterName}}
+  - name: azure-aks-{{$clusterName}}
     type: k8s.Master
     apiServerURL: {{.ClusterEndpoint}}
     skipTLS: true
@@ -55,9 +55,9 @@ spec:
 - name: {{$app}}
   type: core.Directory
   children:
-  - name: {{$clusterName}}
+  - name: azure-aks-{{$app}}
     type: udm.Environment
     members:
-    - Infrastructure/{{$app}}/{{$clusterName}}/{{.Namespace | kebabcase}}
-    - Infrastructure/{{$app}}/{{$clusterName}}
+    - Infrastructure/{{$app}}/azure-aks-{{$clusterName}}/{{.Namespace | kebabcase}}
+    - Infrastructure/{{$app}}/azure-aks-{{$clusterName}}
 {{end}}
