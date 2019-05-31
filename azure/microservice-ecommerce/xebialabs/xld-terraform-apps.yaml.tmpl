@@ -1,0 +1,66 @@
+{{$app := .AppName | kebabcase}}
+{{$clusterName := .ClusterName | kebabcase}}
+apiVersion: xl-deploy/v1
+kind: Applications
+spec:
+- name: {{$app}}
+  type: core.Directory
+  children:
+{{if .ProvisionCluster }}
+# Provision AKS cluster using Terraform templates
+  - name: AKS-TERRAFORM
+    type: core.Directory
+    children:
+    - name: {{$app}}-terraform-aks
+      type: udm.Application
+      children:
+      - name: '1.0.0'
+        type: udm.DeploymentPackage
+        deployables:
+        - name: {{$app}}-aks
+          type: terraform.Module
+          file: !file ../terraform
+          inputVariables:
+            name: {{$app}}
+            resource_group_name: {{.ResourceGroup}}
+            cluster_name: {{.ClusterName}}
+            location: {{.AKSRegion}}
+            client_id: {{.ClientID}}
+            client_secret: !value ClientSecret
+            subscription_id: {{.SubscriptionID}}
+            tenant_id: {{.TenantID}}
+          boundTemplates:
+          - "../azure-aks-{{$clusterName}}"
+          - "../azure-aks-{{$clusterName}}-env"
+
+        templates:
+        # creates the required XLD infrastructure entries
+        - name: azure-aks-{{$clusterName}}
+          type: template.k8s.Master
+          apiServerURL: '{{"{{%outputVariables.host%}}"}}'
+          skipTLS: true
+          token: '{{"{{%outputVariables.password%}}"}}'
+          instanceName: {{$app}}/azure-aks-{{$clusterName}}
+        # creates a new environment for Kubernetes deployments
+        - name: azure-aks-{{$clusterName}}-env
+          type: template.udm.Environment
+          members:
+          - "../azure-aks-{{$clusterName}}"
+          instanceName: {{$app}}/azure-aks-{{$clusterName}}
+
+{{end}}
+  - name: K8S
+    type: core.Directory
+{{if .ProvisionCluster }}
+# Provision K8s namespace
+    children:
+    - name: {{$app}}-namespace
+      type: udm.Application
+      children:
+      - name: '1.0.0'
+        type: udm.DeploymentPackage
+        deployables:
+        - name: {{.Namespace}}
+          type: k8s.NamespaceSpec
+          namespaceName: '{{.Namespace}}'
+{{end}}

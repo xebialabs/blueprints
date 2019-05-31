@@ -63,6 +63,7 @@ spec:
     description: What is the endpoint for the cluster, example https://104.155.109.230
   - name: Namespace
     type: Input
+    description: What is the name of the namespace? This should be same as the one used in Kubernetes files.
     value: xl-demo
   - name: enableCICD
     type: Confirm

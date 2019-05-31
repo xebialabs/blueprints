@@ -1,0 +1,24 @@
+# test the scenario with neither cluster nor CI-CD enabled
+answers-file: answers-no-cluster-with-cicd.yaml
+expected-files:
+    - xebialabs.yaml
+    - xebialabs/USAGE.md
+    - xebialabs/xld-infra-env.yaml
+    - xebialabs/xld-kubernetes-invoice-app.yaml
+    - xebialabs/xld-kubernetes-notification-app.yaml
+    - xebialabs/xld-kubernetes-store-app.yaml
+    - xebialabs/xld-terraform-apps.yaml
+    - xebialabs/xlr-pipeline-ci-cd.yaml
+    - xebialabs/xlr-pipeline-destroy.yaml
+    - docker/docker-compose.yml
+    - docker/data/configure-xl-devops-platform.yaml
+    - docker/jenkins/jenkins.yaml
+not-expected-files:
+    - terraform/aks/main.tf
+    - terraform/aks/outputs.tf
+    - terraform/aks/variables.tf
+    - terraform/.gitignore
+    - terraform/backend.tf
+    - terraform/main.tf
+    - terraform/outputs.tf
+    - terraform/variables.tf
