@@ -26,3 +26,13 @@ spec:
         server: XL Deploy
         deploymentPackage: {{.Prefix}}{{$clusterName}}/1.0.0
         deploymentEnvironment: Environments/{{.Prefix}}terraform
+
+    - name: Deploy Application
+      type: xlrelease.Phase
+
+      tasks:
+      - name: Deploy node
+        type: xldeploy.Deploy
+        server: XL Deploy
+        deploymentPackage: nginx/latest # TODO Can this be a varible instead of hard-coded?
+        deploymentEnvironment: Environments/{{.Prefix}}terraform
