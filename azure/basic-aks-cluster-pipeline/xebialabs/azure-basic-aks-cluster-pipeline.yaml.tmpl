@@ -36,3 +36,31 @@ spec:
         server: XL Deploy
         deploymentPackage: nginx/latest # TODO Can this be a varible instead of hard-coded?
         deploymentEnvironment: Environments/{{.Prefix}}terraform
+
+---
+
+apiVersion: xl-release/v1
+kind: Templates
+spec:
+- name: {{$clusterName}}
+  type: xlrelease.Folder
+  children:
+  - name: {{$clusterName}}-destroy
+    type: xlrelease.Release
+    description: |
+      Blah: # TODO
+    tags:
+    - Azure
+    - AKS
+    - {{$clusterName}}
+    scriptUsername: !value XL_RELEASE_USERNAME
+    scriptUserPassword: !value XL_RELEASE_PASSWORD
+    phases:
+
+    - name: Undeploy Application
+      type: xlrelease.Phase
+      tasks:
+      - name: Undeploy node
+        type: xldeploy.Undeploy
+        server: XL Deploy
+        deployedApplication: Environments/{{.Prefix}}terraform/nginx
