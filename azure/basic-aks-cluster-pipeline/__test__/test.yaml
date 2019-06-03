@@ -1,0 +1,3 @@
+answers-file: answers.yaml
+expected-files:
+- xebialabs/azure-basic-aks-cluster-pipeline.yaml

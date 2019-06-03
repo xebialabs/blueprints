@@ -1,4 +1,5 @@
 answers-file: answers.yaml
 expected-files:
-    - xebialabs/kubernetes-application.yaml
-    - kubernetes/nginx.yaml
+- xebialabs/kubernetes-application.yaml
+- kubernetes/nginx-service.yaml
+- kubernetes/nginx-deployment.yaml
