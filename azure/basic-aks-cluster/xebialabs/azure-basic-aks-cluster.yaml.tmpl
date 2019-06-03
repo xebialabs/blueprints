@@ -54,12 +54,8 @@ spec:
       apiServerURL: '{{"{{%outputVariables.host%}}"}}'
       token: '{{"{{%outputVariables.token%}}"}}'
       skipTLS: true
-      children:
-      - name: default
-        type: template.k8s.Namespace
     - name: "{{$clusterName}} environment"
       type: template.udm.Environment
       instanceName: {{$clusterName}}
       members:
       - "../{{$clusterName}} infrastructure"
-      - "../{{$clusterName}} infrastructure/default"

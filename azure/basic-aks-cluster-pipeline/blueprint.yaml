@@ -25,6 +25,15 @@ spec:
     type: Input
     value: azure-aks-
 
+  - name: XLDUrlForXLR
+    type: Input
+    description: XL Deploy URL for XL Release (This will only be used in the XL Release template)
+    default: http://xl-deploy:4516
+
+  - name: Namespace
+    type: Input
+    value: xl-demo
+
   files:
   # XebiaLabs
   - path: xebialabs/USAGE-azure-basic-aks-cluster-pipeline.md.tmpl

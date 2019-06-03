@@ -1,5 +1,20 @@
 {{$clusterName := .ClusterName | kebabcase}}
 
+apiVersion: xl-deploy/v1
+kind: Applications
+spec:
+- name: {{$clusterName}}-namespace
+  type: udm.Application
+  children:
+  - name: '1.0.0'
+    type: udm.DeploymentPackage
+    deployables:
+    - name: xl-demo
+      type: k8s.NamespaceSpec
+      namespaceName: {{.Namespace}}
+
+---
+
 apiVersion: xl-release/v1
 kind: Templates
 spec:
@@ -9,18 +24,39 @@ spec:
   - name: {{$clusterName}}-cicd
     type: xlrelease.Release
     description: |
-      Blah # TODO
+      Orchestrates the azure/basic-aks-cluster and kubernetes/application blueprints
     tags:
     - Azure
     - AKS
     - {{$clusterName}}
     scriptUsername: !value XL_RELEASE_USERNAME
     scriptUserPassword: !value XL_RELEASE_PASSWORD
+
+    variables:
+    - key: control
+      type: xlrelease.MapStringStringVariable
+      requiresValue: false
+      showOnReleaseStart: false
+      value:
+        namespace: {{.Namespace}}
+        serviceName: nginx
+
+    - key: lbHostnameOrIp
+      type: xlrelease.StringVariable
+      requiresValue: false
+      showOnReleaseStart: false
+
+    - key: xld-admin-password
+      type: xlrelease.PasswordStringVariable
+      requiresValue: true
+      showOnReleaseStart: false
+      value: !value XL_DEPLOY_PASSWORD
+
     phases:
     - name: Provision Infrastructure
       type: xlrelease.Phase
-
       tasks:
+
       - name: Provision Azure AKS cluster
         type: xldeploy.Deploy
         server: XL Deploy
@@ -29,13 +65,58 @@ spec:
 
     - name: Deploy Application
       type: xlrelease.Phase
-
       tasks:
+
+      - name: Deploy namespace
+        type: xldeploy.Deploy
+        server: XL Deploy
+        deploymentPackage: {{$clusterName}}-namespace/1.0.0
+        deploymentEnvironment: Environments/{{$clusterName}}
+
       - name: Deploy node
         type: xldeploy.Deploy
         server: XL Deploy
-        deploymentPackage: nginx/latest # TODO Can this be a varible instead of hard-coded?
-        deploymentEnvironment: Environments/{{.Prefix}}terraform
+        deploymentPackage: nginx/latest
+        deploymentEnvironment: Environments/{{$clusterName}}
+
+    - name: Test
+      type: xlrelease.Phase
+      tasks:
+
+      - name: Get service public URL
+        type: xlrelease.SequentialGroup
+        tasks:
+
+        - name: Get K8s service specs
+          type: xldeploy.Controltask
+          server: XL Deploy
+          numberOfContinueRetrials: 100
+          pollingInterval: 10
+          ciId: Infrastructure/{{$clusterName}}
+          taskName: describeService
+          variableMapping:
+            pythonScript.xlDeployTaskId: ${taskId}
+            pythonScript.parameters: ${control}
+
+        - name: Parse Store K8s service
+          type: webhook.XmlWebhook
+          URL: {{.XLDUrlForXLR}}/deployit/tasks/v2/export
+          method: GET
+          username: !value XL_DEPLOY_USERNAME
+          xPathExpression: "/list/task[@id=\"${taskId}\"]//log/text()"
+          variableMapping:
+            pythonScript.result: ${taskOutput}
+            pythonScript.password: ${xld-admin-password}
+
+        - name: Get K8s service ip or hostname
+          type: xlrelease.ScriptTask
+          script: |
+            import re
+            m = re.search('hostname:(.*)\nip:([0-9.]+|None)', releaseVariables['taskOutput'])
+            ipHostname = [m.group(1), m.group(2)]
+            for item in ipHostname:
+                if "None" not in item:
+                    releaseVariables['lbHostnameOrIp'] = item
 
 ---
 
@@ -48,7 +129,7 @@ spec:
   - name: {{$clusterName}}-destroy
     type: xlrelease.Release
     description: |
-      Blah: # TODO
+      This XL Release template shows how to undeploy an application, based on microservices architecture, to Azure AKS using XL Deploy and Terraform.
     tags:
     - Azure
     - AKS
@@ -63,11 +144,16 @@ spec:
       - name: Undeploy node
         type: xldeploy.Undeploy
         server: XL Deploy
-        deployedApplication: Environments/{{.Prefix}}terraform/nginx
+        deployedApplication: Environments/{{$clusterName}}/nginx
 
     - name: Deprovision Infrastructure
       type: xlrelease.Phase
       tasks:
+      - name: Deprovision {{.Namespace}} namespace
+        type: xldeploy.Undeploy
+        server: XL Deploy
+        deployedApplication: Environments/{{$clusterName}}/{{$clusterName}}-namespace
+
       - name: Deprovision Azure AKS cluster
         type: xldeploy.Undeploy
         server: XL Deploy
