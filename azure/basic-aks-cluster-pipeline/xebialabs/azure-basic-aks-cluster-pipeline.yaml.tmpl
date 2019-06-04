@@ -50,12 +50,6 @@ spec:
       type: xlrelease.Phase
       tasks:
 
-      - name: Deploy namespace
-        type: xldeploy.Deploy
-        server: XL Deploy
-        deploymentPackage: {{$clusterName}}-{{.Namespace}}-namespace/1.0.0
-        deploymentEnvironment: Environments/{{$clusterName}}-{{.Namespace}}
-
       - name: Deploy node
         type: xldeploy.Deploy
         server: XL Deploy
