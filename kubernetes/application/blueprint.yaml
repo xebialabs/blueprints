@@ -21,7 +21,7 @@ spec:
 
   - name: Namespace
     type: Input
-    value: xl-demo
+    value: default
 
   files:
   # XebiaLabs

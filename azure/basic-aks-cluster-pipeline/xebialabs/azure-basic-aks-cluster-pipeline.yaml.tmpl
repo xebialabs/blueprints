@@ -1,20 +1,5 @@
 {{$clusterName := .ClusterName | kebabcase}}
 
-apiVersion: xl-deploy/v1
-kind: Applications
-spec:
-- name: {{$clusterName}}-namespace
-  type: udm.Application
-  children:
-  - name: '1.0.0'
-    type: udm.DeploymentPackage
-    deployables:
-    - name: xl-demo
-      type: k8s.NamespaceSpec
-      namespaceName: {{.Namespace}}
-
----
-
 apiVersion: xl-release/v1
 kind: Templates
 spec:
@@ -26,8 +11,6 @@ spec:
     description: |
       Orchestrates the azure/basic-aks-cluster and kubernetes/application blueprints
     tags:
-    - Azure
-    - AKS
     - {{$clusterName}}
     scriptUsername: !value XL_RELEASE_USERNAME
     scriptUserPassword: !value XL_RELEASE_PASSWORD
@@ -57,7 +40,7 @@ spec:
       type: xlrelease.Phase
       tasks:
 
-      - name: Provision Azure AKS cluster
+      - name: Provision the cluster
         type: xldeploy.Deploy
         server: XL Deploy
         deploymentPackage: {{.Prefix}}{{$clusterName}}/1.0.0
@@ -70,8 +53,8 @@ spec:
       - name: Deploy namespace
         type: xldeploy.Deploy
         server: XL Deploy
-        deploymentPackage: {{$clusterName}}-namespace/1.0.0
-        deploymentEnvironment: Environments/{{$clusterName}}
+        deploymentPackage: {{$clusterName}}-{{.Namespace}}-namespace/1.0.0
+        deploymentEnvironment: Environments/{{$clusterName}}-{{.Namespace}}
 
       - name: Deploy node
         type: xldeploy.Deploy
@@ -87,11 +70,11 @@ spec:
         type: xlrelease.SequentialGroup
         tasks:
 
-        - name: Wait 60 seconds for load balancer to be ready
+        - name: Wait 120 seconds for load balancer to be ready
           type: xlrelease.ScriptTask
           script: |
             import time
-            time.sleep(60)
+            time.sleep(120)
 
         - name: Get K8s service specs
           type: xldeploy.Controltask
@@ -130,7 +113,7 @@ spec:
           import urllib2
           import time
           time.sleep(60)
-          req = urllib2.Request('http://${lbHostnameOrIp')
+          req = urllib2.Request('http://${lbHostnameOrIp}')
           opener = urllib2.build_opener()
           response = opener.open(req)
           body = response.read()
@@ -144,7 +127,7 @@ spec:
         type: xlrelease.GateTask
         team: Release Admin
         description: |
-          The app is now live on AKS!
+          The app is now live!
           Check out the website and complete this task when done.
 
           URL => http://${lbHostnameOrIp}
@@ -159,10 +142,8 @@ spec:
   - name: {{$clusterName}}-destroy
     type: xlrelease.Release
     description: |
-      This XL Release template shows how to undeploy an application, based on microservices architecture, to Azure AKS using XL Deploy and Terraform.
+      This XL Release template shows how to undeploy an application, based on microservices architecture.
     tags:
-    - Azure
-    - AKS
     - {{$clusterName}}
     scriptUsername: !value XL_RELEASE_USERNAME
     scriptUserPassword: !value XL_RELEASE_PASSWORD
@@ -179,11 +160,6 @@ spec:
     - name: Deprovision Infrastructure
       type: xlrelease.Phase
       tasks:
-      - name: Deprovision {{.Namespace}} namespace
-        type: xldeploy.Undeploy
-        server: XL Deploy
-        deployedApplication: Environments/{{$clusterName}}/{{$clusterName}}-namespace
-
       - name: Deprovision Azure AKS cluster
         type: xldeploy.Undeploy
         server: XL Deploy

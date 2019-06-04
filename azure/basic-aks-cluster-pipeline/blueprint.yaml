@@ -13,17 +13,12 @@ spec:
   parameters:
   - name: ClusterName
     type: Input
-    description: What do you want to name the cluster?
+    description: "Use the same cluster name as you did for the basic cluster:"
 
-  - name: ClientSecret
-    type: Input
-    description: What is the client secret?
-    secret: true
-
-  # Hidden prefix
   - name: Prefix
     type: Input
-    value: azure-aks-
+    description: "Use the same prefix as you did for the basic cluster:"
+    pattern: "([a-z0-9-]+-)+"
 
   - name: XLDUrlForXLR
     type: Input
@@ -32,7 +27,7 @@ spec:
 
   - name: Namespace
     type: Input
-    value: xl-demo
+    value: default
 
   files:
   # XebiaLabs

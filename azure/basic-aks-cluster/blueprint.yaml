@@ -79,10 +79,11 @@ spec:
     type: Input
     description: What do you want to name the cluster?
 
-  # Hidden prefix
   - name: Prefix
     type: Input
-    value: azure-aks-
+    description: "Specify the application prefix (use the default if you're not sure):"
+    default: azure-aks-
+    pattern: "([a-z0-9-]+-)+"
 
   files:
   # XebiaLabs
