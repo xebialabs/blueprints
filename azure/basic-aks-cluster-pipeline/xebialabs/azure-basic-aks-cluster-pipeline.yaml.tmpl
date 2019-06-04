@@ -115,9 +115,33 @@ spec:
             m = re.search('hostname:(.*)\nip:([0-9.]+|None)', releaseVariables['taskOutput'])
             ipHostname = [m.group(1), m.group(2)]
             for item in ipHostname:
-                if "None" not in item:
+                if 'None' not in item:
                     releaseVariables['lbHostnameOrIp'] = item
 
+      - name: Check application status
+        type: xlrelease.ScriptTask
+        script: |
+          import urllib2
+          import time
+          time.sleep(60)
+          req = urllib2.Request('http://${lbHostnameOrIp')
+          opener = urllib2.build_opener()
+          response = opener.open(req)
+          body = response.read()
+          if 'Welcome to nginx' in body:
+              print 'All instances are running'
+          else:
+              print 'Not all instances are running'
+              exit(1)
+
+      - name: Verify application
+        type: xlrelease.GateTask
+        team: Release Admin
+        description: |
+          The app is now live on AKS!
+          Check out the website and complete this task when done.
+
+          URL => http://${lbHostnameOrIp}
 ---
 
 apiVersion: xl-release/v1
