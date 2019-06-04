@@ -9,7 +9,7 @@ spec:
       deployables:
         - name: {{ .KubernetesApplicationName }}-service
           type: k8s.ResourcesFile
-          file: !file "../kubernetes/nginx-service.yml"
+          file: !file "../kubernetes/nginx-service.yaml"
         - name: {{ .KubernetesApplicationName }}-deployment
           type: k8s.ResourcesFile
-          file: !file "../kubernetes/nginx-deployment.yml"
+          file: !file "../kubernetes/nginx-deployment.yaml"
