@@ -87,6 +87,12 @@ spec:
         type: xlrelease.SequentialGroup
         tasks:
 
+        - name: Wait 60 seconds for load balancer to be ready
+          type: xlrelease.ScriptTask
+          script: |
+            import time
+            time.sleep(60)
+
         - name: Get K8s service specs
           type: xldeploy.Controltask
           server: XL Deploy
