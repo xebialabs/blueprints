@@ -62,6 +62,7 @@ spec:
 
   - name: NodeAutoScalingGroupDesiredSize
     type: Input
+    default: 3
     description: What is the desired number of nodes in the cluster?
     pattern: "([0-9])+"
 
