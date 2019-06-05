@@ -17,7 +17,7 @@ spec:
     scriptUserPassword: !value XL_RELEASE_PASSWORD
 
     variables:
-    {{- if .ProvisionEFS }}     
+    {{- if .ProvisionEFS }}
       - type: xlrelease.StringVariable
         key: efs
         requiresValue: false
