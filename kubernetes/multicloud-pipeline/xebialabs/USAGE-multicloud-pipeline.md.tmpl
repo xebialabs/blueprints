@@ -1,17 +1,25 @@
 {{$clusterName := .ClusterName | kebabcase}}
 
-## Notes
+# Orchestrate provision of Kubernetes cluster
 
-## Provision  simple AKS cluster on Azure
-
-### Prerequisites
+## Prerequisites
 
 To deploy this blueprint, follow the steps below:
 
 1. Apply the generated YAML configurations using the XL CLI. Open up a terminal in the folder where you generated the configuration. Then run:
 
-```plain
-xl apply -f xebialabs/multicloud-pipeline.yaml
-```
+    ```plain
+    xl apply -f xebialabs/multicloud-pipeline.yaml
+    ```
 
-2. Go to XL Release (default http://localhost:5516) and look for the "{{$clusterName}}-cicd" template and start a new release fro it.
+2. Go to XL Release (default http://localhost:5516) and look for the "{{$clusterName}}-cicd" template and start a new release from it.
+
+3. To deprovision the cluster, look for the "{{$clusterName}}-destroy" template and start a new release from it.
+
+## Minimum required versions
+
+This blueprint version requires at least the following versions of the specified tools to work properly:
+
+- XL Deploy: Version 8.6.1
+- XL Release: Version 8.6.1
+- XL CLI: Version 8.6.0
