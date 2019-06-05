@@ -9,7 +9,9 @@ spec:
   - name: {{$clusterName}}-cicd
     type: xlrelease.Release
     description: |
-      Orchestrates the azure/basic-aks-cluster and kubernetes/application blueprints
+      Orchestrates the following blueprints:
+      * azure/basic-aks-cluster OR gcp/basic-gke-cluster
+      * kubernetes/application
     tags:
     - {{$clusterName}}
     scriptUsername: !value XL_RELEASE_USERNAME
@@ -154,7 +156,7 @@ spec:
     - name: Deprovision Infrastructure
       type: xlrelease.Phase
       tasks:
-      - name: Deprovision Azure AKS cluster
+      - name: Deprovision the cluster
         type: xldeploy.Undeploy
         server: XL Deploy
         deployedApplication: Environments/{{.Prefix}}terraform/{{.Prefix}}{{$clusterName}}

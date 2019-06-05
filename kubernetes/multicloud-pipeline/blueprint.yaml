@@ -2,12 +2,14 @@ apiVersion: xl/v1
 kind: Blueprint
 
 metadata:
-  projectName: Azure-Basic-AKS-Cluster-Pipeline
+  projectName: Kubernetes-Multicloud-Pipeline
   description: |
-    The blueprint provision a basic XLR instance to control the Azure-Basic-AKS blueprint. It takes over the manual deployment that is done within the XLD interface.
+    The blueprint provision a basic XLR instance to control the below blueprints. It takes over the manual deployment that is done within the XLD interface.
+    * azure/basic-aks-cluster OR gcp/basic-gke-cluster
+    * kubernetes/application
   author: XebiaLabs
   version: 1.0
-  instructions: Please read the generated file "xebialabs/USAGE-azure-basic-aks-cluster-pipeline.md" for further usage instructions.
+  instructions: Please read the generated file "xebialabs/USAGE-multicloud-pipeline.md" for further usage instructions.
 
 spec:
   parameters:
@@ -31,5 +33,5 @@ spec:
 
   files:
   # XebiaLabs
-  - path: xebialabs/USAGE-azure-basic-aks-cluster-pipeline.md.tmpl
-  - path: xebialabs/azure-basic-aks-cluster-pipeline.yaml.tmpl
+  - path: xebialabs/USAGE-multicloud-pipeline.md.tmpl
+  - path: xebialabs/multicloud-pipeline.yaml.tmpl
