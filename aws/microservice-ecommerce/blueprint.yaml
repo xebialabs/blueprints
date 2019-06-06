@@ -1,13 +1,13 @@
-apiVersion: xl/v1
+apiVersion: xl/v2
 kind: Blueprint
 
 metadata:
-  projectName: AWS-Microservice-EKS-with-JHipster
+  name: AWS-Microservice-EKS-with-JHipster
   description: |
     The blueprint deploys an e-commerce microservice application to AWS EKS.
     XL Deploy does the provisioning and deployment, while XL Release orchestrates everything.
   author: XebiaLabs
-  version: 1.0
+  version: 2.0
   instructions: Please read the generated file "xebialabs/USAGE.md" for further usage instructions.
 
 spec:
@@ -15,70 +15,75 @@ spec:
   # General variables
   - name: AppName
     type: Input
-    description: What is the name of the application?
+    prompt: What is the name of the application?
 
   # AWS specific variables
   - name: UseAWSCredentialsFromSystem
     type: Confirm
-    description: Do you want to use AWS credentials from ~/.aws/credentials file?
-    dependsOnTrue: !fn aws.credentials().IsAvailable
+    prompt: Do you want to use AWS credentials from ~/.aws/credentials file?
+    promptIf: !expr "awsCredentials('IsAvailable')"
   - name: AWSAccessKey
-    type: Input
-    secret: true
-    description: What is the AWS Access Key ID?
-    dependsOnFalse: UseAWSCredentialsFromSystem
-    default: !fn aws.credentials().AccessKeyID
+    type: SecretInput
+    prompt: What is the AWS Access Key ID?
+    promptIf: !expr "!UseAWSCredentialsFromSystem"
+    default: !expr "awsCredentials('AccessKeyID')"
   - name: AWSAccessSecret
-    type: Input
-    secret: true
-    description: What is the AWS Secret Access Key?
-    dependsOnFalse: UseAWSCredentialsFromSystem
-    default: !fn aws.credentials().SecretAccessKey
+    type: SecretInput
+    prompt: What is the AWS Secret Access Key?
+    promptIf: !expr "!UseAWSCredentialsFromSystem"
+    default: !expr "awsCredentials('SecretAccessKey')"
   - name: AWSRegion #options are set manually because EKS service is not registered within AWS GO SDK
     type: Select
-    description: "Select the AWS region:"
+    prompt: "Select the AWS region:"
     options:
     # This needs to be updated in the RegionMap of cloudformation/eks-workers.yaml as well
-      - us-west-2
+      - label: US West (Oregon)
+        value: us-west-2
       # commented out because of https://github.com/boto/boto3/issues/811
       # - us-east-1
-      - us-east-2
-      - eu-central-1
+      - label: US East (Ohio)
+        value: us-east-2
+      - label: EU (Frankfurt)
+        value: eu-central-1
       # - eu-north-1 # doesn't seem to work
-      - eu-west-1
-      - eu-west-2
-      - eu-west-3
-      - ap-northeast-1
-      - ap-northeast-2
-      - ap-south-1
-      - ap-southeast-1
-      - ap-southeast-2
+      - label: EU (Ireland)
+        value: eu-west-1
+      - label: EU (London)
+        value: eu-west-2
+      - label: EU (Paris)
+        value: eu-west-3
+      - label: Asia Pacific (Tokyo)
+        value: ap-northeast-1
+      - label: Asia Pacific (Seoul)
+        value: ap-northeast-2
+      - label: Asia Pacific (Mumbai)
+        value: ap-south-1
+      - label: Asia Pacific (Singapore)
+        value: ap-southeast-1
+      - label: Asia Pacific (Sydney)
+        value: ap-southeast-2
   - name: ProvisionCluster
     type: Confirm
-    description: Do you want to provision a new AWS EKS cluster?
+    prompt: Do you want to provision a new AWS EKS cluster?
   - name: ClusterName
     type: Input
-    description: What is the name of the cluster?
+    prompt: What is the name of the cluster?
   - name: ClusterEndpoint
     type: Input
-    dependsOnFalse: ProvisionCluster
-    description: What is the endpoint for the cluster, example https://3219568049031C127A97DD725F241767.yl4.eu-west-1.eks.amazonaws.com
+    prompt: What is the endpoint for the cluster, example https://3219568049031C127A97DD725F241767.yl4.eu-west-1.eks.amazonaws.com
+    promptIf: !expr "!ProvisionCluster"
   - name: Namespace
     type: Input
-    dependsOnFalse: ProvisionCluster
-    description: What is the name of the namespace? This should be same as the one used in Kubernetes files.
+    prompt: What is the name of the namespace? This should be same as the one used in Kubernetes files.
+    promptIf: !expr "!ProvisionCluster"
     default: xl-demo
   - name: StoreAdminUsername
-    type: Input
-    description: Store Admin username
     value: admin
   - name: StoreAdminPassword
-    type: Input
-    description: Store Admin password
     value: admin
   - name: XLDUrlForXLR
     type: Input
-    description: XL Deploy URL for XL Release (This will only be used in the XL Release template)
+    prompt: XL Deploy URL for XL Release (This will only be used in the XL Release template)
     default: http://xl-deploy:4516
 
   files:
@@ -91,19 +96,18 @@ spec:
   - path: xebialabs/xlr-pipeline-destroy.yaml.tmpl
   - path: xebialabs/USAGE.md.tmpl
   - path: kubernetes/aws-auth-cm.yaml
-    dependsOnTrue: ProvisionCluster
+    writeIf: ProvisionCluster
   - path: cloudformation/cfn-secret-provider.zip
-    dependsOnTrue: ProvisionCluster
+    writeIf: ProvisionCluster
   - path: cloudformation/eks-master.yaml
-    dependsOnTrue: ProvisionCluster
+    writeIf: ProvisionCluster
   - path: cloudformation/eks-user.yaml
-    dependsOnTrue: ProvisionCluster
+    writeIf: ProvisionCluster
   - path: cloudformation/eks-vpc.yaml
-    dependsOnTrue: ProvisionCluster
+    writeIf: ProvisionCluster
   - path: cloudformation/eks-workers.yaml
-    dependsOnTrue: ProvisionCluster
+    writeIf: ProvisionCluster
   - path: xebialabs.yaml
-  # docker-compose setup for required tools
   - path: docker/docker-compose.yml
   - path: docker/data/configure-xl-devops-platform.yaml
   - path: docker/jenkins/jenkins.yaml
