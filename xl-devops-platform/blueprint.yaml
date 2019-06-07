@@ -1,54 +1,54 @@
-apiVersion: xl/v1
+apiVersion: xl/v2
 kind: Blueprint
 
 metadata:
-  projectName: Docker compose
+  name: Docker compose
   description: Creates the necessary `docker-compose.yaml` needed to run your specific setup.
   author: XebiaLabs
-  version: 1.0
+  version: 2.0
   instructions: Please read the generated file "xebialabs/USAGE.md" for further usage instructions.
   
 spec:
   parameters:
   - name: UseXLDeployFlag
     type: Confirm
-    description: Do you want to install XL Deploy?
+    prompt: Do you want to install XL Deploy?
     default: true
 
   - name: XLDeployPort
     type: Input
-    description: "Host port for XL Deploy:"
+    prompt: "Host port for XL Deploy:"
+    promptIf: UseXLDeployFlag
     default: 4516
-    dependsOnTrue: UseXLDeployFlag
 
   - name: UseXLReleaseFlag
     type: Confirm
-    description: Do you want to install XL Release?
+    prompt: Do you want to install XL Release?
     default: true
 
   - name: XLReleasePort
     type: Input
-    description: "Host port for XL Release:"
+    prompt: "Host port for XL Release:"
+    promptIf: UseXLReleaseFlag
     default: 5516
-    dependsOnTrue: UseXLReleaseFlag
 
   - name: JetPackOrEnterprise
     type: Select
-    description: "Do you want to use JetPack or XL Enterprise:"
+    prompt: "Do you want to use JetPack or XL Enterprise:"
     options:
-    - JetPack
-    - XL Enterprise
+      - JetPack
+      - XL Enterprise
 
   - name: XLVersion
     type: Select
-    description: "Select the version of XL you want to use:"
+    prompt: "Select the version of XL you want to use:"
+    promptIf: !expr "UseXLDeployFlag == true || UseXLReleaseFlag == true"
     options:
-    - 8.6.1
-    dependsOnTrue: !expression "UseXLDeployFlag == true || UseXLReleaseFlag == true"
+      - 8.6.1
 
   - name: UseDockerProxyFlag
     type: Confirm
-    description: Do you want to be able to deploy to your local Docker instance?
+    prompt: Do you want to be able to deploy to your local Docker instance?
     default: true
 
   files:
@@ -56,4 +56,4 @@ spec:
   - path: xebialabs/config.yaml.tmpl
   - path: docker/docker-compose.yml.tmpl
   - path: docker/data/configure-xl-devops-platform.yaml.tmpl
-    dependsOnTrue: UseXLReleaseFlag
+    writeIf: UseXLReleaseFlag
