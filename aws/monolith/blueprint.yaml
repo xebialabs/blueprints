@@ -17,10 +17,12 @@ spec:
     prompt: What is the Application name (maximum 25 characters)?
     validate: !expr "regex('(\\\\S){0,25}', AppName)"
   - name: PublicPort
+    description: The port that the application shoule be exposed
     value: 80
   - name: MySQLMasterPassword
     type: SecretInput
     prompt: What should be the password for MySQL? (minimum 8 characters)
+    validate: !expr "regex('(\\\\S){8,}', MySQLMasterPassword)"
   - name: UseAWSCredentialsFromSystem
     type: Confirm
     prompt: Do you want to use AWS credentials from ~/.aws/credentials file?
