@@ -4,7 +4,7 @@ pipeline {
     agent none
     parameters {
         string(name: 'RELEASE_BRANCH_NAME', defaultValue: 'master', description: 'The branch from which to make the release')
-        string(name: 'RELEASE_FOLDER', defaultValue: '9.0.0', description: 'Folder to copy artifacts into')
+        string(name: 'RELEASE_FOLDER', defaultValue: '', description: 'Folder to copy artifacts into')
     }
     environment { 
         CC = 'clang'
