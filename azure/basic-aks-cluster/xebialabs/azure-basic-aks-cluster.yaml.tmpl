@@ -57,6 +57,8 @@ spec:
       children:
       - name: default
         type: template.k8s.Namespace
+        tags:
+        - default-namespace
     - name: "{{$clusterName}} environment"
       type: template.udm.Environment
       instanceName: {{$clusterName}}

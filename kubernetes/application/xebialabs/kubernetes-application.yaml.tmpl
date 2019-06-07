@@ -8,5 +8,9 @@ spec:
       type: udm.DeploymentPackage
       deployables:
         - name: {{ .KubernetesApplicationName }}
+          tags:
+          - default-namespace
           type: k8s.ResourcesFile
           file: !file {{ .KubernetesResourcesFile }}
+          tags:
+          - default-namespace

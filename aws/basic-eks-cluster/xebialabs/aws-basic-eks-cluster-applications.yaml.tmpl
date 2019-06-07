@@ -121,6 +121,8 @@ spec:
           children:
           - name: default
             type: template.k8s.Namespace
+            tags:
+            - default-namespace
           childTemplates:
           # this namespace is needed for authentication to the cluster
           - name: kube-system
