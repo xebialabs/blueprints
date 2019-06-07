@@ -14,41 +14,35 @@ spec:
   - name: KubernetesName
     type: Input
     prompt: "What is the name of the Kubernetes cluster?"
-    # TODO: Should be changed to value instead of default after limitation is removed
-    default: !expr "k8sConfig('ContextCluster')"
+    value: !expr "k8sConfig('ContextCluster')"
 
   - name: KubernetesURL
     type: Input
     prompt: "What is the URL of the Kubernetes cluster?"
-    # TODO: Should be changed to value instead of default after limitation is removed
-    default: !expr "k8sConfig('ClusterServer')"
+    value: !expr "k8sConfig('ClusterServer')"
 
   - name: KubernetesSkipTLSVerify
     type: Confirm
     prompt: "Does the Kubernetes cluster have a self-signed certificate?"
-    # TODO: Should be changed to value instead of default after limitation is removed
-    default: !expr "k8sConfig('ClusterInsecureSkipTLSVerify')"
+    value: !expr "k8sConfig('ClusterInsecureSkipTLSVerify')"
 
   - name: KubernetesClientCert
     # TODO: Should be SecretEditor after feature is implemented
     type: Editor
     prompt: "Please enter the client certificate to use to connect to the Kubernetes cluster: "
-    # TODO: Should be changed to value instead of default after limitation is removed
-    default: !expr "k8sConfig('UserClientCertificateData')"
+    value: !expr "k8sConfig('UserClientCertificateData')"
 
   - name: KubernetesClientPrivateKey
     # TODO: Should be SecretEditor after feature is implemented
     type: Editor
     prompt: "Please enter the client private key to use to connect to the Kubernetes cluster: "
-    # TODO: Should be changed to value instead of default after limitation is removed
-    default: !expr "k8sConfig('UserClientKeyData')"
+    value: !expr "k8sConfig('UserClientKeyData')"
 
   - name: KubernetesNamespace
     type: Input
     prompt: "Which namespace in the Kubernetes cluster should be used?"
-    # TODO: Should be changed to value instead of default after limitation is removed
-    default: !expr "k8sConfig('ContextNamespace')"
-    #default: default
+    value: !expr "k8sConfig('ContextNamespace')"
+    default: default
 
   files:
     - path: xebialabs/USAGE-kubernetes-environment.md
