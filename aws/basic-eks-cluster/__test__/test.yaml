@@ -1,0 +1,6 @@
+answers-file: answers.yaml
+expected-files:
+- xebialabs/aws-basic-eks-cluster-applications.yaml
+- xebialabs/aws-basic-eks-cluster-environments.yaml
+- xebialabs/aws-basic-eks-cluster.yaml
+- xebialabs/USAGE-aws-basic-eks-cluster.md

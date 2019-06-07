@@ -1,0 +1,81 @@
+apiVersion: xl/v1
+kind: Blueprint
+
+metadata:
+  projectName: AWS-EKS-Basic
+  description: |
+    The blueprint provisions a very basic AWS EKS cluster. XL Deploy does the provisioning.
+  author: XebiaLabs
+  version: 1.0
+  instructions: Please read the generated file "xebialabs/USAGE-aws-basic-eks-cluster.md" for further usage instructions.
+
+spec:
+  parameters:
+  - name: AppName
+    type: Input
+    description: The application name
+
+  # ############################################################################
+  # AWS specific variables
+  # ############################################################################
+  - name: UseAWSCredentialsFromSystem
+    type: Confirm
+    description: Do you want to use AWS credentials from ~/.aws/credentials file?
+    dependsOnTrue: !fn aws.credentials().IsAvailable
+
+  - name: AWSAccessKey
+    type: Input
+    secret: true
+    description: What is the AWS Access Key ID?
+    dependsOnFalse: UseAWSCredentialsFromSystem
+    default: !fn aws.credentials().AccessKeyID
+
+  - name: AWSAccessSecret
+    type: Input
+    secret: true
+    description: What is the AWS Secret Access Key?
+    dependsOnFalse: UseAWSCredentialsFromSystem
+    default: !fn aws.credentials().SecretAccessKey
+
+  - name: AWSRegion #options are set manually because EKS service is not registered within AWS GO SDK
+    type: Select
+    description: "Select the AWS region:"
+    options:
+    # This needs to be updated in the RegionMap of cloudformation/eks-workers.yaml as well
+      - us-west-2
+      # commented out because of https://github.com/boto/boto3/issues/811
+      # - us-east-1
+      - us-east-2
+      - eu-central-1
+      # - eu-north-1 # doesn't seem to work
+      - eu-west-1
+      - eu-west-2
+      - eu-west-3
+      - ap-northeast-1
+      - ap-northeast-2
+      - ap-south-1
+      - ap-southeast-1
+      - ap-southeast-2
+
+  # - name: ClusterName
+  #   type: Input
+  #   description: What do you want to name the cluster?
+
+  - name: Prefix
+    type: Input
+    description: "Specify the application prefix (use the default if you're not sure):"
+    default: aws-eks-
+    pattern: "([a-z0-9-]+-)+"
+
+  files:
+  - path: xebialabs/aws-basic-eks-cluster.yaml.tmpl
+  - path: xebialabs/aws-basic-eks-cluster-applications.yaml.tmpl
+  - path: xebialabs/aws-basic-eks-cluster-environments.yaml.tmpl
+  - path: xebialabs/USAGE-aws-basic-eks-cluster.md.tmpl
+
+  - path: kubernetes/aws-auth-cm.yaml
+  - path: cloudformation/cfn-secret-provider.zip
+  - path: cloudformation/eks-master.yaml
+  - path: cloudformation/eks-user.yaml
+  - path: cloudformation/eks-vpc.yaml
+  - path: cloudformation/eks-workers.yaml
