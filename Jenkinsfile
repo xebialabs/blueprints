@@ -29,8 +29,8 @@ pipeline {
             steps {
                 checkout scm
                 sh 'printenv'
-                sh 'echo ${params.RELEASE_FOLDER}'
-                sh 'echo ${params.RELEASE_BRANCH_NAME}'
+                sh "echo ${params.RELEASE_FOLDER}"
+                sh "echo ${params.RELEASE_BRANCH_NAME}"
                 sh "python ./generate_index.py"
                 // sh "rsync -razv --delete --chmod=Du=rwx,Dg=rx,Do=rx,Fu=rw,Fg=r,Fo=r --exclude '.git' --exclude '.github' --exclude '.xebialabs' --exclude 'Jenkinsfile' --exclude 'generate_index.py' --exclude 'CONTRIBUTING.md' --exclude 'xl' --exclude 'xlw' --exclude 'integration_tests.py' . ${env.DIST_SERVER_USER}@${env.DIST_SERVER_HOSTNAME}:${env.DIST_SERVER_BLUEPRINT_PATH}/${params.RELEASE_FOLDER}"
             }
