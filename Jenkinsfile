@@ -2,6 +2,10 @@
 
 pipeline {
     agent none
+    parameters {
+        string(name: 'RELEASE_FOLDER', defaultValue: '9.0.0', description: 'Folder to copy artifacts into')
+    }
+
 
     options {
         buildDiscarder(logRotator(numToKeepStr: '20', artifactDaysToKeepStr: '7', artifactNumToKeepStr: '5'))
@@ -21,7 +25,7 @@ pipeline {
             steps {
                 checkout scm
                 sh "python ./generate_index.py"
-                sh "rsync -razv --delete --chmod=Du=rwx,Dg=rx,Do=rx,Fu=rw,Fg=r,Fo=r --exclude '.git' --exclude '.github' --exclude '.xebialabs' --exclude 'Jenkinsfile' --exclude 'generate_index.py' --exclude 'CONTRIBUTING.md' --exclude 'xl' --exclude 'xlw' --exclude 'integration_tests.py' . ${env.DIST_SERVER_USER}@${env.DIST_SERVER_HOSTNAME}:${env.DIST_SERVER_BLUEPRINT_PATH}"
+                sh "rsync -razv --delete --chmod=Du=rwx,Dg=rx,Do=rx,Fu=rw,Fg=r,Fo=r --exclude '.git' --exclude '.github' --exclude '.xebialabs' --exclude 'Jenkinsfile' --exclude 'generate_index.py' --exclude 'CONTRIBUTING.md' --exclude 'xl' --exclude 'xlw' --exclude 'integration_tests.py' . ${env.DIST_SERVER_USER}@${env.DIST_SERVER_HOSTNAME}:${env.DIST_SERVER_BLUEPRINT_PATH}/${params.RELEASE_FOLDER}"
             }
         }
     }
