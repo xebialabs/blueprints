@@ -27,14 +27,12 @@ spec:
     value: !expr "k8sConfig('ClusterInsecureSkipTLSVerify')"
 
   - name: KubernetesClientCert
-    # TODO: Should be SecretEditor after feature is implemented
-    type: Editor
+    type: SecretEditor
     prompt: "Please enter the client certificate to use to connect to the Kubernetes cluster: "
     value: !expr "k8sConfig('UserClientCertificateData')"
 
   - name: KubernetesClientPrivateKey
-    # TODO: Should be SecretEditor after feature is implemented
-    type: Editor
+    type: SecretEditor
     prompt: "Please enter the client private key to use to connect to the Kubernetes cluster: "
     value: !expr "k8sConfig('UserClientKeyData')"
 
