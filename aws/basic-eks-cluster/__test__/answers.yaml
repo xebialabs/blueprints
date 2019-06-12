@@ -1,6 +1,6 @@
-AppName: appname
 UseAWSCredentialsFromSystem: false
 AWSAccessKey: A
 AWSAccessSecret: B
 AWSRegion: eu-west-3
+ClusterName: cluster1
 Prefix: aws-aks-

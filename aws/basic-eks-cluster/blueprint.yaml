@@ -11,10 +11,6 @@ metadata:
 
 spec:
   parameters:
-  - name: AppName
-    type: Input
-    description: The application name
-
   # ############################################################################
   # AWS specific variables
   # ############################################################################
@@ -57,9 +53,9 @@ spec:
       - ap-southeast-1
       - ap-southeast-2
 
-  # - name: ClusterName
-  #   type: Input
-  #   description: What do you want to name the cluster?
+  - name: ClusterName
+    type: Input
+    description: What do you want to name the cluster?
 
   - name: Prefix
     type: Input
