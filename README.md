@@ -35,7 +35,7 @@ Every blueprint has a subfolder called `__test__` for CI tests. The tests are ru
 |:-----------------------:|:--------------:|:----------------:|:--------:|:----------------------------------------------------------------------------------:|
 | **answers-file**        | —              | `answers01.yaml` | ✔        | The name of the answers file                                                       |
 | **expected-files**      | Array          | `dir/file01.txt` | -        | Full path of file produced by blueprint                                            |
-| **not-expected-files**  | Array          | `dir/file02.txt` | -        | Full path of file not produced because of `dependsOnTrue` or `dependsOnFalse`      |
+| **not-expected-files**  | Array          | `dir/file02.txt` | -        | Full path of file not produced because of `writeIf`      |
 | **expected-xl-values**  | Dictionary     | `Varname: val`   | -        | Expected values in `values.xlvals`                                                 |
 | **expected-xl-secrets** | Dictionary     | `Varname: val`   | -        | Expected values in `secrets.xlvals`                                                |
 

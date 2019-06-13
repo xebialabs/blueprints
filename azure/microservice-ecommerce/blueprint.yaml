@@ -1,38 +1,37 @@
-apiVersion: xl/v1
+apiVersion: xl/v2
 kind: Blueprint
 
 metadata:
-  projectName: Azure-Microservice-AKS-with-JHipster
+  name: Azure-Microservice-AKS-with-JHipster
   description: |
     The blueprint deploys an e-commerce microservice application to Azure AKS.
     XL Deploy does the provisioning and deployment, while XL Release orchestrates everything.
   author: XebiaLabs
-  version: 1.0
+  version: 2.0
   instructions: Please read the generated file "xebialabs/USAGE.md" for further usage instructions.
 
 spec:
   parameters:
   - name: AppName
     type: Input
-    description: What do you want to name the application?
+    prompt: What do you want to name the application?
 
   - name: ProvisionCluster
     type: Confirm
-    description: Do you want to provision a new Azure AKS cluster?
+    prompt: Do you want to provision a new Azure AKS cluster?
 
   # ############################################################################
   # Own cluster
   # ############################################################################
   - name: ClusterEndpoint
     type: Input
-    description: What is the endpoint for the existing cluster, example https://104.155.109.230
-    dependsOnTrue: !expression "!ProvisionCluster"
+    prompt: What is the endpoint for the existing cluster, example https://104.155.109.230
+    promptIf: !expr "!ProvisionCluster"
 
   - name: PasswordToken
-    type: Input
-    description: What is the token for accessing the existing cluster
-    dependsOnTrue: !expression "!ProvisionCluster"
-    secret: true
+    type: SecretInput
+    prompt: What is the token for accessing the existing cluster
+    promptIf: !expr "!ProvisionCluster"
   # ############################################################################
 
   # ############################################################################
@@ -40,65 +39,96 @@ spec:
   # ############################################################################
   - name: AKSRegion
     type: Select
-    description: "Select the AKS region for the cluster:"
-    dependsOnTrue: ProvisionCluster
+    prompt: "Select the AKS region for the cluster:"
+    promptIf: ProvisionCluster
     options:
-    - eastasia
-    - southeastasia
-    - centralus
-    - eastus
-    - eastus2
-    - westus
-    - northcentralus
-    - southcentralus
-    - northeurope
-    - westeurope
-    - japanwest
-    - japaneast
-    - brazilsouth
-    - australiaeast
-    - australiasoutheast
-    - southindia
-    - centralindia
-    - westindia
-    - canadacentral
-    - canadaeast
-    - uksouth
-    - ukwest
-    - westcentralus
-    - westus2
-    - koreacentral
-    - koreasouth
-    - francecentral
-    - francesouth
-    - australiacentral
-    - australiacentral2
-    - southafricanorth
-    - southafricawest
+      - label: East Asia
+        value: eastasia
+      - label: Southeast Asia
+        value: southeastasia
+      - label: Central US
+        value: centralus
+      - label: East US
+        value: eastus
+      - label: East US 2
+        value: eastus2
+      - label: West US
+        value: westus
+      - label: North Central US
+        value: northcentralus
+      - label: South Central US
+        value: southcentralus
+      - label: North Europe
+        value: northeurope
+      - label: West Europe
+        value: westeurope
+      - label: Japan West
+        value: japanwest
+      - label: Japan East
+        value: japaneast
+      - label: Brazil South
+        value: brazilsouth
+      - label: Australia East
+        value: australiaeast
+      - label: Australia Southeast
+        value: australiasoutheast
+      - label: South India
+        value: southindia
+      - label: Central India
+        value: centralindia
+      - label: West India
+        value: westindia
+      - label: Canada Central
+        value: canadacentral
+      - label: Canada East
+        value: canadaeast
+      - label: UK South
+        value: uksouth
+      - label: UK West
+        value: ukwest
+      - label: West Central US
+        value: westcentralus
+      - label: West US 2
+        value: westus2
+      - label: Korea Central
+        value: koreacentral
+      - label: Korea South
+        value: koreasouth
+      - label: France Central
+        value: francecentral
+      - label: France South
+        value: francesouth
+      - label: Australia Central
+        value: australiacentral
+      - label: Australia Central 2
+        value: australiacentral2
+      - label: South Africa North
+        value: southafricanorth
+      - label: South Africa West
+        value: southafricawest
 
     # ############################################################################
   # Authentication
   # ############################################################################
   - name: SubscriptionID
     type: Input
-    description: "Enter you Azure subscription id:"
-    dependsOnTrue: ProvisionCluster
+    prompt: "Enter you Azure subscription id:"
+    promptIf: ProvisionCluster
 
   - name: TenantID
     type: Input
-    description: "Enter your Azure tenant id:"
-    dependsOnTrue: ProvisionCluster
+    prompt: "Enter your Azure tenant id:"
+    promptIf: ProvisionCluster
 
   - name: ClientID
     type: Input
-    description: "Enter your Azure client id:"
-    dependsOnTrue: ProvisionCluster
+    prompt: "Enter your Azure client id:"
+    promptIf: ProvisionCluster
 
   - name: ClientSecret
-    type: Input
-    description: "Enter your Azure client secret:"
-    secret: true
-    dependsOnTrue: ProvisionCluster
+    type: SecretInput
+    prompt: "Enter your Azure client secret:"
+    promptIf: ProvisionCluster
 
   # ############################################################################
   # For the Terraform backend storage
@@ -106,40 +136,38 @@ spec:
   - name: ResourceGroup
     # Resource group names only allow alphanumeric characters, periods, underscores, hyphens and parenthesis and cannot end in a period
     type: Input
-    description: "The blueprint will create a new Resource Group for the cluster. Please supply a name:"
-    pattern: "[\\w._()-]{2,50}[\\w_()-]"
-    dependsOnTrue: ProvisionCluster
+    prompt: "The blueprint will create a new Resource Group for the cluster. Please supply a name:"
+    promptIf: ProvisionCluster
+    validate: !expr "regex('[\\\\w._()-]{2,50}[\\\\w_()-]', ResourceGroup)"
 
   - name: StorageAccountName
     type: Input
-    description: "Enter the Storage Account where Terraform will store its state (see README.md step 3.2):"
-    dependsOnTrue: ProvisionCluster
+    prompt: "Enter the Storage Account where Terraform will store its state (see README.md step 3.2):"
+    promptIf: ProvisionCluster
 
   - name: StorageAccessKey
     type: Input
-    description: "Enter the Storage Account key for accessing the storage (see README.md step 3.3):"
-    dependsOnTrue: ProvisionCluster
+    prompt: "Enter the Storage Account key for accessing the storage (see README.md step 3.3):"
+    promptIf: ProvisionCluster
 
   - name: StorageContainerName
     type: Input
-    description: "Enter the Storage Container name (see README.md step 3.4):"
+    prompt: "Enter the Storage Container name (see README.md step 3.4):"
+    promptIf: ProvisionCluster
     default: terraform-state
-    dependsOnTrue: ProvisionCluster
   # ############################################################################
 
   - name: ClusterName
     type: Input
-    description: What name do you want to give the cluster?
-    pattern: "[a-zA-Z][\\w-]{1,29}[\\w]"
-    # dependsOnTrue: ProvisionCluster
+    prompt: What name do you want to give the cluster?
+    validate: !expr "regex('[a-zA-Z][\\\\w-]{1,29}[\\\\w]', ClusterName)"
 
   - name: Namespace
-    type: Input
     value: xl-demo
 
   - name: XLDUrlForXLR
     type: Input
-    description: XL Deploy URL for XL Release (This will only be used in the XL Release template)
+    prompt: XL Deploy URL for XL Release (This will only be used in the XL Release template)
     default: http://xl-deploy:4516
 
   # ############################################################################
@@ -147,18 +175,14 @@ spec:
   # ############################################################################
   - name: enableCICD
     type: Confirm
-    description: Do you want to enable CI/CD integration with Jenkins?
+    prompt: Do you want to enable CI/CD integration with Jenkins?
 
   - name: StoreAdminUsername
-    type: Input
-    description: Store Admin username
     value: admin
 
   - name: StoreAdminPassword
-    type: Input
-    description: Store Admin password
+    type: SecretInput
     value: admin
-    secret: true
   # ############################################################################
 
   files:
@@ -174,29 +198,29 @@ spec:
   - path: xebialabs/USAGE.md.tmpl
   # Terraform
   - path: terraform/main.tf
-    dependsOnTrue: ProvisionCluster
+    writeIf: ProvisionCluster
   - path: terraform/variables.tf
-    dependsOnTrue: ProvisionCluster
+    writeIf: ProvisionCluster
   - path: terraform/backend.tf.tmpl
-    dependsOnTrue: ProvisionCluster
+    writeIf: ProvisionCluster
   - path: terraform/outputs.tf
-    dependsOnTrue: ProvisionCluster
+    writeIf: ProvisionCluster
   - path: terraform/.gitignore
-    dependsOnTrue: ProvisionCluster
+    writeIf: ProvisionCluster
   - path: terraform/aks/main.tf
-    dependsOnTrue: ProvisionCluster
+    writeIf: ProvisionCluster
   - path: terraform/aks/variables.tf
-    dependsOnTrue: ProvisionCluster
+    writeIf: ProvisionCluster
   - path: terraform/aks/outputs.tf
-    dependsOnTrue: ProvisionCluster
+    writeIf: ProvisionCluster
   - path: terraform/vpc/main.tf
-    dependsOnTrue: ProvisionCluster
+    writeIf: ProvisionCluster
   - path: terraform/vpc/variables.tf
-    dependsOnTrue: ProvisionCluster
+    writeIf: ProvisionCluster
   - path: terraform/vpc/outputs.tf
-    dependsOnTrue: ProvisionCluster
+    writeIf: ProvisionCluster
   # docker-compose setup for required tools
   - path: docker/docker-compose.yml.tmpl
   - path: docker/data/configure-xl-devops-platform.yaml
   - path: docker/jenkins/jenkins.yaml
-    dependsOnTrue: enableCICD
+    writeIf: enableCICD

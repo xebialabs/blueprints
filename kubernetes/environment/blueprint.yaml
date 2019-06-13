@@ -1,48 +1,47 @@
-apiVersion: xl/v1
+apiVersion: xl/v2
 kind: Blueprint
+
 metadata:
-  projectName: Create infrastructure and environment for Kubernetes
+  name: Create infrastructure and environment for Kubernetes
   description: |
     This blueprint defines an environment for a Kubernetes cluster based on the information in your ~/.kube/config file
   author: XebiaLabs
-  version: 1.0
+  version: 2.0
   instructions: Read xebialabs/USAGE-kubernetes-environment.md to learn how to use this blueprint.
+
 spec:
   parameters:
   - name: KubernetesName
     type: Input
-    value: !fn k8s.config().ContextCluster
-    description: "What is the name of the Kubernetes cluster?"
+    prompt: "What is the name of the Kubernetes cluster?"
+    value: !expr "k8sConfig('ContextCluster')"
 
   - name: KubernetesURL
     type: Input
-    value: !fn k8s.config().ClusterServer
-    description: "What is the URL of the Kubernetes cluster?"
+    prompt: "What is the URL of the Kubernetes cluster?"
+    value: !expr "k8sConfig('ClusterServer')"
 
   - name: KubernetesSkipTLSVerify
     type: Confirm
-    value: !fn k8s.config().ClusterInsecureSkipTLSVerify
-    description: "Does the Kubernetes cluster have a self-signed certificate?"
+    prompt: "Does the Kubernetes cluster have a self-signed certificate?"
+    value: !expr "k8sConfig('ClusterInsecureSkipTLSVerify')"
 
   - name: KubernetesClientCert
-    type: Editor
-    value: !fn k8s.config().UserClientCertificateData
-    secret: true
-    description: "Please enter the client certificate to use to connect to the Kubernetes cluster: "
+    type: SecretEditor
+    prompt: "Please enter the client certificate to use to connect to the Kubernetes cluster: "
+    value: !expr "k8sConfig('UserClientCertificateData')"
 
   - name: KubernetesClientPrivateKey
-    type: Editor
-    value: !fn k8s.config().UserClientKeyData
-    secret: true
-    description: "Please enter the client private key to use to connect to the Kubernetes cluster: "
+    type: SecretEditor
+    prompt: "Please enter the client private key to use to connect to the Kubernetes cluster: "
+    value: !expr "k8sConfig('UserClientKeyData')"
 
   - name: KubernetesNamespace
     type: Input
-    value: !fn k8s.config().ContextNamespace
+    prompt: "Which namespace in the Kubernetes cluster should be used?"
+    value: !expr "k8sConfig('ContextNamespace')"
     default: default
-    description: "Which namespace in the Kubernetes cluster should be used?"
 
   files:
-  # XebiaLabs
-  - path: xebialabs/USAGE-kubernetes-environment.md
-  - path: xebialabs/kubernetes-environment.yaml.tmpl
+    - path: xebialabs/USAGE-kubernetes-environment.md
+    - path: xebialabs/kubernetes-environment.yaml.tmpl

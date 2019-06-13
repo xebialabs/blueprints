@@ -1,13 +1,13 @@
-apiVersion: xl/v1
+apiVersion: xl/v2
 kind: Blueprint
 
 metadata:
-  projectName: AWS-EKS-Cluster
+  name: AWS-EKS-Cluster
   description: |
     The blueprint deploys a simple AWS EKS Cluster (with EFS if requested).
     XL Deploy does the provisioning and deployment, while XL Release orchestrates everything.
   author: XebiaLabs
-  version: 1.0
+  version: 2.0
   instructions: Please read the generated file "xebialabs/USAGE.md" for further usage instructions.
 
 spec:
@@ -15,60 +15,69 @@ spec:
   # General variables
   - name: AppName
     type: Input
-    description: What is the name of the application? (16 characters max)
-    pattern: ^[a-zA-Z0-9-]{1,16}$
+    prompt: What is the name of the application? (16 characters max)
+    description: Application name will be used to generate cloud resource names
+    validate: !expr "regex('^[a-zA-Z0-9-]{1,16}$', AppName)"
 
   # AWS specific variables
   - name: UseAWSCredentialsFromSystem
     type: Confirm
-    description: Do you want to use AWS credentials from ~/.aws/credentials file?
-    dependsOnTrue: !fn aws.credentials().IsAvailable
+    prompt: Do you want to use AWS credentials from ~/.aws/credentials file?
+    promptIf: !expr "awsCredentials('IsAvailable')"
   - name: AWSAccessKey
-    type: Input
-    secret: true
-    description: What is the AWS Access Key ID?
-    dependsOnFalse: UseAWSCredentialsFromSystem
-    default: !fn aws.credentials().AccessKeyID
+    type: SecretInput
+    prompt: What is the AWS Access Key ID?
+    promptIf: !expr "!UseAWSCredentialsFromSystem"
+    default: !expr "awsCredentials('AccessKeyID')"
   - name: AWSAccessSecret
-    type: Input
-    secret: true
-    description: What is the AWS Secret Access Key?
-    dependsOnFalse: UseAWSCredentialsFromSystem
-    default: !fn aws.credentials().SecretAccessKey
+    type: SecretInput
+    prompt: What is the AWS Secret Access Key?
+    promptIf: !expr "!UseAWSCredentialsFromSystem"
+    default: !expr "awsCredentials('SecretAccessKey')"
 
   - name: AWSRegion #options are set manually because EKS service is not registered within AWS GO SDK
     type: Select
-    description: "Select the AWS region:"
+    prompt: "Select the AWS region:"
     options:
     # This needs to be updated in the RegionMap of cloudformation/eks-workers.yaml as well
-      - us-west-2
+      - label: US West (Oregon)
+        value: us-west-2
       # commented out because of https://github.com/boto/boto3/issues/811
       # - us-east-1
-      - us-east-2
-      - eu-central-1
-      # - eu-north-1 # doesn't seem to work
-      - eu-west-1
-      - eu-west-2
-      - eu-west-3
-      - ap-northeast-1
-      - ap-northeast-2
-      - ap-south-1
-      - ap-southeast-1
-      - ap-southeast-2
+      - label: US East (Ohio)
+        value: us-east-2
+      - label: EU (Frankfurt)
+        value: eu-central-1
+      - label: EU (Ireland)
+        value: eu-west-1
+      - label: EU (London)
+        value: eu-west-2
+      - label: EU (Paris)
+        value: eu-west-3
+      - label: Asia Pacific (Tokyo)
+        value: ap-northeast-1
+      - label: Asia Pacific (Seoul)
+        value: ap-northeast-2
+      - label: Asia Pacific (Mumbai)
+        value: ap-south-1
+      - label: Asia Pacific (Singapore)
+        value: ap-southeast-1
+      - label: Asia Pacific (Sydney)
+        value: ap-southeast-2
 
   - name: ClusterName
     type: Input
-    description: What is the name of the cluster?
+    prompt: What is the name of the cluster?
 
   - name: NodeAutoScalingGroupDesiredSize
     type: Input
+    prompt: What is the desired number of nodes in the cluster?
     default: 3
-    description: What is the desired number of nodes in the cluster?
-    pattern: "([0-9])+"
+    validate: !expr "regex('([0-9])+', NodeAutoScalingGroupDesiredSize)"
 
   - name: NodeInstanceType
     type: Select
-    description: What EC2 instance type do you want to use for the nodes?
+    prompt: What EC2 instance type do you want to use for the nodes?
     default: t2.medium
     options:
     - t2.medium
@@ -128,7 +137,7 @@ spec:
 
   - name: ProvisionEFS
     type: Confirm
-    description: "Do you want to provision Amazon Elastic File System?"
+    prompt: "Do you want to provision Amazon Elastic File System?"
     default: false
 
   files:
@@ -144,8 +153,7 @@ spec:
   - path: cloudformation/eks-vpc.yaml
   - path: cloudformation/eks-workers.yaml
   - path: cloudformation/efs.yaml
-    dependsOnTrue: ProvisionEFS
+    writeIf: ProvisionEFS
   - path: xebialabs.yaml
-  # docker-compose setup for required tools
   - path: docker/docker-compose.yml
   - path: docker/data/configure-xl-devops-platform.yaml
