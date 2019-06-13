@@ -1,8 +1,8 @@
 ## Introduction
 
-Azure Kubernetes Service (AKS) allows you to deploy, manage, and scale containerized applications in the cloud using Kubernetes.
+Azure App Service allows you to deploy, manage, and scale web applications in the cloud.
 
-Use this blueprint to provision a simple AKS cluster using Terraform, which defines the infrastructure that will run on AKS.
+Use this blueprint to provision a simple Dockerized Web application using Terraform and XL Deploy, which defines the infrastructure that will run on Azure.
 
 ## Before you get started
 
@@ -17,7 +17,7 @@ If you're new to XebiaLabs blueprints, check out:
 To use this blueprint, run `xl blueprint` in an empty directory and select:
 
 ```plain
-azure/basic-aks-cluster
+azure/app-service-docker-app
 ```
 
 ## Tools and technologies
@@ -25,10 +25,9 @@ azure/basic-aks-cluster
 This blueprint includes the following tools and technologies:
 
 * Target:
-    * [Azure Kubernetes Service (AKS)](https://azure.microsoft.com/en-us/services/kubernetes-service/)
+    * [Azure App Service](https://azure.microsoft.com/en-in/services/app-service/)
 * Tools:
     * [XebiaLabs Deployment Automation](https://xebialabs.com/products/xl-deploy/)
-    * [Kubernetes](https://kubernetes.io/)
     * [Terraform](https://www.terraform.io/)
 
 
@@ -36,8 +35,8 @@ This blueprint includes the following tools and technologies:
 
 This blueprint version requires at least the following versions of the specified tools to work properly:
 
-- XL Deploy: Version 8.6.1
-- XL CLI: Version 8.6.0
+- XL Deploy: Version 9.0.0
+- XL CLI: Version 9.0.0
 
 ## Prerequisites
 
@@ -100,18 +99,19 @@ In this output:
 
 > Note: You already retrieved your `subscription_id` in the previous step.
 
-
 ## Output
 
 This blueprint will output:
 
 * Terraform templates
 * Infrastructure:
-    * AKS cluster (master, nodes)
+    * AppService
+    * MySQL server
 
 ## Labels
 
 * Cloud
 * Microsoft
 * Azure
-* Kubernetes
+* AppService
+* Docker
