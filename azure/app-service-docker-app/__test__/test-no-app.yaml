@@ -1,4 +1,4 @@
-answers-file: answers.yaml
+answers-file: answers-no-app.yaml
 expected-files:
 - xebialabs/azure-app-service.yaml
 - xebialabs/USAGE.md
