@@ -1,0 +1,8 @@
+AppName: MyApp
+SubscriptionID: C
+ClientID: A
+ClientSecret: B
+TenantID: D
+ResourceGroupLocation: westeurope
+UseSampleApplication: true
+MySqlMasterPassword: Test@1234
