@@ -106,7 +106,7 @@ spec:
   - name: AppName
     type: Input
     prompt: What do you want to name the application?
-    validate: !expr "regex('[a-zA-Z0-9-]*', AppName)"
+    validate: !expr "regex('^[a-zA-Z0-9-]*$', AppName)"
 
   - name: UseSampleApplication
     type: Confirm
@@ -116,9 +116,13 @@ spec:
 
   - name: MySqlMasterPassword
     type: SecretInput
-    prompt: What is the master password to use for MySQL server that will be provisioned?
+    prompt: What is the master password to use for MySQL server that will be provisioned? 
+    description: A complex password for MySQL server user. Needs minimum 8 character with at least 1 lowercase, 1 uppercase, 1 number and 1 special character 
     validate: !expr "regex('^(?=.*?[0-9])(?=.*?[a-z])(?=.*?[A-Z])(?=.*?[-._!#^~@$%*]).{8,128}$', MySqlMasterPassword)"
     promptIf: !expr "UseSampleApplication"
+
+  - name: MySqlMasterUsername
+    value: mysqladminun
 
   - name: DockerImage
     type: Input

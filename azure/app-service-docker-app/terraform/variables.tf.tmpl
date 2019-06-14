@@ -32,8 +32,13 @@ variable "docker_image_tag" {
 }
 
 {{- if .UseSampleApplication }}
-variable "my_sql_master_password" {
+variable "mysql_master_password" {
   description = "MySql master password"
+}
+
+variable "mysql_master_username" {
+  description = "MySql master username"
+  default="mysqladminun"
 }
 
 variable "db_name_prefix" {
