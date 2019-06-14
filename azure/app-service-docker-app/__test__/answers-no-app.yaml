@@ -1,0 +1,9 @@
+AppName: MyApp
+SubscriptionID: C
+ClientID: A
+ClientSecret: B
+TenantID: D
+ResourceGroupLocation: westeurope
+UseSampleApplication: false
+DockerImage: test
+DockerImageTag: test
