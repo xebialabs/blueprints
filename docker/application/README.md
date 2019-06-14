@@ -31,8 +31,8 @@ This blueprint includes the following tools and technologies:
 
 This blueprint version requires at least the following versions of the specified tools to work properly:
 
-XL Deploy: Version 8.6.1
-XL CLI: Version 8.6.0
+XL Deploy: Version 9.0.0
+XL CLI: Version 9.0.0
 
 ## Prerequisites
 
