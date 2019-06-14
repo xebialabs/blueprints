@@ -31,8 +31,8 @@ resource "azurerm_mysql_server" "main" {
     geo_redundant_backup  = "Disabled"
   }
 
-  administrator_login          = "mysqladminun"
-  administrator_login_password = "${var.my_sql_master_password}"
+  administrator_login          = "${var.mysql_master_username}"
+  administrator_login_password = "${var.mysql_master_password}"
   version                      = "5.7"
   ssl_enforcement              = "Disabled"
 }
@@ -91,8 +91,8 @@ resource "azurerm_app_service" "main" {
     {{- if .UseSampleApplication }}
     "SPRING_PROFILES_ACTIVE"     = "prod,swagger"
     "SPRING_DATASOURCE_URL"      = "jdbc:mysql://${azurerm_mysql_server.main.fqdn}:3306/${azurerm_mysql_database.main.name}?useUnicode=true&characterEncoding=utf8&useSSL=false&useLegacyDatetimeCode=false&serverTimezone=UTC"
-    "SPRING_DATASOURCE_USERNAME" = "${azurerm_mysql_server.main.administrator_login}@${azurerm_mysql_server.main.name}"
-    "SPRING_DATASOURCE_PASSWORD" = "${var.my_sql_master_password}"
+    "SPRING_DATASOURCE_USERNAME" = "${var.mysql_master_username}@${azurerm_mysql_server.main.name}"
+    "SPRING_DATASOURCE_PASSWORD" = "${var.mysql_master_password}"
     {{- end}}
   }
 }
