@@ -110,9 +110,9 @@ spec:
 
   - name: UseSampleApplication
     type: Confirm
-    prompt: Do you want to deploy a sample application?
+    prompt: Do you want to deploy a sample application with its database?
     default: true
-    description: Deploy the sample application from https://github.com/xebialabs/e-commerce-monolith
+    description: Deploy the sample application from https://github.com/xebialabs/e-commerce-monolith with a MySQL server database
 
   - name: MySqlMasterPassword
     type: SecretInput
