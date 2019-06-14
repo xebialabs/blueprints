@@ -138,7 +138,7 @@ spec:
     type: Input
     prompt: "The blueprint will create a new Resource Group for the cluster. Please supply a name:"
     promptIf: ProvisionCluster
-    validate: !expr "regex('[\\\\w._()-]{2,50}[\\\\w_()-]', ResourceGroup)"
+    validate: !expr "regex('^[\\\\w._()-]{2,50}[\\\\w_()-]$', ResourceGroup)"
 
   - name: StorageAccountName
     type: Input
@@ -160,7 +160,7 @@ spec:
   - name: ClusterName
     type: Input
     prompt: What name do you want to give the cluster?
-    validate: !expr "regex('[a-zA-Z][\\\\w-]{1,29}[\\\\w]', ClusterName)"
+    validate: !expr "regex('^[a-zA-Z][\\\\w-]{1,29}[\\\\w]$', ClusterName)"
 
   - name: Namespace
     value: xl-demo

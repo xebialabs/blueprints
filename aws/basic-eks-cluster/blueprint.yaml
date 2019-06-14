@@ -73,7 +73,7 @@ spec:
     type: Input
     prompt: What is the desired number of nodes in the cluster?
     default: 3
-    validate: !expr "regex('([0-9])+', NodeAutoScalingGroupDesiredSize)"
+    validate: !expr "regex('^([0-9])+$', NodeAutoScalingGroupDesiredSize)"
 
   - name: NodeInstanceType
     type: Select

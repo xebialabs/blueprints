@@ -17,12 +17,12 @@ spec:
     type: Input
     prompt: What is the name of the S3 bucket where CloudFormation templates should be saved?
     default: data-lake
-    validate: !expr "regex('(([a-z0-9]|[a-z0-9][a-z0-9\\-]*[a-z0-9])\\.)*([a-z0-9]|[a-z0-9][a-z0-9\\-]*[a-z0-9]){3,63}', S3BucketName)"
+    validate: !expr "regex('^(([a-z0-9]|[a-z0-9][a-z0-9\\-]*[a-z0-9])\\.)*([a-z0-9]|[a-z0-9][a-z0-9\\-]*[a-z0-9]){3,63}$', S3BucketName)"
   - name: AdministratorName
     type: Input
     prompt: What is the name of the Data Lake administrator user?
     default: admin
-    validate: !expr "regex('.+', AdministratorName)"
+    validate: !expr "regex('^.+$', AdministratorName)"
   - name: AdministratorEmail
     prompt: "Provide a valid email address where to send the generated Data Lake administrator credentials:"
     type: Input
@@ -31,7 +31,7 @@ spec:
     prompt: "Provide a name for the Cognito service domain (can only contain lower-case letters, numbers, and hyphens):"
     default: data-lake
     type: Input
-    validate: !expr "regex('[a-z0-9-]+', CognitoDomain)"
+    validate: !expr "regex('^[a-z0-9-]+$', CognitoDomain)"
   - name: UseAWSCredentialsFromSystem
     type: Confirm
     prompt: Do you want to use AWS credentials from ~/.aws/credentials file?

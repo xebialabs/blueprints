@@ -21,7 +21,7 @@ spec:
   - name: K8SMasterPassword
     type: SecretInput
     prompt: What is the password for Kubernetes cluster? (minimum 16 characters)
-    validate: !expr "regex('(\\\\S){16,}', K8SMasterPassword)"
+    validate: !expr "regex('^(\\\\S){16,}$', K8SMasterPassword)"
   - name: ClusterName
     type: Input
     prompt: What is the name of the cluster?
