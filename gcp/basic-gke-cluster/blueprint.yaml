@@ -84,10 +84,11 @@ spec:
     - n1-ultramem-160
     - n1-megamem-96
 
-  # Hidden prefix
   - name: Prefix
     type: Input
-    value: gcp-gke-
+    description: "Specify the application prefix (use the default if you're not sure):"
+    default: gcp-gke-
+    pattern: "([a-z0-9-]+-)+"
 
   files:
   # XebiaLabs

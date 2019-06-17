@@ -1,0 +1,37 @@
+apiVersion: xl/v1
+kind: Blueprint
+
+metadata:
+  projectName: Kubernetes-Multicloud-Pipeline
+  description: |
+    The blueprint provision a basic XLR instance to control the below blueprints. It takes over the manual deployment that is done within the XLD interface.
+    * azure/basic-aks-cluster OR gcp/basic-gke-cluster
+    * kubernetes/application
+  author: XebiaLabs
+  version: 1.0
+  instructions: Please read the generated file "xebialabs/USAGE-multicloud-pipeline.md" for further usage instructions.
+
+spec:
+  parameters:
+  - name: ClusterName
+    type: Input
+    description: "Use the same cluster name as you did for the basic cluster:"
+
+  - name: Prefix
+    type: Input
+    description: "Use the same prefix as you did for the basic cluster:"
+    pattern: "([a-z0-9-]+-)+"
+
+  - name: XLDUrlForXLR
+    type: Input
+    description: XL Deploy URL for XL Release (This will only be used in the XL Release template)
+    default: http://xl-deploy:4516
+
+  - name: Namespace
+    type: Input
+    value: default
+
+  files:
+  # XebiaLabs
+  - path: xebialabs/USAGE-multicloud-pipeline.md.tmpl
+  - path: xebialabs/multicloud-pipeline.yaml.tmpl

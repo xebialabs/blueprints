@@ -19,14 +19,14 @@ spec:
     default: 'latest'
     description: "What is the version of the application that you want to deploy?"
 
-  - name: KubernetesResourcesFile
+  - name: Namespace
     type: Input
-    default: '../kubernetes/nginx.yaml'
-    description: "What is the path of the Kubernetes YAML file that you want to deploy?"
+    value: default
 
   files:
   # XebiaLabs
   - path: xebialabs/USAGE-kubernetes-application.md
   - path: xebialabs/kubernetes-application.yaml.tmpl
   # Kubernetes
-  - path: kubernetes/nginx.yaml.tmpl
+  - path: kubernetes/nginx-deployment.yaml.tmpl
+  - path: kubernetes/nginx-service.yaml.tmpl
