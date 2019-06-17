@@ -7,7 +7,7 @@ metadata:
     Creates a basic Lambda function and execution role
   author: XebiaLabs
   version: 2.0
-  instructions: Please read the generated file "xebialabs/USAGE-aws-lambda.md" for further usage instructions.
+  instructions: Please read the generated file "xebialabs/USAGE-aws-basic-lambda.md" for further usage instructions.
 
 spec:
   parameters:
@@ -65,7 +65,7 @@ spec:
 
   files:
   # XebiaLabs
-  - path: xebialabs/USAGE-basic-aws-lambda.md.tmpl
+  - path: xebialabs/USAGE-aws-basic-lambda.md.tmpl
   - path: xebialabs/aws-basic-lambda.yaml.tmpl
   # CloudFormation
   - path: cloudformation/lambda-function.yaml
