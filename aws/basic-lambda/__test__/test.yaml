@@ -1,0 +1,5 @@
+answers-file: answers.yaml
+expected-files:
+- xebialabs/aws-basic-lambda.yaml
+- xebialabs/USAGE-aws-basic-lambda.md
+- cloudformation/lambda-function.yaml
