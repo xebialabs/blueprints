@@ -1,0 +1,49 @@
+apiVersion: xl/v2
+kind: Blueprint
+
+metadata:
+  name: AWS-Elastic-Beanstalk-Sample
+  description: |
+    The blueprint deploys a sample AWS Elastic Beanstalk PHP5 application.
+  author: XebiaLabs
+  version: 2.0
+  instructions: Please read the generated file "xebialabs/USAGE.md" for further usage instructions.
+
+spec:
+  parameters:
+  - name: S3BucketName
+    type: Input
+    prompt: What is the name of the S3 bucket where CloudFormation artifacts should be saved?
+    validate: !expr "regex('(([a-z0-9]|[a-z0-9][a-z0-9\\\\-]*[a-z0-9])\\\\.)*([a-z0-9]|[a-z0-9][a-z0-9\\\\-]*[a-z0-9]){3,63}', S3BucketName)"
+    default: beanstalk-sample
+  - name: UseAWSCredentialsFromSystem
+    type: Confirm
+    prompt: Do you want to use AWS credentials from ~/.aws/credentials file?
+    promptIf: !expr "awsCredentials('IsAvailable')"
+  - name: AWSAccessKey
+    type: SecretInput
+    prompt: What is the AWS Access Key ID?
+    promptIf: !expr "!UseAWSCredentialsFromSystem"
+    default: !expr "awsCredentials('AccessKeyID')"
+  - name: AWSAccessSecret
+    type: SecretInput
+    prompt: What is the AWS Secret Access Key?
+    promptIf: !expr "!UseAWSCredentialsFromSystem"
+    default: !expr "awsCredentials('SecretAccessKey')"
+  - name: AWSRegion
+    type: Select
+    prompt: "Select the AWS region:"
+    saveInXlvals: true
+    default: !expr "awsRegions('ecs', 0)"
+    options:
+      - !expr "awsRegions('ecs')"
+
+  files:
+  - path: cloudformation/beanstalk.yaml.tmpl
+  - path: cloudformation/python-v1.zip
+  - path: xebialabs/xld-infrastructure.yaml.tmpl
+  - path: xebialabs/xld-environment.yaml.tmpl
+  - path: xebialabs/USAGE.md.tmpl
+  - path: xebialabs.yaml
+  - path: docker/docker-compose.yml
+  - path: docker/data/configure-xl-devops-platform.yaml

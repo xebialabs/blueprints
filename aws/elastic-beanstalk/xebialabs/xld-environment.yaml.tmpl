@@ -1,0 +1,34 @@
+apiVersion: xl-deploy/v1
+kind: Infrastructure
+spec:
+- name: ELASTIC-BEANSTALK
+  type: core.Directory
+  children:
+  - name: AWS
+    type: aws.Cloud
+    accesskey: {{.AWSAccessKey}}
+    accessSecret: {{.AWSAccessSecret}}
+    children:
+    - name: cloudformation
+      type: aws.cloudformation.Stack
+      region: !value AWSRegion
+
+---
+
+apiVersion: xl-deploy/v1
+kind: Environments
+spec:
+- name: ELASTIC-BEANSTALK
+  type: core.Directory
+  children:
+  - name: AWS Dictionary
+    type: udm.Dictionary
+    entries:
+      region: !value AWSRegion
+  - name: AWS-ELASTIC-BEANSTALK
+    type: udm.Environment
+    members:
+    - "~Infrastructure/ELASTIC-BEANSTALK/AWS"
+    - "~Infrastructure/ELASTIC-BEANSTALK/AWS/cloudformation"
+    dictionaries:
+    - "~Environments/ELASTIC-BEANSTALK/AWS Dictionary"
