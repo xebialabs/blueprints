@@ -65,7 +65,7 @@ spec:
 
   files:
   # XebiaLabs
-  - path: xebialabs/USAGE-aws-lambda.md.tmpl
-  - path: xebialabs/aws-lambda.yaml.tmpl
+  - path: xebialabs/USAGE-basic-aws-lambda.md.tmpl
+  - path: xebialabs/aws-basic-lambda.yaml.tmpl
   # CloudFormation
   - path: cloudformation/lambda-function.yaml
