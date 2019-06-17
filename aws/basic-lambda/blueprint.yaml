@@ -33,31 +33,7 @@ spec:
     type: Select
     prompt: "Select the AWS region:"
     options:
-    # This needs to be updated in the RegionMap of cloudformation/eks-workers.yaml as well
-      - label: US West (Oregon)
-        value: us-west-2
-      # commented out because of https://github.com/boto/boto3/issues/811
-      # - us-east-1
-      - label: US East (Ohio)
-        value: us-east-2
-      - label: EU (Frankfurt)
-        value: eu-central-1
-      - label: EU (Ireland)
-        value: eu-west-1
-      - label: EU (London)
-        value: eu-west-2
-      - label: EU (Paris)
-        value: eu-west-3
-      - label: Asia Pacific (Tokyo)
-        value: ap-northeast-1
-      - label: Asia Pacific (Seoul)
-        value: ap-northeast-2
-      - label: Asia Pacific (Mumbai)
-        value: ap-south-1
-      - label: Asia Pacific (Singapore)
-        value: ap-southeast-1
-      - label: Asia Pacific (Sydney)
-        value: ap-southeast-2
+    - !expr "awsRegions('lambda')"
 
   - name: AppName
     type: Input
