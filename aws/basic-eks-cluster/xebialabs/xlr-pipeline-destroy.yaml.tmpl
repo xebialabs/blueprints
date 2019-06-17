@@ -36,7 +36,7 @@ spec:
         - name: Deprovision EKS config map for workers
           type: xldeploy.Undeploy
           server: XL Deploy
-          deployedApplication: Environments/{{$app}}/aws-eks-{{$app}}-kube-system/{{$app}}-k8s-configmap
+          deployedApplication: Environments/{{$app}}/{{$app}}-master-EKSCluster-kube-system/{{$app}}-k8s-configmap
         - name: Deprovision EKS workers nodes
           type: xldeploy.Undeploy
           server: XL Deploy

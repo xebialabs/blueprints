@@ -77,11 +77,17 @@ spec:
           server: XL Deploy
           deploymentPackage: {{$app}}/EKS-CLOUDFORMATION/{{$app}}-cloudformation-eks-workers/1.0.0
           deploymentEnvironment: Environments/{{$app}}/aws-cloudformation-{{$app}}
+        - name: Update workers dictionary for kube-system environment
+          type: xld.UpdateCIProperty
+          server: XL Deploy
+          ciID: Environments/{{$app}}/{{$app}}-master-EKSCluster-kube-system
+          ciProperty: dictionaries
+          propertyValue: '[ "Environments/{{$app}}/{{$app}}-eks-workers-dictionary" ]'
         - name: Provision EKS config map for workers
           type: xldeploy.Deploy
           server: XL Deploy
           deploymentPackage: {{$app}}/EKS-CLOUDFORMATION/{{$app}}-k8s-configmap/1.0.0
-          deploymentEnvironment: Environments/{{$app}}/aws-eks-{{$app}}-kube-system
+          deploymentEnvironment: Environments/{{$app}}/{{$app}}-master-EKSCluster-kube-system
 
       {{- if .ProvisionEFS }}
       - name: Provision AWS EFS
