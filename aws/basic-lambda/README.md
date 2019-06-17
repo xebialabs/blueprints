@@ -71,24 +71,3 @@ Use the `xl-devops-platform` blueprint to create a `docker-compose.yml` file for
 * AWS
 * CloudFormation
 * Lambda
-
-
-
-
-## Create the necessary role in AWS IAM
-
-```json
-{
-   "Version": "2012-10-17",
-   "Statement": [
-       {
-           "Sid": "",
-           "Effect": "Allow",
-           "Principal": {
-               "Service": ["lambda.amazonaws.com", "apigateway.amazonaws.com"]
-           },
-           "Action": "sts:AssumeRole"
-       }
-   ]
-}
-```
