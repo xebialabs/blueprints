@@ -57,7 +57,7 @@ spec:
           server: XL Deploy
           deployedApplication: Environments/{{$app}}/aws-cloudformation-{{$app}}/{{$app}}-lambda-bucket
       - name: Deprovision AWS VPC and IAM resources
-        type: xlrelease.ParallelGroup
+        type: xlrelease.SequentialGroup
         tasks:
         - name: Deprovision AWS IAM resources
           type: xldeploy.Undeploy
