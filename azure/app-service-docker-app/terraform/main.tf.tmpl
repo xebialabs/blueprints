@@ -93,6 +93,8 @@ resource "azurerm_app_service" "main" {
     "SPRING_DATASOURCE_URL"      = "jdbc:mysql://${azurerm_mysql_server.main.fqdn}:3306/${azurerm_mysql_database.main.name}?useUnicode=true&characterEncoding=utf8&useSSL=false&useLegacyDatetimeCode=false&serverTimezone=UTC"
     "SPRING_DATASOURCE_USERNAME" = "${var.mysql_master_username}@${azurerm_mysql_server.main.name}"
     "SPRING_DATASOURCE_PASSWORD" = "${var.mysql_master_password}"
+    {{- else}}
+    "SPRING_PROFILES_ACTIVE"     = "dev"
     {{- end}}
   }
 }
