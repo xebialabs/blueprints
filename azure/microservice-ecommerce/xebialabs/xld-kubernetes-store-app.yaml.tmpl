@@ -17,6 +17,8 @@ spec:
           - name: {{$app}}-store-mysql
             type: k8s.ResourcesFile
             file: !file ../kubernetes/store/store-mysql.yml
+            tags: 
+            - {{.Namespace}}
       - name: {{$app}}-registry
         type: udm.Application
         children:
@@ -26,9 +28,13 @@ spec:
           - name: {{$app}}-application-config
             type: k8s.ResourcesFile
             file: !file ../kubernetes/registry/application-configmap.yml
+            tags: 
+            - {{.Namespace}}
           - name: {{$app}}-jhipster-registry
             type: k8s.ResourcesFile
             file: !file ../kubernetes/registry/jhipster-registry.yml
+            tags: 
+            - {{.Namespace}}
       - name: {{$app}}-store
         type: udm.Application
         children:
@@ -38,6 +44,10 @@ spec:
           - name: {{$app}}-store-deployment
             type: k8s.ResourcesFile
             file: !file ../kubernetes/store/store-deployment.yml
+            tags: 
+            - {{.Namespace}}
           - name: {{$app}}-store-svc
             type: k8s.ResourcesFile
             file: !file ../kubernetes/store/store-service.yml
+            tags: 
+            - {{.Namespace}}

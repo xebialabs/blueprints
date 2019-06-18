@@ -29,24 +29,7 @@ spec:
             client_secret: !value ClientSecret
             subscription_id: {{.SubscriptionID}}
             tenant_id: {{.TenantID}}
-          boundTemplates:
-          - "../azure-aks-{{$clusterName}}"
-          - "../azure-aks-{{$clusterName}}-env"
-
-        templates:
-        # creates the required XLD infrastructure entries
-        - name: azure-aks-{{$clusterName}}
-          type: template.k8s.Master
-          apiServerURL: '{{"{{%outputVariables.host%}}"}}'
-          skipTLS: true
-          token: '{{"{{%outputVariables.password%}}"}}'
-          instanceName: {{$app}}/azure-aks-{{$clusterName}}
-        # creates a new environment for Kubernetes deployments
-        - name: azure-aks-{{$clusterName}}-env
-          type: template.udm.Environment
-          members:
-          - "../azure-aks-{{$clusterName}}"
-          instanceName: {{$app}}/azure-aks-{{$clusterName}}
+          environmentPath: azure-aks-{{$clusterName}}
 
 {{end}}
   - name: K8S
