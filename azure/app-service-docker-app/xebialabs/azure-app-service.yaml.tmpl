@@ -2,50 +2,59 @@
 apiVersion: xl-deploy/v1
 kind: Infrastructure
 spec:
-- name: {{ $appName }}-terraform-host
-  type: overthere.LocalHost
-  os: UNIX
+- name: {{ $appName }}
+  type: core.Directory
   children:
-  - name: terraform-client
-    type: terraform.TerraformClient
-    path: '/usr/local/bin'
-    workingDirectory: '/tmp/{{ $appName }}-terraform'
+  - name: {{ $appName }}-terraform-host
+    type: overthere.LocalHost
+    os: UNIX
+    children:
+    - name: terraform-client
+      type: terraform.TerraformClient
+      path: '/usr/local/bin'
+      workingDirectory: '/tmp/{{ $appName }}-terraform'
 
 ---
 
 apiVersion: xl-deploy/v1
 kind: Environments
 spec:
-- name: {{ $appName }}-terraform
-  type: udm.Environment
-  members:
-  - ~Infrastructure/{{ $appName }}-terraform-host/terraform-client
+- name: {{ $appName }}
+  type: core.Directory
+  children:
+  - name: {{ $appName }}-terraform
+    type: udm.Environment
+    members:
+    - ~Infrastructure/{{ $appName }}/{{ $appName }}-terraform-host/terraform-client
 
 ---
 
 apiVersion: xl-deploy/v1
 kind: Applications
 spec:
-- name: {{ $appName }}-app
-  type: udm.Application
+- name: {{ $appName }}
+  type: core.Directory
   children:
-  - name: '1.0.0'
-    type: udm.DeploymentPackage
-    deployables:
-    - name: {{ $appName }}-app-service
-      type: terraform.Module
-      file: !file ../terraform
-      inputVariables:
-        prefix: {{$appName}}
-        location: {{.ResourceGroupLocation}}
-        subscription_id: {{.SubscriptionID}}
-        client_id: {{.ClientID}}
-        client_secret: {{.ClientSecret}}
-        tenant_id: {{.TenantID}}
-        docker_image: {{.DockerImage}}
-        docker_image_tag: {{.DockerImageTag}}
-        {{- if .UseSampleApplication }}
-        mysql_master_password: {{.MySqlMasterPassword}}
-        mysql_master_username: {{.MySqlMasterUsername}}
-        db_name_prefix: {{.AppName | snakecase}}
-        {{- end}}
+  - name: {{ $appName }}-app
+    type: udm.Application
+    children:
+    - name: '1.0.0'
+      type: udm.DeploymentPackage
+      deployables:
+      - name: {{ $appName }}-app-service
+        type: terraform.Module
+        file: !file ../terraform
+        inputVariables:
+          prefix: {{$appName}}
+          location: {{.ResourceGroupLocation}}
+          subscription_id: {{.SubscriptionID}}
+          client_id: {{.ClientID}}
+          client_secret: {{.ClientSecret}}
+          tenant_id: {{.TenantID}}
+          docker_image: {{.DockerImage}}
+          docker_image_tag: {{.DockerImageTag}}
+          {{- if .UseSampleApplication }}
+          mysql_master_password: {{.MySqlMasterPassword}}
+          mysql_master_username: {{.MySqlMasterUsername}}
+          db_name_prefix: {{.AppName | snakecase}}
+          {{- end}}
