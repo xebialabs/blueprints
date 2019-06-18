@@ -14,6 +14,10 @@ spec:
   # ############################################################################
   # Access and authorization
   # ############################################################################
+  - name: SubscriptionID
+    type: Input
+    prompt: What is your existing Azure subscription id?
+
   - name: ClientID
     type: Input
     prompt: What is the client id (appId) of an existing Service Principal in Azure?
@@ -21,10 +25,6 @@ spec:
   - name: ClientSecret
     type: SecretInput
     prompt: What is the secret (password) for that client id?
-
-  - name: SubscriptionID
-    type: Input
-    prompt: What is your existing Azure subscription id?
 
   - name: TenantID
     type: Input

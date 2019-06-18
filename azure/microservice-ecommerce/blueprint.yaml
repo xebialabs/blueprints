@@ -115,11 +115,6 @@ spec:
     prompt: "Enter you Azure subscription id:"
     promptIf: ProvisionCluster
 
-  - name: TenantID
-    type: Input
-    prompt: "Enter your Azure tenant id:"
-    promptIf: ProvisionCluster
-
   - name: ClientID
     type: Input
     prompt: "Enter your Azure client id:"
@@ -128,6 +123,11 @@ spec:
   - name: ClientSecret
     type: SecretInput
     prompt: "Enter your Azure client secret:"
+    promptIf: ProvisionCluster
+
+  - name: TenantID
+    type: Input
+    prompt: "Enter your Azure tenant id:"
     promptIf: ProvisionCluster
 
   # ############################################################################
