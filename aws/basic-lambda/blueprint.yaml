@@ -1,0 +1,47 @@
+apiVersion: xl/v2
+kind: Blueprint
+
+metadata:
+  name: AWS-Lambda-Basic
+  description: |
+    Creates a basic Lambda function and execution role
+  author: XebiaLabs
+  version: 2.0
+  instructions: Please read the generated file "xebialabs/USAGE-aws-basic-lambda.md" for further usage instructions.
+
+spec:
+  parameters:
+  # AWS specific variables
+  - name: UseAWSCredentialsFromSystem
+    type: Confirm
+    prompt: Do you want to use AWS credentials from ~/.aws/credentials file?
+    promptIf: !expr "awsCredentials('IsAvailable')"
+
+  - name: AWSAccessKey
+    type: SecretInput
+    prompt: What is the AWS Access Key ID?
+    promptIf: !expr "!UseAWSCredentialsFromSystem"
+    default: !expr "awsCredentials('AccessKeyID')"
+
+  - name: AWSAccessSecret
+    type: SecretInput
+    prompt: What is the AWS Secret Access Key?
+    promptIf: !expr "!UseAWSCredentialsFromSystem"
+    default: !expr "awsCredentials('SecretAccessKey')"
+
+  - name: AWSRegion
+    type: Select
+    prompt: "Select the AWS region:"
+    options:
+    - !expr "awsRegions('lambda')"
+
+  - name: AppName
+    type: Input
+    prompt: "Give the project a name:"
+
+  files:
+  # XebiaLabs
+  - path: xebialabs/USAGE-aws-basic-lambda.md.tmpl
+  - path: xebialabs/aws-basic-lambda.yaml.tmpl
+  # CloudFormation
+  - path: cloudformation/lambda-function.yaml
