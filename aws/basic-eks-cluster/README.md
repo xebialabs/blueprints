@@ -4,7 +4,7 @@
 
 Amazon Elastic Container Service for Kubernetes (EKS) allows you to deploy, manage, and scale containerized applications in the cloud using Kubernetes.
 
-Use this blueprint to provision a GKE cluster using CloudFormation.
+Use this blueprint to provision an EKS cluster using CloudFormation.
 
 ## Before you get started
 
