@@ -87,10 +87,19 @@ spec:
       tasks:
       {{if .ProvisionCluster }}
       - name: Deploy {{.Namespace}} namespace
-        type: xldeploy.Deploy
-        server: XL Deploy
-        deploymentPackage: {{$app}}/K8S/{{$app}}-namespace/1.0.0
-        deploymentEnvironment: Environments/{{$app}}/{{$appEnv}}
+        type: xlrelease.SequentialGroup
+        tasks:
+        - name: Deploy namespace
+          type: xldeploy.Deploy
+          server: XL Deploy
+          deploymentPackage: {{$app}}/K8S/{{$app}}-namespace/1.0.0
+          deploymentEnvironment: Environments/{{$app}}/{{$appEnv}}
+        - name: Tag namespace
+          type: xld.UpdateCIProperty
+          server: XL Deploy
+          ciID: Infrastructure/{{$app}}/gke-{{$app}}-cluster-GKECluster/{{.Namespace}}
+          ciProperty: tags
+          propertyValue: '[ "{{.Namespace}}" ]'
       {{end}}
       - name: Deploy stateful services
         type: xlrelease.ParallelGroup
@@ -147,7 +156,7 @@ spec:
           server: XL Deploy
           numberOfContinueRetrials: 100
           pollingInterval: 10
-          ciId: Infrastructure/{{$app}}/gcp-gke-{{$clusterName}}
+          ciId: Infrastructure/{{$app}}/gke-{{$app}}-cluster-GKECluster
           taskName: describeService
           variableMapping:
             pythonScript.xlDeployTaskId: ${taskId}
