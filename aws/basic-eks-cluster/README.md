@@ -1,4 +1,4 @@
-# Basic AWS Kubernetes Engine Cluster
+# Basic AWS Elastic Kubernetes Service(EKS) Cluster
 
 ## Introduction
 
