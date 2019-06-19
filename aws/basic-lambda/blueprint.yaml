@@ -29,7 +29,7 @@ spec:
     promptIf: !expr "!UseAWSCredentialsFromSystem"
     default: !expr "awsCredentials('SecretAccessKey')"
 
-  - name: AWSRegion #options are set manually because EKS service is not registered within AWS GO SDK
+  - name: AWSRegion
     type: Select
     prompt: "Select the AWS region:"
     options:

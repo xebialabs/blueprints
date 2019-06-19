@@ -20,10 +20,10 @@ To deploy this blueprint to the XebiaLabs DevOps Platform, follow the steps belo
 
 To deploy the Lamba Function to AWS, do the following:
 
-1. Go to XL Deploy and look for `Applications/{{$app}}-basic-lambda/1.0.0`
+1. Go to XL Deploy and look for `Applications/{{$app}}/{{$app}}-basic-lambda/1.0.0`
 2. Click the ellipsis
 3. Choose 'Deploy' from the menu
-3. Choose `Environments/{{$app}}-basic-lambda`
+3. Choose `Environments/{{$app}}/{{$app}}-basic-lambda`
 4. Click the 'Continue' button
 5. Check for errors
 6. Click the 'Deploy' button
@@ -71,7 +71,7 @@ Wait for the deployment to finish
 
 To undeploy the Lamba Function to AWS, do the following:
 
-1. Go to XL Deploy and look for `Environments/{{$app}}-basic-lambda/{{$app}}-basic-lambda (1.0.0)`
+1. Go to XL Deploy and look for `Environments/{{$app}}/{{$app}}-basic-lambda/{{$app}}-basic-lambda (1.0.0)`
 2. Click the ellipsis
 3. Choose 'Undeploy' from the menu
 4. Check for errors
