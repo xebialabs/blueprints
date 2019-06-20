@@ -1,0 +1,49 @@
+{{$app := .AppName | kebabcase}}
+
+apiVersion: xl-deploy/v1
+kind: Applications
+spec:
+- name: {{$app}}
+  type: core.Directory
+  children:
+  - name: "{{$app}}-basic-lambda"
+    type: udm.Application
+    children:
+    - name: '1.0.0'
+      type: udm.DeploymentPackage
+      deployables:
+      - name: "{{$app}}-basic-lambda"
+        type: aws.cloudformation.Template
+        file: !file ../cloudformation/lambda-function.yaml
+        capabilities:
+        - CAPABILITY_NAMED_IAM
+
+---
+
+apiVersion: xl-deploy/v1
+kind: Infrastructure
+spec:
+- name: {{$app}}
+  type: core.Directory
+  children:
+  - name: "{{$app}}-basic-lambda"
+    type: aws.Cloud
+    accesskey: !value AWSAccessKey
+    accessSecret: !value AWSAccessSecret
+    children:
+    - name: stack
+      type: aws.cloudformation.Stack
+      region: {{.AWSRegion}}
+
+---
+
+apiVersion: xl-deploy/v1
+kind: Environments
+spec:
+- name: {{$app}}
+  type: core.Directory
+  children:
+  - name: "{{$app}}-basic-lambda"
+    type: udm.Environment
+    members:
+    - "Infrastructure/{{$app}}/{{$app}}-basic-lambda/stack"
