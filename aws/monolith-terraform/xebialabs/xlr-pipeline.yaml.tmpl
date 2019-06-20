@@ -56,13 +56,13 @@ spec:
           variableMapping:
             pythonScript.response: "${TERRAFORM_INFRASTRUCTURE_CI}"
         - name: Get load balancer DNS
-          type: xlrelease.ScriptTask
-          script: |
-            import json
-
-            data = json.loads('${TERRAFORM_INFRASTRUCTURE_CI}')
-            releaseVariables['ALB_DNS_NAME'] = data['outputVariables']['address']
-          # end of script
+          type: xld.GetCIMapPropertyKey
+          server: XL Deploy
+          ciID: Infrastructure/{{$app}}/localhost/terraform-client/{{$app}}-terraform-ecs-cluster
+          ciPropertyName: outputVariables
+          ciPropertyNameKey: address
+          variableMapping:
+            pythonScript.ciPropertyValue: ${ALB_DNS_NAME}
 
       - name: Check {{$app}} application health
         type: xlrelease.ScriptTask

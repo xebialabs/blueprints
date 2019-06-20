@@ -62,14 +62,21 @@ spec:
           variableMapping:
             pythonScript.response: "${DATALAKE_DICTIONARY_CI}"
         - name: Get console URL
-          type: xlrelease.ScriptTask
-          script: |
-            import json
-
-            data = json.loads('${DATALAKE_DICTIONARY_CI}')
-            releaseVariables['DATALAKE_CONSOLE_URL'] = data['entries']['DATALAKE_CONSOLE_URL']
-            releaseVariables['COGNITO_USER_POOL_ID'] = data['entries']['COGNITO_USER_POOL_ID']
-          # end of script
+          type: xld.GetCIMapPropertyKey
+          server: XL Deploy
+          ciID: Environments/DATA-LAKE/data-lake-dictionary
+          ciPropertyName: outputVariables
+          ciPropertyNameKey: DATALAKE_CONSOLE_URL
+          variableMapping:
+            pythonScript.ciPropertyValue: ${DATALAKE_CONSOLE_URL}
+        - name: Get cognito user pool ID
+          type: xld.GetCIMapPropertyKey
+          server: XL Deploy
+          ciID: Environments/DATA-LAKE/data-lake-dictionary
+          ciPropertyName: outputVariables
+          ciPropertyNameKey: COGNITO_USER_POOL_ID
+          variableMapping:
+            pythonScript.ciPropertyValue: ${COGNITO_USER_POOL_ID}
 
       - name: Check data lake application access
         type: xlrelease.ScriptTask
