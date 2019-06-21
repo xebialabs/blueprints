@@ -54,13 +54,6 @@ spec:
       - name: Get data lake console URL
         type: xlrelease.SequentialGroup
         tasks:
-        - name: Get XL Deploy Environmnet CI
-          type: xld.GetCITask
-          server: XL Deploy
-          accept: json
-          ciID: Environments/DATA-LAKE/data-lake-dictionary
-          variableMapping:
-            pythonScript.response: "${DATALAKE_DICTIONARY_CI}"
         - name: Get console URL
           type: xld.GetCIMapPropertyKey
           server: XL Deploy

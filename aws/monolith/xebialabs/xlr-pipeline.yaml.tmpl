@@ -48,13 +48,6 @@ spec:
       - name: Get application load balancer public URL
         type: xlrelease.SequentialGroup
         tasks:
-        - name: Get XL Deploy Environmnet CI
-          type: xld.GetCITask
-          server: XL Deploy
-          accept: json
-          ciID: Environments/{{$app}}/{{$app}}-ecs-alb-dictionary
-          variableMapping:
-            pythonScript.response: "${ALB_DICTIONARY_CI}"
         - name: Get load balancer DNS
           type: xld.GetCIMapPropertyKey
           server: XL Deploy
