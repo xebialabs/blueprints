@@ -52,7 +52,7 @@ spec:
           type: xld.GetCIMapPropertyKey
           server: XL Deploy
           ciID: Environments/{{$app}}/{{$app}}-ecs-alb-dictionary
-          ciPropertyName: outputVariables
+          ciPropertyName: entries
           ciPropertyNameKey: ALB_DNS_NAME
           variableMapping:
             pythonScript.ciPropertyValue: ${ALB_DNS_NAME}
