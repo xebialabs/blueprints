@@ -96,7 +96,7 @@ spec:
         - name: Tag namespace
           type: xld.UpdateCIProperty
           server: XL Deploy
-          ciID: Infrastructure/{{$app}}/{{.ClusterName}}-AKSCluster/{{.Namespace}}
+          ciID: Infrastructure/{{$app}}/{{$clusterName}}-AKSCluster/{{.Namespace}}
           ciProperty: tags
           propertyValue: '[ "{{.Namespace}}" ]'
       {{end}}
