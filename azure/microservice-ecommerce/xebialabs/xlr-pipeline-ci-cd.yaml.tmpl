@@ -155,7 +155,7 @@ spec:
           server: XL Deploy
           numberOfContinueRetrials: 100
           pollingInterval: 10
-          ciId: Infrastructure/{{$app}}/{{$app}}-AKSCluster
+          ciId: Infrastructure/{{$app}}/{{$clusterName}}-AKSCluster
           taskName: describeService
           variableMapping:
             pythonScript.xlDeployTaskId: ${taskId}
