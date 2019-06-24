@@ -86,10 +86,19 @@ spec:
       tasks:
       {{if .ProvisionCluster }}
       - name: Deploy {{.Namespace}} namespace
-        type: xldeploy.Deploy
-        server: XL Deploy
-        deploymentPackage: {{$app}}/K8S/{{$app}}-namespace/1.0.0
-        deploymentEnvironment: Environments/{{$app}}/{{$appEnv}}
+        type: xlrelease.SequentialGroup
+        tasks:
+        - name: Deploy namespace
+          type: xldeploy.Deploy
+          server: XL Deploy
+          deploymentPackage: {{$app}}/K8S/{{$app}}-namespace/1.0.0
+          deploymentEnvironment: Environments/{{$app}}/{{$appEnv}}
+        - name: Tag namespace
+          type: xld.UpdateCIProperty
+          server: XL Deploy
+          ciID: Infrastructure/{{$app}}/{{$clusterName}}-AKSCluster/{{.Namespace}}
+          ciProperty: tags
+          propertyValue: '[ "{{.Namespace}}" ]'
       {{end}}
       - name: Deploy stateful services
         type: xlrelease.ParallelGroup
@@ -146,7 +155,7 @@ spec:
           server: XL Deploy
           numberOfContinueRetrials: 100
           pollingInterval: 10
-          ciId: Infrastructure/{{$app}}/azure-aks-{{$clusterName}}
+          ciId: Infrastructure/{{$app}}/{{$clusterName}}-AKSCluster
           taskName: describeService
           variableMapping:
             pythonScript.xlDeployTaskId: ${taskId}

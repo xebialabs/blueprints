@@ -95,6 +95,7 @@ spec:
           capabilities:
           - CAPABILITY_IAM
           - CAPABILITY_NAMED_IAM
+          environmentPath: aws-eks-{{$app}}
           inputVariables:
             ProjectName: {{$app}}
             VPCStackName: {{$app}}-eks-vpc
@@ -102,48 +103,8 @@ spec:
             ClusterStackName: {{$app}}-eks-master
             ClusterName: {{$app}}-master
             NodeGroupName: {{$app}}
-          boundTemplates:
-            - "../eks-cluster"
-            - "../aws-eks-{{$app}}"
-            - "../aws-eks-{{$app}}-kube-system"
-            - "../aws-eks-{{$app}}-dictionary"
-        # create infrastructure entry in XLD using the cluster info that was created
-        templates:
-        - name: eks-cluster
-          type: "template.k8s.Master"
-          apiServerURL: '{{"{{%outputVariables.ClusterEndpoint%}}"}}'
-          skipTLS: "true"
-          isEKS: "true"
-          clusterName: "{{$app}}-master"
-          accessKey: {{.AWSAccessKey}}
-          accessSecret: {{.AWSAccessSecret}}
-          instanceName: "{{$app}}/eks-cluster"
-          childTemplates:
-          # this namespace is needed for authentication to the cluster
-          - name: kube-system
-            type: "template.k8s.Namespace"
-            namespaceName: "kube-system"
-        # this dictionary is needed for aws-eks-{{$app}}-kube-system environment
-        - name: aws-eks-{{$app}}-dictionary
-          type: "template.udm.Dictionary"
-          instanceName: "{{$app}}/aws-eks-{{$app}}-dictionary"
-          entries:
-            NodeInstanceRole: '{{"{{%outputVariables.NodeInstanceRole%}}"}}'
-            EksUser: '{{"{{%outputVariables.EksUser%}}"}}'
-            EksUserArn: '{{"{{%outputVariables.EksUserArn%}}"}}'
-        # create environment entry in XLD for the newly created clusters
-        - name: aws-eks-{{$app}}
-          type: "template.udm.Environment"
-          instanceName: "{{$app}}/aws-eks-{{$app}}"
-          members:
-            - "../eks-cluster"
-        - name: aws-eks-{{$app}}-kube-system
-          type: "template.udm.Environment"
-          instanceName: "{{$app}}/aws-eks-{{$app}}-kube-system"
-          members:
-            - "../eks-cluster/kube-system"
-          dictionaries:
-            - "../aws-eks-{{$app}}-dictionary"
+        
+            
     # config map used to create custom user for authentication to the EKS cluster
     - name: {{$app}}-k8s-configmap
       type: udm.Application

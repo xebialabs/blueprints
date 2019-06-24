@@ -72,7 +72,13 @@ spec:
         - name: Deprovision EKS config map for workers
           type: xldeploy.Undeploy
           server: XL Deploy
-          deployedApplication: Environments/{{$app}}/aws-eks-{{$app}}-kube-system/{{$app}}-k8s-configmap
+          deployedApplication: Environments/{{$app}}/{{$app}}-master-EKSCluster-kube-system/{{$app}}-k8s-configmap
+        - name: Update workers dictionary for kube-system environment
+          type: xld.UpdateCIProperty
+          server: XL Deploy
+          ciID: Environments/{{$app}}/{{$app}}-master-EKSCluster-kube-system
+          ciProperty: dictionaries
+          propertyValue: '[]'
         - name: Deprovision EKS workers nodes
           type: xldeploy.Undeploy
           server: XL Deploy

@@ -12,13 +12,13 @@ To deploy this blueprint, follow the steps below:
 xl apply -f xebialabs/azure-app-service.yaml
 ```
 
-2. Go to XL Deploy, look for the `{{$appName}}-app` under `Applications`. Select the `1.0.0` item underneath, click on the ellipsis and select 'Deploy'. Select the `{{$appName}}-terraform` environment (there should be only one), press 'Deploy'.
+2. Go to XL Deploy, look for the `{{$appName}}-app` under `Applications/{{ $appName }}`. Select the `1.0.0` item underneath, click on the ellipsis and select 'Deploy'. Select the `{{$appName}}-terraform` environment (there should be only one), press 'Deploy'.
 
 3. After the deployment process is complete, an App Service application will have been provisioned on Azure.
 
-4. In order to access the application you can check the entry `app_service_default_hostname` in dictionary `{{$appName}}-terraform-dictionary` created in XL Deploy under `Environment` after the deployment.
+4. In order to access the application you can check the entry `app_service_default_hostname` in dictionary `{{$appName}}-terraform-dictionary` created in XL Deploy under `Environment/{{ $appName }}` after the deployment.
 
-5. To deprovision the service, go to the `{{$appName}}-terraform` environment under `Environment`, select the `{{$appName}}-app` item, press the ellipsis and select 'Undeploy'. Follow the instructions on screen.
+5. To deprovision the service, go to the `{{$appName}}-terraform` environment under `Environment/{{ $appName }}`, select the `{{$appName}}-app` item, press the ellipsis and select 'Undeploy'. Follow the instructions on screen.
 
 ## Minimum required versions
 

@@ -1,8 +1,3 @@
-resource "azurerm_resource_group" "k8s" {
-  name     = "${var.resource_group_name}"
-  location = "${var.location}"
-}
-
 resource "tls_private_key" "key" {
   algorithm   = "RSA"
   ecdsa_curve = "P224"
@@ -11,8 +6,8 @@ resource "tls_private_key" "key" {
 
 resource "azurerm_kubernetes_cluster" "k8s" {
   name                = "${var.cluster_name}"
-  location            = "${azurerm_resource_group.k8s.location}"
-  resource_group_name = "${azurerm_resource_group.k8s.name}"
+  location            = "${var.location}"
+  resource_group_name = "${var.resource_group_name}"
   dns_prefix          = "${var.dns_prefix}"
 
   agent_pool_profile {

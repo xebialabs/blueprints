@@ -104,52 +104,6 @@ spec:
             NodeInstanceType: {{.NodeInstanceType}}
             NodeAutoScalingGroupMinSize: {{.NodeAutoScalingGroupDesiredSize}}
             NodeAutoScalingGroupMaxSize: {{add .NodeAutoScalingGroupDesiredSize 1}}
-          boundTemplates:
-            - "../eks-cluster"
-            - "../aws-eks-{{$app}}"
-            - "../aws-eks-{{$app}}-kube-system"
-            - "../aws-eks-{{$app}}-dictionary"
-        # create infrastructure entry in XLD using the cluster info that was created
-        templates:
-        - name: eks-cluster
-          type: "template.k8s.Master"
-          apiServerURL: '{{"{{%outputVariables.ClusterEndpoint%}}"}}'
-          skipTLS: "true"
-          isEKS: "true"
-          clusterName: "{{$app}}-master"
-          accessKey: {{.AWSAccessKey}}
-          accessSecret: {{.AWSAccessSecret}}
-          instanceName: "{{$app}}/eks-cluster"
-          childTemplates:
-          # this namespace is needed for authentication to the cluster
-          - name: kube-system
-            type: "template.k8s.Namespace"
-            namespaceName: "kube-system"
-          - name: default
-            type: template.k8s.Namespace
-            namespaceName: "default"
-        # this dictionary is needed for aws-eks-{{$app}}-kube-system environment
-        - name: aws-eks-{{$app}}-dictionary
-          type: "template.udm.Dictionary"
-          instanceName: "{{$app}}/aws-eks-{{$app}}-dictionary"
-          entries:
-            NodeInstanceRole: '{{"{{%outputVariables.NodeInstanceRole%}}"}}'
-            EksUser: '{{"{{%outputVariables.EksUser%}}"}}'
-            EksUserArn: '{{"{{%outputVariables.EksUserArn%}}"}}'
-        # create environment entry in XLD for the newly created clusters
-        - name: aws-eks-{{$app}}
-          type: "template.udm.Environment"
-          instanceName: "{{$app}}/aws-eks-{{$app}}"
-          members:
-            - "../eks-cluster"
-            - "../eks-cluster/default"
-        - name: aws-eks-{{$app}}-kube-system
-          type: "template.udm.Environment"
-          instanceName: "{{$app}}/aws-eks-{{$app}}-kube-system"
-          members:
-            - "../eks-cluster/kube-system"
-          dictionaries:
-            - "../aws-eks-{{$app}}-dictionary"
 
     {{- if .ProvisionEFS }}
     - name: {{$app}}-cloudformation-efs
