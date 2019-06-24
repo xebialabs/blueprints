@@ -13,6 +13,14 @@ metadata:
 
 spec:
   parameters:
+  - name: Platform
+    type: Select
+    description: "Choose the platform you are targeting:"
+    options:
+    - AWS EKS
+    - GCP GKE
+    - Azure AKS
+
   - name: ClusterName
     type: Input
     description: "Use the same cluster name as you did for the basic cluster:"
@@ -35,3 +43,6 @@ spec:
   # XebiaLabs
   - path: xebialabs/USAGE-multicloud-pipeline.md.tmpl
   - path: xebialabs/multicloud-pipeline.yaml.tmpl
+    dependsOnTrue: !expression "Platform != 'AWS EKS'"
+  - path: xebialabs/multicloud-pipeline-aws.yaml.tmpl
+    dependsOnTrue: !expression "Platform == 'AWS EKS'"

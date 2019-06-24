@@ -2,33 +2,30 @@ apiVersion: xl/v1
 kind: Blueprint
 
 metadata:
-  projectName: AWS-EKS-Cluster
+  projectName: AWS-EKS-Basic
   description: |
-    The blueprint deploys a simple AWS EKS Cluster (with EFS if requested).
-    XL Deploy does the provisioning and deployment, while XL Release orchestrates everything.
+    The blueprint provisions a very basic AWS EKS cluster. XL Deploy does the provisioning.
   author: XebiaLabs
   version: 1.0
-  instructions: Please read the generated file "xebialabs/USAGE.md" for further usage instructions.
+  instructions: Please read the generated file "xebialabs/USAGE-aws-basic-eks-cluster.md" for further usage instructions.
 
 spec:
   parameters:
-  # General variables
-  - name: AppName
-    type: Input
-    description: What is the name of the application? (16 characters max)
-    pattern: ^[a-zA-Z0-9-]{1,16}$
-
+  # ############################################################################
   # AWS specific variables
+  # ############################################################################
   - name: UseAWSCredentialsFromSystem
     type: Confirm
     description: Do you want to use AWS credentials from ~/.aws/credentials file?
     dependsOnTrue: !fn aws.credentials().IsAvailable
+
   - name: AWSAccessKey
     type: Input
     secret: true
     description: What is the AWS Access Key ID?
     dependsOnFalse: UseAWSCredentialsFromSystem
     default: !fn aws.credentials().AccessKeyID
+
   - name: AWSAccessSecret
     type: Input
     secret: true
@@ -58,7 +55,7 @@ spec:
 
   - name: ClusterName
     type: Input
-    description: What is the name of the cluster?
+    description: What do you want to name the cluster?
 
   - name: NodeAutoScalingGroupDesiredSize
     type: Input
@@ -126,26 +123,21 @@ spec:
     - p3.8xlarge
     - p3.16xlarge
 
-  - name: ProvisionEFS
-    type: Confirm
-    description: "Do you want to provision Amazon Elastic File System?"
-    default: false
+  - name: Prefix
+    type: Input
+    description: "Specify the application prefix (use the default if you're not sure):"
+    default: aws-eks-
+    pattern: "([a-z0-9-]+-)+"
 
   files:
-  - path: xebialabs/xld-infra-env.yaml.tmpl
-  - path: xebialabs/xld-cloudformation-apps.yaml.tmpl
-  - path: xebialabs/xlr-pipeline-ci-cd.yaml.tmpl
-  - path: xebialabs/xlr-pipeline-destroy.yaml.tmpl
-  - path: xebialabs/USAGE.md.tmpl
+  - path: xebialabs/aws-basic-eks-cluster.yaml.tmpl
+  - path: xebialabs/aws-basic-eks-cluster-applications.yaml.tmpl
+  - path: xebialabs/aws-basic-eks-cluster-environments.yaml.tmpl
+  - path: xebialabs/USAGE-aws-basic-eks-cluster.md.tmpl
+
   - path: kubernetes/aws-auth-cm.yaml
   - path: cloudformation/cfn-secret-provider.zip
   - path: cloudformation/eks-master.yaml
   - path: cloudformation/eks-user.yaml
   - path: cloudformation/eks-vpc.yaml
   - path: cloudformation/eks-workers.yaml
-  - path: cloudformation/efs.yaml
-    dependsOnTrue: ProvisionEFS
-  - path: xebialabs.yaml
-  # docker-compose setup for required tools
-  - path: docker/docker-compose.yml
-  - path: docker/data/configure-xl-devops-platform.yaml

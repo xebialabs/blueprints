@@ -1,0 +1,5 @@
+answers-file: answers-other.yaml
+expected-files:
+- xebialabs/multicloud-pipeline.yaml
+not-expected-files:
+- xebialabs/multicloud-pipeline-aws.yaml

@@ -1,0 +1,11 @@
+answers-file: answers.yaml
+expected-files:
+- xebialabs/aws-basic-eks-cluster-applications.yaml
+- xebialabs/aws-basic-eks-cluster-environments.yaml
+- xebialabs/aws-basic-eks-cluster.yaml
+- xebialabs/USAGE-aws-basic-eks-cluster.md
+- kubernetes/aws-auth-cm.yaml
+- cloudformation/eks-master.yaml
+- cloudformation/eks-user.yaml
+- cloudformation/eks-vpc.yaml
+- cloudformation/eks-workers.yaml
