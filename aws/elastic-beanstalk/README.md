@@ -37,9 +37,9 @@ This blueprint includes the following tools and technologies:
 
 This blueprint version requires at least the following versions of the specified tools to work properly:
 
-XL Release: Version 8.6.0
-XL Deploy: Version 8.6.1
-XL CLI: Version 8.6.0
+XL Release: Version 9.0.0
+XL Deploy: Version 9.0.0
+XL CLI: Version 9.0.0
 
 ## Prerequisites
 
@@ -64,11 +64,11 @@ This blueprint will output:
 
 * Release template
 * Infrastructure:
-    * Amazon ECS cluster
-    * Networking infrastructure: Virtual Private Cloud (VPC), subnets, route table
-    * Security infrastructure
-    * Elastic Load Balancer (ELB) infrastructure
-    * Amazon Relational Database Service (RDS)
+  * Amazon ECS cluster
+  * Networking infrastructure: Virtual Private Cloud (VPC), subnets, route table
+  * Security infrastructure
+  * Elastic Load Balancer (ELB) infrastructure
+  * Amazon Relational Database Service (RDS)
 * A docker-compose setup for XL Release & XL Deploy
 
 ## Tips and tricks

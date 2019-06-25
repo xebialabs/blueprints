@@ -1,0 +1,34 @@
+apiVersion: xl-release/v1
+kind: Templates
+spec:
+- name: ELASTIC-BEANSTALK
+  type: xlrelease.Folder
+  children:
+  - name: app-ci-cd
+    type: xlrelease.Release
+    description: Something # TODO
+    tags:
+    - AWS
+    - CloudFormation
+    - ElasticBeanstalk
+    scriptUsername: !value XL_RELEASE_USERNAME
+    scriptUserPassword: !value XL_RELEASE_PASSWORD
+    phases:
+    - name: Deploy Application
+      type: xlrelease.Phase
+      tasks:
+      - name: Create S3 bucket
+        type: xldeploy.Deploy
+        server: XL Deploy
+        deploymentPackage: ELASTIC-BEANSTALK/aws-elastic-beanstalk-solution-bucket/1.0.0
+        deploymentEnvironment: Environments/ELASTIC-BEANSTALK/AWS-ELASTIC-BEANSTALK
+      - name: Upload to S3 bucket
+        type: xldeploy.Deploy
+        server: XL Deploy
+        deploymentPackage: ELASTIC-BEANSTALK/aws-elastic-beanstalk-sample-artifacts/1.0.0
+        deploymentEnvironment: Environments/ELASTIC-BEANSTALK/AWS-ELASTIC-BEANSTALK
+      - name: Create CloudFormation stack
+        type: xldeploy.Deploy
+        server: XL Deploy
+        deploymentPackage: ELASTIC-BEANSTALK/aws-elastic-beanstalk-sample-cloudformation/1.0.0
+        deploymentEnvironment: Environments/ELASTIC-BEANSTALK/AWS-ELASTIC-BEANSTALK

@@ -1,0 +1,31 @@
+apiVersion: xl-release/v1
+kind: Templates
+spec:
+- name: ELASTIC-BEANSTALK
+  type: xlrelease.Folder
+  children:
+  - name: app-destroy
+    type: xlrelease.Release
+    description: Something # TODO
+    tags:
+    - AWS
+    - CloudFormation
+    - ElasticBeanstalk
+    scriptUsername: !value XL_RELEASE_USERNAME
+    scriptUserPassword: !value XL_RELEASE_PASSWORD
+    phases:
+    - name: Undeploy Application
+      type: xlrelease.Phase
+      tasks:
+      - name: Delete CloudFormation stack
+        type: xldeploy.Undeploy
+        server: XL Deploy
+        deployedApplication: Environments/ELASTIC-BEANSTALK/AWS-ELASTIC-BEANSTALK/aws-elastic-beanstalk-sample-cloudformation
+      - name: Delete S3 objects
+        type: xldeploy.Undeploy
+        server: XL Deploy
+        deployedApplication: Environments/ELASTIC-BEANSTALK/AWS-ELASTIC-BEANSTALK/aws-elastic-beanstalk-sample-artifacts
+      - name: Delete S3 bucket
+        type: xldeploy.Undeploy
+        server: XL Deploy
+        deployedApplication: Environments/ELASTIC-BEANSTALK/AWS-ELASTIC-BEANSTALK/aws-elastic-beanstalk-solution-bucket

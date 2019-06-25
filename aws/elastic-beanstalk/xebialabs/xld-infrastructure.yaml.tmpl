@@ -4,45 +4,53 @@ spec:
 - name: ELASTIC-BEANSTALK
   type: core.Directory
   children:
-  ### create S3 bucket ###
+
+  ### create S3 bucket ---------------------------------------------------------
   - name: aws-elastic-beanstalk-solution-bucket
     type: udm.Application
     children:
     - name: '1.0.0'
       type: udm.DeploymentPackage
       deployables:
+      # ------------------------------------------------------------------------
       - name: s3-bucket-{{.S3BucketName}}
         type: aws.s3.BucketSpec
         bucketName: {{.S3BucketName}}
-        region: '{{"{{region}}"}}'
-  ### upload the artifacts and cloudformation templates to S3 bucket ###
+        region: '{{"{{region}}"}}' #! Where in the process is this replaced?
+
+  ### upload the artifacts and cloudformation templates to S3 bucket -----------
   - name: aws-elastic-beanstalk-sample-artifacts
     type: udm.Application
     children:
     - name: '1.0.0'
       type: udm.DeploymentPackage
       deployables:
+      # ------------------------------------------------------------------------
       - name: elastic-beanstalk-sample-artifacts
         type: aws.s3.Folder
         file: !file ../cloudformation/python-v1.zip
         acl: bucket-owner-full-control
         createTargetPath: true
         scanPlaceholders: false
-  ### provision elastic-beanstalk solution with cloudformation templates ###
+
+  ### provision elastic-beanstalk solution with cloudformation templates -------
   - name: aws-elastic-beanstalk-sample-cloudformation
     type: udm.Application
     children:
     - name: '1.0.0'
       type: udm.DeploymentPackage
       deployables:
+      # ------------------------------------------------------------------------
       - name: provision-elastic-beanstalk-sample-stack
         type: aws.cloudformation.Template
+        # file: !file ../cloudformation/beanstalk.yaml
         file: !file ../cloudformation/beanstalk.yaml
         timeoutInterval: 300 # wait for 300 loops(approx 30 minutes)
         capabilities:
         - CAPABILITY_IAM
         - CAPABILITY_NAMED_IAM
         inputVariables:
-          AdministratorName: {{.AdministratorName}}
-          AdministratorEmail: {{.AdministratorEmail}}
-          CognitoDomain: {{.CognitoDomain}}
+          BeanstalkService: "elasticbeanstalk.amazonaws.com"
+          Ec2Service: "ec2.amazonaws.com"
+          Partition: "aws"
+          SolutionStackName: "64bit Amazon Linux 2018.03 v2.8.6 running Python 3.6 "

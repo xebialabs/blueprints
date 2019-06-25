@@ -11,11 +11,16 @@ metadata:
 
 spec:
   parameters:
+
   - name: S3BucketName
     type: Input
     prompt: What is the name of the S3 bucket where CloudFormation artifacts should be saved?
-    validate: !expr "regex('(([a-z0-9]|[a-z0-9][a-z0-9\\\\-]*[a-z0-9])\\\\.)*([a-z0-9]|[a-z0-9][a-z0-9\\\\-]*[a-z0-9]){3,63}', S3BucketName)"
+    validate: !expr "regex('^(([a-z0-9]|[a-z0-9][a-z0-9\\\\-]*[a-z0-9])\\\\.)*([a-z0-9]|[a-z0-9][a-z0-9\\\\-]*[a-z0-9]){3,63}$', S3BucketName)"
     default: beanstalk-sample
+
+  # ----------------------------------------------------------------------------
+  # AWS Credentials
+  # ----------------------------------------------------------------------------
   - name: UseAWSCredentialsFromSystem
     type: Confirm
     prompt: Do you want to use AWS credentials from ~/.aws/credentials file?
@@ -30,6 +35,10 @@ spec:
     prompt: What is the AWS Secret Access Key?
     promptIf: !expr "!UseAWSCredentialsFromSystem"
     default: !expr "awsCredentials('SecretAccessKey')"
+  # ----------------------------------------------------------------------------
+  # End: AWS Credentials
+  # ----------------------------------------------------------------------------
+
   - name: AWSRegion
     type: Select
     prompt: "Select the AWS region:"
@@ -43,6 +52,8 @@ spec:
   - path: cloudformation/python-v1.zip
   - path: xebialabs/xld-infrastructure.yaml.tmpl
   - path: xebialabs/xld-environment.yaml.tmpl
+  - path: xebialabs/xlr-pipeline-ci-cd.yaml.tmpl
+  - path: xebialabs/xlr-pipeline-destroy.yaml.tmpl
   - path: xebialabs/USAGE.md.tmpl
   - path: xebialabs.yaml
   - path: docker/docker-compose.yml

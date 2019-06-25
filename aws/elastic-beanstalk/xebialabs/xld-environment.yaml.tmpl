@@ -6,12 +6,12 @@ spec:
   children:
   - name: AWS
     type: aws.Cloud
-    accesskey: {{.AWSAccessKey}}
-    accessSecret: {{.AWSAccessSecret}}
+    accesskey: !value AWSAccessKey
+    accessSecret: !value AWSAccessSecret
     children:
     - name: cloudformation
       type: aws.cloudformation.Stack
-      region: !value AWSRegion
+      region: {{.AWSRegion}}
 
 ---
 
@@ -24,7 +24,7 @@ spec:
   - name: AWS Dictionary
     type: udm.Dictionary
     entries:
-      region: !value AWSRegion
+      region: {{.AWSRegion}}
   - name: AWS-ELASTIC-BEANSTALK
     type: udm.Environment
     members:
