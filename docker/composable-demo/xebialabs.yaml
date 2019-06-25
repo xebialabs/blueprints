@@ -1,0 +1,6 @@
+apiVersion: xl/v1
+kind: Import
+metadata:
+  imports:
+    - xebialabs/docker-environment.yaml
+    - xebialabs/docker-application.yaml
