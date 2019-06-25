@@ -21,15 +21,15 @@ spec:
       - name: Create S3 bucket
         type: xldeploy.Deploy
         server: XL Deploy
-        deploymentPackage: "{{$app}}/aws-elastic-beanstalk-solution-bucket/1.0.0"
+        deploymentPackage: "{{$app}}/aws-elastic-beanstalk-bucket/1.0.0"
         deploymentEnvironment: "Environments/{{$app}}/AWS-ELASTIC-BEANSTALK"
       - name: Upload to S3 bucket
         type: xldeploy.Deploy
         server: XL Deploy
-        deploymentPackage: "{{$app}}/aws-elastic-beanstalk-sample-artifacts/1.0.0"
+        deploymentPackage: "{{$app}}/aws-elastic-beanstalk-artifacts/1.0.0"
         deploymentEnvironment: "Environments/{{$app}}/AWS-ELASTIC-BEANSTALK"
       - name: Create CloudFormation stack
         type: xldeploy.Deploy
         server: XL Deploy
-        deploymentPackage: "{{$app}}/aws-elastic-beanstalk-sample-cloudformation/1.0.0"
+        deploymentPackage: "{{$app}}/aws-elastic-beanstalk-cloudformation/1.0.0"
         deploymentEnvironment: "Environments/{{$app}}/AWS-ELASTIC-BEANSTALK"

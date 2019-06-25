@@ -7,7 +7,7 @@ spec:
   children:
 
   ### create S3 bucket ---------------------------------------------------------
-  - name: aws-elastic-beanstalk-solution-bucket
+  - name: aws-elastic-beanstalk-bucket
     type: udm.Application
     children:
     - name: '1.0.0'
@@ -20,14 +20,14 @@ spec:
         region: '{{"{{region}}"}}' #! Where in the process is this replaced?
 
   ### upload the artifacts and cloudformation templates to S3 bucket -----------
-  - name: aws-elastic-beanstalk-sample-artifacts
+  - name: aws-elastic-beanstalk-artifacts
     type: udm.Application
     children:
     - name: '1.0.0'
       type: udm.DeploymentPackage
       deployables:
       # ------------------------------------------------------------------------
-      - name: elastic-beanstalk-sample-artifacts
+      - name: elastic-beanstalk-artifacts
         type: aws.s3.Folder
         file: !file ../cloudformation/python-v1.zip
         acl: bucket-owner-full-control
@@ -35,14 +35,14 @@ spec:
         scanPlaceholders: false
 
   ### provision elastic-beanstalk solution with cloudformation templates -------
-  - name: aws-elastic-beanstalk-sample-cloudformation
+  - name: aws-elastic-beanstalk-cloudformation
     type: udm.Application
     children:
     - name: '1.0.0'
       type: udm.DeploymentPackage
       deployables:
       # ------------------------------------------------------------------------
-      - name: elastic-beanstalk-sample-stack
+      - name: elastic-beanstalk-stack
         type: aws.cloudformation.Template
         # file: !file ../cloudformation/beanstalk.yaml
         file: !file ../cloudformation/beanstalk.yaml
