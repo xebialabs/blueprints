@@ -1,7 +1,8 @@
+{{$app := .AppName | kebabcase}}
 apiVersion: xl-release/v1
 kind: Templates
 spec:
-- name: ELASTIC-BEANSTALK
+- name: "{{$app}}"
   type: xlrelease.Folder
   children:
   - name: app-destroy
@@ -20,12 +21,12 @@ spec:
       - name: Delete CloudFormation stack
         type: xldeploy.Undeploy
         server: XL Deploy
-        deployedApplication: Environments/ELASTIC-BEANSTALK/AWS-ELASTIC-BEANSTALK/aws-elastic-beanstalk-sample-cloudformation
+        deployedApplication: "Environments/{{$app}}/AWS-ELASTIC-BEANSTALK/aws-elastic-beanstalk-sample-cloudformation"
       - name: Delete S3 objects
         type: xldeploy.Undeploy
         server: XL Deploy
-        deployedApplication: Environments/ELASTIC-BEANSTALK/AWS-ELASTIC-BEANSTALK/aws-elastic-beanstalk-sample-artifacts
+        deployedApplication: "Environments/{{$app}}/AWS-ELASTIC-BEANSTALK/aws-elastic-beanstalk-sample-artifacts"
       - name: Delete S3 bucket
         type: xldeploy.Undeploy
         server: XL Deploy
-        deployedApplication: Environments/ELASTIC-BEANSTALK/AWS-ELASTIC-BEANSTALK/aws-elastic-beanstalk-solution-bucket
+        deployedApplication: "Environments/{{$app}}/AWS-ELASTIC-BEANSTALK/aws-elastic-beanstalk-solution-bucket"

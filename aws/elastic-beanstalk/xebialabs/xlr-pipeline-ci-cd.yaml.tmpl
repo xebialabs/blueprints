@@ -1,7 +1,8 @@
+{{$app := .AppName | kebabcase}}
 apiVersion: xl-release/v1
 kind: Templates
 spec:
-- name: ELASTIC-BEANSTALK
+- name: "{{$app}}"
   type: xlrelease.Folder
   children:
   - name: app-ci-cd
@@ -20,15 +21,15 @@ spec:
       - name: Create S3 bucket
         type: xldeploy.Deploy
         server: XL Deploy
-        deploymentPackage: ELASTIC-BEANSTALK/aws-elastic-beanstalk-solution-bucket/1.0.0
-        deploymentEnvironment: Environments/ELASTIC-BEANSTALK/AWS-ELASTIC-BEANSTALK
+        deploymentPackage: "{{$app}}/aws-elastic-beanstalk-solution-bucket/1.0.0"
+        deploymentEnvironment: "Environments/{{$app}}/AWS-ELASTIC-BEANSTALK"
       - name: Upload to S3 bucket
         type: xldeploy.Deploy
         server: XL Deploy
-        deploymentPackage: ELASTIC-BEANSTALK/aws-elastic-beanstalk-sample-artifacts/1.0.0
-        deploymentEnvironment: Environments/ELASTIC-BEANSTALK/AWS-ELASTIC-BEANSTALK
+        deploymentPackage: "{{$app}}/aws-elastic-beanstalk-sample-artifacts/1.0.0"
+        deploymentEnvironment: "Environments/{{$app}}/AWS-ELASTIC-BEANSTALK"
       - name: Create CloudFormation stack
         type: xldeploy.Deploy
         server: XL Deploy
-        deploymentPackage: ELASTIC-BEANSTALK/aws-elastic-beanstalk-sample-cloudformation/1.0.0
-        deploymentEnvironment: Environments/ELASTIC-BEANSTALK/AWS-ELASTIC-BEANSTALK
+        deploymentPackage: "{{$app}}/aws-elastic-beanstalk-sample-cloudformation/1.0.0"
+        deploymentEnvironment: "Environments/{{$app}}/AWS-ELASTIC-BEANSTALK"

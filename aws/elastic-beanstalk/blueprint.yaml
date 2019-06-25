@@ -12,6 +12,10 @@ metadata:
 spec:
   parameters:
 
+  - name: AppName
+    type: Input
+    prompt: What is the name of the application?
+
   - name: S3BucketName
     type: Input
     prompt: What is the name of the S3 bucket where CloudFormation artifacts should be saved?

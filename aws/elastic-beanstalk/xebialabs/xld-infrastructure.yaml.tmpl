@@ -1,7 +1,8 @@
+{{$app := .AppName | kebabcase}}
 apiVersion: xl-deploy/v1
 kind: Applications
 spec:
-- name: ELASTIC-BEANSTALK
+- name: "{{$app}}"
   type: core.Directory
   children:
 
