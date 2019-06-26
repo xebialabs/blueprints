@@ -1,0 +1,12 @@
+answers-file: answers.yaml
+expected-files:
+- cloudformation/beanstalk.yaml
+- cloudformation/python-v1.zip
+- xebialabs/xld-infrastructure.yaml
+- xebialabs/xld-environment.yaml
+- xebialabs/xlr-pipeline-ci-cd.yaml
+- xebialabs/xlr-pipeline-destroy.yaml
+- xebialabs/USAGE.md
+- xebialabs.yaml
+- docker/docker-compose.yml
+- docker/data/configure-xl-devops-platform.yaml

@@ -1,0 +1,6 @@
+AppName: appname
+S3BucketName: s3bucket
+UseAWSCredentialsFromSystem: false
+AWSAccessKey: ABCDEFGHIJKLMNOPQRST
+AWSAccessSecret: 1234567890abcdefghijklmnopqrstuvwxyz12345
+AWSRegion: eu-west-3
