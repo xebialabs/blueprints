@@ -33,3 +33,14 @@ spec:
         server: XL Deploy
         deploymentPackage: "{{$app}}/aws-elastic-beanstalk-cloudformation/1.0.0"
         deploymentEnvironment: "Environments/{{$app}}/AWS-ELASTIC-BEANSTALK"
+    - name: Test Application
+      type: xlrelease.Phase
+      tasks:
+      - name: Verify application
+        type: xlrelease.GateTask
+        team: Release Admin
+        description: |
+          The Beanstalk application is now live
+          Check out the web site and complete this task when done.
+
+          URL => https://{{.AWSRegion}}.console.aws.amazon.com/elasticbeanstalk/home?region={{.AWSRegion}}
