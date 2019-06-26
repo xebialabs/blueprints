@@ -54,11 +54,7 @@ This blueprint requires:
 This blueprint will output:
 
 * Docker infrastructure
-* Docker application definiton
-* A docker-compose setup for XL Deploy & Docker proxy
-
-## Tips and tricks
-
+* Docker application definition
 
 ## Labels
 
