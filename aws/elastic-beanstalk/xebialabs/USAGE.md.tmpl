@@ -1,3 +1,4 @@
+{{$app := .AppName | kebabcase}}
 ## Elastic Beanstalk Sample Python App on AWS
 
 The blueprint deploys a sample python application to AWS using Elastic Beanstalk.
@@ -20,7 +21,9 @@ To deploy this blueprint with the XebiaLabs DevOps Platform, follow the steps be
     xl apply -f xebialabs.yaml
     ```
 
-2. Go to XL Deploy and deploy packages under 'ELASTIC-BEANSTALK'.
+2. Go to XL Release and deploy the `{{$app}}` template
+
+3. Once the template has been deployed, navigate to https://{{.AWSRegion}}.console.aws.amazon.com/elasticbeanstalk/home?region={{.AWSRegion}} and find the application. Click the URL to see the welcome page.
 
 ## Minimum required versions
 
