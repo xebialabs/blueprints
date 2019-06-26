@@ -45,9 +45,9 @@ spec:
 
   - blueprint: kubernetes/application
     includeIf: !expr "KubeApp"
-    # parameterOverrides:
-    # - name: KubernetesApplicationName
-    #   value: !expr "Provider == 'existing cluster' ? KubernetesName + '-app' : Provider + '-app'"
+    parameterOverrides:
+    - name: KubernetesApplicationName
+      value: !expr "Provider == 'EKS' ? AppName : ''"
 
   files:
   - path: xebialabs.yaml.tmpl

@@ -1,0 +1,19 @@
+answers-file: answers-eks.yaml
+expected-files:
+  - xebialabs/kubernetes-application.yaml
+  - xebialabs/USAGE-kubernetes-application.md
+  - kubernetes/nginx.yaml
+  - xebialabs.yaml
+  - xebialabs/xld-infra-env.yaml
+  - xebialabs/xld-cloudformation-apps.yaml
+  - xebialabs/xlr-pipeline-ci-cd.yaml
+  - xebialabs/xlr-pipeline-destroy.yaml
+  - xebialabs/USAGE-aws-basic-eks-cluster.md
+  - kubernetes/aws-auth-cm.yaml
+  - cloudformation/cfn-secret-provider.zip
+  - cloudformation/eks-master.yaml
+  - cloudformation/eks-user.yaml
+  - cloudformation/eks-vpc.yaml
+  - cloudformation/eks-workers.yaml
+  - docker/docker-compose.yml
+  - docker/data/configure-xl-devops-platform.yaml
