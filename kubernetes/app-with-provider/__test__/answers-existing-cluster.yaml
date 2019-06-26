@@ -1,4 +1,4 @@
-Provider: existing cluster
+Provider: "existing cluster"
 KubeApp: true
 
 KubernetesName: test-cluster
