@@ -51,6 +51,10 @@ spec:
     options:
       - !expr "awsRegions('ecs')"
 
+  - name: SolutionStackName
+    type: Input
+    value: "64bit Amazon Linux 2018.03 v2.8.6 running Python 3.6"
+
   files:
   - path: cloudformation/beanstalk.yaml.tmpl
   - path: cloudformation/python-v1.zip
