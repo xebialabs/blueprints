@@ -1,4 +1,4 @@
-Provider: existing cluster
+Provider: GKE
 KubeApp: true
 
 AppName: test-project

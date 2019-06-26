@@ -1,4 +1,4 @@
-Provider: existing cluster
+Provider: AKS
 KubeApp: true
 
 ClusterName: MyApp
