@@ -13,9 +13,13 @@ metadata:
 spec:
   files:
   - path: xebialabs.yaml
+  - path: xebialabs/USAGE.md
 
   includeBefore:
   - blueprint: docker/environment
+    parameterOverrides:
+    - name: Standalone
+      value: false
   - blueprint: docker/application
 
   includeAfter:

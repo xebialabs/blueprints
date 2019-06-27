@@ -15,7 +15,10 @@ spec:
     type: Input
     prompt: What is the URL of the Docker engine?
     default: http://dockerproxy:2375
+  - name: Standalone
+    type: Confirm
+    value: true
 
   files:
   - path: xebialabs/docker-environment.yaml.tmpl
-  - path: xebialabs/USAGE-docker-environment.md
+  - path: xebialabs/USAGE-docker-environment.md.tmpl

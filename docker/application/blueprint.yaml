@@ -33,7 +33,10 @@ spec:
     prompt: At which host port should that port be exposed?
     promptIf: ExposePort
     default: 8080
-    
+  - name: Standalone
+    type: Confirm
+    value: true
+
   files:
   - path: xebialabs/docker-application.yaml.tmpl
-  - path: xebialabs/USAGE-docker-application.md
+  - path: xebialabs/USAGE-docker-application.md.tmpl
