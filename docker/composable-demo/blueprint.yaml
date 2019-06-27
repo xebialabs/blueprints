@@ -1,0 +1,31 @@
+apiVersion: xl/v2
+kind: Blueprint
+
+metadata:
+  name: Docker Sample
+  description: |
+    The blueprint deploys a simple application in Docker container into your local Docker setup.
+    XL Deploy does the deployment, while XL Release orchestrates everything.
+  author: XebiaLabs
+  version: 2.0
+  instructions: Please read the generated file "xebialabs/USAGE.md" for further usage instructions.
+
+spec:
+  files:
+  - path: xebialabs.yaml
+  - path: xebialabs/USAGE.md
+
+  includeBefore:
+  - blueprint: docker/environment
+    parameterOverrides:
+    - name: Standalone
+      value: false
+  - blueprint: docker/application
+
+  includeAfter:
+  - blueprint: xl-devops-platform
+    parameterOverrides:
+    - name: UseXLDeployFlag
+      value: true
+    - name: UseXLReleaseFlag
+      value: false

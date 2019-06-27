@@ -1,0 +1,8 @@
+DockerURL: http://docker:2375
+DockerImageRepository: nginx
+DockerImageTag: latest
+ExposePort: false
+XLDeployPort: 4321
+JetPackOrEnterprise: JetPack
+XLVersion: 8.6.1
+UseDockerProxyFlag: true
