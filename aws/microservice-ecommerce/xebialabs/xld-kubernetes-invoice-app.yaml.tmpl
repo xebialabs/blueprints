@@ -17,6 +17,8 @@ spec:
           - name: {{$app}}-invoice-mysql
             type: k8s.ResourcesFile
             file: !file ../invoice/build/kubernetes/invoice-mysql.yml
+            tags: 
+            - {{.Namespace}}
       - name: {{$app}}-invoice
         type: udm.Application
         children:
@@ -26,6 +28,10 @@ spec:
           - name: {{$app}}-invoice-deployment
             type: k8s.ResourcesFile
             file: !file ../invoice/build/kubernetes/invoice-deployment.yml
+            tags: 
+            - {{.Namespace}}
           - name: {{$app}}-invoice-svc
             type: k8s.ResourcesFile
             file: !file ../invoice/build/kubernetes/invoice-service.yml
+            tags: 
+            - {{.Namespace}}
