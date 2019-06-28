@@ -1,0 +1,35 @@
+{{$app := .AppName | kebabcase}}
+apiVersion: xl-deploy/v1
+kind: Infrastructure
+spec:
+- name: "{{$app}}"
+  type: core.Directory
+  children:
+  - name: AWS
+    type: aws.Cloud
+    accesskey: !value AWSAccessKey
+    accessSecret: !value AWSAccessSecret
+    children:
+    - name: cloudformation
+      type: aws.cloudformation.Stack
+      region: "{{.AWSRegion}}"
+
+---
+
+apiVersion: xl-deploy/v1
+kind: Environments
+spec:
+- name: "{{$app}}"
+  type: core.Directory
+  children:
+  - name: AWS Dictionary
+    type: udm.Dictionary
+    entries:
+      region: "{{.AWSRegion}}"
+  - name: AWS-ELASTIC-BEANSTALK
+    type: udm.Environment
+    members:
+    - "~Infrastructure/{{$app}}/AWS"
+    - "~Infrastructure/{{$app}}/AWS/cloudformation"
+    dictionaries:
+    - "~Environments/{{$app}}/AWS Dictionary"
