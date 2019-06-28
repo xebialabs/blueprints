@@ -80,6 +80,7 @@ spec:
           capabilities:
           - CAPABILITY_IAM
           - CAPABILITY_NAMED_IAM
+          environmentPath: aws-eks-{{$app}}
           inputVariables:
             ProjectName: {{$app}}
             VPCStackName: {{$app}}-eks-vpc
@@ -95,7 +96,6 @@ spec:
           capabilities:
           - CAPABILITY_IAM
           - CAPABILITY_NAMED_IAM
-          environmentPath: aws-eks-{{$app}}
           inputVariables:
             ProjectName: {{$app}}
             VPCStackName: {{$app}}-eks-vpc
@@ -128,7 +128,7 @@ spec:
       - name: '1.0.0'
         type: udm.DeploymentPackage
         deployables:
-        - name: xl-demo
+        - name: {{.Namespace}}
           type: k8s.NamespaceSpec
-          namespaceName: 'xl-demo'
+          namespaceName: '{{.Namespace}}'
 {{end}}

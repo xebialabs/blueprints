@@ -22,11 +22,7 @@ spec:
       requiresValue: false
       showOnReleaseStart: false
       value:
-        {{- if .ProvisionCluster }}
-        namespace: xl-demo
-        {{- else}}
         namespace: {{.Namespace}}
-        {{- end}}
         serviceName: store
     - key: lbHostnameOrIp
       type: xlrelease.StringVariable
@@ -146,11 +142,20 @@ spec:
       type: xlrelease.Phase
       tasks:
       {{if .ProvisionCluster }}
-      - name: Deploy xl-demo namespace
-        type: xldeploy.Deploy
-        server: XL Deploy
-        deploymentPackage: {{$app}}/K8S/{{$app}}-namespace/1.0.0
-        deploymentEnvironment: Environments/{{$app}}/aws-eks-{{$app}}
+      - name: Deploy {{.Namespace}} namespace
+        type: xlrelease.SequentialGroup
+        tasks:
+        - name: Deploy namespace
+          type: xldeploy.Deploy
+          server: XL Deploy
+          deploymentPackage: {{$app}}/K8S/{{$app}}-namespace/1.0.0
+          deploymentEnvironment: Environments/{{$app}}/aws-eks-{{$app}}
+        - name: Tag namespace
+          type: xld.UpdateCIProperty
+          server: XL Deploy
+          ciID: Infrastructure/{{$app}}/{{$app}}-master-EKSCluster/{{.Namespace}}
+          ciProperty: tags
+          propertyValue: '[ "{{.Namespace}}" ]'
       {{end}}
       - name: Deploy stateful services
         type: xlrelease.ParallelGroup
@@ -208,7 +213,7 @@ spec:
           numberOfContinueRetrials: 100
           pollingInterval: 10
           {{if .ProvisionCluster }}
-          ciId: Infrastructure/{{$app}}/eks-cluster
+          ciId: Infrastructure/{{$app}}/{{$app}}-master-EKSCluster
           {{else}}
           ciId: Infrastructure/{{$app}}/eks-{{$clusterName}}
           {{end}}
