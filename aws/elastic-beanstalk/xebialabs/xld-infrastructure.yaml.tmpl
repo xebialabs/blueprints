@@ -24,8 +24,8 @@ spec:
       type: udm.DeploymentPackage
       deployables:
       - name: elastic-beanstalk-artifacts
-        type: aws.s3.Folder
-        file: !file ../cloudformation/python-v1.zip
+        type: aws.s3.File
+        file: !file ../cloudformation/python-app-v1.zip
         acl: bucket-owner-full-control
         createTargetPath: true
         scanPlaceholders: false
@@ -44,6 +44,8 @@ spec:
         - CAPABILITY_IAM
         - CAPABILITY_NAMED_IAM
         inputVariables:
+          S3BucketName: "{{.S3BucketName}}"
+          S3Key: "{{.S3Key}}"
           BeanstalkService: "elasticbeanstalk.amazonaws.com"
           Ec2Service: "ec2.amazonaws.com"
           Partition: "aws"

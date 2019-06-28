@@ -20,7 +20,7 @@ spec:
     type: Input
     prompt: What is the name of the S3 bucket where CloudFormation artifacts should be saved?
     validate: !expr "regex('^(([a-z0-9]|[a-z0-9][a-z0-9\\\\-]*[a-z0-9])\\\\.)*([a-z0-9]|[a-z0-9][a-z0-9\\\\-]*[a-z0-9]){3,63}$', S3BucketName)"
-    default: beanstalk-sample
+    default: !expr "AppName + '-beanstalk-sample'"
 
   # ----------------------------------------------------------------------------
   # AWS Credentials
@@ -47,17 +47,23 @@ spec:
     type: Select
     prompt: "Select the AWS region:"
     saveInXlvals: true
-    default: !expr "awsRegions('ecs', 0)"
+    default: !expr "awsRegions('elasticbeanstalk', 0)"
     options:
-      - !expr "awsRegions('ecs')"
+      - !expr "awsRegions('elasticbeanstalk')"
 
   - name: SolutionStackName
     type: Input
-    value: "64bit Amazon Linux 2018.03 v2.8.6 running Python 3.6"
+    prompt: Enter a Beanstalk Solution Stack Name
+    description: If the blueprint fails, it may be because this value is out of date. In that case, enter a more recent one from https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/concepts.platforms.html
+    default: "64bit Amazon Linux 2018.03 v2.8.6 running Python 3.6"
+
+  - name: S3Key
+    type: Input
+    value: "python-app-v1.zip"
 
   files:
   - path: cloudformation/beanstalk.yaml.tmpl
-  - path: cloudformation/python-v1.zip
+  - path: cloudformation/python-app-v1.zip
   - path: xebialabs/xld-infrastructure.yaml.tmpl
   - path: xebialabs/xld-environment.yaml.tmpl
   - path: xebialabs/xlr-pipeline-ci-cd.yaml.tmpl

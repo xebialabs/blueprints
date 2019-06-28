@@ -1,7 +1,7 @@
 answers-file: answers.yaml
 expected-files:
 - cloudformation/beanstalk.yaml
-- cloudformation/python-v1.zip
+- cloudformation/python-app-v1.zip
 - xebialabs/xld-infrastructure.yaml
 - xebialabs/xld-environment.yaml
 - xebialabs/xlr-pipeline-ci-cd.yaml

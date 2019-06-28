@@ -1,6 +1,10 @@
 AWSTemplateFormatVersion: 2010-09-09
-Description: Elasticbeanstalk test template
+Description: Deploy a basic Beanstalk example application with the provided zip
 Parameters:
+  S3BucketName:
+    Type: String
+  S3Key:
+    Type: String
   BeanstalkService:
     Type: String
   Ec2Service:
@@ -19,17 +23,17 @@ Resources:
       ApplicationVersions:
         - Description: Version 1.0
           SourceBundle:
-            S3Bucket: {{.S3BucketName}}
-            S3Key: python-v2.zip
+            S3Bucket: !Ref S3BucketName
+            S3Key: !Ref S3Key
           VersionLabel: Initial Version
-      Description: AWS Elastic Beanstalk Python Sample Application
+      Description: AWS Elastic Beanstalk Sample Application
 
   # ----------------------------------------------------------------------------
   Environment:
     Type: AWS::ElasticBeanstalk::Environment
     Properties:
       ApplicationName: !Ref Application
-      Description: AWS Elastic Beanstalk Environment running Python Sample Application
+      Description: AWS Elastic Beanstalk Environment
       SolutionStackName: !Ref SolutionStackName
       VersionLabel: Initial Version
       OptionSettings:
