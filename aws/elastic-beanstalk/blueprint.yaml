@@ -1,0 +1,74 @@
+apiVersion: xl/v2
+kind: Blueprint
+
+metadata:
+  name: AWS-Elastic-Beanstalk-Sample
+  description: |
+    The blueprint deploys a sample AWS Elastic Beanstalk PHP5 application.
+  author: XebiaLabs
+  version: 2.0
+  instructions: Please read the generated file "xebialabs/USAGE.md" for further usage instructions.
+
+spec:
+  parameters:
+
+  - name: AppName
+    type: Input
+    prompt: What is the name of the application?
+
+  - name: S3BucketName
+    type: Input
+    prompt: What is the name of the S3 bucket where CloudFormation artifacts should be saved?
+    validate: !expr "regex('^(([a-z0-9]|[a-z0-9][a-z0-9\\\\-]*[a-z0-9])\\\\.)*([a-z0-9]|[a-z0-9][a-z0-9\\\\-]*[a-z0-9]){3,63}$', S3BucketName)"
+    default: !expr "AppName + '-beanstalk-sample'"
+
+  # ----------------------------------------------------------------------------
+  # AWS Credentials
+  # ----------------------------------------------------------------------------
+  - name: UseAWSCredentialsFromSystem
+    type: Confirm
+    prompt: Do you want to use AWS credentials from ~/.aws/credentials file?
+    promptIf: !expr "awsCredentials('IsAvailable')"
+  - name: AWSAccessKey
+    type: SecretInput
+    prompt: What is the AWS Access Key ID?
+    promptIf: !expr "!UseAWSCredentialsFromSystem"
+    default: !expr "awsCredentials('AccessKeyID')"
+  - name: AWSAccessSecret
+    type: SecretInput
+    prompt: What is the AWS Secret Access Key?
+    promptIf: !expr "!UseAWSCredentialsFromSystem"
+    default: !expr "awsCredentials('SecretAccessKey')"
+  # ----------------------------------------------------------------------------
+  # End: AWS Credentials
+  # ----------------------------------------------------------------------------
+
+  - name: AWSRegion
+    type: Select
+    prompt: "Select the AWS region:"
+    saveInXlvals: true
+    default: !expr "awsRegions('elasticbeanstalk', 0)"
+    options:
+      - !expr "awsRegions('elasticbeanstalk')"
+
+  - name: SolutionStackName
+    type: Input
+    prompt: Enter a Beanstalk Solution Stack Name
+    description: If the blueprint fails, it may be because this value is out of date. In that case, enter a more recent one from https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/concepts.platforms.html
+    default: "64bit Amazon Linux 2018.03 v2.8.6 running Python 3.6"
+
+  - name: S3Key
+    type: Input
+    value: "python-app-v1.zip"
+
+  files:
+  - path: cloudformation/beanstalk.yaml.tmpl
+  - path: cloudformation/python-app-v1.zip
+  - path: xebialabs/xld-infrastructure.yaml.tmpl
+  - path: xebialabs/xld-environment.yaml.tmpl
+  - path: xebialabs/xlr-pipeline-ci-cd.yaml.tmpl
+  - path: xebialabs/xlr-pipeline-destroy.yaml.tmpl
+  - path: xebialabs/USAGE.md.tmpl
+  - path: xebialabs.yaml
+  - path: docker/docker-compose.yml
+  - path: docker/data/configure-xl-devops-platform.yaml

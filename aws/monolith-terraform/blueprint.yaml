@@ -1,51 +1,49 @@
-apiVersion: xl/v1
+apiVersion: xl/v2
 kind: Blueprint
+
 metadata:
-  projectName: AWS-Terraform-Monolith-ECS-Fargate
+  name: AWS-Terraform-Monolith-ECS-Fargate
   description: |
     The blueprint deploys a monolithic application generated with JHipster, to AWS ECS with the Fargate launch type.
     XL Deploy does the provisioning and deployment, while XL Release orchestrates everything.
   author: XebiaLabs
-  version: 1.0
+  version: 2.0
   instructions: Please read the generated file "xebialabs/USAGE.md" for further usage instructions.
+
 spec:
   parameters:
   - name: AppName
     type: Input
-    description: What is the Application name (maximum 25 characters)?
-    pattern: "(\\S){0,25}"
+    prompt: What is the Application name (maximum 25 characters)?
+    validate: !expr "regex('^(\\\\S){0,25}$', AppName)"
   - name: PublicPort
-    type: Input
-    description: At what port should the application be exposed?
+    description: The port that the application shoule be exposed
     value: 80
   - name: MySQLMasterPassword
-    type: Input
-    description: What should be the password for MySQL? (minimum 8 characters)
-    pattern: "(\\S){8,}"
-    secret: true
+    type: SecretInput
+    prompt: What should be the password for MySQL? (minimum 8 characters)
+    validate: !expr "regex('^(\\\\S){8,}$', MySQLMasterPassword)"
   - name: UseAWSCredentialsFromSystem
     type: Confirm
-    description: Do you want to use AWS credentials from ~/.aws/credentials file?
-    dependsOnTrue: !fn aws.credentials().IsAvailable
+    prompt: Do you want to use AWS credentials from ~/.aws/credentials file?
+    promptIf: !expr "awsCredentials('IsAvailable')"
   - name: AWSAccessKey
-    type: Input
-    secret: true
-    description: What is the AWS Access Key ID?
-    dependsOnFalse: UseAWSCredentialsFromSystem
-    default: !fn aws.credentials().AccessKeyID
+    type: SecretInput
+    prompt: What is the AWS Access Key ID?
+    promptIf: !expr "!UseAWSCredentialsFromSystem"
+    default: !expr "awsCredentials('AccessKeyID')"
   - name: AWSAccessSecret
-    type: Input
-    secret: true
-    description: What is the AWS Secret Access Key?
-    dependsOnFalse: UseAWSCredentialsFromSystem
-    default: !fn aws.credentials().SecretAccessKey
+    type: SecretInput
+    prompt: What is the AWS Secret Access Key?
+    promptIf: !expr "!UseAWSCredentialsFromSystem"
+    default: !expr "awsCredentials('SecretAccessKey')"
   - name: AWSRegion
-    saveInXlVals: true
     type: Select
-    description: "Select the AWS region:"
+    prompt: "Select the AWS region:"
+    saveInXlvals: true
+    default: !expr "awsRegions('ecs', 0)"
     options:
-      - !fn aws.regions(ecs)
-    default: !fn aws.regions(ecs)[0]
+      - !expr "awsRegions('ecs')"
 
   files:
   - path: xebialabs/xld-environment.yaml.tmpl
@@ -57,6 +55,5 @@ spec:
   - path: terraform/infrastructure/infrastructure.tf
   - path: terraform/infrastructure/outputs.tf
   - path: terraform/infrastructure/variables.tf
-  # docker-compose setup for required tools
   - path: docker/docker-compose.yml
   - path: docker/data/configure-xl-devops-platform.yaml

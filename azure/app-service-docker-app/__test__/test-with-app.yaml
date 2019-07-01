@@ -1,0 +1,8 @@
+answers-file: answers-with-app.yaml
+expected-files:
+- xebialabs/azure-app-service.yaml
+- xebialabs/USAGE.md
+- terraform/main.tf
+- terraform/outputs.tf
+- terraform/variables.tf
+- docker/docker-compose.yml

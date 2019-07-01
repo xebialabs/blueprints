@@ -17,6 +17,8 @@ spec:
           - name: {{$app}}-notification-mongodb
             type: k8s.ResourcesFile
             file: !file ../kubernetes/notification/notification-mongodb.yml
+            tags: 
+            - {{.Namespace}}
       - name: {{$app}}-notification
         type: udm.Application
         children:
@@ -26,6 +28,10 @@ spec:
           - name: {{$app}}-invoice-notification
             type: k8s.ResourcesFile
             file: !file ../kubernetes/notification/notification-deployment.yml
+            tags: 
+            - {{.Namespace}}
           - name: {{$app}}-notification-svc
             type: k8s.ResourcesFile
             file: !file ../kubernetes/notification/notification-service.yml
+            tags: 
+            - {{.Namespace}}

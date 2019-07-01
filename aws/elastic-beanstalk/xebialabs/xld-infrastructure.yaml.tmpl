@@ -1,0 +1,52 @@
+{{$app := .AppName | kebabcase}}
+apiVersion: xl-deploy/v1
+kind: Applications
+spec:
+- name: "{{$app}}"
+  type: core.Directory
+  children:
+
+  - name: aws-elastic-beanstalk-bucket
+    type: udm.Application
+    children:
+    - name: '1.0.0'
+      type: udm.DeploymentPackage
+      deployables:
+      - name: s3-bucket-{{.S3BucketName}}
+        type: aws.s3.BucketSpec
+        bucketName: {{.S3BucketName}}
+        region: '{{"{{region}}"}}'
+
+  - name: aws-elastic-beanstalk-artifacts
+    type: udm.Application
+    children:
+    - name: '1.0.0'
+      type: udm.DeploymentPackage
+      deployables:
+      - name: elastic-beanstalk-artifacts
+        type: aws.s3.File
+        file: !file ../cloudformation/python-app-v1.zip
+        acl: bucket-owner-full-control
+        createTargetPath: true
+        scanPlaceholders: false
+
+  - name: aws-elastic-beanstalk-cloudformation
+    type: udm.Application
+    children:
+    - name: '1.0.0'
+      type: udm.DeploymentPackage
+      deployables:
+      - name: "{{$app}}-stack"
+        type: aws.cloudformation.Template
+        file: !file ../cloudformation/beanstalk.yaml
+        timeoutInterval: 300 # wait for 300 loops(approx 30 minutes)
+        capabilities:
+        - CAPABILITY_IAM
+        - CAPABILITY_NAMED_IAM
+        inputVariables:
+          S3BucketName: "{{.S3BucketName}}"
+          S3Key: "{{.S3Key}}"
+          BeanstalkService: "elasticbeanstalk.amazonaws.com"
+          Ec2Service: "ec2.amazonaws.com"
+          Partition: "aws"
+          SolutionStackName: "{{.SolutionStackName}}"

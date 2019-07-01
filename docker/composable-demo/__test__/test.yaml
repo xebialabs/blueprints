@@ -1,0 +1,6 @@
+answers-file: answers.yaml
+expected-files:
+- xebialabs/docker-environment.yaml
+- xebialabs/docker-application.yaml
+- xebialabs/config.yaml
+- docker/docker-compose.yml

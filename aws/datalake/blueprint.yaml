@@ -1,69 +1,81 @@
-apiVersion: xl/v1
+apiVersion: xl/v2
 kind: Blueprint
+
 metadata:
-  projectName: AWS-Datalake
+  name: AWS-Datalake
   description: |
     The blueprint deploys a data lake architecture to AWS using CloudFormation.
     XL Deploy does the provisioning and deployment, while XL Release orchestrates everything.
     Refer to https://docs.aws.amazon.com/solutions/latest/data-lake-solution
   author: XebiaLabs
-  version: 1.0
+  version: 2.0
   instructions: Please read the generated file "xebialabs/USAGE.md" for further usage instructions.
+  
 spec:
   parameters:
   - name: S3BucketName
-    description: What is the name of the S3 bucket where CloudFormation templates should be saved?
-    default: data-lake
     type: Input
-    pattern: "(([a-z0-9]|[a-z0-9][a-z0-9\\-]*[a-z0-9])\\.)*([a-z0-9]|[a-z0-9][a-z0-9\\-]*[a-z0-9]){3,63}"
+    prompt: What is the name of the S3 bucket where CloudFormation templates should be saved?
+    default: data-lake
+    validate: !expr "regex('^(([a-z0-9]|[a-z0-9][a-z0-9\\-]*[a-z0-9])\\.)*([a-z0-9]|[a-z0-9][a-z0-9\\-]*[a-z0-9]){3,63}$', S3BucketName)"
   - name: AdministratorName
-    description: What is the name of the Data Lake administrator user?
+    type: Input
+    prompt: What is the name of the Data Lake administrator user?
     default: admin
-    type: Input
-    pattern : ".+"
+    validate: !expr "regex('^.+$', AdministratorName)"
   - name: AdministratorEmail
-    description: "Provide a valid email address where to send the generated Data Lake administrator credentials:"
+    prompt: "Provide a valid email address where to send the generated Data Lake administrator credentials:"
     type: Input
-    pattern: "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$"
+    validate: !expr "regex('^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$', AdministratorEmail)"
   - name: CognitoDomain
-    description: "Provide a name for the Cognito service domain (can only contain lower-case letters, numbers, and hyphens):"
+    prompt: "Provide a name for the Cognito service domain (can only contain lower-case letters, numbers, and hyphens):"
     default: data-lake
     type: Input
-    pattern : "[a-z0-9-]+"
+    validate: !expr "regex('^[a-z0-9-]+$', CognitoDomain)"
   - name: UseAWSCredentialsFromSystem
     type: Confirm
-    description: Do you want to use AWS credentials from ~/.aws/credentials file?
-    dependsOnTrue: !fn aws.credentials().IsAvailable
+    prompt: Do you want to use AWS credentials from ~/.aws/credentials file?
+    promptIf: !expr "awsCredentials('IsAvailable')"
   - name: AWSAccessKey
-    type: Input
-    secret: true
-    description: What is the AWS Access Key ID?
-    dependsOnFalse: UseAWSCredentialsFromSystem
-    default: !fn aws.credentials().AccessKeyID
+    type: SecretInput
+    prompt: What is the AWS Access Key ID?
+    promptIf: !expr "!UseAWSCredentialsFromSystem"
+    default: !expr "awsCredentials('AccessKeyID')"
   - name: AWSAccessSecret
-    type: Input
-    secret: true
-    description: What is the AWS Secret Access Key?
-    dependsOnFalse: UseAWSCredentialsFromSystem
-    default: !fn aws.credentials().SecretAccessKey
+    type: SecretInput
+    prompt: What is the AWS Secret Access Key?
+    promptIf: !expr "!UseAWSCredentialsFromSystem"
+    default: !expr "awsCredentials('SecretAccessKey')"
   - name: AWSRegion
     type: Select
-    description: "Select the AWS region:"
-    options:
-      - us-east-2
-      - us-east-1
-      - us-west-2
-      - ap-south-1
-      - ap-northeast-2
-      - ap-southeast-1
-      - ap-southeast-2
-      - ap-northeast-1
-      - ca-central-1
-      - eu-central-1
-      - eu-west-1
-      - eu-west-2
+    saveInXlvals: true
+    prompt: "Select the AWS region:"
     default: us-east-2
-    saveInXlVals: true
+    options:
+      - label: US West (Oregon)
+        value: us-west-2
+      - label: US East (N. Virginia)
+        value: us-east-1
+      - label: US East (Ohio)
+        value: us-east-2
+      - label: EU (Frankfurt)
+        value: eu-central-1
+      - label: EU (Ireland)
+        value: eu-west-1
+      - label: EU (London)
+        value: eu-west-2
+      - label: Canada (Central)
+        value: ca-central-1
+      - label: Asia Pacific (Tokyo)
+        value: ap-northeast-1
+      - label: Asia Pacific (Seoul)
+        value: ap-northeast-2
+      - label: Asia Pacific (Mumbai)
+        value: ap-south-1
+      - label: Asia Pacific (Singapore)
+        value: ap-southeast-1
+      - label: Asia Pacific (Sydney)
+        value: ap-southeast-2
 
   files:
   - path: xebialabs.yaml
@@ -77,6 +89,5 @@ spec:
   - path: xebialabs/xld-infrastructure.yaml.tmpl
   - path: xebialabs/xld-environment.yaml.tmpl
   - path: xebialabs/xlr-pipeline.yaml.tmpl
-  # docker-compose setup for required tools
   - path: docker/docker-compose.yml
   - path: docker/data/configure-xl-devops-platform.yaml

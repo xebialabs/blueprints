@@ -1,85 +1,97 @@
-apiVersion: xl/v1
+apiVersion: xl/v2
 kind: Blueprint
 
 metadata:
-  projectName: GCP-Microservice-GKE-with-JHipster
+  name: GCP-Microservice-GKE-with-JHipster
   description: |
     The blueprint deploys an e-commerce microservice application to GCP GKE.
     XL Deploy does the provisioning and deployment, while XL Release orchestrates everything.
   author: XebiaLabs
-  version: 1.0
+  version: 2.0
   instructions: Please read the generated file "xebialabs/USAGE.md" for further usage instructions.
+
 spec:
   parameters:
   # General variables
   - name: AppName
     type: Input
-    description: What is the name of the application?
+    prompt: What is the name of the application?
   # GCP specific variables
   - name: GCPProjectID
     type: Input
-    description: What is the GCP project ID?
+    prompt: What is the GCP project ID?
   - name: K8SMasterUser
     type: Input
-    description: What is the username for Kubernetes cluster?
+    prompt: What is the username for Kubernetes cluster?
     default: admin
   - name: K8SMasterPassword
-    type: Input
-    secret: true
-    description: What is the password for Kubernetes cluster? (minimum 16 characters)
-    pattern: "(\\S){16,}"
+    type: SecretInput
+    prompt: What is the password for Kubernetes cluster? (minimum 16 characters)
+    validate: !expr "regex('^(\\\\S){16,}$', K8SMasterPassword)"
   - name: GCPRegion
     type: Select
-    description: "Select the GCP region:"
+    prompt: "Select the GCP region:"
     options:
-      - asia-east1
-      - asia-east2
-      - asia-northeast1
-      - asia-south1
-      - asia-southeast1
-      - australia-southeast1
-      - europe-north1
-      - europe-west1
-      - europe-west2
-      - europe-west3
-      - europe-west4
-      - northamerica-northeast1
-      - southamerica-east1
-      - us-central1
-      - us-east1
-      - us-east4
-      - us-west1
-      - us-west2
-      
+      - label: Taiwan
+        value: asia-east1
+      - label: Hong Kong
+        value: asia-east2
+      - label: Japan
+        value: asia-northeast1
+      - label: India
+        value: asia-south1
+      - label: Singapore
+        value: asia-southeast1
+      - label: Australia (Sydney)
+        value: australia-southeast1
+      - label: Finland
+        value: europe-north1
+      - label: Belgium
+        value: europe-west1
+      - label: England
+        value: europe-west2
+      - label: Germany
+        value: europe-west3
+      - label: Netherlands
+        value: europe-west4
+      - label: Canada
+        value: northamerica-northeast1
+      - label: Brazil
+        value: southamerica-east1
+      - label: Iowa, USA
+        value: us-central1
+      - label: South Carolina, USA
+        value: us-east1
+      - label: Northern Virginia, USA
+        value: us-east4
+      - label: Oregon, USA
+        value: us-west1
+      - label: California, USA
+        value: us-west2
+
   - name: ProvisionCluster
     type: Confirm
-    description: Do you want to provision a new GCP GKE cluster?
+    prompt: Do you want to provision a new GCP GKE cluster?
   - name: ClusterName
     type: Input
-    description: What is the name of the cluster?
+    prompt: What is the name of the cluster?
   - name: ClusterEndpoint
     type: Input
-    dependsOnFalse: ProvisionCluster
-    description: What is the endpoint for the cluster, example https://104.155.109.230
+    prompt: What is the endpoint for the cluster, example https://104.155.109.230
+    promptIf: !expr "!ProvisionCluster"
   - name: Namespace
-    type: Input
-    description: What is the name of the namespace? This should be same as the one used in Kubernetes files.
-    default: xl-demo
+    value: xl-demo
   - name: enableCICD
     type: Confirm
-    description: Do you want to enable CI/CD integration with Jenkins?
+    prompt: Do you want to enable CI/CD integration with Jenkins?
   - name: StoreAdminUsername
-    type: Input
-    description: Store Admin username
     value: admin
   - name: StoreAdminPassword
-    type: Input
-    description: Store Admin password
+    type: SecretInput
     value: admin
-    secret: true
   - name: XLDUrlForXLR
     type: Input
-    description: XL Deploy URL for XL Release (This will only be used in the XL Release template)
+    prompt: XL Deploy URL for XL Release (This will only be used in the XL Release template)
     default: http://xl-deploy:4516
 
   files:
@@ -92,29 +104,28 @@ spec:
   - path: xebialabs/xlr-pipeline-destroy.yaml.tmpl
   - path: xebialabs/USAGE.md.tmpl
   - path: terraform/gke/main.tf
-    dependsOnTrue: ProvisionCluster
+    writeIf: ProvisionCluster
   - path: terraform/gke/outputs.tf
-    dependsOnTrue: ProvisionCluster
+    writeIf: ProvisionCluster
   - path: terraform/gke/variables.tf
-    dependsOnTrue: ProvisionCluster
+    writeIf: ProvisionCluster
   - path: terraform/vpc/main.tf
-    dependsOnTrue: ProvisionCluster
+    writeIf: ProvisionCluster
   - path: terraform/vpc/outputs.tf
-    dependsOnTrue: ProvisionCluster
+    writeIf: ProvisionCluster
   - path: terraform/vpc/variables.tf
-    dependsOnTrue: ProvisionCluster
+    writeIf: ProvisionCluster
   - path: terraform/.gitignore
-    dependsOnTrue: ProvisionCluster
+    writeIf: ProvisionCluster
   - path: terraform/backend.tf.tmpl
-    dependsOnTrue: ProvisionCluster
+    writeIf: ProvisionCluster
   - path: terraform/main.tf
-    dependsOnTrue: ProvisionCluster
+    writeIf: ProvisionCluster
   - path: terraform/outputs.tf
-    dependsOnTrue: ProvisionCluster
+    writeIf: ProvisionCluster
   - path: terraform/variables.tf
-    dependsOnTrue: ProvisionCluster
+    writeIf: ProvisionCluster
   - path: xebialabs.yaml
-  # docker-compose setup for required tools
   - path: docker/docker-compose.yml
   - path: docker/data/configure-xl-devops-platform.yaml
   - path: docker/jenkins/jenkins.yaml

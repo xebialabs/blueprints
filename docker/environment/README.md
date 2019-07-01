@@ -43,12 +43,11 @@ This blueprint requires:
 
 This blueprint will output:
 
-* The file `xebialabs/docker-infrastructure.yaml` that defines the XL Deploy infrastructure item for your Docker engine.
 * The file `xebialabs/docker-environment.yaml` that defines an XL Deploy environment for your Docker engine.
 
 ## Tips and tricks
 
-None
+You can use `xl-devops-platform` blueprint to generate docker-compose file including XLD and Docker Proxy images.
 
 ## Labels
 

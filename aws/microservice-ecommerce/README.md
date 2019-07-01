@@ -26,7 +26,6 @@ This blueprint includes the following tools and technologies:
 
 * Target:
     * [Amazon Elastic Container Service for Kubernetes (EKS)](https://aws.amazon.com/eks/)
-    * [AWS Fargate](https://aws.amazon.com/fargate/)
     * [Amazon Simple Storage Service (S3)](https://aws.amazon.com/s3/)
 * Tools:
     * [XebiaLabs Release Orchestration](https://xebialabs.com/products/xl-release/)
@@ -42,9 +41,9 @@ This blueprint includes the following tools and technologies:
 
 This blueprint version requires at least the following versions of the specified tools to work properly:
 
-XL Release: Version 8.6.0
-XL Deploy: Version 8.6.1
-XL CLI: Version 8.6.0
+XL Release: Version 9.0.0
+XL Deploy: Version 9.0.0
+XL CLI: Version 9.0.0
 
 ## Prerequisites
 
