@@ -1,0 +1,53 @@
+apiVersion: xl/v2
+kind: Blueprint
+metadata:
+  name: A Blueprint for K8S provisioning including cluster creation templates for different cloud providers.
+  version: 2.0
+  instructions: Read xebialabs/USAGE-*.md to learn how to use this blueprint.
+spec:
+  parameters:
+  - name: Provider
+    type: Select
+    prompt: Which Kubernetes service provider do you want to use
+    options:
+    - label: Amazon
+      value: EKS
+    - label: Google Cloud
+      value: GKE
+    - label: Azure
+      value: AKS
+    - existing cluster
+    
+  - name: KubeApp
+    type: Confirm
+    prompt: Do you want to deploy a sample application to the Kubernetes environment?
+
+  includeAfter:
+  - blueprint: kubernetes/environment
+    includeIf: !expr "Provider == 'existing cluster'"
+
+  - blueprint: aws/basic-eks-cluster
+    includeIf: !expr "Provider == 'EKS'"
+    fileOverrides:
+    - path: xebialabs/USAGE.md.tmpl
+      renameTo: xebialabs/USAGE-aws-basic-eks-cluster.md
+    - path: xebialabs.yaml
+      writeIf: !expr "false"
+
+  - blueprint: azure/basic-aks-cluster
+    includeIf: !expr "Provider == 'AKS'"
+
+  - blueprint: gcp/basic-gke-cluster
+    includeIf: !expr "Provider == 'GKE'"
+    fileOverrides:
+    - path: xebialabs.yaml
+      writeIf: !expr "false"
+
+  - blueprint: kubernetes/application
+    includeIf: !expr "KubeApp"
+    parameterOverrides:
+    - name: KubernetesApplicationName
+      value: !expr "Provider == 'EKS' ? AppName : ''"
+
+  files:
+  - path: xebialabs.yaml.tmpl
