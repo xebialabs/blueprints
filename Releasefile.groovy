@@ -9,6 +9,7 @@ xlr {
     variables {
       stringVariable('BLUEPRINTS_VERSION') {
         label 'Blueprints Version'
+        description 'The release version to use, should be x.x.x notation'
       }
       stringVariable('GIT_BRANCH') {
         label 'Git branch'
