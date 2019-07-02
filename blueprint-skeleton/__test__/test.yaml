@@ -1,0 +1,21 @@
+answers-file: answers.yaml
+expected-files:
+- __test__/test.yaml
+- __test__/answers.yaml
+- README.md.tmpl
+- blueprint.yaml
+- xebialabs.yaml
+- xebialabs/USAGE.md.tmpl
+- xebialabs/xld-infra-env.yaml.tmpl
+- xebialabs/xlr-pipeline-ci-cd.yaml.tmpl
+- xebialabs/xlr-pipeline-destroy.yaml.tmpl
+not-expected-files:
+- __test__/test.yaml.tmpl
+- __test__/answers.yaml.tmpl
+- README.md
+- blueprint.yaml.tmpl
+- xebialabs.yaml.tmpl
+- xebialabs/USAGE.md
+- xebialabs/xld-infra-env.yaml
+- xebialabs/xlr-pipeline-ci-cd.yaml
+- xebialabs/xlr-pipeline-destroy.yaml

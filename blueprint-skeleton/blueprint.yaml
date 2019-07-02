@@ -27,7 +27,7 @@ spec:
 
   files:
   - path: __test__/test.yaml.tmpl
-  - path: __test__/answers.yaml
+  - path: __test__/answers.yaml.tmpl
   - path: blueprint.yaml.tmpl
   - path: README.md.tmpl
     renameTo: README.md.tmpl
