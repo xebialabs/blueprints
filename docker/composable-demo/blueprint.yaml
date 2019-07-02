@@ -25,7 +25,9 @@ spec:
   includeAfter:
   - blueprint: xl-devops-platform
     parameterOverrides:
-    - name: UseXLDeployFlag
+    - name: UseXLDeploy
       value: true
-    - name: UseXLReleaseFlag
+    - name: UseXLRelease
       value: false
+    - name: UseDockerProxyFlag
+      value: true

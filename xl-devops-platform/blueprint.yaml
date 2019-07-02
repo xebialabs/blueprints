@@ -3,14 +3,14 @@ kind: Blueprint
 
 metadata:
   name: Docker compose
-  description: Creates the necessary `docker-compose.yaml` needed to run your specific setup.
+  description: Creates the necessary `docker-compose.yaml` needed to run your specific setup including XL Products for development and testing purpose.
   author: XebiaLabs
   version: 2.0
-  instructions: Please read the generated file "xebialabs/USAGE.md" for further usage instructions.
+  instructions: This setup is not suitable for production its intended for development and testing purpose. Please read the generated file "xebialabs/USAGE-docker-compose.md" for further usage instructions.
   
 spec:
   parameters:
-  - name: UseXLDeployFlag
+  - name: UseXLDeploy
     type: Confirm
     prompt: Do you want to install XL Deploy?
     default: true
@@ -18,10 +18,10 @@ spec:
   - name: XLDeployPort
     type: Input
     prompt: "Host port for XL Deploy:"
-    promptIf: UseXLDeployFlag
+    promptIf: UseXLDeploy
     default: 4516
 
-  - name: UseXLReleaseFlag
+  - name: UseXLRelease
     type: Confirm
     prompt: Do you want to install XL Release?
     default: true
@@ -29,7 +29,7 @@ spec:
   - name: XLReleasePort
     type: Input
     prompt: "Host port for XL Release:"
-    promptIf: UseXLReleaseFlag
+    promptIf: UseXLRelease
     default: 5516
 
   - name: JetPackOrEnterprise
@@ -42,18 +42,33 @@ spec:
   - name: XLVersion
     type: Select
     prompt: "Select the version of XL you want to use:"
-    promptIf: !expr "UseXLDeployFlag == true || UseXLReleaseFlag == true"
+    promptIf: !expr "UseXLDeploy == true || UseXLRelease == true"
     options:
+      - 9.0.0
       - 8.6.1
 
-  - name: UseDockerProxyFlag
+  - name: UseJenkins
     type: Confirm
-    prompt: Do you want to be able to deploy to your local Docker instance?
-    default: true
+    prompt: Do you want to be able to run CI using a pre-configured Jenkins instance?
+    default: false
+
+  - name: JenkinsPort
+    type: Input
+    prompt: "Host port for Jenkins:"
+    promptIf: UseJenkins
+    default: 8080
+
+  - name: UseDockerProxy
+    type: Confirm
+    prompt: Do you want to be able to deploy to your local Docker instance using Docker proxy?
+    description: This is meant for development purposes and hence is not a best practice that should be used in production
+    default: false
 
   files:
   - path: xebialabs/USAGE-docker-compose.md.tmpl
   - path: xebialabs/config.yaml.tmpl
   - path: docker/docker-compose.yml.tmpl
   - path: docker/data/configure-xl-devops-platform.yaml.tmpl
-    writeIf: UseXLReleaseFlag
+    writeIf: UseXLRelease
+  - path: docker/jenkins/jenkins.yaml
+    writeIf: UseJenkins
