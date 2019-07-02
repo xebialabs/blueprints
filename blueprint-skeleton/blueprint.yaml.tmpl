@@ -1,0 +1,27 @@
+apiVersion: xl/v2
+kind: Blueprint
+
+metadata:
+  name: Blueprint-Skeleton-Generator
+  description: |
+    {{.Description}}
+  author: XebiaLabs
+  version: 2.0
+  instructions: {{.Instructions}}
+
+spec:
+  parameters:
+  - name: AppName
+    type: Input
+    prompt: What is the name of the application?
+
+  files:
+  - path: xebialabs.yaml
+  - path: xebialabs/USAGE.md.tmpl
+  - path: xebialabs/xld-infra-env.yaml.tmpl
+  - path: xebialabs/xlr-pipeline-ci-cd.yaml.tmpl
+  - path: xebialabs/xlr-pipeline-destroy.yaml.tmpl
+
+# Issues:
+# - Need to delete the secrets.xlvals file
+# - Need to delete the values.xlvals file

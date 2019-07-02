@@ -1,0 +1,42 @@
+apiVersion: xl/v2
+kind: Blueprint
+
+metadata:
+  name: Blueprint-Skeleton-Generator
+  description: |
+    Creates a blueprint skeleton directory
+  author: XebiaLabs
+  version: 2.0
+  instructions: # TODO
+
+spec:
+  parameters:
+  - name: BlueprintName
+    type: Input
+    prompt: "Name of the blueprint:"
+    description: Use kebabcase (lowercase letters, number and hypens only) e.g. this-useful-blueprint
+    validate: !expr "regex('^[a-z0-9][a-z0-9-]+[a-z0-9]$', BlueprintName)"
+
+  - name: Instructions
+    type: Input
+    prompt: "Usage instructions for when blueprint finishes:"
+
+  - name: Description
+    type: Input
+    prompt: "Brief description of the blueprint:"
+
+  files:
+  - path: __test__/test.yaml.tmpl
+  - path: __test__/answers.yaml
+  - path: blueprint.yaml.tmpl
+  - path: README.md.tmpl
+    renameTo: README.md.tmpl
+  - path: xebialabs.yaml
+  - path: xebialabs/USAGE.md.tmpl
+    renameTo: xebialabs/USAGE.md.tmpl
+  - path: xebialabs/xld-infra-env.yaml.tmpl
+    renameTo: xebialabs/xld-infra-env.yaml.tmpl
+  - path: xebialabs/xlr-pipeline-ci-cd.yaml.tmpl
+    renameTo: xebialabs/xlr-pipeline-ci-cd.yaml.tmpl
+  - path: xebialabs/xlr-pipeline-destroy.yaml.tmpl
+    renameTo: xebialabs/xlr-pipeline-destroy.yaml.tmpl
