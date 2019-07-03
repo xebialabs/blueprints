@@ -185,6 +185,34 @@ spec:
     value: admin
   # ############################################################################
 
+  - name: GenerateDockerComposeSetup
+    type: Confirm
+    prompt: "Do you want to generate a docker-compose setup with the required tools to run this blueprint?"
+    default: false
+
+  includeAfter:
+  - blueprint: xl-devops-platform
+    includeIf: GenerateDockerComposeSetup
+    parameterOverrides:
+    - name: UseXLDeploy
+      value: true
+    - name: XLDeployPort
+      value: 4516
+    - name: UseXLRelease
+      value: true
+    - name: XLReleasePort
+      value: 5516
+    - name: JetPackOrEnterprise
+      value: "JetPack"
+    - name: XLVersion
+      value: "9.0.0"
+    - name: UseDockerProxy
+      value: false
+    - name: UseJenkins
+      value: !expr "enableCICD"
+    - name: JenkinsPort
+      value: 8080
+
   files:
   - path: xebialabs.yaml
   - path: README.md
@@ -219,8 +247,3 @@ spec:
     writeIf: ProvisionCluster
   - path: terraform/vpc/outputs.tf
     writeIf: ProvisionCluster
-  # docker-compose setup for required tools
-  - path: docker/docker-compose.yml.tmpl
-  - path: docker/data/configure-xl-devops-platform.yaml
-  - path: docker/jenkins/jenkins.yaml
-    writeIf: enableCICD

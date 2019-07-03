@@ -1,0 +1,8 @@
+answers-file: answers-without-xl-release-jenkins.yaml
+expected-files:
+- xebialabs/config.yaml
+- xebialabs/USAGE-docker-compose.md
+- docker/docker-compose.yml
+not-expected-files:
+- docker/jenkins/jenkins.yaml
+- docker/data/configure-xl-devops-platform.yaml

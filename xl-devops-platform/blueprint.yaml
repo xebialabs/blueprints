@@ -69,6 +69,6 @@ spec:
   - path: xebialabs/config.yaml.tmpl
   - path: docker/docker-compose.yml.tmpl
   - path: docker/data/configure-xl-devops-platform.yaml.tmpl
-    writeIf: UseXLRelease
+    writeIf: !expr "UseXLRelease || UseJenkins"
   - path: docker/jenkins/jenkins.yaml
-    writeIf: UseJenkins
+    writeIf: !expr "UseJenkins"

@@ -26,3 +26,4 @@ BlackduckUsername: dummy
 BlackduckPassword: dummy
 BlackduckApplication: dummy
 BlackduckApplicationVersion: 1
+GenerateDockerComposeSetup: true

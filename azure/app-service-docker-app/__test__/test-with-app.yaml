@@ -5,4 +5,5 @@ expected-files:
 - terraform/main.tf
 - terraform/outputs.tf
 - terraform/variables.tf
+not-expected-files:
 - docker/docker-compose.yml

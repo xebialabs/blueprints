@@ -10,3 +10,4 @@ enableCICD: true
 StoreAdminUsername: admin
 StoreAdminPassword: admin
 XLDUrlForXLR: http://xl-deploy:4516
+GenerateDockerComposeSetup: true

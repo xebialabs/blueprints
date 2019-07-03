@@ -13,5 +13,6 @@ expected-files:
   - cloudformation/eks-vpc.yaml
   - cloudformation/eks-workers.yaml
   - xebialabs.yaml
+not-expected-files:
   - docker/docker-compose.yml
   - docker/data/configure-xl-devops-platform.yaml

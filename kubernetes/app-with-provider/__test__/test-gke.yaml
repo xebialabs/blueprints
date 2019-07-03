@@ -16,4 +16,4 @@ expected-files:
   - terraform-gcp-basic-gke-cluster/main.tf
   - terraform-gcp-basic-gke-cluster/outputs.tf
   - terraform-gcp-basic-gke-cluster/variables.tf
-  - docker/docker-compose.yml
+#   - docker/docker-compose.yml

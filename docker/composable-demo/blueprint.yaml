@@ -27,7 +27,15 @@ spec:
     parameterOverrides:
     - name: UseXLDeploy
       value: true
+    - name: XLDeployPort
+      value: 4516
     - name: UseXLRelease
       value: false
-    - name: UseDockerProxyFlag
+    - name: JetPackOrEnterprise
+      value: "XL Enterprise"
+    - name: XLVersion
+      value: "9.0.0"
+    - name: UseDockerProxy
       value: true
+    - name: UseJenkins
+      value: false

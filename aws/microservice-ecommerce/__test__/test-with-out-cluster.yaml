@@ -10,10 +10,10 @@ expected-files:
   - xebialabs/xlr-pipeline-destroy.yaml
   - xebialabs/USAGE.md
   - xebialabs.yaml
+not-expected-files:
   - docker/docker-compose.yml
   - docker/data/configure-xl-devops-platform.yaml
   - docker/jenkins/jenkins.yaml
-not-expected-files:
   - kubernetes/aws-auth-cm.yaml
   - cloudformation/cfn-secret-provider.zip
   - cloudformation/eks-master.yaml

@@ -4,3 +4,5 @@ expected-files:
 - xebialabs/USAGE-docker-compose.md
 - docker/docker-compose.yml
 - docker/data/configure-xl-devops-platform.yaml
+not-expected-files:
+- docker/jenkins/jenkins.yaml

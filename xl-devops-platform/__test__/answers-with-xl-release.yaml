@@ -5,3 +5,4 @@ XLReleasePort: 4516
 JetPackOrEnterprise: JetPack
 XLVersion: 8.6.1
 UseDockerProxy: true
+UseJenkins: false

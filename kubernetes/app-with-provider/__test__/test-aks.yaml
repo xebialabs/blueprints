@@ -9,3 +9,4 @@ expected-files:
   - terraform-azure-basic-aks-cluster/main.tf
   - terraform-azure-basic-aks-cluster/output.tf
   - terraform-azure-basic-aks-cluster/variables.tf
+#   - docker/docker-compose.yml

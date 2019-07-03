@@ -23,4 +23,5 @@ expected-files:
     - terraform/variables.tf
     - docker/docker-compose.yml
     - docker/data/configure-xl-devops-platform.yaml
+not-expected-files:
     - docker/jenkins/jenkins.yaml
