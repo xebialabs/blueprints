@@ -30,13 +30,8 @@ spec:
   - path: __test__/answers.yaml.tmpl
   - path: blueprint.yaml.tmpl
   - path: README.md.tmpl
-    renameTo: README.md.tmpl
   - path: xebialabs.yaml
-  - path: xebialabs/USAGE.md.tmpl
-    renameTo: xebialabs/USAGE.md.tmpl
-  - path: xebialabs/xld-infra-env.yaml.tmpl
-    renameTo: xebialabs/xld-infra-env.yaml.tmpl
-  - path: xebialabs/xlr-pipeline-ci-cd.yaml.tmpl
-    renameTo: xebialabs/xlr-pipeline-ci-cd.yaml.tmpl
-  - path: xebialabs/xlr-pipeline-destroy.yaml.tmpl
-    renameTo: xebialabs/xlr-pipeline-destroy.yaml.tmpl
+  - path: xebialabs/USAGE.md.tmpl.tmpl
+  - path: xebialabs/xld-infra-env.yaml.tmpl.tmpl
+  - path: xebialabs/xlr-pipeline-ci-cd.yaml.tmpl.tmpl
+  - path: xebialabs/xlr-pipeline-destroy.yaml.tmpl.tmpl

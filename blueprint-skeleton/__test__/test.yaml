@@ -2,7 +2,7 @@ answers-file: answers.yaml
 expected-files:
 - __test__/test.yaml
 - __test__/answers.yaml
-- README.md.tmpl
+- README.md
 - blueprint.yaml
 - xebialabs.yaml
 - xebialabs/USAGE.md.tmpl
@@ -12,7 +12,7 @@ expected-files:
 not-expected-files:
 - __test__/test.yaml.tmpl
 - __test__/answers.yaml.tmpl
-- README.md
+- README.md.tmpl
 - blueprint.yaml.tmpl
 - xebialabs.yaml.tmpl
 - xebialabs/USAGE.md
