@@ -82,6 +82,7 @@ spec:
           inputVariables:
             ProjectName: {{$app}}
             VPCStackName: {{$app}}-eks-vpc
+            ClusterVersion: {{.ClusterVersion}}
     - name: {{$app}}-cloudformation-eks-workers
       type: udm.Application
       children:
