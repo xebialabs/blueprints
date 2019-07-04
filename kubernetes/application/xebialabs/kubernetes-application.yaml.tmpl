@@ -10,6 +10,10 @@ spec:
         - name: {{ .KubernetesApplicationName }}-service
           type: k8s.ResourcesFile
           file: !file "../kubernetes/nginx-service.yaml"
+          tags:
+          - kubernetes-namespace
         - name: {{ .KubernetesApplicationName }}-deployment
           type: k8s.ResourcesFile
           file: !file "../kubernetes/nginx-deployment.yaml"
+          tags:
+          - kubernetes-namespace
