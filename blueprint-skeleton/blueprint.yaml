@@ -7,7 +7,7 @@ metadata:
     Creates a blueprint skeleton directory
   author: XebiaLabs
   version: 2.0
-  instructions: # TODO
+  instructions: Read USAGE-skeleton.md for more information on how to write your own blueprint
 
 spec:
   parameters:
@@ -17,13 +17,13 @@ spec:
     description: Use kebabcase (lowercase letters, number and hypens only) e.g. this-useful-blueprint
     validate: !expr "regex('^[a-z0-9][a-z0-9-]+[a-z0-9]$', BlueprintName)"
 
-  - name: Instructions
-    type: Input
-    prompt: "Usage instructions for when blueprint finishes:"
-
   - name: Description
     type: Input
     prompt: "Brief description of the blueprint:"
+
+  - name: Instructions
+    type: Input
+    prompt: "Usage instructions for when blueprint finishes:"
 
   files:
   - path: __test__/test.yaml.tmpl
@@ -31,7 +31,9 @@ spec:
   - path: blueprint.yaml.tmpl
   - path: README.md.tmpl
   - path: xebialabs.yaml
+  - path: USAGE-skeleton.md.tmpl
   - path: xebialabs/USAGE.md.tmpl.tmpl
+  - path: xebialabs/xld-apps.yaml.tmpl.tmpl
   - path: xebialabs/xld-infra-env.yaml.tmpl.tmpl
   - path: xebialabs/xlr-pipeline-ci-cd.yaml.tmpl.tmpl
   - path: xebialabs/xlr-pipeline-destroy.yaml.tmpl.tmpl

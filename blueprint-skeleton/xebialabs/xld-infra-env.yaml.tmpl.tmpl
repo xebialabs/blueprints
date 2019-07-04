@@ -1,0 +1,20 @@
+{{"{{$app := .AppName | kebabcase}}"}}
+apiVersion: xl-deploy/v1
+kind: Environments
+spec:
+- name: {{"{{$app}}"}}
+  type: core.Directory
+  children:
+  - name: _NAME2_
+    type: udm.Environment
+
+---
+
+apiVersion: xl-deploy/v1
+kind: Infrastructure
+spec:
+- name: {{"{{$app}}"}}
+  type: core.Directory
+  children:
+  - name: _NAME1_
+    type: _TYPE_
