@@ -13,3 +13,5 @@ ProvisionEFS: false
 
 KubernetesDeploymentPackageVersion: latest
 KubernetesResourcesFile: ../kubernetes/httpd.yaml
+
+ClusterVersion: '1.11'

@@ -68,6 +68,15 @@ spec:
   - name: ClusterName
     type: Input
     prompt: What is the name of the cluster?
+  - name: ClusterVersion
+    type: Select
+    default: '1.10'
+    prompt: What version of EKS would you like to run?
+    options:
+      - '1.10'
+      - '1.11'
+      - '1.12'
+      - '1.13'
 
   - name: NodeAutoScalingGroupDesiredSize
     type: Input
