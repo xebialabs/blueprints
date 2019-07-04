@@ -6,7 +6,7 @@ GCPRegion: asia-east1
 ProvisionCluster: false
 ClusterName: test-project
 ClusterEndpoint: http://test-project.com
-enableCICD: true
+EnableCICD: true
 StoreAdminUsername: admin
 StoreAdminPassword: admin
 XLDUrlForXLR: http://xl-deploy:4516

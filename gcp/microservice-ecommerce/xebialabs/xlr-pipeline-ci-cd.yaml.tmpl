@@ -59,7 +59,7 @@ spec:
         deploymentPackage: {{$app}}/GKE-TERRAFORM/{{$app}}-terraform-gke/1.0.0
         deploymentEnvironment: Environments/{{$app}}/gcp-terraform
     {{end}}
-    {{if .enableCICD }}
+    {{if .EnableCICD }}
     - name: Build {{$app}} application
       type: xlrelease.Phase
       tasks:

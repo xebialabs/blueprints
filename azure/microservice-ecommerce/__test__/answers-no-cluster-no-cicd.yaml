@@ -9,7 +9,7 @@ ClientID: A
 ClientSecret: B
 SubscriptionID: C
 TenantID: D
-enableCICD: false
+EnableCICD: false
 XLDUrlForXLR: http://xl-deploy:4516
 StorageAccountName: storageuser
 StorageContainerName: terraform-state

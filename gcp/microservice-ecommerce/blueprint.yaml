@@ -81,7 +81,7 @@ spec:
     promptIf: !expr "!ProvisionCluster"
   - name: Namespace
     value: xl-demo
-  - name: enableCICD
+  - name: EnableCICD
     type: Confirm
     prompt: Do you want to enable CI/CD integration with Jenkins?
   - name: StoreAdminUsername
@@ -118,7 +118,7 @@ spec:
     - name: UseDockerProxy
       value: false
     - name: UseJenkins
-      value: !expr "enableCICD"
+      value: !expr "EnableCICD"
     - name: JenkinsPort
       value: 8080
 
