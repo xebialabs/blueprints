@@ -1,6 +1,3 @@
-Provider: EKS
-KubeApp: true
-
 AppName: test-project
 UseAWSCredentialsFromSystem: false
 AWSAccessKey: ANDGDJDHJHD4235
@@ -9,10 +6,5 @@ AWSRegion: eu-west-1
 ClusterName: test-project
 NodeInstanceType: t2.medium
 NodeAutoScalingGroupDesiredSize: "3"
-ProvisionEFS: false
-GenerateDockerComposeSetup: true
-
-KubernetesDeploymentPackageVersion: latest
-KubernetesResourcesFile: ../kubernetes/httpd.yaml
-
+ProvisionEFS: true
 ClusterVersion: '1.11'
