@@ -11,6 +11,8 @@ spec:
   children:
   - name: {{ .KubernetesNamespace }}
     type: k8s.Namespace
+    tags:
+    - kubernetes-namespace
 
 ---
 
