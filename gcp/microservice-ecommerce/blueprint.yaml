@@ -121,6 +121,8 @@ spec:
       value: !expr "EnableCICD"
     - name: JenkinsPort
       value: 8080
+    - name: JenkinsBranch
+      value: gke-blueprint
 
   files:
   - path: xebialabs/xld-infra-env.yaml.tmpl

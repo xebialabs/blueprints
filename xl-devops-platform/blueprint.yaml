@@ -58,6 +58,9 @@ spec:
     promptIf: UseJenkins
     default: 8080
 
+  - name: JenkinsBranch
+    value: master
+
   - name: UseDockerProxy
     type: Confirm
     prompt: Do you want to be able to deploy to your local Docker instance using Docker proxy?
@@ -70,5 +73,5 @@ spec:
   - path: docker/docker-compose.yml.tmpl
   - path: docker/data/configure-xl-devops-platform.yaml.tmpl
     writeIf: !expr "UseXLRelease || UseJenkins"
-  - path: docker/jenkins/jenkins.yaml
+  - path: docker/jenkins/jenkins.yaml.tmpl
     writeIf: !expr "UseJenkins"
