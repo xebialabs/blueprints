@@ -2,7 +2,7 @@ apiVersion: xl/v2
 kind: Blueprint
 
 metadata:
-  name: Blueprint-Skeleton-Generator
+  name: {{.BlueprintName}}
   description: |
     {{.Description}}
   author: XebiaLabs
@@ -46,7 +46,6 @@ spec:
 
   files:
   - path: xebialabs.yaml
-  - path: README.md
   - path: xebialabs/USAGE.md.tmpl
     writeIf: !expr "SomeCondition"
   - path: xebialabs/xld-apps.yaml.tmpl
