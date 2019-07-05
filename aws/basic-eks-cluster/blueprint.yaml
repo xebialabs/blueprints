@@ -186,7 +186,7 @@ spec:
   - path: cloudformation/eks-master.yaml
   - path: cloudformation/eks-user.yaml
   - path: cloudformation/eks-vpc.yaml
-  - path: cloudformation/eks-workers.yaml
+  - path: cloudformation/eks-workers.yaml.tmpl
   - path: cloudformation/efs.yaml
     writeIf: ProvisionEFS
   - path: xebialabs.yaml
