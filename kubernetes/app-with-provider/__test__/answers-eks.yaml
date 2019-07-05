@@ -10,6 +10,7 @@ ClusterName: test-project
 NodeInstanceType: t2.medium
 NodeAutoScalingGroupDesiredSize: "3"
 ProvisionEFS: false
+GenerateDockerComposeSetup: true
 
 KubernetesDeploymentPackageVersion: latest
 KubernetesResourcesFile: ../kubernetes/httpd.yaml

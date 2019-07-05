@@ -6,3 +6,4 @@ TenantID: D
 ResourceGroupLocation: westeurope
 UseSampleApplication: true
 MySqlMasterPassword: Test@1234
+GenerateDockerComposeSetup: false

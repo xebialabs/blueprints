@@ -7,11 +7,11 @@ ClientID: A
 ClientSecret: B
 SubscriptionID: C
 TenantID: D
-enableCICD: true
+EnableCICD: true
 StoreAdminUsername: admin
 StoreAdminPassword: admin
 XLDUrlForXLR: http://xl-deploy:4516
 StorageAccountName: storageuser
 StorageContainerName: terraform-state
 StorageAccessKey: abcdefgh
-
+GenerateDockerComposeSetup: true

@@ -60,11 +60,6 @@ This blueprint requires:
 * Infrastructure:
     * AWS Lambda artifact for the application
 
-## Tips and tricks
-
-Use the `xl-devops-platform` blueprint to create a `docker-compose.yml` file for running XL Deploy.
-
-
 ## Labels
 
 * Cloud

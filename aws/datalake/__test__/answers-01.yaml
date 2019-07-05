@@ -6,3 +6,4 @@ UseAWSCredentialsFromSystem: false
 AWSAccessKey: ANDGDJDHJHD4235
 AWSAccessSecret: ANDGDJDHJHD4235
 AWSRegion: us-east-2
+GenerateDockerComposeSetup: true

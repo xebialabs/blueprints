@@ -7,4 +7,5 @@ ClusterName: test-project
 NodeInstanceType: t2.medium
 NodeAutoScalingGroupDesiredSize: "3"
 ProvisionEFS: false
+GenerateDockerComposeSetup: false
 ClusterVersion: '1.11'

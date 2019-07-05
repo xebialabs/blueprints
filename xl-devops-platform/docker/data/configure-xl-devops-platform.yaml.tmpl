@@ -3,6 +3,17 @@ kind: Templates
 spec:
 - name: XL Deploy
   type: xldeploy.XLDeployServer
-  url: http://xl-deploy:4516
+  url: http://xl-deploy:{{.XLDeployPort}}
   username: admin
   password: admin
+{{- if .UseJenkins }}
+---
+apiVersion: xl-release/v1
+kind: Templates
+spec:
+- name: jenkins
+  type: jenkins.Server
+  url: http://jenkins:{{.JenkinsPort}}
+  username: admin
+  password: admin
+{{- end }}

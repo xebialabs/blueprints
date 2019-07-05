@@ -58,7 +58,7 @@ spec:
         deploymentPackage: {{$app}}/AKS-TERRAFORM/{{$app}}-terraform-aks/1.0.0
         deploymentEnvironment: Environments/{{$app}}/azure-terraform
     {{end}}
-    {{if .enableCICD }}
+    {{if .EnableCICD }}
     - name: Build {{$app}} application
       type: xlrelease.Phase
       tasks:

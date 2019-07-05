@@ -133,10 +133,33 @@ spec:
     prompt: What is the application version for Black Duck?
     promptIf: ConfigureBlackduck
 
+  - name: GenerateDockerComposeSetup
+    type: Confirm
+    prompt: "Do you want to generate a docker-compose setup with the required tools to run this blueprint?"
+    default: false
+
+  includeAfter:
+  - blueprint: xl-devops-platform
+    includeIf: GenerateDockerComposeSetup
+    parameterOverrides:
+    - name: UseXLDeploy
+      value: false
+    - name: UseXLRelease
+      value: true
+    - name: XLReleasePort
+      value: 5516
+    - name: JetPackOrEnterprise
+      value: "XL Enterprise"
+    - name: XLVersion
+      value: "9.0.0"
+    - name: UseDockerProxy
+      value: false
+    - name: UseJenkins
+      value: false
+
   files:
   - path: xebialabs/xlr-configuration.yaml.tmpl
   - path: xebialabs/xlr-pipeline.yaml.tmpl
   - path: xebialabs/xlr-dashboard.yaml.tmpl
   - path: xebialabs/USAGE.md.tmpl
   - path: xebialabs.yaml
-  - path: docker/docker-compose.yml

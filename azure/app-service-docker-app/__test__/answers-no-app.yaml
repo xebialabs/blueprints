@@ -7,3 +7,4 @@ ResourceGroupLocation: westeurope
 UseSampleApplication: false
 DockerImage: test
 DockerImageTag: test
+GenerateDockerComposeSetup: true

@@ -1,11 +1,16 @@
 ## Find the apps here:
-{{- if .UseXLDeployFlag }}
+{{- if .UseXLDeploy }}
 * XL Deploy: http://localhost:{{.XLDeployPort}}
   * username: admin
   * password: admin
 {{- end }}
-{{- if .UseXLReleaseFlag }}
+{{- if .UseXLRelease }}
 * XL Release: http://localhost:{{.XLReleasePort}}
+  * username: admin
+  * password: admin
+{{- end }}
+{{- if .UseJenkins }}
+* Jenkins: http://localhost:{{.JenkinsPort}}
   * username: admin
   * password: admin
 {{- end }}
@@ -14,14 +19,14 @@
 Copy `xebialabs/config.yaml` to `$HOME/.xebialabs` or make sure your `$HOME/.xebialabs/config.yaml` contains:
 
 ```plain
-{{- if .UseXLDeployFlag }}
+{{- if .UseXLDeploy }}
 xl-deploy:
   authmethod: http
   password: admin
   url: http://localhost:{{.XLDeployPort}}/
   username: admin
 {{- end }}
-{{- if .UseXLReleaseFlag }}
+{{- if .UseXLRelease }}
 xl-release:
   authmethod: http
   password: admin
@@ -60,5 +65,3 @@ docker-compose up
 > **Note:** If you don't do this, all your containers will run under the `xebialabs` network with `xebialabs` prefix.
 >
 > If you only intend to run one container set at a time and run `docker-compose down` in between, you don't have to worry about this.
-
-u

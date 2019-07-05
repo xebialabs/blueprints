@@ -1,6 +1,6 @@
 version: '3.7'
 services:
-  {{- if .UseXLDeployFlag }}
+  {{- if .UseXLDeploy }}
   xl-deploy:
     {{- if eq .JetPackOrEnterprise "JetPack" }}
     image: xebialabs/xl-jetpack-deploy:{{ .XLVersion }}
@@ -14,7 +14,7 @@ services:
     - ACCEPT_EULA=Y
   {{- end }}
 
-  {{- if .UseXLReleaseFlag }}
+  {{- if .UseXLRelease }}
   xl-release:
     {{- if eq .JetPackOrEnterprise "JetPack" }}
     image: xebialabs/xl-jetpack-release:{{ .XLVersion }}
@@ -35,14 +35,29 @@ services:
     volumes:
     - ./data/:/data:ro
   {{- end }}
-
-  {{- if .UseDockerProxyFlag }}
+  {{- if .UseJenkins }}  
+  jenkins:
+    image: xebialabsunsupported/jenkins-blueprint-demo:latest
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./jenkins/jenkins.yaml:/var/jenkins_home/casc_configs/jenkins.yaml
+    environment:
+      - CASC_JENKINS_CONFIG=/var/jenkins_home/casc_configs/jenkins.yaml
+      - GITHUB_USER=${GITHUB_USER}
+      - GITHUB_TOKEN=${GITHUB_TOKEN}
+      - DOCKER_USER=${DOCKER_USER}
+      - DOCKER_PASS=${DOCKER_PASS}
+    ports:
+      - {{.JenkinsPort}}:8080
+      - 55888:55888
+  {{- end }}
+  {{- if .UseDockerProxy }}
   dockerproxy:
     image: tecnativa/docker-socket-proxy:latest
     privileged: true
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-    environment: # warning this potentially opens up a security hole :)
+    environment: # warning this potentially opens up a security hole and hence is not a best practice but rather a workaround :)
       - AUTH=1
       - BUILD=1
       - COMMIT=1

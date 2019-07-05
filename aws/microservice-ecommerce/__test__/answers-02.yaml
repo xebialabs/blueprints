@@ -10,3 +10,4 @@ Namespace: xl-demo
 StoreAdminUsername: admin
 StoreAdminPassword: admin
 XLDUrlForXLR: http://xl-deploy:4516
+GenerateDockerComposeSetup: false

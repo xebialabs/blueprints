@@ -1,7 +1,9 @@
-UseXLDeployFlag: true
+UseXLDeploy: true
 XLDeployPort: 4516
-UseXLReleaseFlag: false
+UseXLRelease: false
 XLReleasePort: 4516
 JetPackOrEnterprise: JetPack
 XLVersion: 8.6.1
-UseDockerProxyFlag: true
+UseDockerProxy: true
+UseJenkins: true
+JenkinsPort: 8080

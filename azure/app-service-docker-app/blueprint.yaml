@@ -136,6 +136,30 @@ spec:
     default: latest
     value: !expr "UseSampleApplication ? 'latest' : ''"
 
+  - name: GenerateDockerComposeSetup
+    type: Confirm
+    prompt: "Do you want to generate a docker-compose setup with the required tools to run this blueprint?"
+    default: false
+
+  includeAfter:
+  - blueprint: xl-devops-platform
+    includeIf: GenerateDockerComposeSetup
+    parameterOverrides:
+    - name: UseXLDeploy
+      value: true
+    - name: XLDeployPort
+      value: 4516
+    - name: UseXLRelease
+      value: false
+    - name: JetPackOrEnterprise
+      value: "JetPack"
+    - name: XLVersion
+      value: "9.0.0"
+    - name: UseDockerProxy
+      value: false
+    - name: UseJenkins
+      value: false
+
   files:
   # XebiaLabs
   - path: xebialabs/USAGE.md.tmpl
@@ -145,5 +169,3 @@ spec:
   - path: terraform/main.tf.tmpl
   - path: terraform/outputs.tf
   - path: terraform/variables.tf.tmpl
-  # Docker
-  - path: docker/docker-compose.yml
