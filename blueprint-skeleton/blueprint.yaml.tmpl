@@ -1,0 +1,54 @@
+apiVersion: xl/v2
+kind: Blueprint
+
+metadata:
+  name: {{.BlueprintName}}
+  description: |
+    {{.Description}}
+  author: XebiaLabs
+  version: 2.0
+  instructions: {{.Instructions}}
+
+spec:
+  parameters:
+  - name: AppName
+    type: Input
+    prompt: What is the name of the application?
+
+  - name: SomeCondition
+    type: Confirm
+    prompt: Do you want this condition to be true?
+    description: "This will be used later in the blueprint and in xlr-pipeline-ci-cd.yaml.tmpl"
+    default: true
+
+  - name: HiddenDerivedValue
+    type: Input
+    value: !expr "'prefix-' + AppName + '-suffix'"
+
+  - name: Username
+    type: Input
+    prompt: What is the username?
+    promptIf: !expr "SomeCondition"
+    saveInXlvals: true
+
+  - name: Password
+    type: SecretInput
+    prompt: What is the password?
+    promptIf: !expr "SomeCondition"
+
+  - name: MultiSelect
+    type: Select
+    prompt: "Choose one:"
+    options:
+    - simple-option
+    - label: Nicer option
+      value: simple-value
+
+  files:
+  - path: xebialabs.yaml
+  - path: xebialabs/USAGE.md.tmpl
+    writeIf: !expr "SomeCondition"
+  - path: xebialabs/xld-apps.yaml.tmpl
+  - path: xebialabs/xld-infra-env.yaml.tmpl
+  - path: xebialabs/xlr-pipeline-ci-cd.yaml.tmpl
+  - path: xebialabs/xlr-pipeline-destroy.yaml.tmpl

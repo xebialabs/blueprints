@@ -1,0 +1,31 @@
+{{"{{ $app := .AppName | kebabcase }}"}}
+apiVersion: xl-release/v1
+kind: Templates
+spec:
+- name: _FOLDER_NAME_
+  type: xlrelease.Folder
+  children:
+  - name: {{"{{$app}}-destroy"}}
+    type: xlrelease.Release
+    description: _DESCRIPTION_
+    tags:
+    - _TAG_
+    scriptUsername: !value XL_RELEASE_USERNAME
+    scriptUserPassword: !value XL_RELEASE_PASSWORD
+    phases:
+    - name: Undeploy Application
+      type: xlrelease.Phase
+      color: '#d94c3d'
+      tasks:
+      - name: _TASK1_
+        type: xldeploy.Undeploy
+        server: XL Deploy
+        deployedApplication: "Environments/_PATH_"
+    - name: Deprovision Infrastructure
+      type: xlrelease.Phase
+      color: '#ff9e3b'
+      tasks:
+      - name: _TASK2_
+        type: xldeploy.Undeploy
+        server: XL Deploy
+        deployedApplication: "Environments/_PATH_"

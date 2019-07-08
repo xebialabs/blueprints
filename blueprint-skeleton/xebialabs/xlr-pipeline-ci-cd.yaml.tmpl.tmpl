@@ -1,0 +1,59 @@
+{{"{{ $app := .AppName | kebabcase }}"}}
+apiVersion: xl-release/v1
+kind: Templates
+spec:
+- name: _FOLDER_NAME_
+  type: xlrelease.Folder
+  children:
+  - name: {{"{{$app}}-ci-cd"}}
+    type: xlrelease.Release
+    description: _DESCRIPTION_
+    tags:
+    - _TAG_
+    scriptUsername: !value XL_RELEASE_USERNAME
+    scriptUserPassword: !value XL_RELEASE_PASSWORD
+    variables:
+    - key: _NAME1_
+      type: xlrelease.StringVariable
+      requiresValue: true
+      showOnReleaseStart: true
+      value: _VALUE_
+    - key: _NAME2_
+      type: xlrelease.MapStringStringVariable
+      requiresValue: false
+      showOnReleaseStart: false
+      value:
+        _KEY1_: _VALUE1_
+        _KEY2_: _VALUE2_
+    - key: _NAME3_
+      type: xlrelease.PasswordStringVariable
+      requiresValue: true
+      showOnReleaseStart: false
+      value: !value XL_DEPLOY_PASSWORD
+    phases:
+    - name: Provision Infrastructure
+      type: xlrelease.Phase
+      color: '#d94c3d'
+      tasks:
+      - name: _TASK1_
+        type: xldeploy.Deploy
+        server: XL Deploy
+        deploymentPackage: ""
+        deploymentEnvironment: "Environments/_PATH_"
+    - name: Deploy Application
+      type: xlrelease.Phase
+      color: '#ff9e3b'
+      tasks:
+      - name: _TASK2_
+        type: xldeploy.Deploy
+        server: XL Deploy
+        deploymentPackage: ""
+        deploymentEnvironment: "Environments/_PATH_"
+      {{"{{ if .SomeCondition }}"}}
+      - name: _TASK3_
+        type: xldeploy.Deploy
+        server: XL Deploy
+        deploymentPackage: ""
+        deploymentEnvironment: "Environments/_PATH_"
+      {{"{{ end }}"}}
+
