@@ -25,7 +25,7 @@ Every blueprint has a subfolder called `__test__` for CI tests. The tests are ru
 ### How to add testing to your blueprint
 1. Create a `__test__` directory in your blueprint's directory
 2. Create a `.yaml` file that starts with `test` (e.g. `test01.yaml`)
-3. Create a `.yaml` answers file containing key/value pairs (For the format of an answers file, see **Blueprint Answers File** in `xl-cli` [blueprints.md](https://github.com/xebialabs/xl-cli/blob/master/docs/blueprints.md))
+3. Create a `.yaml` answers file containing key/value pairs (For the format of an answers file, see **Blueprint Answers File** in `xl-cli` [blueprints.md](https://github.com/xebialabs/xl-cli/blob/master/docs/blueprints-v2.md))
 
 ### Blueprint test file YAML definition file structure
 
