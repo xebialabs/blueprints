@@ -1,0 +1,11 @@
+AppName: test-project
+UseAWSCredentialsFromSystem: false
+AWSAccessKey: ANDGDJDHJHD4235
+AWSAccessSecret: ANDGDJDHJHD4235
+AWSRegion: eu-west-1
+ClusterName: test-project
+NodeInstanceType: t2.medium
+NodeAutoScalingGroupDesiredSize: "3"
+ProvisionEFS: false
+GenerateDockerComposeSetup: false
+ClusterVersion: '1.11'

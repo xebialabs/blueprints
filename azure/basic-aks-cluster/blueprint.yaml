@@ -110,9 +110,11 @@ spec:
     type: Input
     prompt: What do you want to name the cluster?
 
-  # Hidden prefix
   - name: Prefix
-    value: azure-aks-
+    type: Input
+    prompt: "Specify the application prefix (use the default if you're not sure):"
+    default: azure-aks-
+    validate: !expr "regex('^([a-z0-9-]+-)+$', Prefix)"
 
   - name: GenerateDockerComposeSetup
     type: Confirm

@@ -1,0 +1,98 @@
+apiVersion: xl/v2
+kind: Blueprint
+
+metadata:
+  name: Kubernetes-Multicloud-Pipeline
+  description: |
+    An end-to-end blueprint that composes infrastructure (EKS / AKS / GKE), application (Kubernetes) and a pipeline.
+  author: XebiaLabs
+  version: 2.0
+  instructions: Please read the generated file "xebialabs/USAGE-multicloud-pipeline.md" for further usage instructions.
+
+spec:
+  parameters:
+  - name: Platform
+    type: Select
+    prompt: "Choose the platform you are targeting:"
+    options:
+    - AWS EKS
+    - GCP GKE
+    - Azure AKS
+
+  - name: ClusterName
+    type: Input
+    prompt: "What do you want to name your cluster?"
+
+  - name: Prefix
+    type: Input
+    prompt: "What prefix do you want to use?"
+    default: !expr "Platform == 'AWS EKS' ? 'awk-eks-' : (Platform == 'GCP GKE' ? 'gcp-gke-' : 'azure-aks-')"
+    validate: !expr "regex('^([a-z0-9-]+-)+$', Prefix)"
+
+  - name: XLDUrlForXLR
+    type: Input
+    prompt: XL Deploy URL for XL Release (This will only be used in the XL Release template)
+    default: http://xl-deploy:4516
+
+  - name: Namespace
+    type: Input
+    prompt: "Name of the namespace (will be created if necessary):"
+    default: default
+
+  - name: NamespaceTag
+    type: Input
+    value: kubernetes-namespace
+
+  files:
+  # XebiaLabs
+  - path: xebialabs.yaml.tmpl
+  - path: xebialabs/USAGE-multicloud-pipeline.md.tmpl
+  - path: xebialabs/multicloud-pipeline.yaml.tmpl
+    writeIf: !expr "Platform != 'AWS EKS'"
+  - path: xebialabs/multicloud-pipeline-aws.yaml.tmpl
+    writeIf: !expr "Platform == 'AWS EKS'"
+
+  includeAfter:
+  - blueprint: aws/basic-eks-cluster
+    includeIf: !expr "Platform == 'AWS EKS'"
+    fileOverrides:
+    - path: xebialabs/aws-basic-eks-cluster.yaml
+      writeIf: !expr "false"
+    parameterOverrides:
+    - name: ClusterName
+      value: !expr "ClusterName"
+    - name: Prefix
+      value: !expr "Prefix"
+    - name: XLDUrlForXLR
+      value: !expr "XLDUrlForXLR"
+    - name: Namespace
+
+  - blueprint: azure/basic-aks-cluster
+    includeIf: !expr "Platform == 'Azure AKS'"
+    parameterOverrides:
+    - name: ClusterName
+      value: !expr "ClusterName"
+    - name: Prefix
+      value: !expr "Prefix"
+    - name: XLDUrlForXLR
+      value: !expr "XLDUrlForXLR"
+    - name: Namespace
+
+  - blueprint: gcp/basic-gke-cluster
+    includeIf: !expr "Platform == 'GCP GKE'"
+    fileOverrides:
+    - path: xebialabs.yaml
+      writeIf: !expr "false"
+    parameterOverrides:
+    - name: ClusterName
+      value: !expr "ClusterName"
+    - name: Prefix
+      value: !expr "Prefix"
+    - name: XLDUrlForXLR
+      value: !expr "XLDUrlForXLR"
+    - name: Namespace
+
+  - blueprint: kubernetes/application
+    parameterOverrides:
+    - name: NamespaceTag
+      value: !expr "NamespaceTag"

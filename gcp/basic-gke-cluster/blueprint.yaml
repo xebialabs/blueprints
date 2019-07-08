@@ -73,38 +73,40 @@ spec:
     type: Select
     prompt: What is the machine type of the GKE nodes?
     options:
-      - n1-standard-1
-      - n1-standard-2
-      - n1-standard-4
-      - n1-standard-8
-      - n1-standard-16
-      - n1-standard-32
-      - n1-standard-64
-      - n1-standard-96
-      - n1-highmem-2
-      - n1-highmem-4
-      - n1-highmem-8
-      - n1-highmem-16
-      - n1-highmem-32
-      - n1-highmem-64
-      - n1-highmem-96
-      - n1-highcpu-2
-      - n1-highcpu-4
-      - n1-highcpu-8
-      - n1-highcpu-16
-      - n1-highcpu-32
-      - n1-highcpu-64
-      - n1-highcpu-96
-      - f1-micro
-      - g1-small
-      - n1-ultramem-40
-      - n1-ultramem-80
-      - n1-ultramem-160
-      - n1-megamem-96
+    - n1-standard-1
+    - n1-standard-2
+    - n1-standard-4
+    - n1-standard-8
+    - n1-standard-16
+    - n1-standard-32
+    - n1-standard-64
+    - n1-standard-96
+    - n1-highmem-2
+    - n1-highmem-4
+    - n1-highmem-8
+    - n1-highmem-16
+    - n1-highmem-32
+    - n1-highmem-64
+    - n1-highmem-96
+    - n1-highcpu-2
+    - n1-highcpu-4
+    - n1-highcpu-8
+    - n1-highcpu-16
+    - n1-highcpu-32
+    - n1-highcpu-64
+    - n1-highcpu-96
+    - f1-micro
+    - g1-small
+    - n1-ultramem-40
+    - n1-ultramem-80
+    - n1-ultramem-160
+    - n1-megamem-96
 
-  # Hidden prefix
   - name: Prefix
-    value: gcp-gke-
+    type: Input
+    prompt: "Specify the application prefix (use the default if you're not sure):"
+    default: gcp-gke-
+    validate: !expr "regex('^([a-z0-9-]+-)+$', Prefix)"
 
   - name: GenerateDockerComposeSetup
     type: Confirm

@@ -1,0 +1,18 @@
+apiVersion: xl/v1
+kind: Import
+metadata:
+  imports:
+  {{- if eq .Platform "AWS EKS" }}
+  - xebialabs/aws-basic-eks-cluster-applications.yaml
+  - xebialabs/aws-basic-eks-cluster-environments.yaml
+  {{- else if eq .Platform "Azure AKS" }}
+  - xebialabs/azure-basic-aks-cluster.yaml
+  {{- else if eq .Platform "GCP GKE" }}
+  - xebialabs/gcp-basic-gke-cluster.yaml
+  {{- end }}
+  - xebialabs/kubernetes-application.yaml
+  {{- if eq .Platform "AWS EKS" }}
+  - xebialabs/multicloud-pipeline-aws.yaml
+  {{- else }}
+  - xebialabs/multicloud-pipeline.yaml
+  {{ end }}
