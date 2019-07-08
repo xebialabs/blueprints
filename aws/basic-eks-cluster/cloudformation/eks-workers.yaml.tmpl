@@ -3,136 +3,116 @@ Description: 'Amazon EKS - Worker nodes'
 
 Mappings:
     RegionMap:
+        {{- if eq .ClusterVersion "1.10" }}
       us-east-2:
-        {{- if eq .ClusterVersion "1.10" }}
         "AmiId": "ami-0523ec257fff1261d"
-        {{- else if eq .ClusterVersion "1.11" }}
-        "AmiId": "ami-03c6648b74285020f"
-        {{- else if eq .ClusterVersion "1.12" }}
-        "AmiId": "ami-0fe61ae4c397e710d"
-        {{- else if eq .ClusterVersion "1.13" }}
-        "AmiId": "ami-0485258c2d1c3608f"
-        {{- end }}
       us-east-1:
-        {{- if eq .ClusterVersion "1.10" }}
         "AmiId": "ami-01c1c96b9aa69de37"
-        {{- else if eq .ClusterVersion "1.11" }}
-        "AmiId": "ami-0a5f5d5b0f6f58199"
-        {{- else if eq .ClusterVersion "1.12" }}
-        "AmiId": "ami-0e380e0a62d368837"
-        {{- else if eq .ClusterVersion "1.13" }}
-        "AmiId": "ami-0f2e8e5663e16b436"
-        {{- end }}
       us-west-2:
-        {{- if eq .ClusterVersion "1.10" }}
         "AmiId": "ami-021dd1fb7ba7e6e51"
-        {{- else if eq .ClusterVersion "1.11" }}
-        "AmiId": "ami-057d1c0dcb254a878"
-        {{- else if eq .ClusterVersion "1.12" }}
-        "AmiId": "ami-0355c210cb3f58aa2"
-        {{- else if eq .ClusterVersion "1.13" }}
-        "AmiId": "ami-03a55127c613349a7"
-        {{- end }}
       ap-south-1:
-        {{- if eq .ClusterVersion "1.10" }}
         "AmiId": "ami-04c2ed5ff15a580f4"
-        {{- else if eq .ClusterVersion "1.11" }}
-        "AmiId": "ami-00f1adebe5ab9a431"
-        {{- else if eq .ClusterVersion "1.12" }}
-        "AmiId": "ami-01b6a163133c31994"
-        {{- else if eq .ClusterVersion "1.13" }}
-        "AmiId": "ami-0a9b1c1807b1a40ab"
-        {{- end }}
       ap-northeast-1:
-        {{- if eq .ClusterVersion "1.10" }}
         "AmiId": "ami-02ffa4511b4baa5fa"
-        {{- else if eq .ClusterVersion "1.11" }}
-        "AmiId": "ami-0a0b6606652f9b3b9"
-        {{- else if eq .ClusterVersion "1.12" }}
-        "AmiId": "ami-0a9b3f8b4b65b402b"
-        {{- else if eq .ClusterVersion "1.13" }}
-        "AmiId": "ami-0fde798d17145fae1"
-        {{- end }}
       ap-northeast-2:
-        {{- if eq .ClusterVersion "1.10" }}
         "AmiId": "ami-06295f3e6390dae00"
-        {{- else if eq .ClusterVersion "1.11" }}
-        "AmiId": "ami-0c84b3f055cda1afb"
-        {{- else if eq .ClusterVersion "1.12" }}
-        "AmiId": "ami-069f6a654a8795f72"
-        {{- else if eq .ClusterVersion "1.13" }}
-        "AmiId": "ami-07fd7609df6c8e39b"
-        {{- end }}
       ap-southeast-1:
-        {{- if eq .ClusterVersion "1.10" }}
         "AmiId": "ami-07f8ccb046b3ce697"
-        {{- else if eq .ClusterVersion "1.11" }}
-        "AmiId": "ami-05e92412054db3f87"
-        {{- else if eq .ClusterVersion "1.12" }}
-        "AmiId": "ami-03737a1ac334a5767"
-        {{- else if eq .ClusterVersion "1.13" }}
-        "AmiId": "ami-0361e14efd56a71c7"
-        {{- end }}
       ap-southeast-2:
-        {{- if eq .ClusterVersion "1.10" }}
         "AmiId": ami-03ebcd449b224e0a3
-        {{- else if eq .ClusterVersion "1.11" }}
-        "AmiId": ami-07eb76498b1ba6cd6
-        {{- else if eq .ClusterVersion "1.12" }}
-        "AmiId": ami-07580768e8538626f
-        {{- else if eq .ClusterVersion "1.13" }}
-        "AmiId": ami-0237d87bc27daba65
-        {{- end }}
       eu-central-1:
-        {{- if eq .ClusterVersion "1.10" }}
         "AmiId": "ami-0c40973ffcf8bca40"
-        {{- else if eq .ClusterVersion "1.11" }}
-        "AmiId": "ami-0234bc9c2b341aa02"
-        {{- else if eq .ClusterVersion "1.12" }}
-        "AmiId": "ami-0ee5ca4231511cafc"
-        {{- else if eq .ClusterVersion "1.13" }}
-        "AmiId": "ami-0b7127e7a2a38802a"
-        {{- end }}
       eu-west-1:
-        {{- if eq .ClusterVersion "1.10" }}
         "AmiId": "ami-06a96b4cfd627430b"
-        {{- else if eq .ClusterVersion "1.11" }}
-        "AmiId": "ami-06902949103360023"
-        {{- else if eq .ClusterVersion "1.12" }}
-        "AmiId": "ami-0404d23c7e8188740"
-        {{- else if eq .ClusterVersion "1.13" }}
-        "AmiId": "ami-00ac2e6b3cb38a9b9"
-        {{- end }}
       eu-west-2:
-        {{- if eq .ClusterVersion "1.10" }}
         "AmiId": "ami-03356e704fb004162"
-        {{- else if eq .ClusterVersion "1.11" }}
-        "AmiId": "ami-0db100ad46c7966d2"
-        {{- else if eq .ClusterVersion "1.12" }}
-        "AmiId": "ami-07346d8553f83f9d6"
-        {{- else if eq .ClusterVersion "1.13" }}
-        "AmiId": "ami-0147919d2ff9a6ad5"
-        {{- end }}
       eu-west-3:
-        {{- if eq .ClusterVersion "1.10" }}
         "AmiId": "ami-0eb77a4ca7135122b"
-        {{- else if eq .ClusterVersion "1.11" }}
-        "AmiId": "ami-052046d313576d0ba"
-        {{- else if eq .ClusterVersion "1.12" }}
-        "AmiId": "ami-038cb36289174bac4"
-        {{- else if eq .ClusterVersion "1.13" }}
-        "AmiId": "ami-0537ee9329c1628a2"
-        {{- end }}
       eu-north-1:
-        {{- if eq .ClusterVersion "1.10" }}
         "AmiId": "ami-028df8ba9b8603bdd"
         {{- else if eq .ClusterVersion "1.11" }}
+      us-east-2:
+        "AmiId": "ami-03c6648b74285020f"
+      us-east-1:
+        "AmiId": "ami-0a5f5d5b0f6f58199"
+      us-west-2:
+        "AmiId": "ami-057d1c0dcb254a878"
+      ap-south-1:
+        "AmiId": "ami-00f1adebe5ab9a431"
+      ap-northeast-1:
+        "AmiId": "ami-0a0b6606652f9b3b9"
+      ap-northeast-2:
+        "AmiId": "ami-0c84b3f055cda1afb"
+      ap-southeast-1:
+        "AmiId": "ami-05e92412054db3f87"
+      ap-southeast-2:
+        "AmiId": ami-07eb76498b1ba6cd6
+      eu-central-1:
+        "AmiId": "ami-0234bc9c2b341aa02"
+      eu-west-1:
+        "AmiId": "ami-06902949103360023"
+      eu-west-2:
+        "AmiId": "ami-0db100ad46c7966d2"
+      eu-west-3:
+        "AmiId": "ami-052046d313576d0ba"
+      eu-north-1:
         "AmiId": "ami-02ebf24da505128f9"
         {{- else if eq .ClusterVersion "1.12" }}
+      us-east-2:
+        "AmiId": "ami-0fe61ae4c397e710d"
+      us-east-1:
+        "AmiId": "ami-0e380e0a62d368837"
+      us-west-2:
+        "AmiId": "ami-0355c210cb3f58aa2"
+      ap-south-1:
+        "AmiId": "ami-01b6a163133c31994"
+      ap-northeast-1:
+        "AmiId": "ami-0a9b3f8b4b65b402b"
+      ap-northeast-2:
+        "AmiId": "ami-069f6a654a8795f72"
+      ap-southeast-1:
+        "AmiId": "ami-03737a1ac334a5767"
+      ap-southeast-2:
+        "AmiId": ami-07580768e8538626f
+      eu-central-1:
+        "AmiId": "ami-0ee5ca4231511cafc"
+      eu-west-1:
+        "AmiId": "ami-0404d23c7e8188740"
+      eu-west-2:
+        "AmiId": "ami-07346d8553f83f9d6"
+      eu-west-3:
+        "AmiId": "ami-038cb36289174bac4"
+      eu-north-1:
         "AmiId": "ami-03e60b5a990893129"
         {{- else if eq .ClusterVersion "1.13" }}
+      us-east-2:
+        "AmiId": "ami-0485258c2d1c3608f"
+      us-east-1:
+        "AmiId": "ami-0f2e8e5663e16b436"
+      us-west-2:
+        "AmiId": "ami-03a55127c613349a7"
+      ap-south-1:
+        "AmiId": "ami-0a9b1c1807b1a40ab"
+      ap-northeast-1:
+        "AmiId": "ami-0fde798d17145fae1"
+      ap-northeast-2:
+        "AmiId": "ami-07fd7609df6c8e39b"
+      ap-southeast-1:
+        "AmiId": "ami-0361e14efd56a71c7"
+      ap-southeast-2:
+        "AmiId": ami-0237d87bc27daba65
+      eu-central-1:
+        "AmiId": "ami-0b7127e7a2a38802a"
+      eu-west-1:
+        "AmiId": "ami-00ac2e6b3cb38a9b9"
+      eu-west-2:
+        "AmiId": "ami-0147919d2ff9a6ad5"
+      eu-west-3:
+        "AmiId": "ami-0537ee9329c1628a2"
+      eu-north-1:
         "AmiId": "ami-0fd05922165907b85"
         {{- end }}
+
 
 Parameters:
   ProjectName:
