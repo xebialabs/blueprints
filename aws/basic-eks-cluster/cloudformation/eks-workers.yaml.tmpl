@@ -3,7 +3,7 @@ Description: 'Amazon EKS - Worker nodes'
 
 Mappings:
     RegionMap:
-        {{- if eq .ClusterVersion "1.10" }}
+    {{- if eq .ClusterVersion "1.10" }}
       us-east-2:
         "AmiId": "ami-0523ec257fff1261d"
       us-east-1:
@@ -19,7 +19,7 @@ Mappings:
       ap-southeast-1:
         "AmiId": "ami-07f8ccb046b3ce697"
       ap-southeast-2:
-        "AmiId": ami-03ebcd449b224e0a3
+        "AmiId": "ami-03ebcd449b224e0a3"
       eu-central-1:
         "AmiId": "ami-0c40973ffcf8bca40"
       eu-west-1:
@@ -30,7 +30,7 @@ Mappings:
         "AmiId": "ami-0eb77a4ca7135122b"
       eu-north-1:
         "AmiId": "ami-028df8ba9b8603bdd"
-        {{- else if eq .ClusterVersion "1.11" }}
+    {{- else if eq .ClusterVersion "1.11" }}
       us-east-2:
         "AmiId": "ami-03c6648b74285020f"
       us-east-1:
@@ -46,7 +46,7 @@ Mappings:
       ap-southeast-1:
         "AmiId": "ami-05e92412054db3f87"
       ap-southeast-2:
-        "AmiId": ami-07eb76498b1ba6cd6
+        "AmiId": "ami-07eb76498b1ba6cd6"
       eu-central-1:
         "AmiId": "ami-0234bc9c2b341aa02"
       eu-west-1:
@@ -57,7 +57,7 @@ Mappings:
         "AmiId": "ami-052046d313576d0ba"
       eu-north-1:
         "AmiId": "ami-02ebf24da505128f9"
-        {{- else if eq .ClusterVersion "1.12" }}
+    {{- else if eq .ClusterVersion "1.12" }}
       us-east-2:
         "AmiId": "ami-0fe61ae4c397e710d"
       us-east-1:
@@ -73,7 +73,7 @@ Mappings:
       ap-southeast-1:
         "AmiId": "ami-03737a1ac334a5767"
       ap-southeast-2:
-        "AmiId": ami-07580768e8538626f
+        "AmiId": "ami-07580768e8538626f"
       eu-central-1:
         "AmiId": "ami-0ee5ca4231511cafc"
       eu-west-1:
@@ -84,7 +84,7 @@ Mappings:
         "AmiId": "ami-038cb36289174bac4"
       eu-north-1:
         "AmiId": "ami-03e60b5a990893129"
-        {{- else if eq .ClusterVersion "1.13" }}
+    {{- else if eq .ClusterVersion "1.13" }}
       us-east-2:
         "AmiId": "ami-0485258c2d1c3608f"
       us-east-1:
@@ -100,7 +100,7 @@ Mappings:
       ap-southeast-1:
         "AmiId": "ami-0361e14efd56a71c7"
       ap-southeast-2:
-        "AmiId": ami-0237d87bc27daba65
+        "AmiId": "ami-0237d87bc27daba65"
       eu-central-1:
         "AmiId": "ami-0b7127e7a2a38802a"
       eu-west-1:
@@ -111,7 +111,7 @@ Mappings:
         "AmiId": "ami-0537ee9329c1628a2"
       eu-north-1:
         "AmiId": "ami-0fd05922165907b85"
-        {{- end }}
+    {{- end }}
 
 
 Parameters:
