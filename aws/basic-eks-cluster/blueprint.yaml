@@ -41,7 +41,7 @@ spec:
     type: Input
     prompt: What do you want to name the cluster?
     description: Cluster name will be used to generate cloud resource names
-    validate: !expr "regex('^[a-zA-Z0-9-]{1,16}$', AppName)"
+    validate: !expr "regex('^[a-zA-Z0-9-]{1,16}$', ClusterName)"
 
   - name: ClusterVersion
     type: Select
@@ -152,7 +152,7 @@ spec:
       value: false
 
   files:
-  - path: xebialabs/aws-basic-eks-cluster.yaml.tmpl
+  - path: xebialabs/aws-basic-eks-cluster.yaml
   - path: xebialabs/aws-basic-eks-cluster-applications.yaml.tmpl
   - path: xebialabs/aws-basic-eks-cluster-environments.yaml.tmpl
   - path: xebialabs/USAGE-aws-basic-eks-cluster.md.tmpl
@@ -162,4 +162,4 @@ spec:
   - path: cloudformation/eks-master.yaml
   - path: cloudformation/eks-user.yaml
   - path: cloudformation/eks-vpc.yaml
-  - path: cloudformation/eks-workers.yaml
+  - path: cloudformation/eks-workers.yaml.tmpl

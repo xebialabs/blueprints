@@ -2,7 +2,7 @@ apiVersion: xl/v2
 kind: Blueprint
 
 metadata:
-  name: AWS-EKS-Cluster
+  name: AWS-EKS-Intermediate
   description: |
     The blueprint deploys a simple AWS EKS Cluster (with EFS if requested).
     XL Deploy does the provisioning and deployment, while XL Release orchestrates everything.
@@ -19,16 +19,20 @@ spec:
     description: Application name will be used to generate cloud resource names
     validate: !expr "regex('^[a-zA-Z0-9-]{1,16}$', AppName)"
 
+  # ############################################################################
   # AWS specific variables
+  # ############################################################################
   - name: UseAWSCredentialsFromSystem
     type: Confirm
     prompt: Do you want to use AWS credentials from ~/.aws/credentials file?
     promptIf: !expr "awsCredentials('IsAvailable')"
+
   - name: AWSAccessKey
     type: SecretInput
     prompt: What is the AWS Access Key ID?
     promptIf: !expr "!UseAWSCredentialsFromSystem"
     default: !expr "awsCredentials('AccessKeyID')"
+
   - name: AWSAccessSecret
     type: SecretInput
     prompt: What is the AWS Secret Access Key?
@@ -39,35 +43,14 @@ spec:
     type: Select
     prompt: "Select the AWS region:"
     options:
-    # This needs to be updated in the RegionMap of cloudformation/eks-workers.yaml as well
-      - label: US West (Oregon)
-        value: us-west-2
-      # commented out because of https://github.com/boto/boto3/issues/811
-      # - us-east-1
-      - label: US East (Ohio)
-        value: us-east-2
-      - label: EU (Frankfurt)
-        value: eu-central-1
-      - label: EU (Ireland)
-        value: eu-west-1
-      - label: EU (London)
-        value: eu-west-2
-      - label: EU (Paris)
-        value: eu-west-3
-      - label: Asia Pacific (Tokyo)
-        value: ap-northeast-1
-      - label: Asia Pacific (Seoul)
-        value: ap-northeast-2
-      - label: Asia Pacific (Mumbai)
-        value: ap-south-1
-      - label: Asia Pacific (Singapore)
-        value: ap-southeast-1
-      - label: Asia Pacific (Sydney)
-        value: ap-southeast-2
+    - !expr "awsRegions('ecs')"
 
   - name: ClusterName
     type: Input
-    prompt: What is the name of the cluster?
+    prompt: What do you want to name the cluster?
+    description: Cluster name will be used to generate cloud resource names
+    validate: !expr "regex('^[a-zA-Z0-9-]{1,16}$', AppName)"
+
   - name: ClusterVersion
     type: Select
     default: '1.10'
