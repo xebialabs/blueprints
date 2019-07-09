@@ -2,7 +2,8 @@ answers-file: answers-gke.yaml
 expected-files:
   - xebialabs/kubernetes-application.yaml
   - xebialabs/USAGE-kubernetes-application.md
-  - kubernetes/nginx.yaml
+  - kubernetes/nginx-deployment.yaml
+  - kubernetes/nginx-service.yaml
   - xebialabs.yaml
   - xebialabs/USAGE-gcp-basic-gke-cluster.md
   - xebialabs/gcp-basic-gke-cluster.yaml

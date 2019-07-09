@@ -1,2 +1,3 @@
 KubernetesApplicationName: httpd
 KubernetesDeploymentPackageVersion: latest
+Namespace: default

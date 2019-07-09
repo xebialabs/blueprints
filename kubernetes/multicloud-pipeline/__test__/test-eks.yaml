@@ -1,4 +1,4 @@
-answers-file: answers-aws.yaml
+answers-file: answers-eks.yaml
 expected-files:
 - cloudformation/cfn-secret-provider.zip
 - cloudformation/eks-master.yaml

@@ -1,4 +1,4 @@
-answers-file: answers-gcp.yaml
+answers-file: answers-gke.yaml
 expected-files:
 - kubernetes/nginx-deployment.yaml
 - kubernetes/nginx-service.yaml
