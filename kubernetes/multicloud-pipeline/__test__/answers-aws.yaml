@@ -2,3 +2,17 @@ ClusterName: clustername
 Platform: AWS EKS
 Prefix: prefix-
 XLDUrlForXLR: http://xl-deploy:4516
+Namespace: default
+NamespaceTag: kubernetes-namespace
+
+UseAWSCredentialsFromSystem: false
+AWSAccessKey: ABCDEFGHIJKLMNOPQRST
+AWSAccessSecret: abcdefghijklmnopqrstuvwxyz1234567890ABCDE
+AWSRegion: eu-west-3
+ClusterVersion: '1.10'
+NodeAutoScalingGroupDesiredSize: 3
+NodeInstanceType: t2.medium
+GenerateDockerComposeSetup: false
+
+KubernetesApplicationName: nginx
+KubernetesDeploymentPackageVersion: latest

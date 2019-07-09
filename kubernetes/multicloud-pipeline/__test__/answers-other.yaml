@@ -1,4 +1,0 @@
-ClusterName: clustername
-Platform: GCP GKE
-Prefix: prefix-
-XLDUrlForXLR: http://xl-deploy:4516

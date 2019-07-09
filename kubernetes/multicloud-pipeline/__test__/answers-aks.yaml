@@ -1,0 +1,16 @@
+Platform: Azure AKS
+ClusterName: cluster
+Prefix: azure-aks-
+XLDUrlForXLR: http://xl-deploy:4516
+Namespace: default
+
+SubscriptionID: A
+ClientID: B
+ClientSecret: C
+TenantID: D
+ResourceGroup: azure-rg
+ResourceGroupLocation: westeurope
+GenerateDockerComposeSetup: false
+
+KubernetesApplicationName: nginx
+KubernetesDeploymentPackageVersion: latest
