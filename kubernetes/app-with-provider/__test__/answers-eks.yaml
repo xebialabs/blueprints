@@ -11,7 +11,6 @@ NodeInstanceType: t2.medium
 NodeAutoScalingGroupDesiredSize: "3"
 ProvisionEFS: false
 Namespace: default
-Prefix: aws-eks-
 GenerateDockerComposeSetup: true
 
 KubernetesApplicationName: nginx

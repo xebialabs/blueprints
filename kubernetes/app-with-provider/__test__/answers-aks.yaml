@@ -9,7 +9,6 @@ ClientSecret: B
 SubscriptionID: C
 TenantID: D
 Namespace: default
-Prefix: azure-aks-
 GenerateDockerComposeSetup: true
 
 KubernetesApplicationName: httpd

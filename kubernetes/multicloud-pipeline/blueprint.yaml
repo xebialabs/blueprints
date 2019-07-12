@@ -23,12 +23,6 @@ spec:
     type: Input
     prompt: "What do you want to name your cluster?"
 
-  - name: Prefix
-    type: Input
-    prompt: "What prefix do you want to use?"
-    default: !expr "Platform == 'AWS EKS' ? 'awk-eks-' : (Platform == 'GCP GKE' ? 'gcp-gke-' : 'azure-aks-')"
-    validate: !expr "regex('^([a-z0-9-]+-)+$', Prefix)"
-
   - name: XLDUrlForXLR
     type: Input
     prompt: XL Deploy URL for XL Release (This will only be used in the XL Release template)
@@ -61,8 +55,6 @@ spec:
     parameterOverrides:
     - name: ClusterName
       value: !expr "ClusterName"
-    - name: Prefix
-      value: !expr "Prefix"
     - name: XLDUrlForXLR
       value: !expr "XLDUrlForXLR"
     - name: Namespace
@@ -72,8 +64,6 @@ spec:
     parameterOverrides:
     - name: ClusterName
       value: !expr "ClusterName"
-    - name: Prefix
-      value: !expr "Prefix"
     - name: XLDUrlForXLR
       value: !expr "XLDUrlForXLR"
     - name: Namespace
@@ -86,8 +76,6 @@ spec:
     parameterOverrides:
     - name: ClusterName
       value: !expr "ClusterName"
-    - name: Prefix
-      value: !expr "Prefix"
     - name: XLDUrlForXLR
       value: !expr "XLDUrlForXLR"
     - name: Namespace

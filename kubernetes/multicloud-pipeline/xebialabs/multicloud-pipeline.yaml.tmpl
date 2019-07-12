@@ -45,8 +45,8 @@ spec:
       - name: Provision the cluster
         type: xldeploy.Deploy
         server: XL Deploy
-        deploymentPackage: {{$clusterName}}/{{.Prefix}}{{$clusterName}}/1.0.0
-        deploymentEnvironment: Environments/{{$clusterName}}/{{.Prefix}}terraform
+        deploymentPackage: {{$clusterName}}/{{$clusterName}}/1.0.0
+        deploymentEnvironment: Environments/{{$clusterName}}/terraform
       - name: Tag namespace
         type: xld.UpdateCIProperty
         server: XL Deploy
@@ -175,4 +175,4 @@ spec:
       - name: Deprovision the cluster
         type: xldeploy.Undeploy
         server: XL Deploy
-        deployedApplication: Environments/{{$clusterName}}/{{.Prefix}}terraform/{{.Prefix}}{{$clusterName}}
+        deployedApplication: Environments/{{$clusterName}}/terraform/{{$clusterName}}

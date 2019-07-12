@@ -1,6 +1,5 @@
 Platform: Azure AKS
 ClusterName: cluster
-Prefix: azure-aks-
 XLDUrlForXLR: http://xl-deploy:4516
 Namespace: default
 

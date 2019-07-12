@@ -144,12 +144,6 @@ spec:
     - p3.8xlarge
     - p3.16xlarge
 
-  - name: Prefix
-    type: Input
-    prompt: "Specify the application prefix (use the default if you're not sure):"
-    default: aws-eks-
-    validate: !expr "regex('^([a-z0-9-]+-)+$', Prefix)"
-
   - name: GenerateDockerComposeSetup
     type: Confirm
     prompt: "Do you want to generate a docker-compose setup with the required tools to run this blueprint?"

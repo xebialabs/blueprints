@@ -5,6 +5,5 @@ AWSRegion: eu-west-3
 ClusterName: cluster1
 NodeAutoScalingGroupDesiredSize: 3
 NodeInstanceType: t2.medium
-Prefix: aws-aks-
 GenerateDockerComposeSetup: false
 ClusterVersion: '1.11'

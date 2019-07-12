@@ -1,6 +1,5 @@
 ClusterName: clustername
 Platform: AWS EKS
-Prefix: prefix-
 XLDUrlForXLR: http://xl-deploy:4516
 Namespace: default
 NamespaceTag: kubernetes-namespace
