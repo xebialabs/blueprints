@@ -55,19 +55,11 @@ spec:
       writeIf: !expr "false"
     parameterOverrides:
     - name: ClusterName
-      value: !expr "ClusterName"
-    - name: XLDUrlForXLR
-      value: !expr "XLDUrlForXLR"
-    - name: Namespace
 
   - blueprint: azure/basic-aks-cluster
     includeIf: !expr "Platform == 'Azure AKS'"
     parameterOverrides:
     - name: ClusterName
-      value: !expr "ClusterName"
-    - name: XLDUrlForXLR
-      value: !expr "XLDUrlForXLR"
-    - name: Namespace
 
   - blueprint: gcp/basic-gke-cluster
     includeIf: !expr "Platform == 'GCP GKE'"
@@ -76,12 +68,8 @@ spec:
       writeIf: !expr "false"
     parameterOverrides:
     - name: ClusterName
-      value: !expr "ClusterName"
-    - name: XLDUrlForXLR
-      value: !expr "XLDUrlForXLR"
-    - name: Namespace
 
   - blueprint: kubernetes/application
     parameterOverrides:
     - name: NamespaceTag
-      value: !expr "NamespaceTag"
+    - name: Namespace
