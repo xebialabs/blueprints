@@ -165,7 +165,7 @@ if __name__ == '__main__':
 
     blueprint_dirs = find_blueprint_file_directories_recursively()
 
-    if len(args.blueprints) > 0:
+    if args.blueprints and len(args.blueprints) > 0:
         blueprints_filter = [blueprint_dir.strip('/') for blueprint_dir in args.blueprints]
         blueprint_dirs = [blueprint_dir for blueprint_dir in blueprint_dirs if blueprint_dir in blueprints_filter]
         if len(blueprint_dirs) != len(blueprints_filter):
