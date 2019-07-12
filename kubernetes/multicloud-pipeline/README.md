@@ -1,8 +1,8 @@
-# Azure basic AKS cluster XLR pipeline for Azure basic AKS cluster in XLD
+# Basic composability demo with EKS/AKS/GKE cluster, Kubernetes application and an XLR pipeline
 
 > **WARNING:** This is not a standalone blueprint. It must be used in conjunction with the following:
 >
-> * `azure/basic-aks-cluster` OR `gcp/basic-gke-cluster`
+> * `aws/basic-eks-cluster` OR `azure/basic-aks-cluster` OR `gcp/basic-gke-cluster`
 > * `kubernetes/application`
 
 ## What this blueprint does

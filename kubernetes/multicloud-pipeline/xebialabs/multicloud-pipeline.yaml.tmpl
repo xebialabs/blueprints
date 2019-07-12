@@ -6,7 +6,7 @@ spec:
 - name: {{$clusterName}}
   type: xlrelease.Folder
   children:
-  - name: {{$clusterName}}-cicd
+  - name: {{$clusterName}}-ci-cd
     type: xlrelease.Release
     description: |
       Orchestrates the following blueprints:
@@ -66,7 +66,7 @@ spec:
         type: xldeploy.Deploy
         server: XL Deploy
         deploymentPackage: nginx/latest
-        deploymentEnvironment: "Environments/{{$clusterName}}/{{$clusterName}} environment"
+        deploymentEnvironment: Environments/{{$clusterName}}/{{$clusterName}} environment
         tags:
         - {{.NamespaceTag}}
 
@@ -101,7 +101,7 @@ spec:
 
         - name: Parse Store K8s service
           type: webhook.XmlWebhook
-          URL: {{.XLDUrlForXLR}}/deployit/tasks/v2/export
+          URL: "{{.XLDUrlForXLR}}/deployit/tasks/v2/export"
           method: GET
           username: !value XL_DEPLOY_USERNAME
           xPathExpression: "/list/task[@id=\"${taskId}\"]//log/text()"
@@ -160,7 +160,6 @@ spec:
     scriptUsername: !value XL_RELEASE_USERNAME
     scriptUserPassword: !value XL_RELEASE_PASSWORD
     phases:
-
     - name: Undeploy Application
       type: xlrelease.Phase
       tasks:

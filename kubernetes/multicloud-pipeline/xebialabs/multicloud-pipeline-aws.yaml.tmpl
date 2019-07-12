@@ -8,7 +8,9 @@ spec:
   - name: {{$clusterName}}-ci-cd
     type: xlrelease.Release
     description: |
-      This XL Release template shows how to deploy an EKS cluster using XL Deploy.
+      Orchestrates the following blueprints:
+      * aws/basic-eks-cluster
+      * kubernetes/application
     tags:
     - AWS
     - EKS
@@ -22,7 +24,7 @@ spec:
       requiresValue: false
       showOnReleaseStart: false
       value:
-        namespace: "{{.Namespace}}"
+        namespace: {{.Namespace}}
         serviceName: nginx
 
     - key: lbHostnameOrIp
@@ -46,9 +48,7 @@ spec:
       showOnReleaseStart: false
 
     phases:
-    # Provision Infra
     - name: Provision Infrastructure
-      color: '#ff9e3b'
       type: xlrelease.Phase
       tasks:
       - name: Provision Lambda artifacts
@@ -200,7 +200,7 @@ spec:
   - name: {{$clusterName}}-destroy
     type: xlrelease.Release
     description: |
-      This XL Release template shows how to de-provision an AWS EKS cluster using XL Deploy.
+      This XL Release template shows how to undeploy an application, based on microservices architecture.
     tags:
     - AWS
     - EKS
@@ -217,10 +217,9 @@ spec:
         deployedApplication: Environments/{{$clusterName}}/aws-cloudformation-{{$clusterName}}/{{ .KubernetesApplicationName }}
 
     - name: Deprovision Infrastructure
-      color: '#ff9e3b'
       type: xlrelease.Phase
       tasks:
-      - name: Deprovision AWS EKS cluster
+      - name: Deprovision the cluster
         type: xlrelease.SequentialGroup
         tasks:
         - name: Deprovision EKS config map for workers
