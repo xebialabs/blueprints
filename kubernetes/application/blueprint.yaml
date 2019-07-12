@@ -21,9 +21,14 @@ spec:
     prompt: "What is the version of the application that you want to deploy?"
     default: latest
 
+  - name: KubernetesResourcesFile
+    type: Input
+    prompt: "What is the path of the Kubernetes YAML file that you want to deploy?"
+    default: '../kubernetes/nginx.yaml'
+
   - name: Namespace
     type: Input
-    prompt: "Name of new namespace that will be created:"
+    prompt: "Name of namespace to deploy to:"
     default: default
 
   - name: NamespaceTag
@@ -35,5 +40,4 @@ spec:
   - path: xebialabs/USAGE-kubernetes-application.md
   - path: xebialabs/kubernetes-application.yaml.tmpl
   # Kubernetes
-  - path: kubernetes/nginx-deployment.yaml.tmpl
-  - path: kubernetes/nginx-service.yaml.tmpl
+  - path: kubernetes/deployment.yaml.tmpl
