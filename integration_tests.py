@@ -6,6 +6,7 @@ import re
 import subprocess
 import sys
 import tempfile
+import argparse
 
 import yaml
 
@@ -158,7 +159,25 @@ def identify_missing_xlvals(expected_xl_values, configfile):
 
 
 if __name__ == '__main__':
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-b', '--blueprints', nargs='+', help="Run one or more specific blueprint instead of all of them")
+    args = parser.parse_args()
+
     blueprint_dirs = find_blueprint_file_directories_recursively()
+
+    if len(args.blueprints) > 0:
+        blueprints_filter = [blueprint_dir.strip('/') for blueprint_dir in args.blueprints]
+        blueprint_dirs = [blueprint_dir for blueprint_dir in blueprint_dirs if blueprint_dir in blueprints_filter]
+        if len(blueprint_dirs) != len(blueprints_filter):
+            errormsg("One or more blueprint directories could not be found:")
+            for blueprint_dir in list(set(blueprints_filter) - set(blueprint_dirs)):
+                errormsg('- {}'.format(blueprint_dir))
+            sys.exit(1)
+
+        print(greentext('INFO:'), 'Limiting integration tests to:')
+        for blueprint_dir in blueprints_filter:
+            print(greentext('INFO:'), '- {}'.format(blueprint_dir))
+        print('')
 
     blueprint_to_test_dirs = {}
     for blueprint_dir in blueprint_dirs:
