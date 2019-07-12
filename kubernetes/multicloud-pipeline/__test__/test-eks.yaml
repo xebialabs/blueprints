@@ -13,7 +13,6 @@ expected-files:
 - xebialabs/aws-basic-eks-cluster-applications.yaml
 - xebialabs/aws-basic-eks-cluster-environments.yaml
 - xebialabs/kubernetes-application.yaml
-- xebialabs/multicloud-pipeline-aws.yaml
-not-expected-files:
 - xebialabs/multicloud-pipeline.yaml
+not-expected-files:
 - xebialabs/aws-basic-eks-cluster.yaml

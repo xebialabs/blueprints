@@ -16,5 +16,3 @@ expected-files:
 - xebialabs/gcp-basic-gke-cluster.yaml
 - xebialabs/kubernetes-application.yaml
 - xebialabs/multicloud-pipeline.yaml
-not-expected-files:
-- xebialabs/multicloud-pipeline-aws.yaml

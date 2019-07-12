@@ -2,7 +2,7 @@ answers-file: answers-eks.yaml
 expected-files:
   - xebialabs/kubernetes-application.yaml
   - xebialabs/USAGE-kubernetes-application.md
-  - kubernetes/nginx.yaml
+  - kubernetes/deployment.yaml
   - xebialabs.yaml
   - xebialabs/aws-basic-eks-cluster.yaml
   - xebialabs/aws-basic-eks-cluster-applications.yaml
