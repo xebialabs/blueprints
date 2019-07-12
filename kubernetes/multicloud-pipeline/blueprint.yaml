@@ -45,6 +45,7 @@ spec:
     writeIf: !expr "Platform != 'AWS EKS'"
   - path: xebialabs/multicloud-pipeline-aws.yaml.tmpl
     writeIf: !expr "Platform == 'AWS EKS'"
+    renameTo: xebialabs/multicloud-pipeline.yaml.tmpl
 
   includeAfter:
   - blueprint: aws/basic-eks-cluster

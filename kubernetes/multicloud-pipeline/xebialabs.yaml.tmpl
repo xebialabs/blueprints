@@ -11,8 +11,4 @@ metadata:
   - xebialabs/gcp-basic-gke-cluster.yaml
   {{- end }}
   - xebialabs/kubernetes-application.yaml
-  {{- if eq .Platform "AWS EKS" }}
-  - xebialabs/multicloud-pipeline-aws.yaml
-  {{- else }}
   - xebialabs/multicloud-pipeline.yaml
-  {{ end }}
