@@ -30,8 +30,7 @@ spec:
 
   - name: Namespace
     type: Input
-    prompt: "Name of the namespace (will be created if necessary):"
-    default: default
+    value: default
 
   - name: NamespaceTag
     type: Input
