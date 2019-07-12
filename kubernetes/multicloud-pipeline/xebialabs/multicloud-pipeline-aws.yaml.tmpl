@@ -170,12 +170,10 @@ spec:
         script: |
           import urllib2
           import time
-          time.sleep(60)
           req = urllib2.Request('http://${lbHostnameOrIp}')
           opener = urllib2.build_opener()
           response = opener.open(req)
-          body = response.read()
-          if 'Welcome to nginx' in body:
+          if response.getcode() == 200:
               print 'All instances are running'
           else:
               print 'Not all instances are running'
