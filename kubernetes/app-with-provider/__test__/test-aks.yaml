@@ -2,8 +2,7 @@ answers-file: answers-aks.yaml
 expected-files:
   - xebialabs/kubernetes-application.yaml
   - xebialabs/USAGE-kubernetes-application.md
-  - kubernetes/nginx-deployment.yaml
-  - kubernetes/nginx-service.yaml
+  - kubernetes/nginx.yaml
   - xebialabs.yaml
   - xebialabs/azure-basic-aks-cluster.yaml
   - xebialabs/USAGE-azure-basic-aks-cluster.md

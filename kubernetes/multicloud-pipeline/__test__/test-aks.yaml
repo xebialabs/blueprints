@@ -1,8 +1,7 @@
 answers-file: answers-aks.yaml
 expected-files:
 - xebialabs.yaml
-- kubernetes/nginx-deployment.yaml
-- kubernetes/nginx-service.yaml
+- kubernetes/deployment.yaml
 - terraform-azure-basic-aks-cluster/main.tf
 - terraform-azure-basic-aks-cluster/output.tf
 - terraform-azure-basic-aks-cluster/variables.tf

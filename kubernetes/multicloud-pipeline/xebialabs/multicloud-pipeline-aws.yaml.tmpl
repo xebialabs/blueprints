@@ -25,7 +25,7 @@ spec:
       showOnReleaseStart: false
       value:
         namespace: {{.Namespace}}
-        serviceName: nginx
+        serviceName: {{ .KubernetesApplicationName }}-service
 
     - key: lbHostnameOrIp
       type: xlrelease.StringVariable
@@ -115,7 +115,7 @@ spec:
       - name: Deploy node
         type: xldeploy.Deploy
         server: XL Deploy
-        deploymentPackage: nginx/latest
+        deploymentPackage: {{ .KubernetesApplicationName }}/{{ .KubernetesDeploymentPackageVersion }}
         deploymentEnvironment: Environments/{{$clusterName}}/aws-cloudformation-{{$clusterName}}
         tags:
         - {{.NamespaceTag}}

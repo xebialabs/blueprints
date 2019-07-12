@@ -6,8 +6,7 @@ expected-files:
 - cloudformation/eks-vpc.yaml
 - cloudformation/eks-workers.yaml
 - kubernetes/aws-auth-cm.yaml
-- kubernetes/nginx-deployment.yaml
-- kubernetes/nginx-service.yaml
+- kubernetes/deployment.yaml
 - xebialabs/USAGE-aws-basic-eks-cluster.md
 - xebialabs/USAGE-kubernetes-application.md
 - xebialabs/USAGE-multicloud-pipeline.md

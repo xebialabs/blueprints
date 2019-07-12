@@ -11,5 +11,6 @@ ResourceGroup: azure-rg
 ResourceGroupLocation: westeurope
 GenerateDockerComposeSetup: false
 
-KubernetesApplicationName: nginx
+KubernetesApplicationName: httpd
 KubernetesDeploymentPackageVersion: latest
+KubernetesResourcesFile: ../kubernetes/deployment.yaml

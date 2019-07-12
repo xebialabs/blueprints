@@ -1,7 +1,6 @@
 answers-file: answers-gke.yaml
 expected-files:
-- kubernetes/nginx-deployment.yaml
-- kubernetes/nginx-service.yaml
+- kubernetes/deployment.yaml
 - terraform-gcp-basic-gke-cluster/main.tf
 - terraform-gcp-basic-gke-cluster/outputs.tf
 - terraform-gcp-basic-gke-cluster/variables.tf

@@ -13,5 +13,6 @@ NodeAutoScalingGroupDesiredSize: 3
 NodeInstanceType: t2.medium
 GenerateDockerComposeSetup: false
 
-KubernetesApplicationName: nginx
+KubernetesApplicationName: httpd
 KubernetesDeploymentPackageVersion: latest
+KubernetesResourcesFile: ../kubernetes/deployment.yaml

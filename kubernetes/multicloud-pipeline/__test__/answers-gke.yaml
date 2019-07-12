@@ -12,5 +12,6 @@ GKENumNodes: 2
 GKENodeMachineType: n1-standard-1
 GenerateDockerComposeSetup: false
 
-KubernetesApplicationName: nginx
+KubernetesApplicationName: httpd
 KubernetesDeploymentPackageVersion: latest
+KubernetesResourcesFile: ../kubernetes/deployment.yaml

@@ -4,6 +4,5 @@ expected-files:
   - xebialabs/USAGE-kubernetes-environment.md
   - xebialabs/kubernetes-application.yaml
   - xebialabs/USAGE-kubernetes-application.md
-  - kubernetes/nginx-deployment.yaml
-  - kubernetes/nginx-service.yaml
+  - kubernetes/nginx.yaml
   - xebialabs.yaml

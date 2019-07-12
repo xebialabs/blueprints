@@ -24,7 +24,7 @@ spec:
       showOnReleaseStart: false
       value:
         namespace: {{.Namespace}}
-        serviceName: nginx
+        serviceName: {{ .KubernetesApplicationName }}-service
 
     - key: lbHostnameOrIp
       type: xlrelease.StringVariable
@@ -65,7 +65,7 @@ spec:
       - name: Deploy node
         type: xldeploy.Deploy
         server: XL Deploy
-        deploymentPackage: nginx/latest
+        deploymentPackage: {{ .KubernetesApplicationName }}/{{ .KubernetesDeploymentPackageVersion }}
         deploymentEnvironment: Environments/{{$clusterName}}/{{$clusterName}} environment
         tags:
         - {{.NamespaceTag}}
@@ -166,7 +166,7 @@ spec:
       - name: Undeploy node
         type: xldeploy.Undeploy
         server: XL Deploy
-        deployedApplication: "Environments/{{$clusterName}}/{{$clusterName}} environment/nginx"
+        deployedApplication: Environments/{{$clusterName}}/{{$clusterName}} environment/{{ .KubernetesApplicationName }}
 
     - name: Deprovision Infrastructure
       type: xlrelease.Phase
