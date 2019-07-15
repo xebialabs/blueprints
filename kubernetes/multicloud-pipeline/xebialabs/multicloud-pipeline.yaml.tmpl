@@ -38,6 +38,7 @@ spec:
       value: !value XL_DEPLOY_PASSWORD
 
     phases:
+    {{- if ne .Provider "existing cluster" }}
     - name: Provision Infrastructure
       type: xlrelease.Phase
       tasks:
@@ -50,14 +51,14 @@ spec:
       - name: Tag namespace
         type: xld.UpdateCIProperty
         server: XL Deploy
-        {{- if eq .Platform "Azure AKS" }}
+        {{- if eq .Provider "AKS" }}
         ciID: Infrastructure/{{$clusterName}}/{{$clusterName}}-AKSCluster/{{.Namespace}}
-        {{- else if eq .Platform "GCP GKE" }}
+        {{- else if eq .Provider "GKE" }}
         ciID: Infrastructure/{{$clusterName}}/gke-{{$clusterName}}-cluster-GKECluster/{{.Namespace}}
         {{- end}}
         ciProperty: tags
         propertyValue: '[ "{{.NamespaceTag}}" ]'
-
+    {{- end}}
     - name: Deploy Application
       type: xlrelease.Phase
       tasks:
@@ -66,7 +67,11 @@ spec:
         type: xldeploy.Deploy
         server: XL Deploy
         deploymentPackage: {{ .KubernetesApplicationName }}/{{ .KubernetesDeploymentPackageVersion }}
+        {{- if eq .Provider "existing cluster" }}
+        deploymentEnvironment: Environments/{{ .KubernetesName }}
+        {{- else }}
         deploymentEnvironment: Environments/{{$clusterName}}/{{$clusterName}} environment
+        {{- end}}
         tags:
         - {{.NamespaceTag}}
 
@@ -89,10 +94,12 @@ spec:
           server: XL Deploy
           numberOfContinueRetrials: 100
           pollingInterval: 10
-          {{- if eq .Platform "Azure AKS" }}
+          {{- if eq .Provider "AKS" }}
           ciId: Infrastructure/{{$clusterName}}/{{$clusterName}}-AKSCluster
-          {{- else if eq .Platform "GCP GKE" }}
+          {{- else if eq .Provider "GKE" }}
           ciId: Infrastructure/{{$clusterName}}/gke-{{$clusterName}}-cluster-GKECluster
+          {{- else if eq .Provider "existing cluster" }}
+          ciId: Infrastructure/{{ .KubernetesName }}
           {{- end}}
           taskName: describeService
           variableMapping:
@@ -164,8 +171,12 @@ spec:
       - name: Undeploy node
         type: xldeploy.Undeploy
         server: XL Deploy
+        {{- if eq .Provider "existing cluster" }}
+        deployedApplication: Environments/{{ .KubernetesName }}/{{ .KubernetesApplicationName }}
+        {{- else }}
         deployedApplication: Environments/{{$clusterName}}/{{$clusterName}} environment/{{ .KubernetesApplicationName }}
-
+        {{- end}}
+    {{- if ne .Provider "existing cluster" }}
     - name: Deprovision Infrastructure
       type: xlrelease.Phase
       tasks:
@@ -173,3 +184,4 @@ spec:
         type: xldeploy.Undeploy
         server: XL Deploy
         deployedApplication: Environments/{{$clusterName}}/terraform/{{$clusterName}}
+    {{- end}}

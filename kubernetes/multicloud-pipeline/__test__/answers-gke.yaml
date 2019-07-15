@@ -1,8 +1,6 @@
+Provider: GKE
 ClusterName: clustername
-Platform: GCP GKE
 XLDUrlForXLR: http://xl-deploy:4516
-Namespace: default
-NamespaceTag: kubernetes-namespace
 
 GCPProjectID: gcpprojectid
 K8SMasterUser: admin

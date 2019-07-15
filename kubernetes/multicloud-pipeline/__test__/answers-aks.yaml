@@ -1,7 +1,6 @@
-Platform: Azure AKS
+Provider: AKS
 ClusterName: cluster
 XLDUrlForXLR: http://xl-deploy:4516
-Namespace: default
 
 SubscriptionID: A
 ClientID: B
@@ -9,7 +8,7 @@ ClientSecret: C
 TenantID: D
 ResourceGroup: azure-rg
 ResourceGroupLocation: westeurope
-GenerateDockerComposeSetup: false
+GenerateDockerComposeSetup: true
 
 KubernetesApplicationName: httpd
 KubernetesDeploymentPackageVersion: latest

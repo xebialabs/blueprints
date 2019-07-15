@@ -11,13 +11,17 @@ metadata:
 
 spec:
   parameters:
-  - name: Platform
+  - name: Provider
     type: Select
-    prompt: "Choose the platform you are targeting:"
+    prompt: Which Kubernetes service provider do you want to use
     options:
-    - AWS EKS
-    - GCP GKE
-    - Azure AKS
+    - label: Amazon
+      value: EKS
+    - label: Google Cloud
+      value: GKE
+    - label: Azure
+      value: AKS
+    - existing cluster
 
   - name: ClusterName
     type: Input
@@ -36,39 +40,53 @@ spec:
     type: Input
     value: kubernetes-namespace
 
-  files:
-  # XebiaLabs
-  - path: xebialabs.yaml.tmpl
-  - path: xebialabs/USAGE-multicloud-pipeline.md.tmpl
-  - path: xebialabs/multicloud-pipeline.yaml.tmpl
-    writeIf: !expr "Platform != 'AWS EKS'"
-  - path: xebialabs/multicloud-pipeline-aws.yaml.tmpl
-    writeIf: !expr "Platform == 'AWS EKS'"
-    renameTo: xebialabs/multicloud-pipeline.yaml.tmpl
 
   includeAfter:
+  - blueprint: kubernetes/environment
+    includeIf: !expr "Provider == 'existing cluster'"
+    parameterOverrides:
+    - name: KubernetesName
+      value: !expr "ClusterName"
+    - name: KubernetesNamespace
+      value: !expr "Namespace"
+
   - blueprint: aws/basic-eks-cluster
-    includeIf: !expr "Platform == 'AWS EKS'"
+    includeIf: !expr "Provider == 'EKS'"
     fileOverrides:
     - path: xebialabs/aws-basic-eks-cluster.yaml
       writeIf: !expr "false"
     parameterOverrides:
     - name: ClusterName
+      value: !expr "ClusterName"
 
   - blueprint: azure/basic-aks-cluster
-    includeIf: !expr "Platform == 'Azure AKS'"
+    includeIf: !expr "Provider == 'AKS'"
     parameterOverrides:
     - name: ClusterName
+      value: !expr "ClusterName"
 
   - blueprint: gcp/basic-gke-cluster
-    includeIf: !expr "Platform == 'GCP GKE'"
+    includeIf: !expr "Provider == 'GKE'"
     fileOverrides:
     - path: xebialabs.yaml
       writeIf: !expr "false"
     parameterOverrides:
     - name: ClusterName
+      value: !expr "ClusterName"
 
   - blueprint: kubernetes/application
     parameterOverrides:
     - name: NamespaceTag
+      value: !expr "NamespaceTag"
     - name: Namespace
+      value: !expr "Namespace"
+
+  files:
+  # XebiaLabs
+  - path: xebialabs.yaml.tmpl
+  - path: xebialabs/USAGE-multicloud-pipeline.md.tmpl
+  - path: xebialabs/multicloud-pipeline.yaml.tmpl
+    writeIf: !expr "Provider != 'EKS'"
+  - path: xebialabs/multicloud-pipeline-aws.yaml.tmpl
+    writeIf: !expr "Provider == 'EKS'"
+    renameTo: xebialabs/multicloud-pipeline.yaml.tmpl

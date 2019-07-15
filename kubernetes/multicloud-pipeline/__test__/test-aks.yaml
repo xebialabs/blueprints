@@ -10,3 +10,4 @@ expected-files:
 - xebialabs/USAGE-multicloud-pipeline.md
 - xebialabs/kubernetes-application.yaml
 - xebialabs/multicloud-pipeline.yaml
+- docker/docker-compose.yml
