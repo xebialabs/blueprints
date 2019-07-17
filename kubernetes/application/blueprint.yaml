@@ -24,7 +24,7 @@ spec:
   - name: KubernetesResourcesFile
     type: Input
     prompt: "What is the path of the Kubernetes YAML file that you want to deploy?"
-    default: '../kubernetes/nginx.yaml'
+    default: '../kubernetes/deployment.yaml'
 
   - name: Namespace
     type: Input
