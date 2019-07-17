@@ -1,0 +1,18 @@
+# test the scenario with new cluster
+answers-file: answers-02.yaml
+expected-files:
+  - xebialabs/xld-infra-env.yaml
+  - xebialabs/xld-cloudformation-apps.yaml
+  - xebialabs/xlr-pipeline-ci-cd.yaml
+  - xebialabs/xlr-pipeline-destroy.yaml
+  - xebialabs/USAGE.md
+  - kubernetes/aws-auth-cm.yaml
+  - cloudformation/cfn-secret-provider.zip
+  - cloudformation/eks-master.yaml
+  - cloudformation/eks-user.yaml
+  - cloudformation/eks-vpc.yaml
+  - cloudformation/eks-workers.yaml
+  - cloudformation/efs.yaml
+  - xebialabs.yaml
+  - docker/docker-compose.yml
+  - docker/data/configure-xl-devops-platform.yaml

@@ -1,0 +1,13 @@
+answers-file: answers-aks.yaml
+expected-files:
+- xebialabs.yaml
+- kubernetes/deployment.yaml
+- terraform-azure-basic-aks-cluster/main.tf
+- terraform-azure-basic-aks-cluster/output.tf
+- terraform-azure-basic-aks-cluster/variables.tf
+- xebialabs/USAGE-azure-basic-aks-cluster.md
+- xebialabs/USAGE-kubernetes-application.md
+- xebialabs/USAGE-multicloud-pipeline.md
+- xebialabs/kubernetes-application.yaml
+- xebialabs/multicloud-pipeline.yaml
+- docker/docker-compose.yml

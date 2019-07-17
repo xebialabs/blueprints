@@ -110,10 +110,6 @@ spec:
     type: Input
     prompt: What do you want to name the cluster?
 
-  # Hidden prefix
-  - name: Prefix
-    value: azure-aks-
-
   - name: GenerateDockerComposeSetup
     type: Confirm
     prompt: "Do you want to generate a docker-compose setup with the required tools to run this blueprint?"

@@ -1,0 +1,201 @@
+apiVersion: xl/v2
+kind: Blueprint
+
+metadata:
+  name: AWS-EKS-Intermediate
+  description: |
+    The blueprint deploys a simple AWS EKS Cluster (with EFS if requested).
+    XL Deploy does the provisioning and deployment, while XL Release orchestrates everything.
+  author: XebiaLabs
+  version: 2.0
+  instructions: Please read the generated file "xebialabs/USAGE.md" for further usage instructions.
+
+spec:
+  parameters:
+  # General variables
+  - name: AppName
+    type: Input
+    prompt: What is the name of the application? (16 characters max)
+    description: Application name will be used to generate cloud resource names
+    validate: !expr "regex('^[a-zA-Z0-9-]{1,16}$', AppName)"
+
+  # ############################################################################
+  # AWS specific variables
+  # ############################################################################
+  - name: UseAWSCredentialsFromSystem
+    type: Confirm
+    prompt: Do you want to use AWS credentials from ~/.aws/credentials file?
+    promptIf: !expr "awsCredentials('IsAvailable')"
+
+  - name: AWSAccessKey
+    type: SecretInput
+    prompt: What is the AWS Access Key ID?
+    promptIf: !expr "!UseAWSCredentialsFromSystem"
+    default: !expr "awsCredentials('AccessKeyID')"
+
+  - name: AWSAccessSecret
+    type: SecretInput
+    prompt: What is the AWS Secret Access Key?
+    promptIf: !expr "!UseAWSCredentialsFromSystem"
+    default: !expr "awsCredentials('SecretAccessKey')"
+
+  - name: AWSRegion #options are set manually because EKS service is not registered within AWS GO SDK
+    type: Select
+    prompt: "Select the AWS region:"
+    options:
+    # commented out because of https://github.com/boto/boto3/issues/811
+    # - label: US East (N. Virginia)
+    #   value: us-east-1
+    - label: US East (Ohio)
+      value: us-east-2
+    - label: US West (Oregon)
+      value: us-west-2
+    - label: Asia Pacific (Singapore)
+      value: ap-southeast-1
+    - label: Asia Pacific (Tokyo)
+      value: ap-northeast-1
+    - label: Asia Pacific (Sydney)
+      value: ap-southeast-2
+    - label: Asia Pacific (Seoul)
+      value: ap-northeast-2
+    - label: Asia Pacific (Mumbai)
+      value: ap-south-1
+    - label: EU (Ireland)
+      value: eu-west-1
+    - label: EU (Frankfurt)
+      value: eu-central-1
+    - label: EU (London)
+      value: eu-west-2
+    - label: EU (Paris)
+      value: eu-west-3
+    - label: EU (Stockholm)
+      value: eu-north-1
+
+  - name: ClusterName
+    type: Input
+    prompt: What do you want to name the cluster?
+    description: Cluster name will be used to generate cloud resource names
+    validate: !expr "regex('^[a-zA-Z0-9-]{1,16}$', AppName)"
+
+  - name: ClusterVersion
+    type: Select
+    default: '1.10'
+    prompt: What version of EKS would you like to run?
+    options:
+      - '1.10'
+      - '1.11'
+      - '1.12'
+      - '1.13'
+
+  - name: NodeAutoScalingGroupDesiredSize
+    type: Input
+    prompt: What is the desired number of nodes in the cluster?
+    default: 3
+    validate: !expr "regex('^([0-9])+$', NodeAutoScalingGroupDesiredSize)"
+
+  - name: NodeInstanceType
+    type: Select
+    prompt: What EC2 instance type do you want to use for the nodes?
+    default: t2.medium
+    options:
+    - t2.medium
+    - t2.large
+    - t2.xlarge
+    - t2.2xlarge
+    - m3.medium
+    - m3.large
+    - m3.xlarge
+    - m3.2xlarge
+    - m4.large
+    - m4.xlarge
+    - m4.2xlarge
+    - m4.4xlarge
+    - m4.10xlarge
+    - m5.large
+    - m5.xlarge
+    - m5.2xlarge
+    - m5.4xlarge
+    - m5.12xlarge
+    - m5.24xlarge
+    - c4.large
+    - c4.xlarge
+    - c4.2xlarge
+    - c4.4xlarge
+    - c4.8xlarge
+    - c5.large
+    - c5.xlarge
+    - c5.2xlarge
+    - c5.4xlarge
+    - c5.9xlarge
+    - c5.18xlarge
+    - i3.large
+    - i3.xlarge
+    - i3.2xlarge
+    - i3.4xlarge
+    - i3.8xlarge
+    - i3.16xlarge
+    - r3.xlarge
+    - r3.2xlarge
+    - r3.4xlarge
+    - r3.8xlarge
+    - r4.large
+    - r4.xlarge
+    - r4.2xlarge
+    - r4.4xlarge
+    - r4.8xlarge
+    - r4.16xlarge
+    - x1.16xlarge
+    - x1.32xlarge
+    - p2.xlarge
+    - p2.8xlarge
+    - p2.16xlarge
+    - p3.2xlarge
+    - p3.8xlarge
+    - p3.16xlarge
+
+  - name: ProvisionEFS
+    type: Confirm
+    prompt: "Do you want to provision Amazon Elastic File System?"
+    default: false
+
+  - name: GenerateDockerComposeSetup
+    type: Confirm
+    prompt: "Do you want to generate a docker-compose setup with the required tools to run this blueprint?"
+    default: false
+
+  includeAfter:
+  - blueprint: xl-devops-platform
+    includeIf: GenerateDockerComposeSetup
+    parameterOverrides:
+    - name: UseXLDeploy
+      value: true
+    - name: XLDeployPort
+      value: 4516
+    - name: UseXLRelease
+      value: true
+    - name: XLReleasePort
+      value: 5516
+    - name: JetPackOrEnterprise
+      value: "XL Enterprise"
+    - name: XLVersion
+      value: "9.0.0"
+    - name: UseDockerProxy
+      value: false
+    - name: UseJenkins
+      value: false
+
+  files:
+  - path: xebialabs/xld-infra-env.yaml.tmpl
+  - path: xebialabs/xld-cloudformation-apps.yaml.tmpl
+  - path: xebialabs/xlr-pipeline-ci-cd.yaml.tmpl
+  - path: xebialabs/xlr-pipeline-destroy.yaml.tmpl
+  - path: xebialabs/USAGE.md.tmpl
+  - path: kubernetes/aws-auth-cm.yaml
+  - path: cloudformation/cfn-secret-provider.zip
+  - path: cloudformation/eks-master.yaml
+  - path: cloudformation/eks-user.yaml
+  - path: cloudformation/eks-vpc.yaml
+  - path: cloudformation/eks-workers.yaml.tmpl
+  - path: cloudformation/efs.yaml
+    writeIf: ProvisionEFS
+  - path: xebialabs.yaml

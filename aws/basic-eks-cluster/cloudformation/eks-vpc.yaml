@@ -143,4 +143,4 @@ Outputs:
     Description: VPC CIDR Block
     Export:
       Name:
-        Fn::Sub: "${AWS::StackName}-VPCCIDR" 
+        Fn::Sub: "${AWS::StackName}-VPCCIDR"

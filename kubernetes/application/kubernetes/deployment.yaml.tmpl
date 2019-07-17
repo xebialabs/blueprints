@@ -1,0 +1,47 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .KubernetesApplicationName }}-service
+  namespace: {{.Namespace}}
+  labels:
+    app: {{ .KubernetesApplicationName }}
+spec:
+  selector:
+    app: {{ .KubernetesApplicationName }}
+  type: LoadBalancer
+  ports:
+  - name: http
+    port: 80
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .KubernetesApplicationName }}-deployment
+  namespace: {{.Namespace}}
+  labels:
+    app: {{ .KubernetesApplicationName }}
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: {{ .KubernetesApplicationName }}
+  template:
+    metadata:
+      labels:
+        app: {{ .KubernetesApplicationName }}
+    spec:
+      containers:
+      - name: {{ .KubernetesApplicationName }}
+        image: {{ .KubernetesApplicationName }}:{{.KubernetesDeploymentPackageVersion}}
+        ports:
+        - name: http
+          containerPort: 80
+        resources:
+          requests:
+            memory: "32Mi"
+            cpu: "250m"
+          limits:
+            memory: "64Mi"
+            cpu: "500m"

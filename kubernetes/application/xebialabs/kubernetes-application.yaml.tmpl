@@ -9,4 +9,6 @@ spec:
       deployables:
         - name: {{ .KubernetesApplicationName }}
           type: k8s.ResourcesFile
-          file: !file {{ .KubernetesResourcesFile }}
+          file: !file "../kubernetes/deployment.yaml"
+          tags:
+          - {{.NamespaceTag}}

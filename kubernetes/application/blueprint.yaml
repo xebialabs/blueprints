@@ -24,11 +24,20 @@ spec:
   - name: KubernetesResourcesFile
     type: Input
     prompt: "What is the path of the Kubernetes YAML file that you want to deploy?"
-    default: '../kubernetes/nginx.yaml'
+    default: '../kubernetes/deployment.yaml'
+
+  - name: Namespace
+    type: Input
+    prompt: "Name of namespace to deploy to:"
+    default: default
+
+  - name: NamespaceTag
+    type: Input
+    value: kubernetes-namespace
 
   files:
   # XebiaLabs
   - path: xebialabs/USAGE-kubernetes-application.md
   - path: xebialabs/kubernetes-application.yaml.tmpl
   # Kubernetes
-  - path: kubernetes/nginx.yaml.tmpl
+  - path: kubernetes/deployment.yaml.tmpl

@@ -1,0 +1,187 @@
+{{$clusterName := .ClusterName | kebabcase}}
+
+apiVersion: xl-release/v1
+kind: Templates
+spec:
+- name: {{$clusterName}}
+  type: xlrelease.Folder
+  children:
+  - name: {{$clusterName}}-ci-cd
+    type: xlrelease.Release
+    description: |
+      Orchestrates the following blueprints:
+      * azure/basic-aks-cluster OR gcp/basic-gke-cluster
+      * kubernetes/application
+    tags:
+    - {{$clusterName}}
+    scriptUsername: !value XL_RELEASE_USERNAME
+    scriptUserPassword: !value XL_RELEASE_PASSWORD
+
+    variables:
+    - key: control
+      type: xlrelease.MapStringStringVariable
+      requiresValue: false
+      showOnReleaseStart: false
+      value:
+        namespace: {{.Namespace}}
+        serviceName: {{ .KubernetesApplicationName }}-service
+
+    - key: lbHostnameOrIp
+      type: xlrelease.StringVariable
+      requiresValue: false
+      showOnReleaseStart: false
+
+    - key: xld-admin-password
+      type: xlrelease.PasswordStringVariable
+      requiresValue: true
+      showOnReleaseStart: false
+      value: !value XL_DEPLOY_PASSWORD
+
+    phases:
+    {{- if ne .Provider "existing cluster" }}
+    - name: Provision Infrastructure
+      type: xlrelease.Phase
+      tasks:
+
+      - name: Provision the cluster
+        type: xldeploy.Deploy
+        server: XL Deploy
+        deploymentPackage: {{$clusterName}}/{{$clusterName}}/1.0.0
+        deploymentEnvironment: Environments/{{$clusterName}}/terraform
+      - name: Tag namespace
+        type: xld.UpdateCIProperty
+        server: XL Deploy
+        {{- if eq .Provider "AKS" }}
+        ciID: Infrastructure/{{$clusterName}}/{{$clusterName}}-AKSCluster/{{.Namespace}}
+        {{- else if eq .Provider "GKE" }}
+        ciID: Infrastructure/{{$clusterName}}/gke-{{$clusterName}}-cluster-GKECluster/{{.Namespace}}
+        {{- end}}
+        ciProperty: tags
+        propertyValue: '[ "{{.NamespaceTag}}" ]'
+    {{- end}}
+    - name: Deploy Application
+      type: xlrelease.Phase
+      tasks:
+
+      - name: Deploy node
+        type: xldeploy.Deploy
+        server: XL Deploy
+        deploymentPackage: {{ .KubernetesApplicationName }}/{{ .KubernetesDeploymentPackageVersion }}
+        {{- if eq .Provider "existing cluster" }}
+        deploymentEnvironment: Environments/{{ .KubernetesName }}
+        {{- else }}
+        deploymentEnvironment: Environments/{{$clusterName}}/{{$clusterName}} environment
+        {{- end}}
+        tags:
+        - {{.NamespaceTag}}
+
+    - name: Test
+      type: xlrelease.Phase
+      tasks:
+
+      - name: Get service public URL
+        type: xlrelease.SequentialGroup
+        tasks:
+
+        - name: Wait 120 seconds for load balancer to be ready
+          type: xlrelease.ScriptTask
+          script: |
+            import time
+            time.sleep(120)
+
+        - name: Get K8s service specs
+          type: xldeploy.Controltask
+          server: XL Deploy
+          numberOfContinueRetrials: 100
+          pollingInterval: 10
+          {{- if eq .Provider "AKS" }}
+          ciId: Infrastructure/{{$clusterName}}/{{$clusterName}}-AKSCluster
+          {{- else if eq .Provider "GKE" }}
+          ciId: Infrastructure/{{$clusterName}}/gke-{{$clusterName}}-cluster-GKECluster
+          {{- else if eq .Provider "existing cluster" }}
+          ciId: Infrastructure/{{ .KubernetesName }}
+          {{- end}}
+          taskName: describeService
+          variableMapping:
+            pythonScript.xlDeployTaskId: ${taskId}
+            pythonScript.parameters: ${control}
+
+        - name: Parse Store K8s service
+          type: webhook.XmlWebhook
+          URL: "{{.XLDUrlForXLR}}/deployit/tasks/v2/export"
+          method: GET
+          username: !value XL_DEPLOY_USERNAME
+          xPathExpression: "/list/task[@id=\"${taskId}\"]//log/text()"
+          variableMapping:
+            pythonScript.result: ${taskOutput}
+            pythonScript.password: ${xld-admin-password}
+
+        - name: Get K8s service ip or hostname
+          type: xlrelease.ScriptTask
+          script: |
+            import re
+            m = re.search('hostname:(.*)\nip:([0-9.]+|None)', releaseVariables['taskOutput'])
+            ipHostname = [m.group(1), m.group(2)]
+            for item in ipHostname:
+                if 'None' not in item:
+                    releaseVariables['lbHostnameOrIp'] = item
+
+      - name: Check application status
+        type: xlrelease.ScriptTask
+        script: |
+          import urllib2
+          import time
+          req = urllib2.Request('http://${lbHostnameOrIp}')
+          opener = urllib2.build_opener()
+          response = opener.open(req)
+          if response.getcode() == 200:
+              print 'All instances are running'
+          else:
+              print 'Not all instances are running'
+              exit(1)
+
+      - name: Verify application
+        type: xlrelease.GateTask
+        team: Release Admin
+        description: |
+          The app is now live!
+          Check out the website and complete this task when done.
+
+          URL => http://${lbHostnameOrIp}
+---
+
+apiVersion: xl-release/v1
+kind: Templates
+spec:
+- name: {{$clusterName}}
+  type: xlrelease.Folder
+  children:
+  - name: {{$clusterName}}-destroy
+    type: xlrelease.Release
+    description: |
+      This XL Release template shows how to undeploy an application, based on microservices architecture.
+    tags:
+    - {{$clusterName}}
+    scriptUsername: !value XL_RELEASE_USERNAME
+    scriptUserPassword: !value XL_RELEASE_PASSWORD
+    phases:
+    - name: Undeploy Application
+      type: xlrelease.Phase
+      tasks:
+      - name: Undeploy node
+        type: xldeploy.Undeploy
+        server: XL Deploy
+        {{- if eq .Provider "existing cluster" }}
+        deployedApplication: Environments/{{ .KubernetesName }}/{{ .KubernetesApplicationName }}
+        {{- else }}
+        deployedApplication: Environments/{{$clusterName}}/{{$clusterName}} environment/{{ .KubernetesApplicationName }}
+        {{- end}}
+    {{- if ne .Provider "existing cluster" }}
+    - name: Deprovision Infrastructure
+      type: xlrelease.Phase
+      tasks:
+      - name: Deprovision the cluster
+        type: xldeploy.Undeploy
+        server: XL Deploy
+        deployedApplication: Environments/{{$clusterName}}/terraform/{{$clusterName}}
+    {{- end}}

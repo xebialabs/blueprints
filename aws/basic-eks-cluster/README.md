@@ -1,10 +1,10 @@
-# Amazon EKS Cluster
+# Basic AWS Elastic Kubernetes Service(EKS) Cluster
 
 ## Introduction
 
 Amazon Elastic Container Service for Kubernetes (EKS) allows you to deploy, manage, and scale containerized applications in the cloud using Kubernetes.
 
-Use this blueprint to provision a simple EKS cluster. The release template that the blueprint generates provisions a new cluster.
+Use this blueprint to provision an EKS cluster using CloudFormation.
 
 ## Before you get started
 
@@ -16,9 +16,11 @@ If you're new to XebiaLabs blueprints, check out:
 
 ## Usage
 
-To use this blueprint, run `xl blueprint` and select:
+To use this blueprint, run `xl blueprint` in an empty directory and select:
 
-    aws/basic-eks-cluster
+```plain
+aws/basic-eks-cluster
+```
 
 ## Tools and technologies
 
@@ -26,56 +28,48 @@ This blueprint includes the following tools and technologies:
 
 * Target:
     * [Amazon Elastic Container Service for Kubernetes (EKS)](https://aws.amazon.com/eks/)
-    * [Amazon Simple Storage Service (S3)](https://aws.amazon.com/s3/)
 * Tools:
-    * [XebiaLabs Release Orchestration](https://xebialabs.com/products/xl-release/)
     * [XebiaLabs Deployment Automation](https://xebialabs.com/products/xl-deploy/)
-    * [AWS CloudFormation](https://aws.amazon.com/cloudformation/)
     * [Kubernetes](https://kubernetes.io/)
-    * [AWS Lambda](https://aws.amazon.com/lambda/)
+    * [CloudFormation](https://aws.amazon.com/cloudformation/)
 
-## Minimum Required versions
+## Minimum required versions
 
-This blueprint version requires at least the below versions of the specified tools to work properly.
+This blueprint version requires at least the following versions of the specified tools to work properly:
 
-XL Release: Version 9.0.0
-XL Deploy: Version 9.0.0
-XL CLI: Version 9.0.0
+* XL Deploy: Version 9.0.0
+* XL CLI: Version 9.0.0
 
 ## Prerequisites
 
 To run the YAML that this blueprint generates, you need:
 
-* XebiaLabs Release Orchestration and Deployment Automation up and running
-* Access to an AWS account to deploy the application to
+* XebiaLabs Deployment Automation up and running
+* Access to an AWS account that can deploy EKS clusters and create S3 storage
+* [AWS CLI](https://aws.amazon.com/cli/)
 
 ## Information required
-
-This blueprint requires:
-
-* AWS credentials
-* An AWS region
+* AWS Access Key (find it in `~/.aws/credentials`)
+* AWS Secret Access Key (find it in `~/.aws/credentials`)
 
 ## Output
 
 This blueprint will output:
 
-* Release templates
-* AWS CloudFormation templates
+* CloudFormation templates
 * Infrastructure:
-    * Amazon EKS cluster (master, workers, config map, namespace)
-    * Amazon S3 bucket for the application
-    * AWS Lambda artifacts for the application
-    * Networking infrastructure: Virtual Private Cloud (VPC), subnets, route table
-    * Security infrastructure: IAM role
-* A docker-compose setup for XL Release and XL Deploy
+    * EKS cluster (master, nodes)
 
-## Tips and tricks
+**Note:** You will find more instructions in `xebialabs/USAGE-aws-basic-eks-cluster.md` after you have run the blueprint.
 
-* The YAML that the blueprint generates includes optional steps to remove the application and deprovision the cluster.
+## Notes
+
+None
 
 ## Labels
 
 * Cloud
+* Amazon
 * AWS
 * Kubernetes
+* CloudFormation

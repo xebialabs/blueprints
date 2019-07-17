@@ -1,3 +1,4 @@
 KubernetesApplicationName: httpd
 KubernetesDeploymentPackageVersion: latest
 KubernetesResourcesFile: ../kubernetes/httpd.yaml
+Namespace: default

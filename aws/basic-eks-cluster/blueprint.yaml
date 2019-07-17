@@ -2,33 +2,29 @@ apiVersion: xl/v2
 kind: Blueprint
 
 metadata:
-  name: AWS-EKS-Cluster
+  name: AWS-EKS-Basic
   description: |
-    The blueprint deploys a simple AWS EKS Cluster (with EFS if requested).
-    XL Deploy does the provisioning and deployment, while XL Release orchestrates everything.
+    The blueprint provisions a very basic AWS EKS cluster. XL Deploy does the provisioning.
   author: XebiaLabs
   version: 2.0
-  instructions: Please read the generated file "xebialabs/USAGE.md" for further usage instructions.
+  instructions: Please read the generated file "xebialabs/USAGE-aws-basic-eks-cluster.md" for further usage instructions.
 
 spec:
   parameters:
-  # General variables
-  - name: AppName
-    type: Input
-    prompt: What is the name of the application? (16 characters max)
-    description: Application name will be used to generate cloud resource names
-    validate: !expr "regex('^[a-zA-Z0-9-]{1,16}$', AppName)"
-
+  # ############################################################################
   # AWS specific variables
+  # ############################################################################
   - name: UseAWSCredentialsFromSystem
     type: Confirm
     prompt: Do you want to use AWS credentials from ~/.aws/credentials file?
     promptIf: !expr "awsCredentials('IsAvailable')"
+
   - name: AWSAccessKey
     type: SecretInput
     prompt: What is the AWS Access Key ID?
     promptIf: !expr "!UseAWSCredentialsFromSystem"
     default: !expr "awsCredentials('AccessKeyID')"
+
   - name: AWSAccessSecret
     type: SecretInput
     prompt: What is the AWS Secret Access Key?
@@ -39,35 +35,40 @@ spec:
     type: Select
     prompt: "Select the AWS region:"
     options:
-    # This needs to be updated in the RegionMap of cloudformation/eks-workers.yaml as well
-      - label: US West (Oregon)
-        value: us-west-2
-      # commented out because of https://github.com/boto/boto3/issues/811
-      # - us-east-1
-      - label: US East (Ohio)
-        value: us-east-2
-      - label: EU (Frankfurt)
-        value: eu-central-1
-      - label: EU (Ireland)
-        value: eu-west-1
-      - label: EU (London)
-        value: eu-west-2
-      - label: EU (Paris)
-        value: eu-west-3
-      - label: Asia Pacific (Tokyo)
-        value: ap-northeast-1
-      - label: Asia Pacific (Seoul)
-        value: ap-northeast-2
-      - label: Asia Pacific (Mumbai)
-        value: ap-south-1
-      - label: Asia Pacific (Singapore)
-        value: ap-southeast-1
-      - label: Asia Pacific (Sydney)
-        value: ap-southeast-2
+    # commented out because of https://github.com/boto/boto3/issues/811
+    # - label: US East (N. Virginia)
+    #   value: us-east-1
+    - label: US East (Ohio)
+      value: us-east-2
+    - label: US West (Oregon)
+      value: us-west-2
+    - label: Asia Pacific (Singapore)
+      value: ap-southeast-1
+    - label: Asia Pacific (Tokyo)
+      value: ap-northeast-1
+    - label: Asia Pacific (Sydney)
+      value: ap-southeast-2
+    - label: Asia Pacific (Seoul)
+      value: ap-northeast-2
+    - label: Asia Pacific (Mumbai)
+      value: ap-south-1
+    - label: EU (Ireland)
+      value: eu-west-1
+    - label: EU (Frankfurt)
+      value: eu-central-1
+    - label: EU (London)
+      value: eu-west-2
+    - label: EU (Paris)
+      value: eu-west-3
+    - label: EU (Stockholm)
+      value: eu-north-1
 
   - name: ClusterName
     type: Input
-    prompt: What is the name of the cluster?
+    prompt: What do you want to name the cluster?
+    description: Cluster name will be used to generate cloud resource names
+    validate: !expr "regex('^[a-zA-Z0-9-]{1,16}$', ClusterName)"
+
   - name: ClusterVersion
     type: Select
     default: '1.10'
@@ -144,11 +145,6 @@ spec:
     - p3.8xlarge
     - p3.16xlarge
 
-  - name: ProvisionEFS
-    type: Confirm
-    prompt: "Do you want to provision Amazon Elastic File System?"
-    default: false
-
   - name: GenerateDockerComposeSetup
     type: Confirm
     prompt: "Do you want to generate a docker-compose setup with the required tools to run this blueprint?"
@@ -176,17 +172,14 @@ spec:
       value: false
 
   files:
-  - path: xebialabs/xld-infra-env.yaml.tmpl
-  - path: xebialabs/xld-cloudformation-apps.yaml.tmpl
-  - path: xebialabs/xlr-pipeline-ci-cd.yaml.tmpl
-  - path: xebialabs/xlr-pipeline-destroy.yaml.tmpl
-  - path: xebialabs/USAGE.md.tmpl
+  - path: xebialabs/aws-basic-eks-cluster.yaml
+  - path: xebialabs/aws-basic-eks-cluster-applications.yaml.tmpl
+  - path: xebialabs/aws-basic-eks-cluster-environments.yaml.tmpl
+  - path: xebialabs/USAGE-aws-basic-eks-cluster.md.tmpl
+
   - path: kubernetes/aws-auth-cm.yaml
   - path: cloudformation/cfn-secret-provider.zip
   - path: cloudformation/eks-master.yaml
   - path: cloudformation/eks-user.yaml
   - path: cloudformation/eks-vpc.yaml
   - path: cloudformation/eks-workers.yaml.tmpl
-  - path: cloudformation/efs.yaml
-    writeIf: ProvisionEFS
-  - path: xebialabs.yaml

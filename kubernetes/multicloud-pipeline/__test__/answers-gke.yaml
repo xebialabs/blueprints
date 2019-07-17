@@ -1,0 +1,15 @@
+Provider: GKE
+ClusterName: clustername
+XLDUrlForXLR: http://xl-deploy:4516
+
+GCPProjectID: gcpprojectid
+K8SMasterUser: admin
+K8SMasterPassword: 1234567890123456
+GCPRegion: europe-west4
+GKENumNodes: 2
+GKENodeMachineType: n1-standard-1
+GenerateDockerComposeSetup: false
+
+KubernetesApplicationName: httpd
+KubernetesDeploymentPackageVersion: latest
+KubernetesResourcesFile: ../kubernetes/deployment.yaml

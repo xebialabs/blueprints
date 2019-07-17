@@ -1,0 +1,15 @@
+Provider: AKS
+ClusterName: cluster
+XLDUrlForXLR: http://xl-deploy:4516
+
+SubscriptionID: A
+ClientID: B
+ClientSecret: C
+TenantID: D
+ResourceGroup: azure-rg
+ResourceGroupLocation: westeurope
+GenerateDockerComposeSetup: true
+
+KubernetesApplicationName: httpd
+KubernetesDeploymentPackageVersion: latest
+KubernetesResourcesFile: ../kubernetes/deployment.yaml

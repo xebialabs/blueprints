@@ -1,0 +1,8 @@
+answers-file: answers-existing-cluster.yaml
+expected-files:
+  - xebialabs/kubernetes-environment.yaml
+  - xebialabs/USAGE-kubernetes-environment.md
+  - xebialabs/kubernetes-application.yaml
+  - xebialabs/USAGE-kubernetes-application.md
+  - kubernetes/deployment.yaml
+  - xebialabs.yaml

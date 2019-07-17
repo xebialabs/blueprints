@@ -1,0 +1,18 @@
+answers-file: answers-gke.yaml
+expected-files:
+- kubernetes/deployment.yaml
+- terraform-gcp-basic-gke-cluster/main.tf
+- terraform-gcp-basic-gke-cluster/outputs.tf
+- terraform-gcp-basic-gke-cluster/variables.tf
+- terraform-gcp-basic-gke-cluster/gke/main.tf
+- terraform-gcp-basic-gke-cluster/gke/outputs.tf
+- terraform-gcp-basic-gke-cluster/gke/variables.tf
+- terraform-gcp-basic-gke-cluster/vpc/main.tf
+- terraform-gcp-basic-gke-cluster/vpc/outputs.tf
+- terraform-gcp-basic-gke-cluster/vpc/variables.tf
+- xebialabs/USAGE-gcp-basic-gke-cluster.md
+- xebialabs/USAGE-kubernetes-application.md
+- xebialabs/USAGE-multicloud-pipeline.md
+- xebialabs/gcp-basic-gke-cluster.yaml
+- xebialabs/kubernetes-application.yaml
+- xebialabs/multicloud-pipeline.yaml

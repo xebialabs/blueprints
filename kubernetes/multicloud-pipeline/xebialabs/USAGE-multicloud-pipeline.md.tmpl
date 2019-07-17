@@ -1,0 +1,29 @@
+{{$clusterName := .ClusterName | kebabcase}}
+
+# Orchestrate provision of Kubernetes cluster
+
+## Prerequisites
+
+To deploy this blueprint, follow the steps below:
+
+{{ if ne .KubernetesApplicationName "nginx" }}
+First, edit `kubernetes/deployment.yaml` to suit the `{{ .KubernetesApplicationName }}` image you chose to deploy.
+{{ end }}
+
+1. Apply the generated YAML configurations using the XL CLI. Open up a terminal in the folder where you generated the configuration. Then run:
+
+    ```plain
+    xl apply -f xebialabs.yaml
+    ```
+
+2. Go to XL Release (default http://localhost:5516) and look for the "{{$clusterName}}-cicd" template and start a new release from it.
+
+3. To deprovision the cluster, look for the "{{$clusterName}}-destroy" template and start a new release from it.
+
+## Minimum required versions
+
+This blueprint version requires at least the following versions of the specified tools to work properly:
+
+- XL Deploy: Version 8.6.1
+- XL Release: Version 8.6.1
+- XL CLI: Version 8.6.0

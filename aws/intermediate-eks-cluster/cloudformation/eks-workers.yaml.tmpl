@@ -1,0 +1,412 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: 'Amazon EKS - Worker nodes'
+
+Mappings:
+    RegionMap:
+    {{- if eq .ClusterVersion "1.10" }}
+      us-east-2:
+        "AmiId": "ami-0523ec257fff1261d"
+      us-east-1:
+        "AmiId": "ami-01c1c96b9aa69de37"
+      us-west-2:
+        "AmiId": "ami-021dd1fb7ba7e6e51"
+      ap-south-1:
+        "AmiId": "ami-04c2ed5ff15a580f4"
+      ap-northeast-1:
+        "AmiId": "ami-02ffa4511b4baa5fa"
+      ap-northeast-2:
+        "AmiId": "ami-06295f3e6390dae00"
+      ap-southeast-1:
+        "AmiId": "ami-07f8ccb046b3ce697"
+      ap-southeast-2:
+        "AmiId": "ami-03ebcd449b224e0a3"
+      eu-central-1:
+        "AmiId": "ami-0c40973ffcf8bca40"
+      eu-west-1:
+        "AmiId": "ami-06a96b4cfd627430b"
+      eu-west-2:
+        "AmiId": "ami-03356e704fb004162"
+      eu-west-3:
+        "AmiId": "ami-0eb77a4ca7135122b"
+      eu-north-1:
+        "AmiId": "ami-028df8ba9b8603bdd"
+    {{- else if eq .ClusterVersion "1.11" }}
+      us-east-2:
+        "AmiId": "ami-03c6648b74285020f"
+      us-east-1:
+        "AmiId": "ami-0a5f5d5b0f6f58199"
+      us-west-2:
+        "AmiId": "ami-057d1c0dcb254a878"
+      ap-south-1:
+        "AmiId": "ami-00f1adebe5ab9a431"
+      ap-northeast-1:
+        "AmiId": "ami-0a0b6606652f9b3b9"
+      ap-northeast-2:
+        "AmiId": "ami-0c84b3f055cda1afb"
+      ap-southeast-1:
+        "AmiId": "ami-05e92412054db3f87"
+      ap-southeast-2:
+        "AmiId": "ami-07eb76498b1ba6cd6"
+      eu-central-1:
+        "AmiId": "ami-0234bc9c2b341aa02"
+      eu-west-1:
+        "AmiId": "ami-06902949103360023"
+      eu-west-2:
+        "AmiId": "ami-0db100ad46c7966d2"
+      eu-west-3:
+        "AmiId": "ami-052046d313576d0ba"
+      eu-north-1:
+        "AmiId": "ami-02ebf24da505128f9"
+    {{- else if eq .ClusterVersion "1.12" }}
+      us-east-2:
+        "AmiId": "ami-0fe61ae4c397e710d"
+      us-east-1:
+        "AmiId": "ami-0e380e0a62d368837"
+      us-west-2:
+        "AmiId": "ami-0355c210cb3f58aa2"
+      ap-south-1:
+        "AmiId": "ami-01b6a163133c31994"
+      ap-northeast-1:
+        "AmiId": "ami-0a9b3f8b4b65b402b"
+      ap-northeast-2:
+        "AmiId": "ami-069f6a654a8795f72"
+      ap-southeast-1:
+        "AmiId": "ami-03737a1ac334a5767"
+      ap-southeast-2:
+        "AmiId": "ami-07580768e8538626f"
+      eu-central-1:
+        "AmiId": "ami-0ee5ca4231511cafc"
+      eu-west-1:
+        "AmiId": "ami-0404d23c7e8188740"
+      eu-west-2:
+        "AmiId": "ami-07346d8553f83f9d6"
+      eu-west-3:
+        "AmiId": "ami-038cb36289174bac4"
+      eu-north-1:
+        "AmiId": "ami-03e60b5a990893129"
+    {{- else if eq .ClusterVersion "1.13" }}
+      us-east-2:
+        "AmiId": "ami-0485258c2d1c3608f"
+      us-east-1:
+        "AmiId": "ami-0f2e8e5663e16b436"
+      us-west-2:
+        "AmiId": "ami-03a55127c613349a7"
+      ap-south-1:
+        "AmiId": "ami-0a9b1c1807b1a40ab"
+      ap-northeast-1:
+        "AmiId": "ami-0fde798d17145fae1"
+      ap-northeast-2:
+        "AmiId": "ami-07fd7609df6c8e39b"
+      ap-southeast-1:
+        "AmiId": "ami-0361e14efd56a71c7"
+      ap-southeast-2:
+        "AmiId": "ami-0237d87bc27daba65"
+      eu-central-1:
+        "AmiId": "ami-0b7127e7a2a38802a"
+      eu-west-1:
+        "AmiId": "ami-00ac2e6b3cb38a9b9"
+      eu-west-2:
+        "AmiId": "ami-0147919d2ff9a6ad5"
+      eu-west-3:
+        "AmiId": "ami-0537ee9329c1628a2"
+      eu-north-1:
+        "AmiId": "ami-0fd05922165907b85"
+    {{- end }}
+
+
+Parameters:
+  ProjectName:
+    Type: String
+    Default: "app"
+  VPCStackName:
+    Type: String
+    Description: VPC Stack Name
+    Default: "eks-vpc"
+  UserStackName:
+    Type: String
+    Description: User Stack Name
+    Default: "eks-user"
+  ClusterStackName:
+    Type: String
+    Description: Cluster Stack Name
+    Default: "eks-master"
+  NodeInstanceType:
+    Description: EC2 instance type for the node instances
+    Type: String
+    Default: t2.medium
+    AllowedValues:
+    - t2.small
+    - t2.medium
+    - t2.large
+    - t2.xlarge
+    - t2.2xlarge
+    - m3.medium
+    - m3.large
+    - m3.xlarge
+    - m3.2xlarge
+    - m4.large
+    - m4.xlarge
+    - m4.2xlarge
+    - m4.4xlarge
+    - m4.10xlarge
+    - m5.large
+    - m5.xlarge
+    - m5.2xlarge
+    - m5.4xlarge
+    - m5.12xlarge
+    - m5.24xlarge
+    - c4.large
+    - c4.xlarge
+    - c4.2xlarge
+    - c4.4xlarge
+    - c4.8xlarge
+    - c5.large
+    - c5.xlarge
+    - c5.2xlarge
+    - c5.4xlarge
+    - c5.9xlarge
+    - c5.18xlarge
+    - i3.large
+    - i3.xlarge
+    - i3.2xlarge
+    - i3.4xlarge
+    - i3.8xlarge
+    - i3.16xlarge
+    - r3.xlarge
+    - r3.2xlarge
+    - r3.4xlarge
+    - r3.8xlarge
+    - r4.large
+    - r4.xlarge
+    - r4.2xlarge
+    - r4.4xlarge
+    - r4.8xlarge
+    - r4.16xlarge
+    - x1.16xlarge
+    - x1.32xlarge
+    - p2.xlarge
+    - p2.8xlarge
+    - p2.16xlarge
+    - p3.2xlarge
+    - p3.8xlarge
+    - p3.16xlarge
+    ConstraintDescription: Must be a valid EC2 instance type
+  NodeAutoScalingGroupMinSize:
+    Type: Number
+    Description: Minimum size of Node Group ASG.
+    Default: 1
+  NodeAutoScalingGroupMaxSize:
+    Type: Number
+    Description: Maximum size of Node Group ASG.
+    Default: 4
+  NodeVolumeSize:
+    Type: Number
+    Description: Node volume size
+    Default: 20
+  ClusterName:
+    Description: The cluster name provided when the cluster was created. If it is incorrect, nodes will not be able to join the cluster.
+    Type: String
+    Default: app-master
+  BootstrapArguments:
+    Description: Arguments to pass to the bootstrap script. See files/bootstrap.sh in https://github.com/awslabs/amazon-eks-ami
+    Default: ""
+    Type: String
+  NodeGroupName:
+    Description: Unique identifier for the Node Group.
+    Type: String
+    Default: app
+
+Resources:
+  NodeInstanceProfile:
+    Type: AWS::IAM::InstanceProfile
+    Properties:
+      InstanceProfileName: !Sub "${ProjectName}-InstanceProfile"
+      Path: "/"
+      Roles:
+      - !Ref NodeInstanceRole
+
+  NodeInstanceRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: !Sub "${ProjectName}-NodeInstanceRole"
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+        - Effect: Allow
+          Principal:
+            Service:
+            - ec2.amazonaws.com
+          Action:
+          - sts:AssumeRole
+      Path: "/"
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy
+        - arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy
+        - arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly
+        - arn:aws:iam::aws:policy/AmazonElasticFileSystemFullAccess
+
+  NodeSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupName: !Sub "${ProjectName}-NodeSecurityGroup"
+      GroupDescription: Security group for all nodes in the cluster
+      VpcId:
+        Fn::ImportValue:
+          !Sub "${VPCStackName}-VPCID"
+      Tags:
+      - Key: !Sub "kubernetes.io/cluster/${ClusterName}"
+        Value: 'owned'
+
+  NodeSecurityGroupIngress:
+    Type: AWS::EC2::SecurityGroupIngress
+    DependsOn: NodeSecurityGroup
+    Properties:
+      Description: Allow node to communicate with each other
+      GroupId: !Ref NodeSecurityGroup
+      SourceSecurityGroupId: !Ref NodeSecurityGroup
+      IpProtocol: '-1'
+      FromPort: 0
+      ToPort: 65535
+
+  NodeSecurityGroupFromControlPlaneIngress:
+    Type: AWS::EC2::SecurityGroupIngress
+    DependsOn: NodeSecurityGroup
+    Properties:
+      Description: Allow worker Kubelets and pods to receive communication from the cluster control plane
+      GroupId: !Ref NodeSecurityGroup
+      SourceSecurityGroupId:
+        Fn::ImportValue:
+          !Sub "${ClusterStackName}-ClusterControlPlaneSecurityGroup"
+      IpProtocol: tcp
+      FromPort: 1025
+      ToPort: 65535
+
+  ControlPlaneEgressToNodeSecurityGroup:
+    Type: AWS::EC2::SecurityGroupEgress
+    DependsOn: NodeSecurityGroup
+    Properties:
+      Description: Allow the cluster control plane to communicate with worker Kubelet and pods
+      GroupId:
+        Fn::ImportValue:
+          !Sub "${ClusterStackName}-ClusterControlPlaneSecurityGroup"
+      DestinationSecurityGroupId: !Ref NodeSecurityGroup
+      IpProtocol: tcp
+      FromPort: 1025
+      ToPort: 65535
+
+  NodeSecurityGroupFromControlPlaneOn443Ingress:
+    Type: AWS::EC2::SecurityGroupIngress
+    DependsOn: NodeSecurityGroup
+    Properties:
+      Description: Allow pods running extension API servers on port 443 to receive communication from cluster control plane
+      GroupId: !Ref NodeSecurityGroup
+      SourceSecurityGroupId:
+        Fn::ImportValue:
+          !Sub "${ClusterStackName}-ClusterControlPlaneSecurityGroup"
+      IpProtocol: tcp
+      FromPort: 443
+      ToPort: 443
+
+  ControlPlaneEgressToNodeSecurityGroupOn443:
+    Type: AWS::EC2::SecurityGroupEgress
+    DependsOn: NodeSecurityGroup
+    Properties:
+      Description: Allow the cluster control plane to communicate with pods running extension API servers on port 443
+      GroupId:
+        Fn::ImportValue:
+          !Sub "${ClusterStackName}-ClusterControlPlaneSecurityGroup"
+      DestinationSecurityGroupId: !Ref NodeSecurityGroup
+      IpProtocol: tcp
+      FromPort: 443
+      ToPort: 443
+
+  ClusterControlPlaneSecurityGroupIngress:
+    Type: AWS::EC2::SecurityGroupIngress
+    DependsOn: NodeSecurityGroup
+    Properties:
+      Description: Allow pods to communicate with the cluster API Server
+      GroupId:
+        Fn::ImportValue:
+          !Sub "${ClusterStackName}-ClusterControlPlaneSecurityGroup"
+      SourceSecurityGroupId: !Ref NodeSecurityGroup
+      IpProtocol: tcp
+      ToPort: 443
+      FromPort: 443
+
+  NodeGroup:
+    Type: AWS::AutoScaling::AutoScalingGroup
+    Properties:
+      AutoScalingGroupName: !Sub "${ProjectName}-AutoScalingGroup"
+      LaunchConfigurationName: !Ref NodeLaunchConfig
+      MinSize: !Ref NodeAutoScalingGroupMinSize
+      MaxSize: !Ref NodeAutoScalingGroupMaxSize
+      VPCZoneIdentifier:
+        - Fn::ImportValue:
+            !Sub "${VPCStackName}-subnetAID"
+        - Fn::ImportValue:
+            !Sub "${VPCStackName}-subnetBID"
+      Tags:
+      - Key: Name
+        Value: !Sub "${ClusterName}-${NodeGroupName}-Node"
+        PropagateAtLaunch: 'true'
+      - Key: !Sub 'kubernetes.io/cluster/${ClusterName}'
+        Value: 'owned'
+        PropagateAtLaunch: 'true'
+    UpdatePolicy:
+      AutoScalingRollingUpdate:
+        MinInstancesInService: '1'
+        MaxBatchSize: '1'
+
+  NodeLaunchConfig:
+    Type: AWS::AutoScaling::LaunchConfiguration
+    Properties:
+      LaunchConfigurationName: !Sub "${ProjectName}-LaunchConfiguration"
+      AssociatePublicIpAddress: 'true'
+      IamInstanceProfile: !Ref NodeInstanceProfile
+      ImageId: !FindInMap ["RegionMap", Ref: "AWS::Region", "AmiId"]
+      InstanceType: !Ref NodeInstanceType
+      KeyName:
+        Fn::ImportValue:
+          !Sub "${UserStackName}-keypair"
+      SecurityGroups:
+      - !Ref NodeSecurityGroup
+      BlockDeviceMappings:
+        - DeviceName: /dev/xvda
+          Ebs:
+            VolumeSize: !Ref NodeVolumeSize
+            VolumeType: gp2
+            DeleteOnTermination: true
+      UserData:
+        Fn::Base64:
+          !Sub |
+            #!/bin/bash
+            set -o xtrace
+            /etc/eks/bootstrap.sh ${ClusterName} ${BootstrapArguments}
+            /opt/aws/bin/cfn-signal --exit-code $? \
+                     --stack  ${AWS::StackName} \
+                     --resource NodeGroup  \
+                     --region ${AWS::Region}
+
+Outputs:
+  ProjectName:
+    Description: The name of the project
+    Value: !Sub '${ProjectName}'
+  NodeInstanceRole:
+    Description: The node instance role
+    Value: !GetAtt NodeInstanceRole.Arn
+  EksUser:
+    Value:
+      Fn::ImportValue:
+        !Sub "${UserStackName}-user"
+  EksUserArn:
+    Value:
+      Fn::ImportValue:
+        !Sub "${UserStackName}-user-arn"
+  ClusterEndpoint:
+    Value:
+      Fn::ImportValue:
+        !Sub "${ClusterStackName}-ClusterEndpoint"
+  ClusterName:
+    Value:
+      Fn::ImportValue:
+        !Sub "${ClusterStackName}-ClusterName"

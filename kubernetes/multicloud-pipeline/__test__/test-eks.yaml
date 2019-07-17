@@ -1,0 +1,18 @@
+answers-file: answers-eks.yaml
+expected-files:
+- cloudformation/cfn-secret-provider.zip
+- cloudformation/eks-master.yaml
+- cloudformation/eks-user.yaml
+- cloudformation/eks-vpc.yaml
+- cloudformation/eks-workers.yaml
+- kubernetes/aws-auth-cm.yaml
+- kubernetes/deployment.yaml
+- xebialabs/USAGE-aws-basic-eks-cluster.md
+- xebialabs/USAGE-kubernetes-application.md
+- xebialabs/USAGE-multicloud-pipeline.md
+- xebialabs/aws-basic-eks-cluster-applications.yaml
+- xebialabs/aws-basic-eks-cluster-environments.yaml
+- xebialabs/kubernetes-application.yaml
+- xebialabs/multicloud-pipeline.yaml
+not-expected-files:
+- xebialabs/aws-basic-eks-cluster.yaml
