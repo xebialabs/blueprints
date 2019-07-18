@@ -194,7 +194,7 @@ if __name__ == '__main__':
 
             os.chdir(tempdir.name)
 
-            command = ['xl', 'blueprint', '-l', '../', '-b', '{}'.format(blueprint_dir), '-sa', '../{}'.format(answers_file)]
+            command = ['xl', 'blueprint', '--use-defaults', '--local-repo', '../', '--blueprint', '{}'.format(blueprint_dir), '--strict-answers', '--answers', '../{}'.format(answers_file)]
             print('Executing: {}'.format(' '.join(command)))
             result = subprocess.run(command, capture_output=True, env=env)
             if not result.returncode == 0:
