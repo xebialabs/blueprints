@@ -40,6 +40,12 @@ spec:
     type: Input
     value: kubernetes-namespace
 
+  - name: GenerateDockerComposeSetup
+    type: Confirm
+    prompt: "Do you want to generate a docker-compose setup with the required tools to run this blueprint?"
+    promptIf: !expr "Provider == 'existing cluster'"
+    default: false
+
   includeAfter:
   - blueprint: kubernetes/environment
     includeIf: !expr "Provider == 'existing cluster'"
