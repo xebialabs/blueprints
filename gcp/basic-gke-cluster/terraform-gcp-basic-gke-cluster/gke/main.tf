@@ -26,8 +26,11 @@ resource "google_container_cluster" "primary" {
   }
 
   master_auth {
-    username = "${var.gke_master_user}"
-    password = "${var.gke_master_pass}"
+    username = ""
+    password = ""
+    client_certificate_config {
+      issue_client_certificate = true
+    }
   }
 
   node_config {
@@ -38,7 +41,7 @@ resource "google_container_cluster" "primary" {
       "https://www.googleapis.com/auth/monitoring",
     ]
 
-    labels {
+    labels = {
       env = "${var.gke_label}"
     }
 

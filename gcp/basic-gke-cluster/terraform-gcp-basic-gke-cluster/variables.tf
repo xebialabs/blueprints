@@ -32,15 +32,6 @@ variable "gke_num_nodes" {
   description = "Number of nodes in each GKE cluster zone"
 }
 
-variable "gke_master_user" {
-  default     = "k8s_admin"
-  description = "Username to authenticate with the k8s master"
-}
-
-variable "gke_master_pass" {
-  description = "Password to authenticate with the k8s master"
-}
-
 variable "gke_node_machine_type" {
   default     = "n1-standard-2"
   description = "Machine type of GKE nodes"

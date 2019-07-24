@@ -37,6 +37,7 @@ This blueprint version requires at least the following versions of the specified
 
 * XL Deploy: Version 9.0.0
 * XL CLI: Version 9.0.0
+* Terraform: Version 0.12.0
 
 ## Prerequisites
 
