@@ -124,7 +124,13 @@ def type_aware_equals(expected, actual):
             return False
     elif type(expected) == bool:
         try:
-            return expected == bool(actual)
+            if actual.lower() in ['yes', 'true', 't', '1']:
+                bool_val = True
+            elif actual.lower() in ['no', 'false', 'f', '0']:
+                bool_val = False
+            else:
+                raise Exception('Expected one of: [yes, no, true, false, t, f, 1, 0]. Got %s instead' % actual)
+            return expected == bool_val
         except:
             return False
     else:
