@@ -1,0 +1,15 @@
+Provider: EKS
+ClusterName: clustername
+XLDUrlForXLR: http://xl-deploy:4516
+
+UseAWSCredentialsFromSystem: false
+AWSAccessKey: ABCDEFGHIJKLMNOPQRST
+AWSAccessSecret: abcdefghijklmnopqrstuvwxyz1234567890ABCDE
+AWSRegion: eu-west-3
+NodeAutoScalingGroupDesiredSize: 3
+NodeInstanceType: t2.medium
+GenerateDockerComposeSetup: false
+
+KubernetesApplicationName: httpd
+KubernetesDeploymentPackageVersion: latest
+KubernetesResourcesFile: ../kubernetes/deployment.yaml
