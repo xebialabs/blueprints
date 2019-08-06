@@ -13,7 +13,7 @@ Parameters:
   ClusterVersion:
     Type: String
     Description: The version of EKS to start up
-    Default: "1.10"
+    Default: "1.11"
 Resources:
 
   #
