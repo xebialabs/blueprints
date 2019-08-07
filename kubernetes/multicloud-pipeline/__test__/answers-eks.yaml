@@ -6,7 +6,6 @@ UseAWSCredentialsFromSystem: false
 AWSAccessKey: ABCDEFGHIJKLMNOPQRST
 AWSAccessSecret: abcdefghijklmnopqrstuvwxyz1234567890ABCDE
 AWSRegion: eu-west-3
-ClusterVersion: '1.10'
 NodeAutoScalingGroupDesiredSize: 3
 NodeInstanceType: t2.medium
 GenerateDockerComposeSetup: false
