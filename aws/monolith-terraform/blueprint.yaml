@@ -65,7 +65,7 @@ spec:
     - name: JetPackOrEnterprise
       value: "JetPack"
     - name: XLVersion
-      value: "9.0.0"
+      value: "9.0"
     - name: UseDockerProxy
       value: false
     - name: UseJenkins
