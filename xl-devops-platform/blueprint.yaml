@@ -44,8 +44,8 @@ spec:
     prompt: "Select the version of XL you want to use:"
     promptIf: !expr "UseXLDeploy == true || UseXLRelease == true"
     options:
-      - 9.0
-      - 8.6.1
+      - "9.0"
+      - "8.6.1"
 
   - name: UseJenkins
     type: Confirm
