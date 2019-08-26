@@ -62,8 +62,6 @@ spec:
       value: true
     - name: XLReleasePort
       value: 5516
-    - name: JetPackOrEnterprise
-      value: "JetPack"
     - name: XLVersion
       value: "9.0"
     - name: UseDockerProxy
