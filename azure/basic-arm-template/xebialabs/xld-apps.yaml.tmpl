@@ -1,0 +1,25 @@
+{{$app := .AppName | kebabcase}}
+apiVersion: xl-deploy/v1
+kind: Applications
+spec:
+- name: {{$app}}
+  type: core.Directory
+  children:
+  - name: {{$app}}-application
+    type: udm.Application
+    children:
+    - name: '1.0.0'
+      type: udm.DeploymentPackage
+      deployables:
+      - name: {{$app}}-template
+        type: azure.arm.Template
+        deploymentMode: Incremental
+        resourceGroupName: {{.ResourceGroup}}
+        location: {{.ResourceGroupLocation}}
+        deploymentName: {{.AppName}}-deployment
+        file: !file "../arm/template.json"
+        inputVariables:
+          adminUsername: {{.AdminUsername}}
+          adminPassword: !value AdminPassword
+          dnsLabelPrefix: {{$app}}
+          vmName: {{$app}}
