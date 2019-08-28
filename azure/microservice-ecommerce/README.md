@@ -283,7 +283,7 @@ The blueprint will output:
 * Infrastructure:
     * AKS cluster (master, nodes)
     * Security infrastructure
-* A docker-compose setup for XL and Jenkins
+* A docker-compose setup for XL Release, XL Deploy and Jenkins
 
 **Note:** You will find more instructions in `xebialabs/USAGE.md` after you have run the blueprint.
 

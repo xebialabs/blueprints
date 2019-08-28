@@ -121,7 +121,7 @@ This blueprint will output:
     * GKE cluster (master, nodes)
     * Networking infrastructure: Virtual Private Cloud (VPC), subnets
     * Security infrastructure
-* A docker-compose setup for XL and Jenkins
+* A docker-compose setup for XL Release, XL Deploy and Jenkins
 
 ## Tips and tricks
 
