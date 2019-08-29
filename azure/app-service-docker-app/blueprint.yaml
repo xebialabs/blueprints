@@ -151,8 +151,6 @@ spec:
       value: 4516
     - name: UseXLRelease
       value: false
-    - name: JetPackOrEnterprise
-      value: "JetPack"
     - name: XLVersion
       value: "9.0"
     - name: UseDockerProxy

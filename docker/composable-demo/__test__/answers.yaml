@@ -3,7 +3,6 @@ DockerImageRepository: nginx
 DockerImageTag: latest
 ExposePort: false
 XLDeployPort: 4321
-JetPackOrEnterprise: JetPack
 XLVersion: 8.6.1
 UseDockerProxy: true
 GenerateDockerComposeSetup: true
