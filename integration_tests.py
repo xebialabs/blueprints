@@ -192,7 +192,7 @@ if __name__ == '__main__':
     fail_if_missing_test_dirs(blueprint_to_test_dirs.values())
 
     for blueprint_dir, test_dir in blueprint_to_test_dirs.items():
-        test_files = [filename for filename in glob.iglob('{}/test*.yaml'.format(test_dir))]
+        test_files = [filename for filename in glob.iglob('{}/**/test*.yaml'.format(test_dir), recursive=True)]
         if not test_files:
             errormsg('Missing test files under {}'.format(test_dir))
             sys.exit(1)
@@ -206,9 +206,9 @@ if __name__ == '__main__':
             testdef = load_testdef_from_yaml_file(test_file)
             validate_testdef(testdef)
 
-            answers_file = '{}/{}'.format(test_dir, testdef['answers-file'])
+            answers_file = '{}/{}'.format(os.path.dirname(test_file), testdef['answers-file'])
             if not os.path.exists(answers_file):
-                errormsg('Missing answers file {} for {}'.format(answers_file, test_dir))
+                errormsg('Missing answers file {}'.format(answers_file))
                 sys.exit(1)
 
             try:
