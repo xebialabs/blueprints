@@ -10,9 +10,8 @@ Use this blueprint to deploy a sample microservice-based application on GKE usin
 
 If you're new to XebiaLabs blueprints, check out:
 
-* [Get started with DevOps as Code](https://docs.xebialabs.com/xl-platform/concept/get-started-with-devops-as-code.html)
-* [Get started with blueprints](https://docs.xebialabs.com/xl-platform/concept/get-started-with-blueprints.html)
-* [Get started with XL JetPack](https://docs.xebialabs.com/xl-platform/concept/get-started-with-xl-jetpack.html)
+* [Get started with DevOps as Code](https://docs.xebialabs.com/xl-release/concept/get-started-with-devops-as-code.html)
+* [Get started with blueprints](https://docs.xebialabs.com/xl-release/concept/get-started-with-blueprints.html)
 
 ## Usage
 
@@ -122,7 +121,7 @@ This blueprint will output:
     * GKE cluster (master, nodes)
     * Networking infrastructure: Virtual Private Cloud (VPC), subnets
     * Security infrastructure
-* A docker-compose setup for XL JetPack and Jenkins
+* A docker-compose setup for XL Release, XL Deploy and Jenkins
 
 ## Tips and tricks
 

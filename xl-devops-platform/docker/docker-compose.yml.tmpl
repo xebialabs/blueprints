@@ -2,11 +2,7 @@ version: '3.7'
 services:
   {{- if .UseXLDeploy }}
   xl-deploy:
-    {{- if eq .JetPackOrEnterprise "JetPack" }}
-    image: xebialabs/xl-jetpack-deploy:{{ .XLVersion }}
-    {{- else }}
     image: xebialabs/xl-deploy:{{ .XLVersion }}
-    {{- end }}
     ports:
     - "{{.XLDeployPort}}:4516"
     environment:
@@ -16,11 +12,7 @@ services:
 
   {{- if .UseXLRelease }}
   xl-release:
-    {{- if eq .JetPackOrEnterprise "JetPack" }}
-    image: xebialabs/xl-jetpack-release:{{ .XLVersion }}
-    {{- else }}
     image: xebialabs/xl-release:{{ .XLVersion }}
-    {{- end }}
     ports:
     - "{{.XLReleasePort}}:5516"
     environment:

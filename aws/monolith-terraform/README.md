@@ -10,9 +10,8 @@ Use this blueprint to deploy a monolithic application on ECS with the Fargate la
 
 If you're new to XebiaLabs blueprints, check out:
 
-* [Get started with DevOps as Code](https://docs.xebialabs.com/xl-platform/concept/get-started-with-devops-as-code.html)
-* [Get started with blueprints](https://docs.xebialabs.com/xl-platform/concept/get-started-with-blueprints.html)
-* [Get started with XL JetPack](https://docs.xebialabs.com/xl-platform/concept/get-started-with-xl-jetpack.html)
+* [Get started with DevOps as Code](https://docs.xebialabs.com/xl-release/concept/get-started-with-devops-as-code.html)
+* [Get started with blueprints](https://docs.xebialabs.com/xl-release/concept/get-started-with-blueprints.html)
 
 ## Usage
 
@@ -71,7 +70,7 @@ This blueprint will output:
     * Security infrastructure
     * Elastic Load Balancer (ELB) infrastructure
     * Amazon Relational Database Service (RDS)
-* A docker-compose setup for XL JetPack
+* A docker-compose setup for XL Release and XL Deploy
 
 ## Tips and tricks
 

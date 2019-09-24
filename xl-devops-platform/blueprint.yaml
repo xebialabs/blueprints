@@ -32,20 +32,13 @@ spec:
     promptIf: UseXLRelease
     default: 5516
 
-  - name: JetPackOrEnterprise
-    type: Select
-    prompt: "Do you want to use JetPack or XL Enterprise:"
-    options:
-      - JetPack
-      - XL Enterprise
-
   - name: XLVersion
     type: Select
     prompt: "Select the version of XL you want to use:"
     promptIf: !expr "UseXLDeploy == true || UseXLRelease == true"
     options:
-      - 9.0.0
-      - 8.6.1
+      - "9.0"
+      - "8.6.1"
 
   - name: UseJenkins
     type: Confirm

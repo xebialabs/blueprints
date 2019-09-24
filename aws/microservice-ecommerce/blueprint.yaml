@@ -104,10 +104,8 @@ spec:
       value: true
     - name: XLReleasePort
       value: 5516
-    - name: JetPackOrEnterprise
-      value: "XL Enterprise"
     - name: XLVersion
-      value: "9.0.0"
+      value: "9.0"
     - name: UseDockerProxy
       value: false
     - name: UseJenkins

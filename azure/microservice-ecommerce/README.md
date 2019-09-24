@@ -10,9 +10,8 @@ Use this blueprint to deploy a sample microservice-based application on AKS usin
 
 If you're new to XebiaLabs blueprints, check out:
 
-* [Get started with DevOps as Code](https://docs.xebialabs.com/xl-platform/concept/get-started-with-devops-as-code.html)
-* [Get started with blueprints](https://docs.xebialabs.com/xl-platform/concept/get-started-with-blueprints.html)
-* [Get started with XL JetPack](https://docs.xebialabs.com/xl-platform/concept/get-started-with-xl-jetpack.html)
+* [Get started with DevOps as Code](https://docs.xebialabs.com/xl-release/concept/get-started-with-devops-as-code.html)
+* [Get started with blueprints](https://docs.xebialabs.com/xl-release/concept/get-started-with-blueprints.html)
 
 ## Tools and technologies
 
@@ -284,7 +283,7 @@ The blueprint will output:
 * Infrastructure:
     * AKS cluster (master, nodes)
     * Security infrastructure
-* A docker-compose setup for XL JetPack and Jenkins
+* A docker-compose setup for XL Release, XL Deploy and Jenkins
 
 **Note:** You will find more instructions in `xebialabs/USAGE.md` after you have run the blueprint.
 
