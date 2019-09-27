@@ -142,7 +142,7 @@ spec:
     - name: UseXLRelease
       value: true
     - name: XLVersion
-      value: "9.5.0"
+      value: "9.5"
     - name: UseDockerProxy
       value: false
     - name: UseJenkins
