@@ -140,9 +140,9 @@ spec:
     - name: XLDeployPort
       value: 4516
     - name: UseXLRelease
-      value: false
+      value: true
     - name: XLVersion
-      value: "9.0.0"
+      value: "9.5.0"
     - name: UseDockerProxy
       value: false
     - name: UseJenkins

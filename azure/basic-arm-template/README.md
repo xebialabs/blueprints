@@ -10,8 +10,8 @@ Use this blueprint to provision a single VM using an ARM template.
 
 If you're new to XebiaLabs blueprints, check out:
 
-* [Get started with DevOps as Code](https://docs.xebialabs.com/xl-platform/concept/get-started-with-devops-as-code.html)
-* [Get started with blueprints](https://docs.xebialabs.com/xl-platform/concept/get-started-with-blueprints.html)
+* [Get started with DevOps as Code](https://docs.xebialabs.com/xl-release/concept/get-started-with-devops-as-code/)
+* [Get started with blueprints](https://docs.xebialabs.com/xl-deploy/concept/get-started-with-blueprints/)
 
 ## Usage
 
@@ -34,9 +34,9 @@ This blueprint includes the following tools and technologies:
 
 This blueprint version requires at least the following versions of the specified tools to work properly:
 
-* XL Deploy: Version 9.0.0
-* XL Release: Version 9.0.0
-* XL CLI: Version 9.0.0
+* XL Deploy: Version 9.5.0
+* XL Release: Version 9.5.0
+* XL CLI: Version 9.5.0
 
 ## Prerequisites
 

@@ -7,7 +7,7 @@ Now that you've created your blueprint skeleton, there are a few more steps:
 3. When you're done reading this file, delete it, as it should not be part of your blueprint
 
 The files in this skeleton make up a basic blueprint with the most common elements. For more detail, refer to the online documentation:
-* [Blueprint YAML format](https://docs.xebialabs.com/xl-platform/concept/blueprint-yaml-format.html)
+* [Blueprint YAML format](https://docs.xebialabs.com/xl-deploy/concept/blueprint-yaml-format/)
 * [Go Templates](https://golang.org/pkg/text/template/)
 * [Using Go Templates](https://blog.gopheracademy.com/advent-2017/using-go-templates/)
 
