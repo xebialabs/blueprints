@@ -1,0 +1,36 @@
+apiVersion: xl/v2
+kind: Blueprint
+
+metadata:
+  name: docker-compose-cyberark-conjur
+  description: |
+    Creates a Cyberark Conjur server.
+  author: XebiaLabs
+  version: 2.0
+  instructions: Please read xebialabs/USAGE-cyberark-conjur.md.
+  suppressXebiaLabsFolder: true
+
+spec:
+  parameters:
+  - name: DockerCyberarkAccount
+    type: Input
+    prompt: "Enter the account name:"
+
+  - name: DockerCyberarkPolicyPath
+    type: Input
+    prompt: "Enter the policy path:"
+
+  - name: DockerCyberarkKeys
+    type: Input
+    prompt: "Comma-separated list of secret keys to be created (e.g. key.one,key.two). You will supply the values manually:"
+    validate: !expr "regex('^([a-zA-Z0-9._-]+,)*[a-zA-Z0-9._-]+$', DockerCyberarkKeys)"
+
+  files:
+  - path: xebialabs/USAGE-cyberark-conjur.md.tmpl
+  - path: docker-cyberark-conjur/docker-compose.yaml.tmpl
+  - path: docker-cyberark-conjur/conf/policy/00100-policy.yaml.tmpl
+  - path: docker-cyberark-conjur/conjur-client/Dockerfile
+  - path: docker-cyberark-conjur/conjur-client/script/provision.sh.tmpl
+  - path: docker-cyberark-conjur/conjur-server/Dockerfile
+  - path: docker-cyberark-conjur/conjur-server/script/provision.sh.tmpl
+  - path: docker-cyberark-conjur/volumes/.gitkeep

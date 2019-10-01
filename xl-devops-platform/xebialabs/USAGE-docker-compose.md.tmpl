@@ -1,32 +1,30 @@
-## Find the apps here:
-{{- if .UseXLDeploy }}
-* XL Deploy: http://localhost:{{.XLDeployPort}}
-  * username: admin
-  * password: admin
+# XL DevOps Platform
+
+This blueprint allows you to run test instances in Docker of:
+
+{{ if .UseXLDeploy -}}
+* XL Deploy
 {{- end }}
-{{- if .UseXLRelease }}
-* XL Release: http://localhost:{{.XLReleasePort}}
-  * username: admin
-  * password: admin
+{{ if .UseXLRelease -}}
+* XL Release
 {{- end }}
-{{- if .UseJenkins }}
-* Jenkins: http://localhost:{{.JenkinsPort}}
-  * username: admin
-  * password: admin
+{{ if .UseJenkins -}}
+* Jenkins
 {{- end }}
 
+## Configuration
 
 Copy `xebialabs/config.yaml` to `$HOME/.xebialabs` or make sure your `$HOME/.xebialabs/config.yaml` contains:
 
 ```plain
-{{- if .UseXLDeploy }}
+{{ if .UseXLDeploy -}}
 xl-deploy:
   authmethod: http
   password: admin
   url: http://localhost:{{.XLDeployPort}}/
   username: admin
 {{- end }}
-{{- if .UseXLRelease }}
+{{ if .UseXLRelease -}}
 xl-release:
   authmethod: http
   password: admin
@@ -35,33 +33,31 @@ xl-release:
 {{- end }}
 ```
 
-If you want to run multiple `docker-compose` instances, you need to give them each unique names.
+## Start the containers
 
- Use `docker network list` to see what networks you currently have defined.
-
-```plain
- docker network list
- NETWORK ID          NAME                DRIVER              SCOPE
- abcdef012345        bridge              bridge              local
- 6789abcdef01        host                host                local
- 23456789abcd        none                null                local
- ef0123456789        normal              bridge              local
- abcdef012345        xebialabs_default   bridge              local
-```
-
-> Here you can see that the `xebialabs` network is already defined.
-
-To use a different network, either use the `--project-name` option or set the `COMPOSE_PROJECT_NAME` environment variable:
+Run the following:
 
 ```plain
-docker-compose --project-name xebialabs up
-
-# or
-
-export COMPOSE_PROJECT_NAME=xebialabs
-docker-compose up
+cd docker
+docker-compose up --detach
 ```
 
-> **Note:** If you don't do this, all your containers will run under the `xebialabs` network with `xebialabs` prefix.
->
-> If you only intend to run one container set at a time and run `docker-compose down` in between, you don't have to worry about this.
+## Find the apps here:
+
+{{ if .UseXLDeploy -}}
+* XL Deploy: http://localhost:{{.XLDeployPort}}
+  * username: admin
+  * password: admin
+{{- end }}
+
+{{ if .UseXLRelease -}}
+* XL Release: http://localhost:{{.XLReleasePort}}
+  * username: admin
+  * password: admin
+{{- end }}
+
+{{ if .UseJenkins -}}
+* Jenkins: http://localhost:{{.JenkinsPort}}
+  * username: admin
+  * password: admin
+{{- end }}

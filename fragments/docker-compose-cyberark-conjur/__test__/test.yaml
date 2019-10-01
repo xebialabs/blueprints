@@ -1,0 +1,11 @@
+answers-file: answers.yaml
+expected-files:
+- xebialabs/USAGE-cyberark-conjur.md
+- docker-cyberark-conjur/docker-compose.yaml
+- docker-cyberark-conjur/conf/policy/00100-policy.yaml
+- docker-cyberark-conjur/conjur-client/Dockerfile
+- docker-cyberark-conjur/conjur-client/script/provision.sh
+- docker-cyberark-conjur/conjur-server/Dockerfile
+- docker-cyberark-conjur/conjur-server/script/provision.sh
+not-expected-files:
+- xebialabs.yaml

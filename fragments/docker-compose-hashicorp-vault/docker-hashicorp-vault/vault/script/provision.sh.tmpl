@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+{{ $path := splitList "/" .DockerHashiCorpSecretPath }}
+vault secrets enable -path={{ index $path 0 }} -version=1 {{ if eq .DockerHashiCorpBackend "VERSIONED" }}kv-v2{{ else }}kv{{ end }}
+{{- $splitKeys := splitList "," .DockerHashiCorpKeys }}
+vault kv put {{ .DockerHashiCorpSecretPath }}{{ range $splitKeys }} {{ . | trim }}=YOUR_VALUE_HERE{{ end }}

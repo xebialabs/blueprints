@@ -1,0 +1,38 @@
+version: '2.1'
+services:
+  database:
+    image: postgres:9.3
+    container_name: xebialabs-conjur-postgres
+
+  conjur:
+    build: conjur-server
+    container_name: xebialabs-conjur-server
+    command: server
+    environment:
+      DATABASE_URL: postgres://postgres@database/postgres
+      CONJUR_DATA_KEY: XX3CC4QLyC7AipDejgZ0+LrCmpaZ13vThM4xfPLlxt4=
+    healthcheck:
+      test: /bin/sh provision.sh
+    user: root
+    volumes:
+      - ./volumes/admin_info:/opt/conjur-server/admin_info
+    depends_on: [ database ]
+
+  client:
+    build: conjur-client
+    container_name: xebialabs-conjur-client
+    entrypoint: sleep
+    command: infinity
+    healthcheck:
+      test: /bin/bash provision.sh
+      interval: 35s
+    depends_on: [ database ]
+    user: root
+    volumes:
+    - ./conf/policy:/policy
+    - ./volumes/admin_info:/admin_info
+
+networks:
+  default:
+    external:
+      name: xebialabs

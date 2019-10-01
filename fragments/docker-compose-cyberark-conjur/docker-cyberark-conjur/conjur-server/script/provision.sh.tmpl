@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+if [ -f temporary ]
+then
+    rm -f /opt/conjur-server/admin_info/*
+fi
+
+if [ ! -f /opt/conjur-server/admin_info/admin_data ]
+then
+    conjurctl account create {{ .DockerCyberarkAccount }} > admin_info/admin_data
+    chmod -R 777 ../../build
+    rm -f temporary
+fi

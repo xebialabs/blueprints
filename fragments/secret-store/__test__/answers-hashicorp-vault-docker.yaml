@@ -1,0 +1,9 @@
+SecretStoreTool: hashicorp-vault
+SecretStoreName: MySecretStore
+SecretStoreDirectoryName: secretdir
+SecretStoreDictionaryName: MySecretStore Dictionary
+SecretStoreLocation: docker
+SecretStoreKeys: key.one,key.two
+HashiCorpBackend: VERSIONED
+HashiCorpSecretPath: xebialabs/demo
+DockerHashiCorpRootToken: demo-root-token

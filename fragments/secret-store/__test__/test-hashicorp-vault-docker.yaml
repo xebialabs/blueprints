@@ -1,0 +1,11 @@
+answers-file: answers-hashicorp-vault-docker.yaml
+expected-files:
+- xebialabs/USAGE-secret-store.md
+- xebialabs/USAGE-hashicorp-vault.md
+- xebialabs/xld-secret-store-configuration.yaml
+- xebialabs/xld-secret-store-environments.yaml
+- docker-hashicorp-vault/docker-compose.yaml
+- docker-hashicorp-vault/vault/Dockerfile
+- docker-hashicorp-vault/vault/script/provision.sh
+not-expected-files:
+- xebialabs.yaml

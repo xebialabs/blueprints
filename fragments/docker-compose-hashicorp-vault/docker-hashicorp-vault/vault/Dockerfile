@@ -1,0 +1,2 @@
+FROM vault
+ADD script /

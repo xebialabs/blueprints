@@ -3,33 +3,44 @@ services:
   {{- if .UseXLDeploy }}
   xl-deploy:
     image: xebialabs/xl-deploy:{{ .XLVersion }}
+    container_name: xebialabs-xl-deploy
     ports:
     - "{{.XLDeployPort}}:4516"
     environment:
     - ADMIN_PASSWORD=admin
     - ACCEPT_EULA=Y
+    networks:
+    - xebialabs
   {{- end }}
 
   {{- if .UseXLRelease }}
   xl-release:
     image: xebialabs/xl-release:{{ .XLVersion }}
+    container_name: xebialabs-xl-release
     ports:
     - "{{.XLReleasePort}}:5516"
     environment:
     - ADMIN_PASSWORD=admin
     - ACCEPT_EULA=Y
+    networks:
+    - xebialabs
   xl-cli:
     image: xebialabsunsupported/xl-cli:{{ .XLVersion }}
+    container_name: xebialabs-xl-cli
     depends_on:
     - xl-deploy
     - xl-release
     command: ["apply", "--xl-deploy-url", "http://xl-deploy:4516/", "--xl-release-url", "http://xl-release:5516/", "-f", "/data/configure-xl-devops-platform.yaml"]
     volumes:
     - ./data/:/data:ro
+    networks:
+    - xebialabs
   {{- end }}
-  {{- if .UseJenkins }}  
+
+  {{- if .UseJenkins }}
   jenkins:
     image: xebialabsunsupported/jenkins-blueprint-demo:latest
+    container_name: xebialabs-jenkins
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - ./jenkins/jenkins.yaml:/var/jenkins_home/casc_configs/jenkins.yaml
@@ -40,12 +51,16 @@ services:
       - DOCKER_USER=${DOCKER_USER}
       - DOCKER_PASS=${DOCKER_PASS}
     ports:
-      - {{.JenkinsPort}}:8080
-      - 55888:55888
+      - "{{.JenkinsPort}}:8080"
+      - "55888:55888"
+    networks:
+    - xebialabs
   {{- end }}
+
   {{- if .UseDockerProxy }}
   dockerproxy:
     image: tecnativa/docker-socket-proxy:latest
+    container_name: xebialabs-dockerproxy
     privileged: true
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
@@ -70,4 +85,11 @@ services:
       - TASKS=1
       - VERSION=1
       - VOLUMES=1
+    networks:
+    - xebialabs
   {{- end }}
+
+networks:
+  xebialabs:
+    name: xebialabs
+    driver: bridge

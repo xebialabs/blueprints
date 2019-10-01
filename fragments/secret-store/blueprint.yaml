@@ -1,0 +1,121 @@
+apiVersion: xl/v2
+kind: Blueprint
+
+metadata:
+  name: secret-store
+  description: |
+    External secret store
+  author: XebiaLabs
+  version: 2.0
+  instructions: |
+    Please read xebialabs/USAGE-secret-store.md
+  suppressXebiaLabsFolder: true
+
+spec:
+  parameters:
+  # ###########################################################################
+  # Generic
+  # ###########################################################################
+
+  - name: SecretStoreTool
+    type: Select
+    prompt: "Choose which external secret store to use:"
+    options:
+    - label: Hashicorp Vault
+      value: hashicorp-vault
+    - label: Cyberark Conjur
+      value: cyberark-conjur
+
+  - name: SecretStoreName
+    type: Input
+    prompt: "Give the secret store a name:"
+
+  - name: SecretStoreDirectoryName
+    type: Input
+    prompt: "The directory in XL Deploy where this Dictionary will be created:"
+
+  - name: SecretStoreDictionaryName
+    type: Input
+    prompt: "The blueprint will also create a dictionary. Give the dictionary a name:"
+    default: !expr "SecretStoreName + ' Dictionary'"
+
+  - name: SecretStoreLocation
+    type: Select
+    prompt: "Select where the secret store is:"
+    options:
+    - label: Connect to an existing secret store
+      value: existing
+    - label: Create a new secret store with Docker
+      value: docker
+
+  - name: SecretStoreKeys
+    type: Input
+    prompt: "Comma-separated list of secret keys to be referenced (e.g. key.one,key.two). You will supply the values manually:"
+    validate: !expr "regex('^([a-zA-Z0-9._-]+,)*[a-zA-Z0-9._-]+$', SecretStoreKeys)"
+
+  - name: SecretStoreServerAddress
+    type: Input
+    prompt: "Enter the secret store server's address:"
+    validate: !expr "regex('^http://[a-z0-9_.-]+:[0-9]{1,5}', SecretStoreServerAddress)"
+    promptIf: !expr "SecretStoreLocation == 'existing'"
+
+  # ###########################################################################
+  # HashiCorp specific
+  # ###########################################################################
+
+  - name: HashiCorpBackend
+    type: Select
+    prompt: "Choose the type of backend versioning:"
+    options:
+    - label: Versioned
+      value: VERSIONED
+    - label: Unversioned
+      value: UNVERSIONED
+    promptIf: !expr "SecretStoreTool == 'hashicorp-vault'"
+
+  - name: HashiCorpSecretPath
+    type: Input
+    prompt: "Enter the secret path:"
+    promptIf: !expr "SecretStoreTool == 'hashicorp-vault'"
+    default: "xebialabs/demo"
+    validate: !expr "regex('^([^/]+/)[^/]+$', HashiCorpSecretPath)"
+
+  # ###########################################################################
+  # Cyberark specific
+  # ###########################################################################
+
+  - name: CyberarkAccount
+    type: Input
+    prompt: "Enter the account name:"
+    promptIf: !expr "SecretStoreTool == 'cyberark-conjur'"
+
+  - name: CyberarkPolicyPath
+    type: Input
+    prompt: "Enter the policy path:"
+    promptIf: !expr "SecretStoreTool == 'cyberark-conjur'"
+
+  includeAfter:
+  - blueprint: fragments/docker-compose-hashicorp-vault
+    includeIf: !expr "SecretStoreTool == 'hashicorp-vault' && SecretStoreLocation == 'docker'"
+    parameterOverrides:
+    - name: DockerHashiCorpBackend
+      value: !expr "HashiCorpBackend"
+    - name: DockerHashiCorpSecretPath
+      value: !expr "HashiCorpSecretPath"
+    - name: DockerHashiCorpKeys
+      value: !expr "SecretStoreKeys"
+
+  - blueprint: fragments/docker-compose-cyberark-conjur
+    includeIf: !expr "SecretStoreTool == 'cyberark-conjur' && SecretStoreLocation == 'docker'"
+    parameterOverrides:
+    - name: DockerCyberarkAccount
+      value: "xebialabs"
+    - name: DockerCyberarkPolicyPath
+      value: "demo"
+    - name: DockerCyberarkKeys
+      value: !expr "SecretStoreKeys"
+
+  files:
+  - path: xebialabs/USAGE-secret-store.md.tmpl
+  - path: xebialabs/xld-secret-store-configuration.yaml.tmpl
+  - path: xebialabs/xld-secret-store-environments.yaml.tmpl

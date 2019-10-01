@@ -1,0 +1,14 @@
+{{ $dir := .DictionaryDirectoryName | kebabcase }}
+apiVersion: xl-deploy/v1
+kind: Environments
+spec:
+- name: {{$dir}}
+  type: core.Directory
+  children:
+  - name: {{ .DictionaryName }}
+    type: udm.EncryptedDictionary
+    entries:
+      {{- $splitKeys := splitList "," .DictionaryKeys }}
+      {{- range $splitKeys }}
+      {{ . | trim }}: ""
+      {{- end }}

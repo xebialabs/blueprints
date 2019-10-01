@@ -1,0 +1,45 @@
+apiVersion: xl/v2
+kind: Blueprint
+
+metadata:
+  name: docker-compose-hashicorp-vault
+  description: |
+    Creates a HashiCorp Vault server.
+  author: XebiaLabs
+  version: 2.0
+  instructions: Please read xebialabs/USAGE-hashicorp-vault.md.
+  suppressXebiaLabsFolder: true
+
+spec:
+  parameters:
+
+  - name: DockerHashiCorpBackend
+    type: Select
+    prompt: "Choose the type of backend versioning:"
+    options:
+    - label: Versioned
+      value: VERSIONED
+    - label: Unversioned
+      value: UNVERSIONED
+
+  - name: DockerHashiCorpSecretPath
+    type: Input
+    prompt: "The path where secrets will be stored:"
+    default: "xebialabs/demo"
+    validate: !expr "regex('^([^/]+/)[^/]+$', DockerHashiCorpSecretPath)"
+
+  - name: DockerHashiCorpRootToken
+    type: Input
+    value: "demo-root-token"
+
+  - name: DockerHashiCorpKeys
+    type: Input
+    prompt: "Comma-separated list of secret keys to be created (e.g. key.one,key.two). You will supply the values manually:"
+    default: "key.one,key.two"
+    validate: !expr "regex('^([a-zA-Z0-9._-]+,)*[a-zA-Z0-9._-]+$', DockerHashiCorpKeys)"
+
+  files:
+  - path: xebialabs/USAGE-hashicorp-vault.md.tmpl
+  - path: docker-hashicorp-vault/docker-compose.yaml.tmpl
+  - path: docker-hashicorp-vault/vault/Dockerfile
+  - path: docker-hashicorp-vault/vault/script/provision.sh.tmpl

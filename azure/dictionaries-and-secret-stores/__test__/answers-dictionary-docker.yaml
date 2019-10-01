@@ -1,0 +1,15 @@
+AppName: testapp
+AzureResourceGroupName: rg
+AzureLocation: westeurope
+AzureVMName: testvm
+AzureVMSize: Standard_DS1_v2
+AzureOSUsername: azureuser
+CredentialsSource: dictionary
+DictionaryName: TestDictionary
+AzureClientID: 9149b9d6-b24f-d09b-3d9e-7ac9977b3dbe
+AzureSubscriptionID: 375e746d-0f79-4e4e-6627-d27491ca1bcb
+AzureTenantID: 57b6831a-b882-3577-556e-5a246483a5cf
+GenerateDockerComposeSetup: true
+XLDeployPort: 4516
+XLReleasePort: 5516
+XLVersion: "9.0"

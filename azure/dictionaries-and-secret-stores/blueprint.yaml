@@ -1,0 +1,172 @@
+apiVersion: xl/v2
+kind: Blueprint
+
+metadata:
+  name: dictionaries-and-secret-stores
+  description: |
+    A single Linux VM using Terraform
+  author: XebiaLabs
+  version: 2.0
+  instructions: Please read xebialabs/USAGE-dictionaries-and-secret-stores.md
+  suppressXebiaLabsFolder: true
+spec:
+  parameters:
+  - name: AppName
+    type: Input
+    prompt: What name do you want to give the application?
+
+  - name: AzureResourceGroupName
+    type: Input
+    prompt: "Name for the new Resource Group:"
+
+  - name: AzureLocation
+    type: Select
+    prompt: "Select where this resource group will go:"
+    options:
+    - label: East Asia
+      value: eastasia
+    - label: Southeast Asia
+      value: southeastasia
+    - label: Central US
+      value: centralus
+    - label: East US
+      value: eastus
+    - label: East US 2
+      value: eastus2
+    - label: West US
+      value: westus
+    - label: North Central US
+      value: northcentralus
+    - label: South Central US
+      value: southcentralus
+    - label: North Europe
+      value: northeurope
+    - label: West Europe
+      value: westeurope
+    - label: Japan West
+      value: japanwest
+    - label: Japan East
+      value: japaneast
+    - label: Brazil South
+      value: brazilsouth
+    - label: Australia East
+      value: australiaeast
+    - label: Australia Southeast
+      value: australiasoutheast
+    - label: South India
+      value: southindia
+    - label: Central India
+      value: centralindia
+    - label: West India
+      value: westindia
+    - label: Canada Central
+      value: canadacentral
+    - label: Canada East
+      value: canadaeast
+    - label: UK South
+      value: uksouth
+    - label: UK West
+      value: ukwest
+    - label: West Central US
+      value: westcentralus
+    - label: West US 2
+      value: westus2
+    - label: Korea Central
+      value: koreacentral
+    - label: Korea South
+      value: koreasouth
+    - label: France Central
+      value: francecentral
+    - label: France South
+      value: francesouth
+    - label: Australia Central
+      value: australiacentral
+    - label: Australia Central 2
+      value: australiacentral2
+    - label: South Africa North
+      value: southafricanorth
+    - label: South Africa West
+      value: southafricawest
+
+  - name: AzureVMName
+    type: Input
+    prompt: "Enter a name to give the VM:"
+
+  - name: AzureVMSize
+    type: Select
+    prompt: "Select a VM size:"
+    options:
+    - label: 1 vCPU, 3.5 GiB RAM
+      value: Standard_DS1_v2
+    - label: 2 vCPUs, 7 GiB RAM
+      value: Standard_DS2_v2
+    - label: 4 vCPUs, 14 GiB RAM
+      value: Standard_DS3_v2
+    - label: 8 vCPUs, 28 GiB RAM
+      value: Standard_DS4_v2
+    - label: 16 vCPUs, 56 GiB RAM
+      value: Standard_DS5_v2
+
+  - name: AzureOSUsername
+    type: Input
+    prompt: "Enter the username that will log into the VM:"
+    default: "azureuser"
+
+  - name: CredentialsSource
+    type: Select
+    prompt: "Select a secret store for the credentials:"
+    options:
+    - label: "Max security - external secret store that you have configured (HashiCorp Vault or Cyberark Conjur)"
+      value: secret-store
+    - label: "Med security - encrypted dictionary to be created within XL Deploy"
+      value: dictionary
+
+  includeAfter:
+  - blueprint: fragments/secret-store
+    includeIf: !expr "CredentialsSource == 'secret-store'"
+    parameterOverrides:
+    - name: SecretStoreDirectoryName
+      value: !expr "AppName"
+    - name: SecretStoreKeys
+      value: "azure.clientsecret,azure.ospassword"
+
+  - blueprint: fragments/dictionary
+    includeIf: !expr "CredentialsSource == 'dictionary'"
+    parameterOverrides:
+    - name: DictionaryDirectoryName
+      value: !expr "AppName"
+    - name: DictionaryKeys
+      value: "azure.clientsecret,azure.ospassword"
+
+  - blueprint: fragments/azure-credentials
+    parameterOverrides:
+    - name: AskForAzurePassword
+      value: !expr "false"
+
+  - blueprint: xl-devops-platform
+    parameterOverrides:
+    - name: UseXLDeploy
+      value: !expr "true"
+    - name: UseXLRelease
+      value: !expr "true"
+    - name: UseJenkins
+      value: !expr "false"
+    - name: UseDockerProxy
+      value: !expr "false"
+
+  files:
+  - path: xebialabs.yaml.tmpl
+  - path: xebialabs/USAGE-dictionaries-and-secret-stores-dictionary.md.tmpl
+    writeIf: !expr "CredentialsSource == 'dictionary'"
+    renameTo: xebialabs/USAGE-dictionaries-and-secret-stores.md.tmpl
+  - path: xebialabs/USAGE-dictionaries-and-secret-stores-secret-store.md.tmpl
+    writeIf: !expr "CredentialsSource == 'secret-store'"
+    renameTo: xebialabs/USAGE-dictionaries-and-secret-stores.md.tmpl
+  - path: xebialabs/xld-dictionaries-and-secret-stores-applications.yaml.tmpl
+  - path: xebialabs/xld-dictionaries-and-secret-stores-environments.yaml.tmpl
+  - path: xebialabs/xld-dictionaries-and-secret-stores-infrastructure.yaml.tmpl
+  - path: xebialabs/xlr-dictionaries-and-secret-stores-pipeline-ci-cd.yaml.tmpl
+  - path: xebialabs/xlr-dictionaries-and-secret-stores-pipeline-destroy.yaml.tmpl
+  - path: terraform/main.tf
+  - path: terraform/outputs.tf
+  - path: terraform/variables.tf
