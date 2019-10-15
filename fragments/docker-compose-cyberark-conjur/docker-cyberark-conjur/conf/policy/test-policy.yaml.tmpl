@@ -1,0 +1,8 @@
+- !policy
+  id: test
+  body:
+    - &variables
+      {{- $splitKeys := splitList "," .DockerCyberarkKeys }}
+      {{- range $key := $splitKeys }}
+      - !variable {{ $key | trim }}
+      {{- end }}

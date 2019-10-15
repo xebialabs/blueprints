@@ -10,6 +10,6 @@ Below are the steps you need to follow:
 In XL Deploy, edit `Environments/{{$dir}}/{{ .DictionaryName }}` and fill in the secret values for each of the following keys:
 
 {{ $splitKeys := splitList "," .DictionaryKeys }}
-{{- range $splitKeys }}
-* `{{ . | trim }}`
+{{- range $key := $splitKeys }}
+* `{{ $key | trim }}`
 {{- end }}

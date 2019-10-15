@@ -128,7 +128,7 @@ spec:
     - name: SecretStoreDirectoryName
       value: !expr "AppName"
     - name: SecretStoreKeys
-      value: "azure.clientsecret,azure.ospassword"
+      value: "azure.clientsecret,azure.ospassword,azure.resourcegroup"
 
   - blueprint: fragments/dictionary
     includeIf: !expr "CredentialsSource == 'dictionary'"
@@ -136,7 +136,7 @@ spec:
     - name: DictionaryDirectoryName
       value: !expr "AppName"
     - name: DictionaryKeys
-      value: "azure.clientsecret,azure.ospassword"
+      value: "azure.clientsecret,azure.ospassword,azure.resourcegroup"
 
   - blueprint: fragments/azure-credentials
     parameterOverrides:

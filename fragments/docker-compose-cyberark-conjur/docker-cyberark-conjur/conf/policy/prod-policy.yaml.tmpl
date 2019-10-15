@@ -1,8 +1,8 @@
 - !policy
-  id: {{ .DockerCyberarkPolicyPath }}
+  id: prod
   body:
     - &variables
       {{- $splitKeys := splitList "," .DockerCyberarkKeys }}
-      {{- range $splitKeys }}
-      - !variable {{ . | trim }}
+      {{- range $key := $splitKeys }}
+      - !variable {{ $key | trim }}
       {{- end }}

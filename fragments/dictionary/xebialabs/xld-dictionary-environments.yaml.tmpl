@@ -2,13 +2,16 @@
 apiVersion: xl-deploy/v1
 kind: Environments
 spec:
-- name: {{$dir}}
+{{- $environments := list "dev" "test" "prod" }}
+{{- range $env := $environments }}
+- name: {{$dir}} ({{$env}})
   type: core.Directory
   children:
-  - name: {{ .DictionaryName }}
+  - name: {{ $.DictionaryName }}
     type: udm.EncryptedDictionary
     entries:
-      {{- $splitKeys := splitList "," .DictionaryKeys }}
-      {{- range $splitKeys }}
-      {{ . | trim }}: ""
+      {{- $splitKeys := splitList "," $.DictionaryKeys }}
+      {{- range $key := $splitKeys }}
+      {{ $key | trim }}: ""
       {{- end }}
+{{- end }}
