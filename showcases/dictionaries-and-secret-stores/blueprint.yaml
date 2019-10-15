@@ -15,10 +15,6 @@ spec:
     type: Input
     prompt: What name do you want to give the application?
 
-  - name: AzureResourceGroupName
-    type: Input
-    prompt: "Name for the new Resource Group:"
-
   - name: AzureLocation
     type: Select
     prompt: "Select where this resource group will go:"
