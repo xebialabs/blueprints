@@ -1,0 +1,75 @@
+
+# apply using "xl apply -f release-file.yaml --xl-release-username "<your ldap user>" --xl-release-password "<your ldap password>" --xl-release-url https://xl-release.xebialabs.com:5516"
+
+apiVersion: xl-release/v1
+kind: Templates
+spec:
+- directory: Cloud Love
+  children:
+  - template: Blueprints release template
+    description: XLR pipeline to release blueprints every milestone
+    phases:
+    - phase: Verification
+      tasks:
+      - name: Verify Travis CI last build
+        type: xlrelease.ScriptTask
+        script: |-
+          import urllib2
+          import json
+          import time
+          travis_url = 'https://api.travis-ci.org/repos/xebialabs/blueprints/branches/${GIT_BRANCH}'
+          headers = {"User-Agent":"XebiaLabs", "Accept": "application/vnd.travis-ci.2.1+json" }
+          def make_req(url, body=None, token=None):
+            req = urllib2.Request(url, None, headers=headers)
+            opener = urllib2.build_opener()
+            response = opener.open(req)
+            return json.loads(response.read())
+          resp = make_req(travis_url)
+          branch = resp['branch']
+          print("\nLast build number: " + branch['number'])
+          print("\nLast build status: " + branch['state'])
+          if branch['state'] != "passed":
+            print("\nCheck the logs on: https://travis-ci.org/xebialabs/blueprints/builds/" + repo['id'] + "\n")
+            print(json.dumps(resp, indent=4, sort_keys=True))
+            exit(1)
+    - phase: Prepare
+      tasks:
+      - name: Create Branch for release
+        type: github.CreateBranch
+        server: XebiaLabs GitHub (from community GitHub plugin)
+        organization: xebialabs
+        repositoryName: blueprints
+        oldBranch: ${GIT_BRANCH}
+        newBranch: ${BLUEPRINTS_VERSION}-maintenance
+      color: '#0099CC'
+    - phase: Release
+      tasks:
+      - name: Release new version of Blueprints
+        type: jenkins.Build
+        jenkinsServer: Jenkins NG
+        jobName: XL Devops As Code/job/Blueprints Release
+        jobParameters: |-
+          RELEASE_BRANCH_NAME=${BLUEPRINTS_VERSION}-maintenance
+          RELEASE_FOLDER=${BLUEPRINTS_VERSION}
+      - name: Verify release
+        type: webhook.UrlCheck
+        url: https://dist.xebialabs.com/public/blueprints/${BLUEPRINTS_VERSION}/index.json
+      - name: Notify team
+        type: slack.Notification
+        server: Cloud-Love
+        message: Blueprints version ${BLUEPRINTS_VERSION} was released to https://dist.xebialabs.com/public/blueprints/${BLUEPRINTS_VERSION}
+          and a new branch ${BLUEPRINTS_VERSION}-maintenance has been created in GitHub.
+        titleLink: https://dist.xebialabs.com/public/blueprints/${BLUEPRINTS_VERSION}
+        color: good
+      color: '#0099CC'
+    variables:
+    - type: xlrelease.StringVariable
+      key: BLUEPRINTS_VERSION
+      label: Blueprints Version
+      description: The release version to use, should be x.x.x notation
+    - type: xlrelease.StringVariable
+      key: GIT_BRANCH
+      label: Git branch
+      description: Git branch to build
+      value: master
+    riskProfile: Default risk profile
