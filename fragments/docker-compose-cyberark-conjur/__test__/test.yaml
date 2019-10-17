@@ -2,7 +2,7 @@ answers-file: answers.yaml
 expected-files:
 - xebialabs/USAGE-cyberark-conjur.md
 - docker-cyberark-conjur/docker-compose.yaml
-- docker-cyberark-conjur/conf/policy/demo-policy.yaml
+- docker-cyberark-conjur/conf/policy/root-policy.yaml
 - docker-cyberark-conjur/conf/policy/dev-policy.yaml
 - docker-cyberark-conjur/conf/policy/test-policy.yaml
 - docker-cyberark-conjur/conf/policy/prod-policy.yaml

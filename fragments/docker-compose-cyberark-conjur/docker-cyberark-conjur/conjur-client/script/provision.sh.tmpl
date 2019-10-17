@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-if [ ! -f admin_info/00100-xl_data ]
+if [ ! -f admin_info/root-xl_data ]
 then
     conjur init -u conjur -a {{ .DockerCyberarkAccount }}
     TOKEN_LINE="$(tail -1 admin_info/admin_data)"
