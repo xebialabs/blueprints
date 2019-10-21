@@ -1,4 +1,4 @@
-# Basic Vm
+# Dictionaries and Secret Stores
 
 ## Introduction
 
@@ -7,13 +7,13 @@ This blueprint showcases the use of dictionaries and external secret stores to h
 It has several different possible outcomes, depending on the answers you give. The basics are:
 
 1. A dictionary for passwords,
-2. or a secret store for passwords. Two product are supported:
-   1. Cyberark Conjur
-   2. HashiCorp Vault
-3. You can choose whether to use your existing secret store or generate Docker files to spin one up locally
-4. Lastly, you can choose whether to connect to your existing instances of XL Deploy and XL Release or generate Docker files to spin them up locally
+2. **or** a secret store for passwords. Two products are supported:
+   1. [CyberArk Conjur](/xl-platform/how-to/manage-secrets-using-cyberark-conjur/)
+   2. [HashiCorp Vault](/xl-platform/how-to/manage-secrets-using-hashicorp-vault/)
+3. You can choose whether to use your existing secret store or generate Docker files to spin one up locally.
+4. Lastly, you can choose whether to connect to your existing instances of XL Deploy and XL Release or generate Docker files to spin them up locally.
 
-In the interest of security, the blueprint will not prompt you for the following values. You will need to capture them manually or make sure they exist in your external secret store.
+In the interests of security, the blueprint will not prompt you for the following values. You will need to capture them manually or make sure they exist in your external secret store:
 
 * `azure.clientsecret`
 * `azure.ospassword`
@@ -25,8 +25,8 @@ There will be instructions on where and when to fill in these values in the gene
 
 If you're new to XebiaLabs blueprints, check out:
 
-* [Get started with DevOps as Code](https://docs.xebialabs.com/xl-platform/concept/get-started-with-devops-as-code.html)
-* [Get started with blueprints](https://docs.xebialabs.com/xl-platform/concept/get-started-with-blueprints.html)
+* [Get started with DevOps as Code](https://docs.xebialabs.com/xl-release/concept/get-started-with-devops-as-code.html)
+* [Get started with blueprints](https://docs.xebialabs.com/xl-release/concept/get-started-with-blueprints.html)
 
 ## Usage
 
