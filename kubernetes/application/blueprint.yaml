@@ -37,7 +37,7 @@ spec:
 
   files:
   # XebiaLabs
-  - path: xebialabs/USAGE-kubernetes-application.md
+  - path: xebialabs/USAGE-kubernetes-application.md.tmpl
   - path: xebialabs/kubernetes-application.yaml.tmpl
   # Kubernetes
   - path: kubernetes/deployment.yaml.tmpl
