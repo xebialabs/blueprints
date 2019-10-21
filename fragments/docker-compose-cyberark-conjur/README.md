@@ -1,8 +1,8 @@
-# Docker Compose for Cyberark Conjur
+# Docker Compose for CyberArk Conjur
 
 ## Introduction
 
-This blueprint will create all the files necessary to run an instance of Cyberark Conjur in Docker within the same `xebialabs` Docker network as `xl-devops-platform`.
+This blueprint will create all the files necessary to run an instance of CyberArk Conjur in Docker within the same `xebialabs` Docker network as `xl-devops-platform`.
 
 ## Fragment blueprint
 
@@ -21,16 +21,16 @@ includeAfter:
 
 This blueprint includes the following tools and technologies:
 
-* Cyberark Conjur
+* CyberArk Conjur
 * Docker
 
 ## Output
 
 This blueprint will output:
 
-* A `docker-compose.yaml` file that will launch the Cyberark Conjur instance
+* A `docker-compose.yaml` file that will launch the CyberArk Conjur instance
 
 ## Labels
 
-* Cyberark Conjur
+* CyberArk Conjur
 * Docker

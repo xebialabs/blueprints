@@ -41,7 +41,7 @@ This blueprint includes the following tools and technologies:
 * Azure
 * Terraform
 * HashiCorp Vault
-* Cyberark Conjur
+* CyberArk Conjur
 * XL Deploy
 * XL Release
 
@@ -59,7 +59,7 @@ To run the YAML that this blueprint generates, you need:
 
 * Docker (Linux) or Docker Desktop (Mac, Windows)
 * XebiaLabs Deployment Automation up and running
-* Cyberark Conjur or HashiCorp Vault up and running
+* CyberArk Conjur or HashiCorp Vault up and running
 * A valid Azure account
 
 ## Information required
@@ -83,4 +83,4 @@ This blueprint will output:
 * Azure
 * Terraform
 * HashiCorp Vault
-* Cyberark Conjur
+* CyberArk Conjur

@@ -2,22 +2,22 @@
 
 if [ ! -f admin_info/root-xl_data ]
 then
-    conjur init -u conjur -a {{ .DockerCyberarkAccount }}
+    conjur init -u conjur -a {{ .DockerCyberArkAccount }}
     TOKEN_LINE="$(tail -1 admin_info/admin_data)"
     ADMIN_TOKEN="$(cut -d':' -f2 <<< $TOKEN_LINE)"
     conjur authn login -u admin -p $ADMIN_TOKEN
     conjur policy load --replace root policy/root-policy.yaml > admin_info/root-policy
-    conjur policy load {{ .DockerCyberarkPolicyPath }} policy/dev-policy.yaml > admin_info/dev-policy
-    conjur policy load {{ .DockerCyberarkPolicyPath }} policy/test-policy.yaml > admin_info/test-policy
-    conjur policy load {{ .DockerCyberarkPolicyPath }} policy/prod-policy.yaml > admin_info/prod-policy
+    conjur policy load {{ .DockerCyberArkPolicyPath }} policy/dev-policy.yaml > admin_info/dev-policy
+    conjur policy load {{ .DockerCyberArkPolicyPath }} policy/test-policy.yaml > admin_info/test-policy
+    conjur policy load {{ .DockerCyberArkPolicyPath }} policy/prod-policy.yaml > admin_info/prod-policy
 
     chmod -R 777 admin_info
 
     {{- $environments := list "dev" "test" "prod" }}
-    {{- $splitKeys := splitList "," .DockerCyberarkKeys }}
+    {{- $splitKeys := splitList "," .DockerCyberArkKeys }}
     {{- range $env := $environments }}
     {{- range $key := $splitKeys }}
-    conjur variable values add {{ $.DockerCyberarkPolicyPath }}/{{$env}}/{{ $key | trim }} "YOUR_VALUE_HERE"
+    conjur variable values add {{ $.DockerCyberArkPolicyPath }}/{{$env}}/{{ $key | trim }} "YOUR_VALUE_HERE"
     {{- end }}
     {{- end }}
 

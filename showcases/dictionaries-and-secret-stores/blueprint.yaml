@@ -112,7 +112,7 @@ spec:
     type: Select
     prompt: "Select a secret store for the credentials:"
     options:
-    - label: "Max security - external secret store that you have configured (HashiCorp Vault or Cyberark Conjur)"
+    - label: "Max security - external secret store that you have configured (HashiCorp Vault or CyberArk Conjur)"
       value: secret-store
     - label: "Med security - encrypted dictionary to be created within XL Deploy"
       value: dictionary

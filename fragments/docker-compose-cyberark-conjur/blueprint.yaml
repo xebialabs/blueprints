@@ -4,7 +4,7 @@ kind: Blueprint
 metadata:
   name: docker-compose-cyberark-conjur
   description: |
-    Creates a Cyberark Conjur server.
+    Creates a CyberArk Conjur server.
   author: XebiaLabs
   version: 2.0
   instructions: Please read xebialabs/USAGE-cyberark-conjur.md.
@@ -12,18 +12,18 @@ metadata:
 
 spec:
   parameters:
-  - name: DockerCyberarkAccount
+  - name: DockerCyberArkAccount
     type: Input
     prompt: "Enter the account name:"
 
-  - name: DockerCyberarkPolicyPath
+  - name: DockerCyberArkPolicyPath
     type: Input
     prompt: "Enter the policy path:"
 
-  - name: DockerCyberarkKeys
+  - name: DockerCyberArkKeys
     type: Input
     prompt: "Comma-separated list of secret keys to be created (e.g. key.one,key.two). You will supply the values manually:"
-    validate: !expr "regex('^([a-zA-Z0-9._-]+,)*[a-zA-Z0-9._-]+$', DockerCyberarkKeys)"
+    validate: !expr "regex('^([a-zA-Z0-9._-]+,)*[a-zA-Z0-9._-]+$', DockerCyberArkKeys)"
 
   files:
   - path: xebialabs/USAGE-cyberark-conjur.md.tmpl

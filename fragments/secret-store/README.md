@@ -3,7 +3,7 @@
 ## Introduction
 
 This blueprint will create in Docker or connect you to the following already-running 3rd party secret store tools:
-* Cyberark Conjur
+* CyberArk Conjur
 * HashiCorp Vault
 
 
@@ -26,7 +26,7 @@ You probably want to pass the same XL directory from your blueprint to this one.
 
 This blueprint includes the following tools and technologies:
 
-* Cyberark Conjur
+* CyberArk Conjur
 * HashiCorp Vault
 * Docker
 
@@ -34,11 +34,11 @@ This blueprint includes the following tools and technologies:
 
 This blueprint will output:
 
-* A `docker-compose.yaml` file that will launch the Cyberark Conjur or HashiCorp Vault instance
+* A `docker-compose.yaml` file that will launch the CyberArk Conjur or HashiCorp Vault instance
 * A set of instructions for connecting to an existing running instance
 
 ## Labels
 
-* Cyberark Conjur
+* CyberArk Conjur
 * HashiCorp Vault
 * Docker

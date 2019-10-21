@@ -5,5 +5,5 @@ SecretStoreDictionaryName: MySecretStore Dictionary
 SecretStoreLocation: docker
 SecretStoreServerAddress: http://10.0.0.1:80
 SecretStoreKeys: key.one,key.two
-CyberarkAccount: xebialabs
-CyberarkPolicyPath: demo
+CyberArkAccount: xebialabs
+CyberArkPolicyPath: demo

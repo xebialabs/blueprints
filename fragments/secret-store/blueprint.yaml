@@ -23,7 +23,7 @@ spec:
     options:
     - label: Hashicorp Vault
       value: hashicorp-vault
-    - label: Cyberark Conjur
+    - label: CyberArk Conjur
       value: cyberark-conjur
 
   - name: SecretStoreName
@@ -81,15 +81,15 @@ spec:
     validate: !expr "regex('^([^/]+/)[^/]+$', HashiCorpSecretPath)"
 
   # ###########################################################################
-  # Cyberark specific
+  # CyberArk specific
   # ###########################################################################
 
-  - name: CyberarkAccount
+  - name: CyberArkAccount
     type: Input
     prompt: "Enter the account name:"
     promptIf: !expr "SecretStoreTool == 'cyberark-conjur'"
 
-  - name: CyberarkPolicyPath
+  - name: CyberArkPolicyPath
     type: Input
     prompt: "Enter the policy path:"
     promptIf: !expr "SecretStoreTool == 'cyberark-conjur'"
@@ -108,11 +108,11 @@ spec:
   - blueprint: fragments/docker-compose-cyberark-conjur
     includeIf: !expr "SecretStoreTool == 'cyberark-conjur' && SecretStoreLocation == 'docker'"
     parameterOverrides:
-    - name: DockerCyberarkAccount
+    - name: DockerCyberArkAccount
       value: "xebialabs"
-    - name: DockerCyberarkPolicyPath
+    - name: DockerCyberArkPolicyPath
       value: "demo"
-    - name: DockerCyberarkKeys
+    - name: DockerCyberArkKeys
       value: !expr "SecretStoreKeys"
 
   files:

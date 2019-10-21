@@ -1,8 +1,8 @@
-# Docker compose for Cyberark Conjur
+# Docker compose for CyberArk Conjur
 
 ## Notes
 
-* The default username and password for Cyberark is: `admin`/`admin`.
+* The default username and password for CyberArk is: `admin`/`admin`.
 
 ## Steps
 
@@ -15,7 +15,7 @@ Below are the steps you need to follow:
 
 Edit the file `docker-cyberark-conjur/conjur-client/script/provision.sh` and replace "`YOUR_VALUE_HERE`" with the secret values for each of the following keys.
 
-{{ $splitKeys := splitList "," .DockerCyberarkKeys }}
+{{ $splitKeys := splitList "," .DockerCyberArkKeys }}
 {{- range $key := $splitKeys }}
 * `{{ $key | trim }}`
 {{- end }}

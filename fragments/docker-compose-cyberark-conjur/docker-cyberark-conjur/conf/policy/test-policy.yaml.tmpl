@@ -2,7 +2,7 @@
   id: test
   body:
     - &variables
-      {{- $splitKeys := splitList "," .DockerCyberarkKeys }}
+      {{- $splitKeys := splitList "," .DockerCyberArkKeys }}
       {{- range $key := $splitKeys }}
       - !variable {{ $key | trim }}
       {{- end }}
