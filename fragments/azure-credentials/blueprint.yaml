@@ -14,22 +14,21 @@ metadata:
 spec:
   parameters:
   - name: AskForAzurePassword
-    type: Input
     value: true
 
   - name: AzureClientID
     type: Input
-    prompt: "Client ID (also sometimes called AppID):"
+    prompt: "What is the client id (appId) of an existing Service Principal in Azure?"
 
   - name: AzureClientSecret
     type: SecretInput
-    prompt: "Client Secret:"
+    prompt: "What is the secret (password) for that client id?"
     promptIf: !expr "AskForAzurePassword"
 
   - name: AzureSubscriptionID
     type: Input
-    prompt: "Subscription ID:"
+    prompt: "What is your existing Azure subscription id?"
 
   - name: AzureTenantID
     type: Input
-    prompt: "Tenant ID:"
+    prompt: "What is your existing Azure tenant id?"
