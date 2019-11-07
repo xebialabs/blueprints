@@ -1,4 +1,4 @@
-# Basic Arm Template
+# Basic ARM Template
 
 ## Introduction
 

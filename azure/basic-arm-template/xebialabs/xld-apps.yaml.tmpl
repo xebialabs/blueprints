@@ -17,7 +17,7 @@ spec:
         resourceGroupName: {{.ResourceGroup}}
         location: {{.ResourceGroupLocation}}
         deploymentName: {{.AppName}}-deployment
-        file: !file "../arm/template.json"
+        file: !file "{{.TemplateFile}}"
         inputVariables:
           adminUsername: {{.AdminUsername}}
           adminPassword: !value AdminPassword

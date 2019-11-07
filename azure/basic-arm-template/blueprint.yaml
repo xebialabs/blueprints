@@ -156,3 +156,4 @@ spec:
   - path: xebialabs/xlr-pipeline-ci-cd.yaml.tmpl
   - path: xebialabs/xlr-pipeline-destroy.yaml.tmpl
   - path: arm/template.json
+    writeIf: !expr "TemplateFile != '../arm/template.json'"
