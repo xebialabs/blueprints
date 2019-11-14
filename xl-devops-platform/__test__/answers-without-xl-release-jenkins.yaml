@@ -1,3 +1,4 @@
+GenerateDockerComposeSetup: true
 UseXLDeploy: true
 XLDeployPort: 4516
 UseXLRelease: false

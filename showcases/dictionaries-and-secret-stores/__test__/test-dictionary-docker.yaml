@@ -1,0 +1,15 @@
+answers-file: answers-dictionary-docker.yaml
+expected-files:
+- xebialabs.yaml
+- xebialabs/USAGE-dictionaries-and-secret-stores.md
+- xebialabs/USAGE-dictionary.md
+- xebialabs/xld-dictionaries-and-secret-stores-applications.yaml
+- xebialabs/xld-dictionaries-and-secret-stores-environments.yaml
+- xebialabs/xld-dictionaries-and-secret-stores-infrastructure.yaml
+- xebialabs/xlr-dictionaries-and-secret-stores-pipeline-ci-cd.yaml
+- xebialabs/xlr-dictionaries-and-secret-stores-pipeline-destroy.yaml
+- docker/docker-compose.yml
+- docker/data/configure-xl-devops-platform.yaml
+- terraform/main.tf
+- terraform/outputs.tf
+- terraform/variables.tf

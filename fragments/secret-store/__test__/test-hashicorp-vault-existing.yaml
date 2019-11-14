@@ -1,0 +1,7 @@
+answers-file: answers-hashicorp-vault-existing.yaml
+expected-files:
+- xebialabs/USAGE-secret-store.md
+- xebialabs/xld-secret-store-configuration.yaml
+- xebialabs/xld-secret-store-environments.yaml
+not-expected-files:
+- xebialabs.yaml

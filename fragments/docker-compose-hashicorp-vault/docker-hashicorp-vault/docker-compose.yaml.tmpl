@@ -1,0 +1,19 @@
+version: "2.2"
+
+services:
+  vault:
+    container_name: xebialabs-vault
+    build: vault
+    ports:
+    - "8200:8200"
+    environment:
+      VAULT_DEV_ROOT_TOKEN_ID: {{ .DockerHashiCorpRootToken }}
+      VAULT_TOKEN: {{ .DockerHashiCorpRootToken }}
+      VAULT_ADDR: 'http://0.0.0.0:8200'
+    healthcheck:
+      test: /bin/sh provision.sh
+
+networks:
+  default:
+    external:
+      name: xebialabs

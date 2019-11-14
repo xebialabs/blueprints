@@ -1,0 +1,31 @@
+apiVersion: xl/v2
+kind: Blueprint
+
+metadata:
+  name: dictionary
+  description: |
+    This blueprint creates a dictionary for other blueprints to draw secret values from
+  author: XebiaLabs
+  version: 2.0
+  instructions: No special instructions.
+  suppressXebiaLabsFolder: true
+
+spec:
+  parameters:
+  - name: DictionaryName
+    type: Input
+    prompt: "Name for the dictionary:"
+
+  - name: DictionaryDirectoryName
+    type: Input
+    prompt: "The directory in XL Deploy where this Dictionary will be created:"
+    validate: !expr "regex('^[^ ]+$', DictionaryDirectoryName)"
+
+  - name: DictionaryKeys
+    type: Input
+    prompt: "Comma-separated list of secret keys to be created (e.g. key.one,key.two). You will supply the values manually:"
+    validate: !expr "regex('^([a-zA-Z0-9._-]+,)*[a-zA-Z0-9._-]+$', DictionaryKeys)"
+
+  files:
+  - path: xebialabs/USAGE-dictionary.md.tmpl
+  - path: xebialabs/xld-dictionary-environments.yaml.tmpl

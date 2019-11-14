@@ -1,0 +1,4 @@
+DockerHashiCorpBackend: VERSIONED
+DockerHashiCorpSecretPath: xebialabs/demo
+DockerHashiCorpRootToken: demo-root-token
+DockerHashiCorpKeys: key.one,key.two

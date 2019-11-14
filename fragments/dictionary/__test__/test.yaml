@@ -1,0 +1,6 @@
+answers-file: answers.yaml
+expected-files:
+- xebialabs/USAGE-dictionary.md
+- xebialabs/xld-dictionary-environments.yaml
+not-expected-files:
+- xebialabs.yaml

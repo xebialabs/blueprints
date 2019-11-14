@@ -1,0 +1,9 @@
+SecretStoreTool: cyberark-conjur
+SecretStoreName: MySecretStore
+SecretStoreDirectoryName: secretdir
+SecretStoreDictionaryName: MySecretStore Dictionary
+SecretStoreLocation: existing
+SecretStoreServerAddress: http://10.0.0.1:80
+SecretStoreKeys: key.one,key.two
+CyberArkAccount: xebialabs
+CyberArkPolicyPath: demo
