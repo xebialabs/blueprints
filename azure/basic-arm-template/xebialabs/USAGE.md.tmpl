@@ -1,0 +1,28 @@
+{{$app := .AppName | kebabcase}}
+
+## Notes
+* This blueprint will create the {{.ResourceGroup}} Resource Group and place everything under it.
+* When you undeploy, the Resource Group will be completely deleted
+* The deployment will fail if the Resource Group already exists, to guard against deploying to, and destroying, an existing Resource Group
+
+## Provision simple ARM template on Azure
+
+### Prerequisites
+
+To deploy this blueprint, follow the steps below:
+
+1. Apply the generated YAML configurations using the XL CLI. Open up a terminal in the folder where you generated the configuration. Then run:
+
+    ```plain
+    xl apply -f xebialabs.yaml
+    ```
+
+2. Go to XL Release, look for the "{{$app}}-ci-cd" template, and start a new release from it.
+
+## Minimum required versions
+
+This blueprint version requires at least the following versions of the specified tools to work properly:
+
+- XL Deploy: Version 9.5.0
+- XL Release: Version 9.5.0
+- XL CLI: Version 9.5.0

@@ -1,0 +1,11 @@
+SubscriptionID: A
+ClientID: B
+ClientSecret: C
+TenantID: D
+ResourceGroup: rg-1
+ResourceGroupLocation: westeurope
+AppName: MyApp
+TemplateFile: ../arm/template.json
+AdminUsername: azure
+AdminPassword: azurepassword
+GenerateDockerComposeSetup: false

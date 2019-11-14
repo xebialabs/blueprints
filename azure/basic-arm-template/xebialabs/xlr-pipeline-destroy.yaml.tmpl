@@ -1,0 +1,25 @@
+{{ $app := .AppName | kebabcase }}
+apiVersion: xl-release/v1
+kind: Templates
+spec:
+- name: {{$app}}
+  type: xlrelease.Folder
+  children:
+  - name: {{$app}}-destroy
+    type: xlrelease.Release
+    description: _Destroy the ARM Template and remove the Resource Group
+    tags:
+    - Azure
+    - ARM
+    - {{$app}}
+    scriptUsername: !value XL_RELEASE_USERNAME
+    scriptUserPassword: !value XL_RELEASE_PASSWORD
+    phases:
+    - name: Undeploy Application
+      type: xlrelease.Phase
+      color: '#d94c3d'
+      tasks:
+      - name: Undeploy the template
+        type: xldeploy.Undeploy
+        server: XL Deploy
+        deployedApplication: "Environments/{{$app}}/AzureEnvironment/{{$app}}-application"

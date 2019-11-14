@@ -1,0 +1,44 @@
+{{ $app := .AppName | kebabcase }}
+apiVersion: xl-release/v1
+kind: Templates
+spec:
+- name: {{$app}}
+  type: xlrelease.Folder
+  children:
+  - name: {{$app}}-ci-cd
+    type: xlrelease.Release
+    description: Deploy the ARM Template
+    tags:
+    - Azure
+    - ARM
+    - {{$app}}
+    scriptUsername: !value XL_RELEASE_USERNAME
+    scriptUserPassword: !value XL_RELEASE_PASSWORD
+    variables:
+    - key: ipAddress
+      type: xlrelease.StringVariable
+      requiresValue: false
+      showOnReleaseStart: false
+    phases:
+    - name: Deploy ARM template
+      type: xlrelease.Phase
+      color: '#08b153'
+      tasks:
+      - name: Deploy the template
+        type: xldeploy.Deploy
+        server: XL Deploy
+        deploymentPackage: "{{$app}}/{{$app}}-application/1.0.0"
+        deploymentEnvironment: "Environments/{{$app}}/AzureEnvironment"
+      - name: Get IP Address
+        type: xld.GetCIMapPropertyKey
+        server: XL Deploy
+        ciID: Environments/{{$app}}/{{$app}}-template-dictionary
+        ciPropertyName: entries
+        ciPropertyNameKey: publicIPAddress
+        variableMapping:
+          pythonScript.ciPropertyValue: ${ipAddress}
+      - name: Check deployment
+        type: xlrelease.GateTask
+        team: Release Admin
+        description: |
+          The template is deployed. Please log in as {{.AdminUsername}}@${ipAddress} and use the password you chose.
