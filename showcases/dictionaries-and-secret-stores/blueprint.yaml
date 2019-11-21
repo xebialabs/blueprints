@@ -117,6 +117,10 @@ spec:
     - label: "Med security - encrypted dictionary to be created within XL Deploy"
       value: dictionary
 
+  - name: GenerateDockerComposeSetup
+    type: Confirm
+    prompt: "Do you want to generate a docker-compose setup with the required tools to run this blueprint?"
+    default: false
   includeAfter:
   - blueprint: fragments/secret-store
     includeIf: !expr "CredentialsSource == 'secret-store'"
