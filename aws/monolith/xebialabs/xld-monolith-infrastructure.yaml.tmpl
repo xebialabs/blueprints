@@ -1,0 +1,11 @@
+{{$app := .AppName | kebabcase}}
+apiVersion: xl-deploy/v1
+kind: Infrastructure
+spec:
+- name: {{$app}}
+  type: core.Directory
+  children:
+  - name: aws
+    type: aws.Cloud
+    accesskey: {{.AWSAccessKey}}
+    accessSecret: {{.AWSAccessSecret}}

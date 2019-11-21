@@ -2,4 +2,6 @@ apiVersion: xl/v1
 kind: Import
 metadata:
   imports:
-    - xebialabs/gcp-basic-gke-cluster.yaml
+  - xebialabs/xld-basic-gke-cluster-applications.yaml
+  - xebialabs/xld-basic-gke-cluster-infrastructure.yaml
+  - xebialabs/xld-basic-gke-cluster-environments.yaml

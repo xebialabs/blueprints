@@ -49,6 +49,9 @@ spec:
   includeAfter:
   - blueprint: kubernetes/environment
     includeIf: !expr "Provider == 'existing cluster'"
+    fileOverrides:
+    - path: xebialabs.yaml
+      writeIf: !expr "false"
     parameterOverrides:
     - name: KubernetesName
       value: !expr "ClusterName"
@@ -58,7 +61,7 @@ spec:
   - blueprint: aws/basic-eks-cluster
     includeIf: !expr "Provider == 'EKS'"
     fileOverrides:
-    - path: xebialabs/aws-basic-eks-cluster.yaml
+    - path: xebialabs.yaml
       writeIf: !expr "false"
     parameterOverrides:
     - name: ClusterName
@@ -66,6 +69,9 @@ spec:
 
   - blueprint: azure/basic-aks-cluster
     includeIf: !expr "Provider == 'AKS'"
+    fileOverrides:
+    - path: xebialabs.yaml
+      writeIf: !expr "false"
     parameterOverrides:
     - name: ClusterName
       value: !expr "ClusterName"
@@ -80,6 +86,9 @@ spec:
       value: !expr "ClusterName"
 
   - blueprint: kubernetes/application
+    fileOverrides:
+    - path: xebialabs.yaml
+      writeIf: !expr "false"
     parameterOverrides:
     - name: NamespaceTag
       value: !expr "NamespaceTag"
@@ -88,6 +97,9 @@ spec:
 
   - blueprint: xl-devops-platform
     includeIf: GenerateDockerComposeSetup
+    fileOverrides:
+    - path: xebialabs.yaml
+      writeIf: !expr "false"
     parameterOverrides:
     - name: UseXLDeploy
       value: true
@@ -107,9 +119,15 @@ spec:
   files:
   # XebiaLabs
   - path: xebialabs.yaml.tmpl
+  - path: README.md
   - path: xebialabs/USAGE-multicloud-pipeline.md.tmpl
-  - path: xebialabs/multicloud-pipeline.yaml.tmpl
+  - path: xebialabs/xlr-multicloud-pipeline-ci-cd.yaml.tmpl
     writeIf: !expr "Provider != 'EKS'"
-  - path: xebialabs/multicloud-pipeline-aws.yaml.tmpl
+  - path: xebialabs/xlr-multicloud-pipeline-destroy.yaml.tmpl
+    writeIf: !expr "Provider != 'EKS'"
+  - path: xebialabs/xlr-multicloud-pipeline-aws-ci-cd.yaml.tmpl
     writeIf: !expr "Provider == 'EKS'"
-    renameTo: xebialabs/multicloud-pipeline.yaml.tmpl
+    renameTo: xebialabs/xlr-multicloud-pipeline-ci-cd.yaml.tmpl
+  - path: xebialabs/xlr-multicloud-pipeline-aws-destroy.yaml.tmpl
+    writeIf: !expr "Provider == 'EKS'"
+    renameTo: xebialabs/xlr-multicloud-pipeline-destroy.yaml.tmpl

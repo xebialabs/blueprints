@@ -1,3 +1,5 @@
 answers-file: answers.yaml
 expected-files:
-- xebialabs/docker-application.yaml
+- xebialabs.yaml
+- README.md
+- xebialabs/xld-application-applications.yaml

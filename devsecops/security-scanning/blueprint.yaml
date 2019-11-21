@@ -7,7 +7,7 @@ metadata:
     The blueprint creates a simple template to orchestrate Security and Compliance with XL Release.
   author: XebiaLabs
   version: 2.0
-  instructions: Please read the generated file "xebialabs/USAGE.md" for further usage instructions.
+  instructions: Please read the generated file "xebialabs/USAGE-security-scanning.md" for further usage instructions.
 
 spec:
   parameters:
@@ -54,8 +54,8 @@ spec:
     promptIf: ConfigureFortify
     default: Fortify SSC
     options:
-      - Fortify SSC
-      - Fortify on Demand
+    - Fortify SSC
+    - Fortify on Demand
   - name: FortifyUrl
     type: Input
     prompt: What is the URL for Fortify, example https://api.emea.fortify.com?
@@ -86,9 +86,9 @@ spec:
     promptIf: ConfigureCheckmarx
     default: both
     options:
-      - CxSAST
-      - CxOSA
-      - both
+    - CxSAST
+    - CxOSA
+    - both
   - name: CheckmarxUrl
     type: Input
     prompt: What is the URL for Checkmarx?
@@ -156,8 +156,10 @@ spec:
       value: false
 
   files:
-  - path: xebialabs/xlr-configuration.yaml.tmpl
-  - path: xebialabs/xlr-pipeline.yaml.tmpl
-  - path: xebialabs/xlr-dashboard.yaml.tmpl
-  - path: xebialabs/USAGE.md.tmpl
+  # XebiaLabs
   - path: xebialabs.yaml
+  - path: README.md
+  - path: xebialabs/USAGE-security-scanning.md.tmpl
+  - path: xebialabs/xlr-security-scanning-configuration.yaml.tmpl
+  - path: xebialabs/xlr-security-scanning-pipeline.yaml.tmpl
+  - path: xebialabs/xlr-security-scanning-dashboard.yaml.tmpl

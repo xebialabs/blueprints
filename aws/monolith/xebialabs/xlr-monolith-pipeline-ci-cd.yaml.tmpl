@@ -1,0 +1,90 @@
+{{$app := .AppName | kebabcase}}
+apiVersion: xl-release/v1
+kind: Templates
+spec:
+- name: {{$app}}
+  type: xlrelease.Folder
+  children:
+  - name: {{$app}}-release-pipeline
+    type: xlrelease.Release
+    description: |
+      This XL Release template shows how to deploy and undeploy a monolithic application to AWS ECS(Fargate) using XL Deploy.
+    tags:
+    - {{$app}}
+    - ECS
+    - Fargate
+    scriptUsername: !value XL_RELEASE_USERNAME
+    scriptUserPassword: !value XL_RELEASE_PASSWORD
+    variables:
+    - key: "ALB_DNS_NAME"
+      type: xlrelease.StringVariable
+      requiresValue: false
+      showOnReleaseStart: false
+    phases:
+    - name: Provision Infrastructure
+      color: '#ff9e3b'
+      type: xlrelease.Phase
+      tasks:
+      # Provision Infra
+      - name: Provision Fargate cluster, RDS DB and Network resources
+        type: xldeploy.Deploy
+        server: XL Deploy
+        deploymentPackage: {{$app}}/{{$app}}-ecs-fargate-cluster/1.0
+        deploymentEnvironment: Environments/{{$app}}/AWS
+
+    - name: Deploy {{$app}} application
+      type: xlrelease.Phase
+      tasks:
+      # Deploy the application service
+      - name: Deploy application
+        type: xldeploy.Deploy
+        server: XL Deploy
+        deploymentPackage: {{$app}}/{{$app}}-app-service/1.0
+        deploymentEnvironment: Environments/{{$app}}/AWS
+
+    - name: Test
+      type: xlrelease.Phase
+      tasks:
+      - name: Get application load balancer public URL
+        type: xlrelease.SequentialGroup
+        tasks:
+        - name: Get load balancer DNS
+          type: xld.GetCIMapPropertyKey
+          server: XL Deploy
+          ciID: Environments/{{$app}}/{{$app}}-ecs-alb-dictionary
+          ciPropertyName: entries
+          ciPropertyNameKey: ALB_DNS_NAME
+          variableMapping:
+            pythonScript.ciPropertyValue: ${ALB_DNS_NAME}
+
+      - name: Check {{$app}} application health
+        type: xlrelease.ScriptTask
+        script: |
+          import urllib2
+          import json
+          import time
+
+          time.sleep(30)
+          health_url = 'http://${ALB_DNS_NAME}/management/health'
+          def make_req(url):
+              req = urllib2.Request(url)
+
+              opener = urllib2.build_opener()
+              response = opener.open(req)
+              return json.loads(response.read())
+
+          resp = make_req(health_url)
+          if resp['status'] == 'UP':
+              print 'Application is in good health'
+          else:
+              print 'Application is not in good health'
+              exit(1)
+        # end of script
+      - name: Verify application
+        type: xlrelease.GateTask
+        team: Release Admin
+        description: |
+          The {{$app}} app is now live on ECS!
+          Check out the web site and complete this task when done.
+
+          URL => http://${ALB_DNS_NAME}

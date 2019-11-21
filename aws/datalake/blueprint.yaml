@@ -9,8 +9,8 @@ metadata:
     Refer to https://docs.aws.amazon.com/solutions/latest/data-lake-solution
   author: XebiaLabs
   version: 2.0
-  instructions: Please read the generated file "xebialabs/USAGE.md" for further usage instructions.
-  
+  instructions: Please read the generated file "xebialabs/USAGE-datalake.md" for further usage instructions.
+
 spec:
   parameters:
   - name: S3BucketName
@@ -52,30 +52,30 @@ spec:
     prompt: "Select the AWS region:"
     default: us-east-2
     options:
-      - label: US West (Oregon)
-        value: us-west-2
-      - label: US East (N. Virginia)
-        value: us-east-1
-      - label: US East (Ohio)
-        value: us-east-2
-      - label: EU (Frankfurt)
-        value: eu-central-1
-      - label: EU (Ireland)
-        value: eu-west-1
-      - label: EU (London)
-        value: eu-west-2
-      - label: Canada (Central)
-        value: ca-central-1
-      - label: Asia Pacific (Tokyo)
-        value: ap-northeast-1
-      - label: Asia Pacific (Seoul)
-        value: ap-northeast-2
-      - label: Asia Pacific (Mumbai)
-        value: ap-south-1
-      - label: Asia Pacific (Singapore)
-        value: ap-southeast-1
-      - label: Asia Pacific (Sydney)
-        value: ap-southeast-2
+    - label: US West (Oregon)
+      value: us-west-2
+    - label: US East (N. Virginia)
+      value: us-east-1
+    - label: US East (Ohio)
+      value: us-east-2
+    - label: EU (Frankfurt)
+      value: eu-central-1
+    - label: EU (Ireland)
+      value: eu-west-1
+    - label: EU (London)
+      value: eu-west-2
+    - label: Canada (Central)
+      value: ca-central-1
+    - label: Asia Pacific (Tokyo)
+      value: ap-northeast-1
+    - label: Asia Pacific (Seoul)
+      value: ap-northeast-2
+    - label: Asia Pacific (Mumbai)
+      value: ap-south-1
+    - label: Asia Pacific (Singapore)
+      value: ap-southeast-1
+    - label: Asia Pacific (Sydney)
+      value: ap-southeast-2
 
   - name: GenerateDockerComposeSetup
     type: Confirm
@@ -102,14 +102,19 @@ spec:
       value: false
 
   files:
+  # XebiaLabs
   - path: xebialabs.yaml
-  - path: cloudformation/data-lake-artifacts.zip
-  - path: cloudformation/data-lake-api.yaml
-  - path: cloudformation/data-lake-services.yaml
-  - path: cloudformation/data-lake-storage.yaml
-  - path: cloudformation/data-lake-deploy-federated.master.yaml.tmpl
-  - path: cloudformation/data-lake-deploy.master.yaml.tmpl
-  - path: xebialabs/USAGE.md.tmpl
-  - path: xebialabs/xld-infrastructure.yaml.tmpl
-  - path: xebialabs/xld-environment.yaml.tmpl
-  - path: xebialabs/xlr-pipeline.yaml.tmpl
+  - path: README.md
+  - path: xebialabs/USAGE-datalake.md.tmpl
+  - path: xebialabs/xld-datalake-applications.yaml.tmpl
+  - path: xebialabs/xld-datalake-infrastructure.yaml.tmpl
+  - path: xebialabs/xld-datalake-environments.yaml.tmpl
+  - path: xebialabs/xlr-datalake-pipeline-ci-cd.yaml.tmpl
+  - path: xebialabs/xlr-datalake-pipeline-destroy.yaml.tmpl
+  # CloudFormation
+  - path: cloudformation-datalake/data-lake-artifacts.zip
+  - path: cloudformation-datalake/data-lake-api.yaml
+  - path: cloudformation-datalake/data-lake-services.yaml
+  - path: cloudformation-datalake/data-lake-storage.yaml
+  - path: cloudformation-datalake/data-lake-deploy-federated.master.yaml.tmpl
+  - path: cloudformation-datalake/data-lake-deploy.master.yaml.tmpl

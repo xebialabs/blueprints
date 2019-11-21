@@ -1,0 +1,18 @@
+apiVersion: xl-deploy/v1
+apiVersion: xl-deploy/v1
+kind: Environments
+spec:
+- name: DATA-LAKE
+  type: core.Directory
+  children:
+  - name: AWS Dictionary
+    type: udm.Dictionary
+    entries:
+      region: !value AWSRegion
+  - name: AWS-DATA-LAKE
+    type: udm.Environment
+    members:
+    - "~Infrastructure/DATA-LAKE/AWS"
+    - "~Infrastructure/DATA-LAKE/AWS/cloudformation"
+    dictionaries:
+    - "~Environments/DATA-LAKE/AWS Dictionary"

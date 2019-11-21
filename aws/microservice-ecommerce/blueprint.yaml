@@ -8,7 +8,7 @@ metadata:
     XL Deploy does the provisioning and deployment, while XL Release orchestrates everything.
   author: XebiaLabs
   version: 2.0
-  instructions: Please read the generated file "xebialabs/USAGE.md" for further usage instructions.
+  instructions: Please read the generated file "xebialabs/USAGE-microservice-ecommerce.md" for further usage instructions.
 
 spec:
   parameters:
@@ -36,7 +36,7 @@ spec:
     type: Select
     prompt: "Select the AWS region:"
     options:
-    # This needs to be updated in the RegionMap of cloudformation/eks-workers.yaml as well
+    # This needs to be updated in the RegionMap of cloudformation-microservice-ecommerce/eks-workers.yaml as well
       - label: US West (Oregon)
         value: us-west-2
       # commented out because of https://github.com/boto/boto3/issues/811
@@ -114,24 +114,28 @@ spec:
       value: 8080
 
   files:
-  - path: xebialabs/xld-infra-env.yaml.tmpl
-  - path: xebialabs/xld-cloudformation-apps.yaml.tmpl
-  - path: xebialabs/xld-kubernetes-invoice-app.yaml.tmpl
-  - path: xebialabs/xld-kubernetes-store-app.yaml.tmpl
-  - path: xebialabs/xld-kubernetes-notification-app.yaml.tmpl
-  - path: xebialabs/xlr-pipeline-ci-cd.yaml.tmpl
-  - path: xebialabs/xlr-pipeline-destroy.yaml.tmpl
-  - path: xebialabs/USAGE.md.tmpl
-  - path: kubernetes/aws-auth-cm.yaml
-    writeIf: ProvisionCluster
-  - path: cloudformation/cfn-secret-provider.zip
-    writeIf: ProvisionCluster
-  - path: cloudformation/eks-master.yaml
-    writeIf: ProvisionCluster
-  - path: cloudformation/eks-user.yaml
-    writeIf: ProvisionCluster
-  - path: cloudformation/eks-vpc.yaml
-    writeIf: ProvisionCluster
-  - path: cloudformation/eks-workers.yaml
-    writeIf: ProvisionCluster
+  # XebiaLabs
   - path: xebialabs.yaml
+  - path: README.md
+  - path: xebialabs/USAGE-microservice-ecommerce.md.tmpl
+  - path: xebialabs/xld-microservice-ecommerce-invoice-applications.yaml.tmpl
+  - path: xebialabs/xld-microservice-ecommerce-store-applications.yaml.tmpl
+  - path: xebialabs/xld-microservice-ecommerce-notification-applications.yaml.tmpl
+  - path: xebialabs/xld-microservice-ecommerce-cloudformation-applications.yaml.tmpl
+  - path: xebialabs/xld-microservice-ecommerce-infra-env.yaml.tmpl
+  - path: xebialabs/xlr-microservice-ecommerce-pipeline-ci-cd.yaml.tmpl
+  - path: xebialabs/xlr-microservice-ecommerce-pipeline-destroy.yaml.tmpl
+  # Kubernetes
+  - path: kubernetes-microservice-ecommerce/aws-auth-cm.yaml
+    writeIf: ProvisionCluster
+  # CloudFormation
+  - path: cloudformation-microservice-ecommerce/cfn-secret-provider.zip
+    writeIf: ProvisionCluster
+  - path: cloudformation-microservice-ecommerce/eks-master.yaml
+    writeIf: ProvisionCluster
+  - path: cloudformation-microservice-ecommerce/eks-user.yaml
+    writeIf: ProvisionCluster
+  - path: cloudformation-microservice-ecommerce/eks-vpc.yaml
+    writeIf: ProvisionCluster
+  - path: cloudformation-microservice-ecommerce/eks-workers.yaml
+    writeIf: ProvisionCluster

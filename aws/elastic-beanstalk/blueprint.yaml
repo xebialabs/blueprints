@@ -7,7 +7,7 @@ metadata:
     The blueprint deploys a sample AWS Elastic Beanstalk PHP5 application.
   author: XebiaLabs
   version: 2.0
-  instructions: Please read the generated file "xebialabs/USAGE.md" for further usage instructions.
+  instructions: Please read the generated file "xebialabs/USAGE-elastic-beanstalk.md" for further usage instructions.
 
 spec:
   parameters:
@@ -49,7 +49,7 @@ spec:
     saveInXlvals: true
     default: !expr "awsRegions('elasticbeanstalk', 0)"
     options:
-      - !expr "awsRegions('elasticbeanstalk')"
+    - !expr "awsRegions('elasticbeanstalk')"
 
   - name: SolutionStackName
     type: Input
@@ -86,11 +86,15 @@ spec:
       value: false
 
   files:
-  - path: cloudformation/beanstalk.yaml.tmpl
-  - path: cloudformation/python-app-v1.zip
-  - path: xebialabs/xld-infrastructure.yaml.tmpl
-  - path: xebialabs/xld-environment.yaml.tmpl
-  - path: xebialabs/xlr-pipeline-ci-cd.yaml.tmpl
-  - path: xebialabs/xlr-pipeline-destroy.yaml.tmpl
-  - path: xebialabs/USAGE.md.tmpl
+  # XebiaLabs
   - path: xebialabs.yaml
+  - path: README.md
+  - path: xebialabs/USAGE-elastic-beanstalk.md.tmpl
+  - path: xebialabs/xld-elastic-beanstalk-applications.yaml.tmpl
+  - path: xebialabs/xld-elastic-beanstalk-infrastructure.yaml.tmpl
+  - path: xebialabs/xld-elastic-beanstalk-environments.yaml.tmpl
+  - path: xebialabs/xlr-elastic-beanstalk-pipeline-ci-cd.yaml.tmpl
+  - path: xebialabs/xlr-elastic-beanstalk-pipeline-destroy.yaml.tmpl
+  # CloudFormation
+  - path: cloudformation-elastic-beanstalk//beanstalk.yaml.tmpl
+  - path: cloudformation-elastic-beanstalk//python-app-v1.zip

@@ -1,0 +1,49 @@
+{{$app := .AppName | kebabcase}}
+{{$clusterName := .ClusterName | kebabcase}}
+apiVersion: xl-deploy/v1
+kind: Applications
+spec:
+- name: {{$app}}
+  type: core.Directory
+  children:
+{{if .ProvisionCluster }}
+# Provision AKS cluster using Terraform templates
+  - name: AKS-TERRAFORM
+    type: core.Directory
+    children:
+    - name: {{$app}}-terraform-aks
+      type: udm.Application
+      children:
+      - name: '1.0.0'
+        type: udm.DeploymentPackage
+        deployables:
+        - name: {{$app}}-aks
+          type: terraform.Module
+          file: !file ../terraform-microservice-ecommerce
+          inputVariables:
+            name: {{$app}}
+            resource_group_name: {{.ResourceGroup}}
+            cluster_name: {{$clusterName}}
+            location: {{.AKSRegion}}
+            client_id: {{.ClientID}}
+            client_secret: !value ClientSecret
+            subscription_id: {{.SubscriptionID}}
+            tenant_id: {{.TenantID}}
+          environmentPath: azure-aks-{{$clusterName}}
+
+{{end}}
+  - name: K8S
+    type: core.Directory
+{{if .ProvisionCluster }}
+# Provision K8s namespace
+    children:
+    - name: {{$app}}-namespace
+      type: udm.Application
+      children:
+      - name: '1.0.0'
+        type: udm.DeploymentPackage
+        deployables:
+        - name: {{.Namespace}}
+          type: k8s.NamespaceSpec
+          namespaceName: '{{.Namespace}}'
+{{end}}

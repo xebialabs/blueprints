@@ -8,13 +8,9 @@ metadata:
     XL Deploy does the deployment, while XL Release orchestrates everything.
   author: XebiaLabs
   version: 2.0
-  instructions: Please read the generated file "xebialabs/USAGE.md" for further usage instructions.
+  instructions: Please read the generated file "xebialabs/USAGE-composable-demo.md" for further usage instructions.
 
 spec:
-  files:
-  - path: xebialabs.yaml
-  - path: xebialabs/USAGE.md
-
   includeBefore:
   - blueprint: docker/environment
     parameterOverrides:
@@ -37,3 +33,9 @@ spec:
       value: true
     - name: UseJenkins
       value: false
+
+  files:
+  # XebiaLabs
+  - path: xebialabs.yaml
+  - path: README.md
+  - path: xebialabs/USAGE-composable-demo.md

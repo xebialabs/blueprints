@@ -7,7 +7,7 @@ metadata:
     The blueprint provisions a GCP GKE Cluster using Terraform and XL Deploy.
   author: XebiaLabs
   version: 2.0
-  instructions: Read xebialabs/USAGE-gcp-basic-gke-cluster.md to learn how to use this blueprint.
+  instructions: Read xebialabs/USAGE-basic-gke-cluster.md to learn how to use this blueprint.
 
 spec:
   parameters:
@@ -126,17 +126,20 @@ spec:
 
   files:
   # XebiaLabs
-  - path: xebialabs/USAGE-gcp-basic-gke-cluster.md.tmpl
-  - path: xebialabs/gcp-basic-gke-cluster.yaml.tmpl
   - path: xebialabs.yaml
+  - path: README.md
+  - path: xebialabs/USAGE-basic-gke-cluster.md.tmpl
+  - path: xebialabs/xld-basic-gke-cluster-applications.yaml.tmpl
+  - path: xebialabs/xld-basic-gke-cluster-infrastructure.yaml.tmpl
+  - path: xebialabs/xld-basic-gke-cluster-environments.yaml.tmpl
   # Terraform
-  - path: terraform-gcp-basic-gke-cluster/gke/main.tf
-  - path: terraform-gcp-basic-gke-cluster/gke/outputs.tf
-  - path: terraform-gcp-basic-gke-cluster/gke/variables.tf
-  - path: terraform-gcp-basic-gke-cluster/vpc/main.tf
-  - path: terraform-gcp-basic-gke-cluster/vpc/outputs.tf
-  - path: terraform-gcp-basic-gke-cluster/vpc/variables.tf
-  - path: terraform-gcp-basic-gke-cluster/.gitignore
-  - path: terraform-gcp-basic-gke-cluster/main.tf
-  - path: terraform-gcp-basic-gke-cluster/outputs.tf
-  - path: terraform-gcp-basic-gke-cluster/variables.tf
+  - path: terraform-basic-gke-cluster/gke/main.tf
+  - path: terraform-basic-gke-cluster/gke/outputs.tf
+  - path: terraform-basic-gke-cluster/gke/variables.tf
+  - path: terraform-basic-gke-cluster/vpc/main.tf
+  - path: terraform-basic-gke-cluster/vpc/outputs.tf
+  - path: terraform-basic-gke-cluster/vpc/variables.tf
+  - path: terraform-basic-gke-cluster/.gitignore
+  - path: terraform-basic-gke-cluster/main.tf
+  - path: terraform-basic-gke-cluster/outputs.tf
+  - path: terraform-basic-gke-cluster/variables.tf

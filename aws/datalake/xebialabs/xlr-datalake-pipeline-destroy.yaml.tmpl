@@ -1,0 +1,47 @@
+apiVersion: xl-release/v1
+kind: Templates
+spec:
+- name: AWS-DATA-LAKE
+  type: xlrelease.Folder
+  children:
+  - name: data-lake-release-pipeline
+    type: xlrelease.Release
+    description: |
+      This XL Release template deploys a data lake architecture to AWS using XL Deploy.
+    tags:
+    - data-lake
+    - ECS
+    - Fargate
+    scriptUsername: !value XL_RELEASE_USERNAME
+    scriptUserPassword: !value XL_RELEASE_PASSWORD
+    phases:
+    # Cleanup and deprovision everything
+    - name: Undeploy Infrastructure
+      type: xlrelease.Phase
+      color: '#ff9e3b'
+      tasks:
+      - name: Undeploy cloudformation stack
+        type: xldeploy.Undeploy
+        server: XL Deploy
+        deployedApplication: Environments/DATA-LAKE/AWS-DATA-LAKE/aws-data-lake-solution-cloudformation
+      - name: Delete artifacts from S3
+        type: xldeploy.Undeploy
+        server: XL Deploy
+        deployedApplication: Environments/DATA-LAKE/AWS-DATA-LAKE/aws-data-lake-solution-artifacts
+      - name: Delete S3 bucket
+        type: xldeploy.Undeploy
+        server: XL Deploy
+        deployedApplication: Environments/DATA-LAKE/AWS-DATA-LAKE/aws-data-lake-solution-bucket
+      - name: Delete Cognito user pool and Cloudwatch logs
+        type: xlrelease.GateTask
+        team: Release Admin
+        description: |
+          Please delete the Cognito domain and user pool manually by visiting below url
+
+          Domain => https://{{.AWSRegion}}.console.aws.amazon.com/cognito/users?region={{.AWSRegion}}#/pool/${COGNITO_USER_POOL_ID}/app-integration-domain
+
+          User Pool => https://{{.AWSRegion}}.console.aws.amazon.com/cognito/users?region={{.AWSRegion}}#/pool/${COGNITO_USER_POOL_ID}
+
+          Please delete all the data lake log groups manually by visiting below url
+
+          URL => https://{{.AWSRegion}}.console.aws.amazon.com/cloudwatch/home?region={{.AWSRegion}}#logs:/

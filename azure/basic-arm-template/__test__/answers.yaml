@@ -5,7 +5,7 @@ TenantID: D
 ResourceGroup: rg-1
 ResourceGroupLocation: westeurope
 AppName: MyApp
-TemplateFile: ../arm/template.json
+TemplateFile: ../arm-basic-arm-template/template.json
 AdminUsername: azure
 AdminPassword: azurepassword
 GenerateDockerComposeSetup: false

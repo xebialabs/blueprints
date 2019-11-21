@@ -1,0 +1,7 @@
+apiVersion: xl/v1
+kind: Import
+metadata:
+  imports:
+  - xebialabs/xld-basic-lambda-applications.yaml
+  - xebialabs/xld-basic-lambda-infrastructure.yaml
+  - xebialabs/xld-basic-lambda-environments.yaml

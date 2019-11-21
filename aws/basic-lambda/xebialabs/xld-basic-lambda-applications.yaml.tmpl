@@ -1,0 +1,19 @@
+{{$app := .AppName | kebabcase}}
+
+apiVersion: xl-deploy/v1
+kind: Applications
+spec:
+- name: {{$app}}
+  type: core.Directory
+  children:
+  - name: "{{$app}}-basic-lambda"
+    type: udm.Application
+    children:
+    - name: '1.0.0'
+      type: udm.DeploymentPackage
+      deployables:
+      - name: "{{$app}}-basic-lambda"
+        type: aws.cloudformation.Template
+        file: !file ../cloudformation-basic-lambda/lambda-function.yaml
+        capabilities:
+        - CAPABILITY_NAMED_IAM

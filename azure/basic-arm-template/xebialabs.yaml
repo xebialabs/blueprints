@@ -2,7 +2,8 @@ apiVersion: xl/v1
 kind: Import
 metadata:
   imports:
-  - xebialabs/xld-apps.yaml
-  - xebialabs/xld-infra-env.yaml
-  - xebialabs/xlr-pipeline-ci-cd.yaml
-  - xebialabs/xlr-pipeline-destroy.yaml
+  - xebialabs/xld-basic-arm-template-applications.yaml
+  - xebialabs/xld-basic-arm-template-infrastructure.yaml
+  - xebialabs/xld-basic-arm-template-environments.yaml
+  - xebialabs/xlr-basic-arm-template-pipeline-ci-cd.yaml
+  - xebialabs/xlr-basic-arm-template-pipeline-destroy.yaml

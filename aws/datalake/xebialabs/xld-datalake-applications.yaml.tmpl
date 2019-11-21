@@ -1,0 +1,62 @@
+apiVersion: xl-deploy/v1
+kind: Applications
+spec:
+- name: DATA-LAKE
+  type: core.Directory
+  children:
+  ### create S3 bucket ###
+  - name: aws-data-lake-solution-bucket
+    type: udm.Application
+    children:
+    - name: '1.0.0'
+      type: udm.DeploymentPackage
+      deployables:
+      - name: s3-bucket-{{.S3BucketName}}
+        type: aws.s3.BucketSpec
+        bucketName: {{.S3BucketName}}
+        region: '{{"{{region}}"}}'
+  ### upload the artifacts and cloudformation templates to S3 bucket ###
+  - name: aws-data-lake-solution-artifacts
+    type: udm.Application
+    children:
+    - name: '1.0.0'
+      type: udm.DeploymentPackage
+      deployables:
+      - name: data-lake-solution-artifacts
+        type: aws.s3.Folder
+        file: !file ../cloudformation-datalake/data-lake-artifacts.zip
+        acl: bucket-owner-full-control
+        createTargetPath: true
+        scanPlaceholders: false
+      - name: data-lake-solution-services
+        type: aws.s3.File
+        file: !file ../cloudformation-datalake/data-lake-services.yaml
+        acl: bucket-owner-full-control
+      - name: data-lake-solution-storage
+        type: aws.s3.File
+        file: !file ../cloudformation-datalake/data-lake-storage.yaml
+        acl: bucket-owner-full-control
+      - name: data-lake-solution-api
+        type: aws.s3.File
+        file: !file ../cloudformation-datalake/data-lake-api.yaml
+        acl: bucket-owner-full-control
+  ### provision data-lake solution with cloudformation templates ###
+  - name: aws-data-lake-solution-cloudformation
+    type: udm.Application
+    children:
+    - name: '1.0.0'
+      type: udm.DeploymentPackage
+      deployables:
+      - name: provision-data-lake-stack
+        type: aws.cloudformation.Template
+        file: !file ../cloudformation-datalake/data-lake-deploy.master.yaml
+        # use the below to deploy an AD Federated infrastructure
+        # file: !file ../cloudformation-datalake/data-lake-deploy-federated.master.yaml
+        timeoutInterval: 300 # wait for 300 loops(approx 30 minutes)
+        capabilities:
+        - CAPABILITY_IAM
+        - CAPABILITY_NAMED_IAM
+        inputVariables:
+          AdministratorName: {{.AdministratorName}}
+          AdministratorEmail: {{.AdministratorEmail}}
+          CognitoDomain: {{.CognitoDomain}}

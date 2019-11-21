@@ -1,14 +1,16 @@
 # test the default scenario
 answers-file: answers-01.yaml
 expected-files:
-  - xebialabs/xld-environment.yaml
-  - xebialabs/xld-infrastructure.yaml
-  - xebialabs/xld-service.yaml
-  - xebialabs/xlr-pipeline.yaml
-  - xebialabs/USAGE.md
-  - xebialabs.yaml
-  - terraform/infrastructure/infrastructure.tf
-  - terraform/infrastructure/outputs.tf
-  - terraform/infrastructure/variables.tf
-  - docker/docker-compose.yml
-  - docker/data/configure-xl-devops-platform.yaml
+- xebialabs.yaml
+- README.md
+- xebialabs/USAGE-monolith-terraform.md
+- xebialabs/xld-monolith-terraform-applications.yaml
+- xebialabs/xld-monolith-terraform-infrastructure.yaml
+- xebialabs/xld-monolith-terraform-environments.yaml
+- xebialabs/xlr-monolith-terraform-pipeline-ci-cd.yaml
+- xebialabs/xlr-monolith-terraform-pipeline-destroy.yaml
+- terraform-monolith-terraform/infrastructure/infrastructure.tf
+- terraform-monolith-terraform/infrastructure/outputs.tf
+- terraform-monolith-terraform/infrastructure/variables.tf
+- docker/docker-compose.yml
+- docker/data/configure-xl-devops-platform.yaml

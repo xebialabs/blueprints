@@ -1,5 +1,7 @@
 answers-file: answers.yaml
 expected-files:
-- xebialabs/kubernetes-application.yaml
-- xebialabs/USAGE-kubernetes-application.md
-- kubernetes/deployment.yaml
+- xebialabs.yaml
+- README.md
+- xebialabs/USAGE-application.md
+- xebialabs/xld-application-applications.yaml
+- kubernetes-application/deployment.yaml

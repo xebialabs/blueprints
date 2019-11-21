@@ -7,7 +7,7 @@ metadata:
     The blueprint provisions an Azure App service instance with given Docker image or with a sample application
   author: XebiaLabs
   version: 2.0
-  instructions: Please read the generated file "xebialabs/USAGE.md" for further usage instructions.
+  instructions: Please read the generated file "xebialabs/USAGE-app-service-docker-app.md" for further usage instructions.
 
 spec:
   parameters:
@@ -116,8 +116,8 @@ spec:
 
   - name: MySqlMasterPassword
     type: SecretInput
-    prompt: What is the master password to use for MySQL server that will be provisioned? 
-    description: A complex password for MySQL server user. Needs minimum 8 character with at least 1 lowercase, 1 uppercase, 1 number and 1 special character 
+    prompt: What is the master password to use for MySQL server that will be provisioned?
+    description: A complex password for MySQL server user. Needs minimum 8 character with at least 1 lowercase, 1 uppercase, 1 number and 1 special character
     validate: !expr "regex('^(?=.*?[0-9])(?=.*?[a-z])(?=.*?[A-Z])(?=.*?[-._!#^~@$%*]).{8,128}$', MySqlMasterPassword)"
     promptIf: !expr "UseSampleApplication"
 
@@ -160,10 +160,14 @@ spec:
 
   files:
   # XebiaLabs
-  - path: xebialabs/USAGE.md.tmpl
-  - path: xebialabs/azure-app-service.yaml.tmpl
+  - path: xebialabs.yaml
+  - path: README.md
+  - path: xebialabs/USAGE-app-service-docker-app.md.tmpl
+  - path: xebialabs/xld-app-service-docker-app-applications.yaml.tmpl
+  - path: xebialabs/xld-app-service-docker-app-infrastructure.yaml.tmpl
+  - path: xebialabs/xld-app-service-docker-app-environments.yaml.tmpl
   # Terraform
-  - path: terraform/.gitignore
-  - path: terraform/main.tf.tmpl
-  - path: terraform/outputs.tf
-  - path: terraform/variables.tf.tmpl
+  - path: terraform-app-service-docker-app/.gitignore
+  - path: terraform-app-service-docker-app/main.tf.tmpl
+  - path: terraform-app-service-docker-app/outputs.tf
+  - path: terraform-app-service-docker-app/variables.tf.tmpl

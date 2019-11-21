@@ -7,7 +7,7 @@ metadata:
     This blueprint defines an environment for a Kubernetes cluster based on the information in your ~/.kube/config file
   author: XebiaLabs
   version: 2.0
-  instructions: Read xebialabs/USAGE-kubernetes-environment.md to learn how to use this blueprint.
+  instructions: Read xebialabs/USAGE-environment.md to learn how to use this blueprint.
 
 spec:
   parameters:
@@ -43,5 +43,9 @@ spec:
     default: default
 
   files:
-    - path: xebialabs/USAGE-kubernetes-environment.md
-    - path: xebialabs/kubernetes-environment.yaml.tmpl
+  # XebiaLabs
+  - path: xebialabs.yaml
+  - path: README.md
+  - path: xebialabs/USAGE-environment.md
+  - path: xebialabs/xld-environment-infrastructure.yaml.tmpl
+  - path: xebialabs/xld-environment-environments.yaml.tmpl

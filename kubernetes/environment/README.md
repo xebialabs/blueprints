@@ -38,7 +38,7 @@ This blueprint requires:
 
 This blueprint will output:
 
-* The file `xebialabs/kubernetes-environment.yaml` that defines an XL Deploy infrastructure item and environment for your Kubernetes cluster.
+* The file `xebialabs/environment.yaml` that defines an XL Deploy infrastructure item and environment for your Kubernetes cluster.
 
 If your `~/.kube/config` contains a reference to `localhost`, it will be replaced with `host.docker.internal` so that the container that runs XL Deploy will access the Kubernetes cluster correctly.
 

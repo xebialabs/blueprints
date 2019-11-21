@@ -1,0 +1,13 @@
+{{$app := .AppName | kebabcase}}
+apiVersion: xl-deploy/v1
+kind: Infrastructure
+spec:
+- name: {{$app}}
+  type: core.Directory
+  children:
+  - name: AzureCloud
+    type: azure.Cloud
+    subscriptionId: {{.SubscriptionID}}
+    tenantId: {{.TenantID}}
+    clientId: {{.ClientID}}
+    clientKey: !value ClientSecret

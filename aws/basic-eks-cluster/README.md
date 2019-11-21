@@ -59,7 +59,7 @@ This blueprint will output:
 * Infrastructure:
     * EKS cluster (master, nodes)
 
-**Note:** You will find more instructions in `xebialabs/USAGE-aws-basic-eks-cluster.md` after you have run the blueprint.
+**Note:** You will find more instructions in `xebialabs/USAGE-basic-eks-cluster.md` after you have run the blueprint.
 
 ## Notes
 

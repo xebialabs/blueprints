@@ -7,7 +7,7 @@ metadata:
     Creates a basic Lambda function and execution role
   author: XebiaLabs
   version: 2.0
-  instructions: Please read the generated file "xebialabs/USAGE-aws-basic-lambda.md" for further usage instructions.
+  instructions: Please read the generated file "xebialabs/USAGE-basic-lambda.md" for further usage instructions.
 
 spec:
   parameters:
@@ -38,7 +38,7 @@ spec:
   - name: AppName
     type: Input
     prompt: "Give the project a name:"
-  
+
   - name: GenerateDockerComposeSetup
     type: Confirm
     prompt: "Do you want to generate a docker-compose setup with the required tools to run this blueprint?"
@@ -63,7 +63,11 @@ spec:
 
   files:
   # XebiaLabs
-  - path: xebialabs/USAGE-aws-basic-lambda.md.tmpl
-  - path: xebialabs/aws-basic-lambda.yaml.tmpl
+  - path: xebialabs.yaml
+  - path: README.md
+  - path: xebialabs/USAGE-basic-lambda.md.tmpl
+  - path: xebialabs/xld-basic-lambda-applications.yaml.tmpl
+  - path: xebialabs/xld-basic-lambda-infrastructure.yaml.tmpl
+  - path: xebialabs/xld-basic-lambda-environments.yaml.tmpl
   # CloudFormation
-  - path: cloudformation/lambda-function.yaml
+  - path: cloudformation-basic-lambda/lambda-function.yaml

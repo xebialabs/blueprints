@@ -1,0 +1,14 @@
+apiVersion: xl-deploy/v1
+kind: Infrastructure
+spec:
+- name: DATA-LAKE
+  type: core.Directory
+  children:
+  - name: AWS
+    type: aws.Cloud
+    accesskey: {{.AWSAccessKey}}
+    accessSecret: {{.AWSAccessSecret}}
+    children:
+    - name: cloudformation
+      type: aws.cloudformation.Stack
+      region: !value AWSRegion

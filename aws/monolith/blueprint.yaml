@@ -8,8 +8,8 @@ metadata:
     XL Deploy does the provisioning and deployment, while XL Release orchestrates everything.
   author: XebiaLabs
   version: 2.0
-  instructions: Please read the generated file "xebialabs/USAGE.md" for further usage instructions.
-  
+  instructions: Please read the generated file "xebialabs/USAGE-monolith.md" for further usage instructions.
+
 spec:
   parameters:
   - name: AppName
@@ -43,7 +43,7 @@ spec:
     saveInXlvals: true
     default: !expr "awsRegions('ecs', 0)"
     options:
-      - !expr "awsRegions('ecs')"
+    - !expr "awsRegions('ecs')"
 
   - name: GenerateDockerComposeSetup
     type: Confirm
@@ -70,9 +70,12 @@ spec:
       value: false
 
   files:
-  - path: xebialabs/xld-infrastructure.yaml.tmpl
-  - path: xebialabs/xld-service.yaml.tmpl
-  - path: xebialabs/xld-environment.yaml.tmpl
-  - path: xebialabs/xlr-pipeline.yaml.tmpl
-  - path: xebialabs/USAGE.md.tmpl
+  # XebiaLabs
   - path: xebialabs.yaml
+  - path: README.md
+  - path: xebialabs/USAGE-monolith.md.tmpl
+  - path: xebialabs/xld-monolith-applications.yaml.tmpl
+  - path: xebialabs/xld-monolith-infrastructure.yaml.tmpl
+  - path: xebialabs/xld-monolith-environments.yaml.tmpl
+  - path: xebialabs/xlr-monolith-pipeline-ci-cd.yaml.tmpl
+  - path: xebialabs/xlr-monolith-pipeline-destroy.yaml.tmpl

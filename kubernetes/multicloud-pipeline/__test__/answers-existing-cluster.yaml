@@ -10,4 +10,4 @@ GenerateDockerComposeSetup: false
 
 KubernetesApplicationName: httpd
 KubernetesDeploymentPackageVersion: latest
-KubernetesResourcesFile: ../kubernetes/httpd.yaml
+KubernetesResourcesFile: ../kubernetes-application/httpd.yaml

@@ -1,0 +1,18 @@
+{{$app := .AppName | kebabcase}}
+apiVersion: xl-deploy/v1
+kind: Environments
+spec:
+- name: "{{$app}}"
+  type: core.Directory
+  children:
+  - name: AWS Dictionary
+    type: udm.Dictionary
+    entries:
+      region: "{{.AWSRegion}}"
+  - name: AWS-ELASTIC-BEANSTALK
+    type: udm.Environment
+    members:
+    - "~Infrastructure/{{$app}}/AWS"
+    - "~Infrastructure/{{$app}}/AWS/cloudformation"
+    dictionaries:
+    - "~Environments/{{$app}}/AWS Dictionary"

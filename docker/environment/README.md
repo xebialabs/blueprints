@@ -42,7 +42,7 @@ This blueprint requires:
 
 This blueprint will output:
 
-* The file `xebialabs/docker-environment.yaml` that defines an XL Deploy environment for your Docker engine.
+* The file `xebialabs/environment.yaml` that defines an XL Deploy environment for your Docker engine.
 
 ## Tips and tricks
 
