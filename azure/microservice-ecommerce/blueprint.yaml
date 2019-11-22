@@ -214,6 +214,7 @@ spec:
       value: gke-blueprint
 
   files:
+  # XebiaLabs
   - path: xebialabs.yaml
   - path: README.md
   - path: xebialabs/USAGE-microservice-ecommerce.md.tmpl

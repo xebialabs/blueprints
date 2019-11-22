@@ -1,5 +1,7 @@
 answers-file: answers.yaml
 expected-files:
+- xebialabs.yaml
+- README.md
 - xebialabs/USAGE-basic-aks-cluster.md
 - xebialabs/xld-basic-aks-cluster-applications.yaml
 - xebialabs/xld-basic-aks-cluster-infrastructure.yaml
