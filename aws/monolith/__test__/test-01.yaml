@@ -5,6 +5,7 @@ expected-files:
 - README.md
 - xebialabs/USAGE-monolith.md
 - xebialabs/xld-monolith-applications.yaml
+- xebialabs/xld-monolith-service-applications.yaml
 - xebialabs/xld-monolith-infrastructure.yaml
 - xebialabs/xld-monolith-environments.yaml
 - xebialabs/xlr-monolith-pipeline-ci-cd.yaml

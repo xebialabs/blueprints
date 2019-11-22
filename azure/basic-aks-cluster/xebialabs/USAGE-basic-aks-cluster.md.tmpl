@@ -15,7 +15,7 @@ To deploy this blueprint, follow the steps below:
 1. Apply the generated YAML configurations using the XL CLI. Open up a terminal in the folder where you generated the configuration. Then run:
 
     ```plain
-    xl apply -f xebialabs/basic-aks-cluster.yaml
+    xl apply -f xebialabs.yaml
     ```
 
 2. Go to XL Deploy, look for the `basic-aks-cluster-terraform-for-{{$clusterName}}` folder under `Applications/{{ $clusterName }}`. Select the `1.0.0` item underneath, click on the ellipsis and select 'Deploy'. Select the `terraform` environment (there should be only one), press 'Deploy'.

@@ -134,8 +134,12 @@ spec:
 
   files:
   # XebiaLabs
+  - path: xebialabs.yaml
+  - path: README.md
   - path: xebialabs/USAGE-basic-aks-cluster.md.tmpl
-  - path: xebialabs/basic-aks-cluster.yaml.tmpl
+  - path: xebialabs/xld-basic-aks-cluster-applications.yaml.tmpl
+  - path: xebialabs/xld-basic-aks-cluster-infrastructure.yaml.tmpl
+  - path: xebialabs/xld-basic-aks-cluster-environments.yaml.tmpl
   # Terraform
   - path: terraform-basic-aks-cluster/.gitignore
   - path: terraform-basic-aks-cluster/main.tf

@@ -13,7 +13,7 @@ Create a pull request with your proposed changes and request review from a contr
 3. Make your changes, test them and iterate
 4. Commit them `git add --all && git commit -m "commit message describing the change"`. Commit often if needed.
 4. Once ready, push your changes to your fork `git push origin my-awesome-branch`.
-5. You will see a link printed to your terminal to open a PR, click on it and follow through or open a new PR from GitHub https://github.com/xebialabs/blueprints/compare, click on "compare across forks" and choose your fork as the head repository. Select appropriate branch and follow through. Please follow the checklist provided in the pull request template. 
+5. You will see a link printed to your terminal to open a PR, click on it and follow through or open a new PR from GitHub https://github.com/xebialabs/blueprints/compare, click on "compare across forks" and choose your fork as the head repository. Select appropriate branch and follow through. Please follow the checklist provided in the pull request template.
 
 ### Unit tests
 
@@ -37,7 +37,7 @@ expected-xl-secrets:
   AWSAccessSecret: ANDGDJDHJHD4235
 ```
 
-The `answers-file` needs to be on the same `__test__` folder as well. The `answers-file` holds values for the parameters defined in `blueprint.yaml` file. 
+The `answers-file` needs to be on the same `__test__` folder as well. The `answers-file` holds values for the parameters defined in `blueprint.yaml` file.
 Here is a sample YAML for answers.
 
 ```

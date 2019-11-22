@@ -11,7 +11,9 @@ metadata:
   - xebialabs/xld-basic-aks-cluster-infrastructure.yaml
   - xebialabs/xld-basic-aks-cluster-environments.yaml
   {{- else if eq .Provider "GKE"}}
-  - xebialabs/xld-basic-gke-cluster.yaml
+  - xebialabs/xld-basic-gke-cluster-applications.yaml
+  - xebialabs/xld-basic-gke-cluster-infrastructure.yaml
+  - xebialabs/xld-basic-gke-cluster-environments.yaml
   {{- else}}
   - xebialabs/xld-environment-infrastructure.yaml
   - xebialabs/xld-environment-environments.yaml

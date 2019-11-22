@@ -75,6 +75,7 @@ spec:
   - path: README.md
   - path: xebialabs/USAGE-monolith.md.tmpl
   - path: xebialabs/xld-monolith-applications.yaml.tmpl
+  - path: xebialabs/xld-monolith-service-applications.yaml.tmpl
   - path: xebialabs/xld-monolith-infrastructure.yaml.tmpl
   - path: xebialabs/xld-monolith-environments.yaml.tmpl
   - path: xebialabs/xlr-monolith-pipeline-ci-cd.yaml.tmpl
