@@ -33,11 +33,9 @@ spec:
     default: http://xl-deploy:4516
 
   - name: Namespace
-    type: Input
     value: default
 
   - name: NamespaceTag
-    type: Input
     value: kubernetes-namespace
 
   - name: GenerateDockerComposeSetup

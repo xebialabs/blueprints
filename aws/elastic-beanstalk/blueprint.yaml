@@ -58,7 +58,6 @@ spec:
     default: "64bit Amazon Linux 2018.03 v2.8.6 running Python 3.6"
 
   - name: S3Key
-    type: Input
     value: "python-app-v1.zip"
 
   - name: GenerateDockerComposeSetup

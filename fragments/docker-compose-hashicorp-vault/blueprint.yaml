@@ -29,7 +29,6 @@ spec:
     validate: !expr "regex('^([^/]+/)[^/]+$', DockerHashiCorpSecretPath)"
 
   - name: DockerHashiCorpRootToken
-    type: Input
     value: "demo-root-token"
 
   - name: DockerHashiCorpKeys

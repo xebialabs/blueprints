@@ -34,7 +34,6 @@ spec:
     promptIf: ExposePort
     default: 8080
   - name: Standalone
-    type: Confirm
     value: true
 
   files:

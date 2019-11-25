@@ -32,7 +32,6 @@ spec:
     default: default
 
   - name: NamespaceTag
-    type: Input
     value: kubernetes-namespace
 
   files:
