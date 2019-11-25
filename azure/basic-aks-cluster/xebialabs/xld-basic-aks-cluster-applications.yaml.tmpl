@@ -1,0 +1,25 @@
+{{$clusterName := .ClusterName | kebabcase}}
+apiVersion: xl-deploy/v1
+kind: Applications
+spec:
+- name: {{ $clusterName }}
+  type: core.Directory
+  children:
+  - name: {{$clusterName}}
+    type: udm.Application
+    children:
+    - name: '1.0.0'
+      type: udm.DeploymentPackage
+      deployables:
+      - name: {{$clusterName}}
+        type: terraform.Module
+        file: !file ../terraform-basic-aks-cluster
+        inputVariables:
+          cluster_name: {{$clusterName}}
+          subscription_id: {{.SubscriptionID}}
+          client_id: {{.ClientID}}
+          client_secret: {{.ClientSecret}}
+          tenant_id: {{.TenantID}}
+          resource_group: {{.ResourceGroup}}
+          resource_group_location: {{.ResourceGroupLocation}}
+        environmentPath: "{{$clusterName}} environment"

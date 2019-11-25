@@ -1,4 +1,7 @@
 answers-file: answers.yaml
 expected-files:
-- xebialabs/kubernetes-environment.yaml
-- xebialabs/USAGE-kubernetes-environment.md
+- xebialabs.yaml
+- README.md
+- xebialabs/USAGE-environment.md
+- xebialabs/xld-environment-infrastructure.yaml
+- xebialabs/xld-environment-environments.yaml

@@ -7,7 +7,7 @@ metadata:
     The blueprint provisions a single VM using an ARM template. XL Deploy does the provisioning.
   author: XebiaLabs
   version: 2.0
-  instructions: Please read the generated file "xebialabs/USAGE.md" for further usage instructions.
+  instructions: Please read the generated file "xebialabs/USAGE-basic-arm-template.md" for further usage instructions.
 
 spec:
   parameters:
@@ -113,7 +113,7 @@ spec:
   - name: TemplateFile
     type: Input
     prompt: Path to the ARM template file
-    default: ../arm/template.json
+    default: ../arm-basic-arm-template/template.json
 
   - name: AdminUsername
     type: Input
@@ -149,11 +149,15 @@ spec:
       value: false
 
   files:
+  # XebiaLabs
   - path: xebialabs.yaml
-  - path: xebialabs/USAGE.md.tmpl
-  - path: xebialabs/xld-apps.yaml.tmpl
-  - path: xebialabs/xld-infra-env.yaml.tmpl
-  - path: xebialabs/xlr-pipeline-ci-cd.yaml.tmpl
-  - path: xebialabs/xlr-pipeline-destroy.yaml.tmpl
-  - path: arm/template.json
-    writeIf: !expr "TemplateFile == '../arm/template.json'"
+  - path: README.md
+  - path: xebialabs/USAGE-basic-arm-template.md.tmpl
+  - path: xebialabs/xld-basic-arm-template-applications.yaml.tmpl
+  - path: xebialabs/xld-basic-arm-template-infrastructure.yaml.tmpl
+  - path: xebialabs/xld-basic-arm-template-environments.yaml.tmpl
+  - path: xebialabs/xlr-basic-arm-template-pipeline-ci-cd.yaml.tmpl
+  - path: xebialabs/xlr-basic-arm-template-pipeline-destroy.yaml.tmpl
+  # Azure
+  - path: arm-basic-arm-template/template.json
+    writeIf: !expr "TemplateFile == '../arm-basic-arm-template/template.json'"

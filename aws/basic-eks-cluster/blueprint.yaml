@@ -7,7 +7,7 @@ metadata:
     The blueprint provisions a very basic AWS EKS cluster. XL Deploy does the provisioning.
   author: XebiaLabs
   version: 2.0
-  instructions: Please read the generated file "xebialabs/USAGE-aws-basic-eks-cluster.md" for further usage instructions.
+  instructions: Please read the generated file "xebialabs/USAGE-basic-eks-cluster.md" for further usage instructions.
 
 spec:
   parameters:
@@ -169,14 +169,18 @@ spec:
       value: false
 
   files:
-  - path: xebialabs/aws-basic-eks-cluster.yaml
-  - path: xebialabs/aws-basic-eks-cluster-applications.yaml.tmpl
-  - path: xebialabs/aws-basic-eks-cluster-environments.yaml.tmpl
-  - path: xebialabs/USAGE-aws-basic-eks-cluster.md.tmpl
-
-  - path: kubernetes/aws-auth-cm.yaml
-  - path: cloudformation/cfn-secret-provider.zip
-  - path: cloudformation/eks-master.yaml
-  - path: cloudformation/eks-user.yaml
-  - path: cloudformation/eks-vpc.yaml
-  - path: cloudformation/eks-workers.yaml.tmpl
+  # XebiaLabs
+  - path: xebialabs.yaml
+  - path: README.md
+  - path: xebialabs/USAGE-basic-eks-cluster.md.tmpl
+  - path: xebialabs/xld-basic-eks-cluster-applications.yaml.tmpl
+  - path: xebialabs/xld-basic-eks-cluster-infrastructure.yaml.tmpl
+  - path: xebialabs/xld-basic-eks-cluster-environments.yaml.tmpl
+  # Kubernetes
+  - path: kubernetes-basic-eks-cluster/aws-auth-cm.yaml
+  # CloudFormation
+  - path: cloudformation-basic-eks-cluster/cfn-secret-provider.zip
+  - path: cloudformation-basic-eks-cluster/eks-master.yaml
+  - path: cloudformation-basic-eks-cluster/eks-user.yaml
+  - path: cloudformation-basic-eks-cluster/eks-vpc.yaml
+  - path: cloudformation-basic-eks-cluster/eks-workers.yaml.tmpl

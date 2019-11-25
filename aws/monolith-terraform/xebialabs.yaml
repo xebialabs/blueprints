@@ -2,7 +2,8 @@ apiVersion: xl/v1
 kind: Import
 metadata:
   imports:
-    - xebialabs/xld-environment.yaml
-    - xebialabs/xld-infrastructure.yaml
-    - xebialabs/xld-service.yaml
-    - xebialabs/xlr-pipeline.yaml
+  - xebialabs/xld-monolith-terraform-applications.yaml
+  - xebialabs/xld-monolith-terraform-infrastructure.yaml
+  - xebialabs/xld-monolith-terraform-environments.yaml
+  - xebialabs/xlr-monolith-terraform-pipeline-ci-cd.yaml
+  - xebialabs/xlr-monolith-terraform-pipeline-destroy.yaml

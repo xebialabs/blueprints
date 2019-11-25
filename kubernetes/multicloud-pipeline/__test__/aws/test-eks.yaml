@@ -1,18 +1,21 @@
 answers-file: answers-eks.yaml
 expected-files:
-- cloudformation/cfn-secret-provider.zip
-- cloudformation/eks-master.yaml
-- cloudformation/eks-user.yaml
-- cloudformation/eks-vpc.yaml
-- cloudformation/eks-workers.yaml
-- kubernetes/aws-auth-cm.yaml
-- kubernetes/deployment.yaml
-- xebialabs/USAGE-aws-basic-eks-cluster.md
-- xebialabs/USAGE-kubernetes-application.md
+- xebialabs.yaml
+- README.md
+- xebialabs/USAGE-basic-eks-cluster.md
+- xebialabs/USAGE-application.md
 - xebialabs/USAGE-multicloud-pipeline.md
-- xebialabs/aws-basic-eks-cluster-applications.yaml
-- xebialabs/aws-basic-eks-cluster-environments.yaml
-- xebialabs/kubernetes-application.yaml
-- xebialabs/multicloud-pipeline.yaml
+- xebialabs/xld-basic-eks-cluster-applications.yaml
+- xebialabs/xld-basic-eks-cluster-environments.yaml
+- xebialabs/xld-application-applications.yaml
+- xebialabs/xlr-multicloud-pipeline-ci-cd.yaml
+- xebialabs/xlr-multicloud-pipeline-destroy.yaml
+- cloudformation-basic-eks-cluster/cfn-secret-provider.zip
+- cloudformation-basic-eks-cluster/eks-master.yaml
+- cloudformation-basic-eks-cluster/eks-user.yaml
+- cloudformation-basic-eks-cluster/eks-vpc.yaml
+- cloudformation-basic-eks-cluster/eks-workers.yaml
+- kubernetes-basic-eks-cluster/aws-auth-cm.yaml
+- kubernetes-application/deployment.yaml
 not-expected-files:
-- xebialabs/aws-basic-eks-cluster.yaml
+- xebialabs/basic-eks-cluster.yaml

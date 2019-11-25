@@ -3,13 +3,11 @@ kind: Blueprint
 
 metadata:
   name: azure-credentials
-  description: |
-    Fragment to collect Azure credentials
+  description: Fragment to collect Azure credentials
   author: XebiaLabs
   version: 2.0
-  instructions: |
-    This blueprint has no instructions.
   suppressXebiaLabsFolder: true
+  instructions: This blueprint has no instructions.
 
 spec:
   parameters:

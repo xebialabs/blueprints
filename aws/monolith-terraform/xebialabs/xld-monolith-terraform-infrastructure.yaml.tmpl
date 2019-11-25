@@ -1,0 +1,15 @@
+{{$app := .AppName | kebabcase}}
+apiVersion: xl-deploy/v1
+kind: Infrastructure
+spec:
+- name: {{$app}}
+  type: core.Directory
+  children:
+    - name: localhost
+      type: overthere.LocalHost
+      os: UNIX
+      children:
+        - name: terraform-client
+          type: terraform.TerraformClient
+          workingDirectory: '/tmp/{{$app}}'
+          path: '/usr/local/bin'

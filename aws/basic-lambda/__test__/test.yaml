@@ -1,6 +1,10 @@
 answers-file: answers.yaml
 expected-files:
-- xebialabs/aws-basic-lambda.yaml
-- xebialabs/USAGE-aws-basic-lambda.md
-- cloudformation/lambda-function.yaml
+- xebialabs.yaml
+- README.md
+- xebialabs/USAGE-basic-lambda.md
+- xebialabs/xld-basic-lambda-applications.yaml
+- xebialabs/xld-basic-lambda-infrastructure.yaml
+- xebialabs/xld-basic-lambda-environments.yaml
+- cloudformation-basic-lambda/lambda-function.yaml
 - docker/docker-compose.yml

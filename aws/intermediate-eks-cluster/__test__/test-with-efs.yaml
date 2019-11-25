@@ -1,18 +1,20 @@
 # test the scenario with new cluster
 answers-file: answers-02.yaml
 expected-files:
-  - xebialabs/xld-infra-env.yaml
-  - xebialabs/xld-cloudformation-apps.yaml
-  - xebialabs/xlr-pipeline-ci-cd.yaml
-  - xebialabs/xlr-pipeline-destroy.yaml
-  - xebialabs/USAGE.md
-  - kubernetes/aws-auth-cm.yaml
-  - cloudformation/cfn-secret-provider.zip
-  - cloudformation/eks-master.yaml
-  - cloudformation/eks-user.yaml
-  - cloudformation/eks-vpc.yaml
-  - cloudformation/eks-workers.yaml
-  - cloudformation/efs.yaml
-  - xebialabs.yaml
-  - docker/docker-compose.yml
-  - docker/data/configure-xl-devops-platform.yaml
+- xebialabs.yaml
+- README.md
+- xebialabs/USAGE-intermediate-eks-cluster.md
+- xebialabs/xld-intermediate-eks-cluster-applications.yaml
+- xebialabs/xld-intermediate-eks-cluster-infrastructure.yaml
+- xebialabs/xld-intermediate-eks-cluster-environments.yaml
+- xebialabs/xlr-intermediate-eks-cluster-pipeline-ci-cd.yaml
+- xebialabs/xlr-intermediate-eks-cluster-pipeline-destroy.yaml
+- kubernetes-intermediate-eks-cluster/aws-auth-cm.yaml
+- cloudformation-intermediate-eks-cluster/cfn-secret-provider.zip
+- cloudformation-intermediate-eks-cluster/eks-master.yaml
+- cloudformation-intermediate-eks-cluster/eks-user.yaml
+- cloudformation-intermediate-eks-cluster/eks-vpc.yaml
+- cloudformation-intermediate-eks-cluster/eks-workers.yaml
+- cloudformation-intermediate-eks-cluster/efs.yaml
+- docker/docker-compose.yml
+- docker/data/configure-xl-devops-platform.yaml

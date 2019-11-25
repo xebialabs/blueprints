@@ -6,9 +6,9 @@
 
 To deploy this blueprint, follow the steps below:
 
-{{ if ne .KubernetesApplicationName "nginx" }}
-First, edit `kubernetes/deployment.yaml` to suit the `{{ .KubernetesApplicationName }}` image you chose to deploy.
-{{ end }}
+{{if ne .KubernetesApplicationName "nginx"}}
+First, edit `kubernetes/deployment.yaml` to suit the `{{.KubernetesApplicationName}}` image you chose to deploy.
+{{end}}
 
 1. Apply the generated YAML configurations using the XL CLI. Open up a terminal in the folder where you generated the configuration. Then run:
 
@@ -16,7 +16,7 @@ First, edit `kubernetes/deployment.yaml` to suit the `{{ .KubernetesApplicationN
     xl apply -f xebialabs.yaml
     ```
 
-2. Go to XL Release (default http://localhost:5516) and look for the "{{$clusterName}}-cicd" template and start a new release from it.
+2. Go to XL Release (default http://localhost:5516) and look for the "{{$clusterName}}-ci-cd" template and start a new release from it.
 
 3. To deprovision the cluster, look for the "{{$clusterName}}-destroy" template and start a new release from it.
 

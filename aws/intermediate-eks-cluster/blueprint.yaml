@@ -8,7 +8,7 @@ metadata:
     XL Deploy does the provisioning and deployment, while XL Release orchestrates everything.
   author: XebiaLabs
   version: 2.0
-  instructions: Please read the generated file "xebialabs/USAGE.md" for further usage instructions.
+  instructions: Please read the generated file "xebialabs/USAGE-intermediate-eks-cluster.md" for further usage instructions.
 
 spec:
   parameters:
@@ -82,9 +82,9 @@ spec:
     default: '1.11'
     prompt: What version of EKS would you like to run?
     options:
-      - '1.11'
-      - '1.12'
-      - '1.13'
+    - '1.11'
+    - '1.12'
+    - '1.13'
 
   - name: NodeAutoScalingGroupDesiredSize
     type: Input
@@ -182,17 +182,22 @@ spec:
       value: false
 
   files:
-  - path: xebialabs/xld-infra-env.yaml.tmpl
-  - path: xebialabs/xld-cloudformation-apps.yaml.tmpl
-  - path: xebialabs/xlr-pipeline-ci-cd.yaml.tmpl
-  - path: xebialabs/xlr-pipeline-destroy.yaml.tmpl
-  - path: xebialabs/USAGE.md.tmpl
-  - path: kubernetes/aws-auth-cm.yaml
-  - path: cloudformation/cfn-secret-provider.zip
-  - path: cloudformation/eks-master.yaml
-  - path: cloudformation/eks-user.yaml
-  - path: cloudformation/eks-vpc.yaml
-  - path: cloudformation/eks-workers.yaml.tmpl
-  - path: cloudformation/efs.yaml
-    writeIf: ProvisionEFS
+  # XebiaLabs
   - path: xebialabs.yaml
+  - path: README.md
+  - path: xebialabs/USAGE-intermediate-eks-cluster.md.tmpl
+  - path: xebialabs/xld-intermediate-eks-cluster-applications.yaml.tmpl
+  - path: xebialabs/xld-intermediate-eks-cluster-infrastructure.yaml.tmpl
+  - path: xebialabs/xld-intermediate-eks-cluster-environments.yaml.tmpl
+  - path: xebialabs/xlr-intermediate-eks-cluster-pipeline-ci-cd.yaml.tmpl
+  - path: xebialabs/xlr-intermediate-eks-cluster-pipeline-destroy.yaml.tmpl
+  # Kubernetes
+  - path: kubernetes-intermediate-eks-cluster/aws-auth-cm.yaml
+  # CloudFormation
+  - path: cloudformation-intermediate-eks-cluster/cfn-secret-provider.zip
+  - path: cloudformation-intermediate-eks-cluster/eks-master.yaml
+  - path: cloudformation-intermediate-eks-cluster/eks-user.yaml
+  - path: cloudformation-intermediate-eks-cluster/eks-vpc.yaml
+  - path: cloudformation-intermediate-eks-cluster/eks-workers.yaml.tmpl
+  - path: cloudformation-intermediate-eks-cluster/efs.yaml
+    writeIf: ProvisionEFS

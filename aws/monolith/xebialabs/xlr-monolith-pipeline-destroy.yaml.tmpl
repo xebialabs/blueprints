@@ -1,0 +1,30 @@
+{{$app := .AppName | kebabcase}}
+apiVersion: xl-release/v1
+kind: Templates
+spec:
+- name: {{$app}}
+  type: xlrelease.Folder
+  children:
+  - name: {{$app}}-release-pipeline
+    type: xlrelease.Release
+    description: |
+      This XL Release template shows how to deploy and undeploy a monolithic application to AWS ECS(Fargate) using XL Deploy.
+    tags:
+    - {{$app}}
+    - ECS
+    - Fargate
+    scriptUsername: !value XL_RELEASE_USERNAME
+    scriptUserPassword: !value XL_RELEASE_PASSWORD
+    phases:
+    - name: Undeploy Application
+      type: xlrelease.Phase
+      color: '#ff9e3b'
+      tasks:
+      - name: Undeploy application services
+        type: xldeploy.Undeploy
+        server: XL Deploy
+        deployedApplication: Environments/{{$app}}/AWS/{{$app}}-app-service
+      - name: Deprovision application infrastructure
+        type: xldeploy.Undeploy
+        server: XL Deploy
+        deployedApplication: Environments/{{$app}}/AWS/{{$app}}-ecs-fargate-cluster

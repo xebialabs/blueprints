@@ -38,7 +38,7 @@ None
 
 This blueprint will output:
 
-* The file `xebialabs/kubernetes-application.yaml` that defines a package that deploys a single Docker container.
+* The file `xebialabs/application.yaml` that defines a package that deploys a single Docker container.
 
 ## Tips and tricks
 

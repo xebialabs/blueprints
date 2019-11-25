@@ -7,7 +7,7 @@ metadata:
     This blueprint defines an application that can be deployed to Kubernetes
   author: XebiaLabs
   version: 2.0
-  instructions: Read xebialabs/USAGE-kubernetes-application.md to learn how to use this blueprint.
+  instructions: Read xebialabs/USAGE-application.md to learn how to use this blueprint.
 
 spec:
   parameters:
@@ -24,7 +24,7 @@ spec:
   - name: KubernetesResourcesFile
     type: Input
     prompt: "What is the path of the Kubernetes YAML file that you want to deploy?"
-    default: '../kubernetes/deployment.yaml'
+    default: '../kubernetes-application/deployment.yaml'
 
   - name: Namespace
     type: Input
@@ -37,7 +37,9 @@ spec:
 
   files:
   # XebiaLabs
-  - path: xebialabs/USAGE-kubernetes-application.md.tmpl
-  - path: xebialabs/kubernetes-application.yaml.tmpl
+  - path: xebialabs.yaml
+  - path: README.md
+  - path: xebialabs/USAGE-application.md.tmpl
+  - path: xebialabs/xld-application-applications.yaml.tmpl
   # Kubernetes
-  - path: kubernetes/deployment.yaml.tmpl
+  - path: kubernetes-application/deployment.yaml.tmpl

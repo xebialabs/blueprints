@@ -2,7 +2,8 @@ apiVersion: xl/v1
 kind: Import
 metadata:
   imports:
-    - xebialabs/xld-environment.yaml
-    - xebialabs/xld-infrastructure.yaml
-    - xebialabs/xlr-pipeline-ci-cd.yaml
-    - xebialabs/xlr-pipeline-destroy.yaml
+    - xebialabs/xld-elastic-beanstalk-applications.yaml
+    - xebialabs/xld-elastic-beanstalk-infrastructure.yaml
+    - xebialabs/xld-elastic-beanstalk-environments.yaml
+    - xebialabs/xlr-elastic-beanstalk-pipeline-ci-cd.yaml
+    - xebialabs/xlr-elastic-beanstalk-pipeline-destroy.yaml

@@ -1,9 +1,13 @@
 answers-file: answers-with-app.yaml
 expected-files:
-- xebialabs/azure-app-service.yaml
-- xebialabs/USAGE.md
-- terraform/main.tf
-- terraform/outputs.tf
-- terraform/variables.tf
+- xebialabs.yaml
+- README.md
+- xebialabs/USAGE-app-service-docker-app.md
+- xebialabs/xld-app-service-docker-app-applications.yaml
+- xebialabs/xld-app-service-docker-app-infrastructure.yaml
+- xebialabs/xld-app-service-docker-app-environments.yaml
+- terraform-app-service-docker-app/main.tf
+- terraform-app-service-docker-app/outputs.tf
+- terraform-app-service-docker-app/variables.tf
 not-expected-files:
 - docker/docker-compose.yml

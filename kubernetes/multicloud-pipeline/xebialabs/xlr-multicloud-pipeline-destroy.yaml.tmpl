@@ -1,0 +1,37 @@
+{{$clusterName := .ClusterName | kebabcase}}
+
+apiVersion: xl-release/v1
+kind: Templates
+spec:
+- name: {{$clusterName}}
+  type: xlrelease.Folder
+  children:
+  - name: {{$clusterName}}-destroy
+    type: xlrelease.Release
+    description: |
+      This XL Release template shows how to undeploy an application, based on microservices architecture.
+    tags:
+    - {{$clusterName}}
+    scriptUsername: !value XL_RELEASE_USERNAME
+    scriptUserPassword: !value XL_RELEASE_PASSWORD
+    phases:
+    - name: Undeploy Application
+      type: xlrelease.Phase
+      tasks:
+      - name: Undeploy node
+        type: xldeploy.Undeploy
+        server: XL Deploy
+        {{- if eq .Provider "existing cluster"}}
+        deployedApplication: Environments/{{.KubernetesName}}/{{.KubernetesApplicationName}}
+        {{- else}}
+        deployedApplication: Environments/{{$clusterName}}/{{$clusterName}} environment/{{.KubernetesApplicationName}}
+        {{- end}}
+    {{- if ne .Provider "existing cluster"}}
+    - name: Deprovision Infrastructure
+      type: xlrelease.Phase
+      tasks:
+      - name: Deprovision the cluster
+        type: xldeploy.Undeploy
+        server: XL Deploy
+        deployedApplication: Environments/{{$clusterName}}/terraform/{{$clusterName}}
+    {{- end}}

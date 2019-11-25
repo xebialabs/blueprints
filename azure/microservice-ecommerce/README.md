@@ -285,7 +285,7 @@ The blueprint will output:
     * Security infrastructure
 * A docker-compose setup for XL Release, XL Deploy and Jenkins
 
-**Note:** You will find more instructions in `xebialabs/USAGE.md` after you have run the blueprint.
+**Note:** You will find more instructions in `xebialabs/USAGE-microservice-ecommerce.md` after you have run the blueprint.
 
 ## Notes
 

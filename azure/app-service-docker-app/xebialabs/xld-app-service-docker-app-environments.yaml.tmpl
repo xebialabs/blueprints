@@ -1,0 +1,12 @@
+{{$appName := .AppName | kebabcase}}
+
+apiVersion: xl-deploy/v1
+kind: Environments
+spec:
+- name: {{$appName}}
+  type: core.Directory
+  children:
+  - name: {{$appName}}-terraform
+    type: udm.Environment
+    members:
+    - ~Infrastructure/{{$appName}}/{{$appName}}-terraform-host/terraform-client

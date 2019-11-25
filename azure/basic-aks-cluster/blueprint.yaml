@@ -7,7 +7,7 @@ metadata:
     The blueprint provisions a very basic Azure AKS cluster. XL Deploy does the provisioning.
   author: XebiaLabs
   version: 2.0
-  instructions: Please read the generated file "xebialabs/USAGE-azure-basic-aks-cluster.md" for further usage instructions.
+  instructions: Please read the generated file "xebialabs/USAGE-basic-aks-cluster.md" for further usage instructions.
 
 spec:
   parameters:
@@ -134,10 +134,14 @@ spec:
 
   files:
   # XebiaLabs
-  - path: xebialabs/USAGE-azure-basic-aks-cluster.md.tmpl
-  - path: xebialabs/azure-basic-aks-cluster.yaml.tmpl
+  - path: xebialabs.yaml
+  - path: README.md
+  - path: xebialabs/USAGE-basic-aks-cluster.md.tmpl
+  - path: xebialabs/xld-basic-aks-cluster-applications.yaml.tmpl
+  - path: xebialabs/xld-basic-aks-cluster-infrastructure.yaml.tmpl
+  - path: xebialabs/xld-basic-aks-cluster-environments.yaml.tmpl
   # Terraform
-  - path: terraform-azure-basic-aks-cluster/.gitignore
-  - path: terraform-azure-basic-aks-cluster/main.tf
-  - path: terraform-azure-basic-aks-cluster/output.tf
-  - path: terraform-azure-basic-aks-cluster/variables.tf
+  - path: terraform-basic-aks-cluster/.gitignore
+  - path: terraform-basic-aks-cluster/main.tf
+  - path: terraform-basic-aks-cluster/output.tf
+  - path: terraform-basic-aks-cluster/variables.tf

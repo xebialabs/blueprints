@@ -1,0 +1,31 @@
+{{$appName := .AppName | kebabcase}}
+
+apiVersion: xl-deploy/v1
+kind: Applications
+spec:
+- name: {{$appName}}
+  type: core.Directory
+  children:
+  - name: {{$appName}}-app
+    type: udm.Application
+    children:
+    - name: '1.0.0'
+      type: udm.DeploymentPackage
+      deployables:
+      - name: {{$appName}}-app-service
+        type: terraform.Module
+        file: !file ../terraform-app-service-docker-app
+        inputVariables:
+          prefix: {{$appName}}
+          location: {{.ResourceGroupLocation}}
+          subscription_id: {{.SubscriptionID}}
+          client_id: {{.ClientID}}
+          client_secret: {{.ClientSecret}}
+          tenant_id: {{.TenantID}}
+          docker_image: {{.DockerImage}}
+          docker_image_tag: {{.DockerImageTag}}
+          {{- if .UseSampleApplication}}
+          mysql_master_password: {{.MySqlMasterPassword}}
+          mysql_master_username: {{.MySqlMasterUsername}}
+          db_name_prefix: {{.AppName | snakecase}}
+          {{- end}}

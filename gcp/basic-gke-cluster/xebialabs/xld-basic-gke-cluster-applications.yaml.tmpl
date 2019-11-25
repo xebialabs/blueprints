@@ -1,0 +1,27 @@
+{{$clusterName := .ClusterName | kebabcase}}
+
+
+apiVersion: xl-deploy/v1
+kind: Applications
+spec:
+- name: {{$clusterName}}
+  type: core.Directory
+  children:
+  - name: {{$clusterName}}
+    type: udm.Application
+    children:
+    - name: '1.0.0'
+      type: udm.DeploymentPackage
+      deployables:
+      - name: {{$clusterName}}
+        type: terraform.Module
+        file: !file ../terraform-basic-gke-cluster
+        inputVariables:
+          project_id: {{.GCPProjectID}}
+          name: {{$clusterName}}
+          region: {{.GCPRegion}}
+          gke_master_user: {{.K8SMasterUser}}
+          gke_master_pass: {{.K8SMasterPassword}}
+          gke_num_nodes: {{.GKENumNodes}}
+          gke_node_machine_type: {{.GKENodeMachineType}}
+        environmentPath: "{{$clusterName}} environment"

@@ -8,7 +8,7 @@ metadata:
     XL Deploy does the provisioning and deployment, while XL Release orchestrates everything.
   author: XebiaLabs
   version: 2.0
-  instructions: Please read the generated file "xebialabs/USAGE.md" for further usage instructions.
+  instructions: Please read the generated file "xebialabs/USAGE-microservice-ecommerce.md" for further usage instructions.
 
 spec:
   parameters:
@@ -214,36 +214,39 @@ spec:
       value: gke-blueprint
 
   files:
+  # XebiaLabs
   - path: xebialabs.yaml
   - path: README.md
-  - path: xebialabs/xld-infra-env.yaml.tmpl
-  - path: xebialabs/xld-terraform-apps.yaml.tmpl
-  - path: xebialabs/xld-kubernetes-invoice-app.yaml.tmpl
-  - path: xebialabs/xld-kubernetes-store-app.yaml.tmpl
-  - path: xebialabs/xld-kubernetes-notification-app.yaml.tmpl
-  - path: xebialabs/xlr-pipeline-ci-cd.yaml.tmpl
-  - path: xebialabs/xlr-pipeline-destroy.yaml.tmpl
-  - path: xebialabs/USAGE.md.tmpl
+  - path: xebialabs/USAGE-microservice-ecommerce.md.tmpl
+  - path: xebialabs/xld-microservice-ecommerce-infra-env.yaml.tmpl
+  - path: xebialabs/xld-microservice-ecommerce-invoice-applications.yaml.tmpl
+  - path: xebialabs/xld-microservice-ecommerce-store-applications.yaml.tmpl
+  - path: xebialabs/xld-microservice-ecommerce-notification-applications.yaml.tmpl
+  - path: xebialabs/xld-microservice-ecommerce-terraform-applications.yaml.tmpl
+  - path: xebialabs/xlr-microservice-ecommerce-pipeline-ci-cd.yaml.tmpl
+  - path: xebialabs/xlr-microservice-ecommerce-pipeline-destroy.yaml.tmpl
   # Terraform
-  - path: terraform/main.tf
+  - path: terraform-microservice-ecommerce/.gitignore
     writeIf: ProvisionCluster
-  - path: terraform/variables.tf
+  - path: terraform-microservice-ecommerce/main.tf
     writeIf: ProvisionCluster
-  - path: terraform/backend.tf.tmpl
+  - path: terraform-microservice-ecommerce/variables.tf
     writeIf: ProvisionCluster
-  - path: terraform/outputs.tf
+  - path: terraform-microservice-ecommerce/backend.tf.tmpl
     writeIf: ProvisionCluster
-  - path: terraform/.gitignore
+  - path: terraform-microservice-ecommerce/outputs.tf
     writeIf: ProvisionCluster
-  - path: terraform/aks/main.tf
+  - path: terraform-microservice-ecommerce/.gitignore
     writeIf: ProvisionCluster
-  - path: terraform/aks/variables.tf
+  - path: terraform-microservice-ecommerce/aks/main.tf
     writeIf: ProvisionCluster
-  - path: terraform/aks/outputs.tf
+  - path: terraform-microservice-ecommerce/aks/variables.tf
     writeIf: ProvisionCluster
-  - path: terraform/vpc/main.tf
+  - path: terraform-microservice-ecommerce/aks/outputs.tf
     writeIf: ProvisionCluster
-  - path: terraform/vpc/variables.tf
+  - path: terraform-microservice-ecommerce/vpc/main.tf
     writeIf: ProvisionCluster
-  - path: terraform/vpc/outputs.tf
+  - path: terraform-microservice-ecommerce/vpc/variables.tf
+    writeIf: ProvisionCluster
+  - path: terraform-microservice-ecommerce/vpc/outputs.tf
     writeIf: ProvisionCluster
