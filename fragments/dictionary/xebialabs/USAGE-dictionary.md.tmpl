@@ -1,4 +1,4 @@
-{{- $dir := .DictionaryDirectoryName | kebabcase }}
+{{- $dir := .DictionaryDirectoryName | kebabcase}}
 # Dictionary
 
 ## Steps
@@ -7,9 +7,9 @@ Below are the steps you need to follow:
 
 ### 1. Add the secret values for the keys to the Dictionary
 
-In XL Deploy, edit `Environments/{{$dir}}/{{ .DictionaryName }}` and fill in the secret values for each of the following keys:
+In XL Deploy, edit `Environments/{{$dir}}/{{.DictionaryName}}` and fill in the secret values for each of the following keys:
 
-{{ $splitKeys := splitList "," .DictionaryKeys }}
-{{- range $key := $splitKeys }}
-* `{{ $key | trim }}`
-{{- end }}
+{{$splitKeys := splitList "," .DictionaryKeys}}
+{{- range $key := $splitKeys}}
+* `{{$key | trim}}`
+{{- end}}

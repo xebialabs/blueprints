@@ -55,14 +55,14 @@ spec:
           type: xldeploy.Undeploy
           server: XL Deploy
           deployedApplication: Environments/{{$app}}/{{$appEnv}}/{{$app}}-notification-mongodb
-      {{if .ProvisionCluster }}
+      {{if .ProvisionCluster}}
       # Un-provision namespace
       - name: Undeploy {{.Namespace}} namespace
         type: xldeploy.Undeploy
         server: XL Deploy
         deployedApplication: Environments/{{$app}}/{{$appEnv}}/{{$app}}-namespace
       {{end}}
-    {{if .ProvisionCluster }}
+    {{if .ProvisionCluster}}
     # De-provision Infra
     - name: Deprovision Infrastructure
       color: '#ff9e3b'

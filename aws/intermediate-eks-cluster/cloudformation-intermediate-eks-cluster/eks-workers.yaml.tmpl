@@ -3,7 +3,7 @@ Description: 'Amazon EKS - Worker nodes'
 
 Mappings:
     RegionMap:
-    {{- if eq .ClusterVersion "1.11" }}
+    {{- if eq .ClusterVersion "1.11"}}
       us-east-2:
         "AmiId": "ami-03c6648b74285020f"
       us-east-1:
@@ -30,7 +30,7 @@ Mappings:
         "AmiId": "ami-052046d313576d0ba"
       eu-north-1:
         "AmiId": "ami-02ebf24da505128f9"
-    {{- else if eq .ClusterVersion "1.12" }}
+    {{- else if eq .ClusterVersion "1.12"}}
       us-east-2:
         "AmiId": "ami-0fe61ae4c397e710d"
       us-east-1:
@@ -57,7 +57,7 @@ Mappings:
         "AmiId": "ami-038cb36289174bac4"
       eu-north-1:
         "AmiId": "ami-03e60b5a990893129"
-    {{- else if eq .ClusterVersion "1.13" }}
+    {{- else if eq .ClusterVersion "1.13"}}
       us-east-2:
         "AmiId": "ami-0485258c2d1c3608f"
       us-east-1:
@@ -84,7 +84,7 @@ Mappings:
         "AmiId": "ami-0537ee9329c1628a2"
       eu-north-1:
         "AmiId": "ami-0fd05922165907b85"
-    {{- end }}
+    {{- end}}
 
 
 Parameters:

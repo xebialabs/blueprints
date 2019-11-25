@@ -1,13 +1,13 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ .KubernetesApplicationName }}-service
+  name: {{.KubernetesApplicationName}}-service
   namespace: {{.Namespace}}
   labels:
-    app: {{ .KubernetesApplicationName }}
+    app: {{.KubernetesApplicationName}}
 spec:
   selector:
-    app: {{ .KubernetesApplicationName }}
+    app: {{.KubernetesApplicationName}}
   type: LoadBalancer
   ports:
   - name: http
@@ -18,23 +18,23 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ .KubernetesApplicationName }}-deployment
+  name: {{.KubernetesApplicationName}}-deployment
   namespace: {{.Namespace}}
   labels:
-    app: {{ .KubernetesApplicationName }}
+    app: {{.KubernetesApplicationName}}
 spec:
   replicas: 2
   selector:
     matchLabels:
-      app: {{ .KubernetesApplicationName }}
+      app: {{.KubernetesApplicationName}}
   template:
     metadata:
       labels:
-        app: {{ .KubernetesApplicationName }}
+        app: {{.KubernetesApplicationName}}
     spec:
       containers:
-      - name: {{ .KubernetesApplicationName }}
-        image: {{ .KubernetesApplicationName }}:{{.KubernetesDeploymentPackageVersion}}
+      - name: {{.KubernetesApplicationName}}
+        image: {{.KubernetesApplicationName}}:{{.KubernetesDeploymentPackageVersion}}
         ports:
         - name: http
           containerPort: 80

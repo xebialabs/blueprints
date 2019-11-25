@@ -2,7 +2,7 @@
   id: prod
   body:
     - &variables
-      {{- $splitKeys := splitList "," .DockerCyberArkKeys }}
-      {{- range $key := $splitKeys }}
-      - !variable {{ $key | trim }}
-      {{- end }}
+      {{- $splitKeys := splitList "," .DockerCyberArkKeys}}
+      {{- range $key := $splitKeys}}
+      - !variable {{$key | trim}}
+      {{- end}}

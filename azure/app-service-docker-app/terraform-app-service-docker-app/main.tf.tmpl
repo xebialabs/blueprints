@@ -11,7 +11,7 @@ resource "azurerm_resource_group" "main" {
   location = "${var.location}"
 }
 
-{{- if .UseSampleApplication }}
+{{- if .UseSampleApplication}}
 # This creates a MySQL server
 resource "azurerm_mysql_server" "main" {
   name                = "${var.prefix}-mysql-server"
@@ -88,7 +88,7 @@ resource "azurerm_app_service" "main" {
     "DOCKER_REGISTRY_SERVER_URL"          = "https://index.docker.io"
 
     # These are app specific environment variables go here
-    {{- if .UseSampleApplication }}
+    {{- if .UseSampleApplication}}
     "SPRING_PROFILES_ACTIVE"     = "prod,swagger"
     "SPRING_DATASOURCE_URL"      = "jdbc:mysql://${azurerm_mysql_server.main.fqdn}:3306/${azurerm_mysql_database.main.name}?useUnicode=true&characterEncoding=utf8&useSSL=false&useLegacyDatetimeCode=false&serverTimezone=UTC"
     "SPRING_DATASOURCE_USERNAME" = "${var.mysql_master_username}@${azurerm_mysql_server.main.name}"

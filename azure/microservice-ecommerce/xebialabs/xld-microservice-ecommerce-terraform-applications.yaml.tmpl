@@ -6,7 +6,7 @@ spec:
 - name: {{$app}}
   type: core.Directory
   children:
-{{if .ProvisionCluster }}
+{{if .ProvisionCluster}}
 # Provision AKS cluster using Terraform templates
   - name: AKS-TERRAFORM
     type: core.Directory
@@ -34,7 +34,7 @@ spec:
 {{end}}
   - name: K8S
     type: core.Directory
-{{if .ProvisionCluster }}
+{{if .ProvisionCluster}}
 # Provision K8s namespace
     children:
     - name: {{$app}}-namespace

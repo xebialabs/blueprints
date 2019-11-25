@@ -7,7 +7,7 @@ fi
 
 if [ ! -f /opt/conjur-server/admin_info/admin_data ]
 then
-    conjurctl account create {{ .DockerCyberArkAccount }} > admin_info/admin_data
+    conjurctl account create {{.DockerCyberArkAccount}} > admin_info/admin_data
     chmod -R 777 ../../build
     rm -f temporary
 fi

@@ -1,22 +1,22 @@
-{{ $app := regexReplaceAll "^.*?/" .DockerImageRepository "" }}
+{{$app := regexReplaceAll "^.*?/" .DockerImageRepository ""}}
 apiVersion: xl-deploy/v1
 kind: Applications
 spec:
-  - name: {{ $app }}
+  - name: {{$app}}
     type: udm.Application
     children:
-      - name: {{ .DockerImageTag }}
+      - name: {{.DockerImageTag}}
         type: udm.DeploymentPackage
         deployables:
-          - name: {{ $app }}
+          - name: {{$app}}
             type: docker.ContainerSpec
-            image: {{ .DockerImageRepository }}:{{ .DockerImageTag }}
+            image: {{.DockerImageRepository}}:{{.DockerImageTag}}
             showLogsAfter: 5
-{{- if .ExposePort }}
+{{- if .ExposePort}}
             portBindings:
-            - name: "{{ .ContainerPort }}"
+            - name: "{{.ContainerPort}}"
               type: docker.PortSpec
-              hostPort: "{{ .HostPort }}"
-              containerPort: "{{ .ContainerPort }}"
+              hostPort: "{{.HostPort}}"
+              containerPort: "{{.ContainerPort}}"
               protocol: tcp
-{{ end }}
+{{end}}

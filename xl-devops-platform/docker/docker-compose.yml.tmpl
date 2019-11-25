@@ -1,8 +1,8 @@
 version: '3.7'
 services:
-  {{- if .UseXLDeploy }}
+  {{- if .UseXLDeploy}}
   xl-deploy:
-    image: xebialabs/xl-deploy:{{ .XLVersion }}
+    image: xebialabs/xl-deploy:{{.XLVersion}}
     container_name: xebialabs-xl-deploy
     ports:
     - "{{.XLDeployPort}}:4516"
@@ -11,11 +11,11 @@ services:
     - ACCEPT_EULA=Y
     networks:
     - xebialabs
-  {{- end }}
+  {{- end}}
 
-  {{- if .UseXLRelease }}
+  {{- if .UseXLRelease}}
   xl-release:
-    image: xebialabs/xl-release:{{ .XLVersion }}
+    image: xebialabs/xl-release:{{.XLVersion}}
     container_name: xebialabs-xl-release
     ports:
     - "{{.XLReleasePort}}:5516"
@@ -25,7 +25,7 @@ services:
     networks:
     - xebialabs
   xl-cli:
-    image: xebialabsunsupported/xl-cli:{{ .XLVersion }}
+    image: xebialabsunsupported/xl-cli:{{.XLVersion}}
     container_name: xebialabs-xl-cli
     depends_on:
     - xl-deploy
@@ -35,9 +35,9 @@ services:
     - ./data/:/data:ro
     networks:
     - xebialabs
-  {{- end }}
+  {{- end}}
 
-  {{- if .UseJenkins }}
+  {{- if .UseJenkins}}
   jenkins:
     image: xebialabsunsupported/jenkins-blueprint-demo:latest
     container_name: xebialabs-jenkins
@@ -55,9 +55,9 @@ services:
       - "55888:55888"
     networks:
     - xebialabs
-  {{- end }}
+  {{- end}}
 
-  {{- if .UseDockerProxy }}
+  {{- if .UseDockerProxy}}
   dockerproxy:
     image: tecnativa/docker-socket-proxy:latest
     container_name: xebialabs-dockerproxy
@@ -87,7 +87,7 @@ services:
       - VOLUMES=1
     networks:
     - xebialabs
-  {{- end }}
+  {{- end}}
 
 networks:
   xebialabs:

@@ -2,13 +2,13 @@ apiVersion: xl/v1
 kind: Import
 metadata:
   imports:
-  {{- if eq .CredentialsSource "secret-store" }}
+  {{- if eq .CredentialsSource "secret-store"}}
   - xebialabs/xld-secret-store-configuration.yaml
   - xebialabs/xld-secret-store-environments.yaml
-  {{- end }}
-  {{- if eq .CredentialsSource "dictionary" }}
+  {{- end}}
+  {{- if eq .CredentialsSource "dictionary"}}
   - xebialabs/xld-dictionary-environments.yaml
-  {{- end }}
+  {{- end}}
   - xebialabs/xld-dictionaries-and-secret-stores-infrastructure.yaml
   - xebialabs/xld-dictionaries-and-secret-stores-applications.yaml
   - xebialabs/xld-dictionaries-and-secret-stores-environments.yaml

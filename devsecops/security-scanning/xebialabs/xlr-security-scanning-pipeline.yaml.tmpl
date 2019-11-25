@@ -22,14 +22,14 @@ spec:
         color: '#d94c3d'
         type: xlrelease.Phase
         tasks:
-      {{- if .ConfigureSonar }}
+      {{- if .ConfigureSonar}}
         - name: Sonarqube Compliance for {{$app}}
           type: sonar.checkCompliance
           sonarServer: {{$sonarServer}}
           resource: {{.SonarResource}}
           locked: true
       {{- end}}
-      {{- if .ConfigureFortify }}
+      {{- if .ConfigureFortify}}
         - name: Fortify Compliance for {{$app}}
         {{- if eq .SelectedFortify "Fortify SSC"}}
           type: fortify.checkCompliance
@@ -42,7 +42,7 @@ spec:
           projectVersion: {{.FortifyApplicationVersion}}
           locked: true
       {{- end}}
-      {{- if .ConfigureCheckmarx }}
+      {{- if .ConfigureCheckmarx}}
         {{- if eq .SelectedCheckmarx "both" "CxSAST"}}
         - name: CxSAST Compliance for {{$app}}
           type: checkmarx.checkCompliance
@@ -60,7 +60,7 @@ spec:
           locked: true
         {{- end}}
       {{- end}}
-      {{- if .ConfigureBlackduck }}
+      {{- if .ConfigureBlackduck}}
         - name: Blackduck Compliance for {{$app}}
           type: blackduck.checkCompliance
           blackduckServer: {{$blackduckServer}}
@@ -71,7 +71,7 @@ spec:
     - type: xlrelease.Dashboard
       owner: !value XL_RELEASE_USERNAME
       tiles:
-    {{- if .ConfigureSonar }}
+    {{- if .ConfigureSonar}}
       - name: SonarQube analysis summary
         type: sonar.SonarSummaryTile
         row: 3

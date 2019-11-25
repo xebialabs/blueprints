@@ -13,7 +13,7 @@ spec:
       type: xlrelease.BlankDashboard
       owner: !value XL_RELEASE_USERNAME
       tiles:
-    {{- if .ConfigureSonar }}
+    {{- if .ConfigureSonar}}
       - name: SonarQube metrics - Issues for {{$app}}
         type: sonar.SonarComplianceTile
         row: 0
@@ -46,7 +46,7 @@ spec:
           duplicated_lines: Duplicated Lines
           ncloc: Lines of Code
     {{- end}}
-    {{- if .ConfigureFortify }}
+    {{- if .ConfigureFortify}}
       {{- if eq .SelectedFortify "Fortify SSC"}}
       - name: Fortify SSC application compliance for {{$app}}
         type: fortify.FortifyComplianceTile
@@ -103,7 +103,7 @@ spec:
         projectVersion: {{.FortifyApplicationVersion}}
       {{- end}}
     {{- end}}
-    {{- if .ConfigureCheckmarx }}
+    {{- if .ConfigureCheckmarx}}
       {{- if eq .SelectedCheckmarx "both" "CxSAST"}}
       - name: CxSAST Scan Summary for {{$app}}
         type: checkmarx.CheckmarxSummaryTile
@@ -138,7 +138,7 @@ spec:
         riskType: Security Risks
       {{- end}}
     {{- end}}
-    {{- if .ConfigureBlackduck }}
+    {{- if .ConfigureBlackduck}}
       - name: BlackDuck security risk profile for {{$app}}
         type: blackduck.BlackduckRiskProfileTile
         row: 7

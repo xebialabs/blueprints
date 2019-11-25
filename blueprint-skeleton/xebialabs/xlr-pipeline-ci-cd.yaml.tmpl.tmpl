@@ -1,4 +1,4 @@
-{{"{{ $app := .AppName | kebabcase }}"}}
+{{"{{$app := .AppName | kebabcase}}"}}
 apiVersion: xl-release/v1
 kind: Templates
 spec:
@@ -49,11 +49,11 @@ spec:
         server: XL Deploy
         deploymentPackage: ""
         deploymentEnvironment: "Environments/_PATH_"
-      {{"{{ if .SomeCondition }}"}}
+      {{"{{if .SomeCondition}}"}}
       - name: _TASK3_
         type: xldeploy.Deploy
         server: XL Deploy
         deploymentPackage: ""
         deploymentEnvironment: "Environments/_PATH_"
-      {{"{{ end }}"}}
+      {{"{{end}}"}}
 

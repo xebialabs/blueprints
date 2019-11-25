@@ -47,7 +47,7 @@ spec:
       showOnReleaseStart: false
       value: !value XL_DEPLOY_PASSWORD
     phases:
-    {{if .ProvisionCluster }}
+    {{if .ProvisionCluster}}
     - name: Provision Infrastructure
       color: '#ff9e3b'
       type: xlrelease.Phase
@@ -58,7 +58,7 @@ spec:
         deploymentPackage: {{$app}}/AKS-TERRAFORM/{{$app}}-terraform-aks/1.0.0
         deploymentEnvironment: Environments/{{$app}}/azure-terraform
     {{end}}
-    {{if .EnableCICD }}
+    {{if .EnableCICD}}
     - name: Build {{$app}} application
       type: xlrelease.Phase
       tasks:
@@ -84,7 +84,7 @@ spec:
     - name: Deploy {{$app}} application
       type: xlrelease.Phase
       tasks:
-      {{if .ProvisionCluster }}
+      {{if .ProvisionCluster}}
       - name: Deploy {{.Namespace}} namespace
         type: xlrelease.SequentialGroup
         tasks:
