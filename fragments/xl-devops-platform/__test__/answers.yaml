@@ -1,0 +1,10 @@
+GenerateDockerComposeSetup: true
+UseXLDeploy: true
+XLDeployPort: 4516
+UseXLRelease: true
+XLReleasePort: 5516
+XLVersion: 9.0.0
+UseJenkins: true
+JenkinsPort: 8080
+JenkinsBranch: master
+UseDockerProxy: true

@@ -1,0 +1,68 @@
+apiVersion: xl/v2
+kind: Blueprint
+
+metadata:
+  name: Docker compose
+  description: Fragment that acts as a proxy for xl-devops-platform
+  author: XebiaLabs
+  version: 2.0
+  suppressXebiaLabsFolder: true
+  instructions: No instructions
+
+spec:
+  parameters:
+  - name: GenerateDockerComposeSetup
+    type: Confirm
+    prompt: "Do you want to generate a docker-compose setup with the required tools to run this blueprint?"
+    default: false
+
+  - name: UseXLDeploy
+    value: default
+
+  - name: XLDeployPort
+    value: default
+
+  - name: UseXLRelease
+    value: default
+
+  - name: XLReleasePort
+    value: default
+
+  - name: XLVersion
+    value: default
+
+  - name: UseJenkins
+    value: default
+
+  - name: JenkinsPort
+    value: default
+
+  - name: JenkinsBranch
+    value: default
+
+  - name: UseDockerProxy
+    value: default
+
+  includeAfter:
+  - blueprint: xl-devops-platform
+    includeIf: GenerateDockerComposeSetup
+    parameterOverrides:
+    - name: UseXLDeploy
+      value: !expr "UseXLDeploy == 'default' ? '' : UseXLDeploy"
+    - name: XLDeployPort
+      value: !expr "XLDeployPort == 'default' ? '' : XLDeployPort"
+    - name: UseXLRelease
+      value: !expr "UseXLRelease == 'default' ? '' : UseXLRelease"
+    - name: XLReleasePort
+      value: !expr "XLReleasePort == 'default' ? '' : XLReleasePort"
+    - name: XLVersion
+      value: !expr "XLVersion == 'default' ? '' : XLVersion"
+    - name: UseJenkins
+      value: !expr "UseJenkins == 'default' ? '' : UseJenkins"
+    - name: JenkinsPort
+      value: !expr "JenkinsPort == 'default' ? '' : JenkinsPort"
+    - name: JenkinsBranch
+      value: !expr "JenkinsBranch == 'default' ? '' : JenkinsBranch"
+    - name: UseDockerProxy
+      value: !expr "UseDockerProxy == 'default' ? '' : UseDockerProxy"
+
