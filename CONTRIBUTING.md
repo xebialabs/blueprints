@@ -24,12 +24,12 @@ Tests are expected in a folder named `__test__` under each blueprint folder. You
 ```
 answers-file: answers-01.yaml
 expected-files:
-  - xebialabs.yaml
-  - cloudformation/data-lake-api.yaml
-  - xebialabs/USAGE.md
-  - xebialabs/xld-environment.yaml
-  - xebialabs/xld-infrastructure.yaml
-  - xebialabs/xlr-pipeline.yaml
+- xebialabs.yaml
+- cloudformation/data-lake-api.yaml
+- xebialabs/USAGE.md
+- xebialabs/xld-environment.yaml
+- xebialabs/xld-infrastructure.yaml
+- xebialabs/xlr-pipeline.yaml
 expected-xl-values:
   AWSRegion: us-east-2
 expected-xl-secrets:

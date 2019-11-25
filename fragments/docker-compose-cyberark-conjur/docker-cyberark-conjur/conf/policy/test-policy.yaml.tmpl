@@ -1,8 +1,8 @@
 - !policy
   id: test
   body:
-    - &variables
-      {{- $splitKeys := splitList "," .DockerCyberArkKeys}}
-      {{- range $key := $splitKeys}}
-      - !variable {{$key | trim}}
-      {{- end}}
+  - &variables
+    {{- $splitKeys := splitList "," .DockerCyberArkKeys}}
+    {{- range $key := $splitKeys}}
+    - !variable {{$key | trim}}
+    {{- end}}

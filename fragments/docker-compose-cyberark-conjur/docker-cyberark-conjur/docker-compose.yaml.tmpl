@@ -15,7 +15,7 @@ services:
       test: /bin/sh provision.sh
     user: root
     volumes:
-      - ./volumes/admin_info:/opt/conjur-server/admin_info
+    - ./volumes/admin_info:/opt/conjur-server/admin_info
     depends_on: [ database ]
 
   client:

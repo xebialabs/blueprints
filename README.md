@@ -44,10 +44,10 @@ Example of a `testxxx.yaml` file:
 ```yaml
 answers-file: answers01.yaml
 expected-files:
-  - file01.txt
-  - dir1/file02.txt
+- file01.txt
+- dir1/file02.txt
 non-expected-files:
-  - dir2/needsdependency.txt
+- dir2/needsdependency.txt
 expected-xl-values:
   Variable1: value1
   Variable2: value2

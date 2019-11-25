@@ -6,185 +6,185 @@
 apiVersion: xl-release/v1
 kind: Templates
 spec:
-  - name: {{$app}}
-    type: xlrelease.Folder
-    children:
-    - name: Security and Compliance
-      type: xlrelease.BlankDashboard
-      owner: !value XL_RELEASE_USERNAME
-      tiles:
-    {{- if .ConfigureSonar}}
-      - name: SonarQube metrics - Issues for {{$app}}
-        type: sonar.SonarComplianceTile
-        row: 0
-        col: 0
-        sonarServer: {{$sonarServer}}
-        metricUnit: INT
-        resource: {{.SonarResource}}
-        versionFilterRegex: '[^\n]+'
-        metrics:
-          violations: Issues
-      - name: SonarQube metrics - Coverage for {{$app}}
-        type: sonar.SonarComplianceTile
-        row: 0
-        col: 2
-        sonarServer: {{$sonarServer}}
-        metricUnit: PERCENT
-        resource: {{.SonarResource}}
-        versionFilterRegex: '[^\n]+'
-        metrics:
-          coverage: Coverage
-      - name: SonarQube metrics - Duplication for {{$app}}
-        type: sonar.SonarComplianceTile
-        row: 0
-        col: 4
-        sonarServer: {{$sonarServer}}
-        metricUnit: INT
-        resource: {{.SonarResource}}
-        versionFilterRegex: '[^\n]+'
-        metrics:
-          duplicated_lines: Duplicated Lines
-          ncloc: Lines of Code
+- name: {{$app}}
+  type: xlrelease.Folder
+  children:
+  - name: Security and Compliance
+    type: xlrelease.BlankDashboard
+    owner: !value XL_RELEASE_USERNAME
+    tiles:
+  {{- if .ConfigureSonar}}
+    - name: SonarQube metrics - Issues for {{$app}}
+      type: sonar.SonarComplianceTile
+      row: 0
+      col: 0
+      sonarServer: {{$sonarServer}}
+      metricUnit: INT
+      resource: {{.SonarResource}}
+      versionFilterRegex: '[^\n]+'
+      metrics:
+        violations: Issues
+    - name: SonarQube metrics - Coverage for {{$app}}
+      type: sonar.SonarComplianceTile
+      row: 0
+      col: 2
+      sonarServer: {{$sonarServer}}
+      metricUnit: PERCENT
+      resource: {{.SonarResource}}
+      versionFilterRegex: '[^\n]+'
+      metrics:
+        coverage: Coverage
+    - name: SonarQube metrics - Duplication for {{$app}}
+      type: sonar.SonarComplianceTile
+      row: 0
+      col: 4
+      sonarServer: {{$sonarServer}}
+      metricUnit: INT
+      resource: {{.SonarResource}}
+      versionFilterRegex: '[^\n]+'
+      metrics:
+        duplicated_lines: Duplicated Lines
+        ncloc: Lines of Code
+  {{- end}}
+  {{- if .ConfigureFortify}}
+    {{- if eq .SelectedFortify "Fortify SSC"}}
+    - name: Fortify SSC application compliance for {{$app}}
+      type: fortify.FortifyComplianceTile
+      row: 2
+      col: 0
+      width: 4
+      fortifyServer: {{$fortifyServer}}
+      timeFrame: LAST_YEAR
+      projectName: {{.FortifyApplication}}
+      standards:
+      - B40F9EE0-3824-4879-B9FE-7A789C89307C:FISMA
+      - 771C470C-9274-4580-8556-C12F5E4BEC51:GDPR
+      - 3C6ECB67-BBD9-4259-A8DB-B49328927248:OWASP Top 10 2017
+      - 1A2B4C7E-93B0-4502-878A-9BE40D2A25C4:OWASP Top 10 2013
+      - 4E8431F9-1BA1-41A8-BDBD-087D5826751A:PCI 3.2
+      - E2FB0D38-0192-4F03-8E01-FE2A12680CA3:PCI 3.0
+      - 92EB4481-1FD9-4165-8E16-F2DE6CB0BD63:SANS Top 25 2011
+      versionFilterRegex: '[^\n]+'
+    - name: Fortify SSC version summary for {{$app}}
+      type: fortify.FortifySummaryTile
+      row: 2
+      col: 4
+      fortifyServer: {{$fortifyServer}}
+      projectName: {{.FortifyApplication}}
+      projectVersion: {{.FortifyApplicationVersion}}
+      metrics:
+        PercentCriticalPriorityIssues: Critical Priority Issues
+        Issues: Total Issues
+        PercentHighPriorityIssues: High Priority Issues
+    {{- else}}
+    - name: Fortify On Demand application compliance for {{$app}}
+      type: fortifyOnDemand.FortifyOnDemandComplianceTile
+      row: 2
+      col: 0
+      width: 4
+      fortifyOnDemandServer: {{$fortifyServer}}
+      timeFrame: LAST_YEAR
+      projectName: {{.FortifyApplication}}
+      standards:
+      - owasp2017
+      - fisma
+      - owasp2013
+      - pci3_2
+      - pci3
+      - pci2
+      - sans2011
+      - sti4_3
+    - name: Fortify On Demand version summary for {{$app}}
+      type: fortifyOnDemand.FortifyOnDemandSummaryTile
+      row: 2
+      col: 4
+      fortifyOnDemandServer: {{$fortifyServer}}
+      projectName: {{.FortifyApplication}}
+      projectVersion: {{.FortifyApplicationVersion}}
     {{- end}}
-    {{- if .ConfigureFortify}}
-      {{- if eq .SelectedFortify "Fortify SSC"}}
-      - name: Fortify SSC application compliance for {{$app}}
-        type: fortify.FortifyComplianceTile
-        row: 2
-        col: 0
-        width: 4
-        fortifyServer: {{$fortifyServer}}
-        timeFrame: LAST_YEAR
-        projectName: {{.FortifyApplication}}
-        standards:
-        - B40F9EE0-3824-4879-B9FE-7A789C89307C:FISMA
-        - 771C470C-9274-4580-8556-C12F5E4BEC51:GDPR
-        - 3C6ECB67-BBD9-4259-A8DB-B49328927248:OWASP Top 10 2017
-        - 1A2B4C7E-93B0-4502-878A-9BE40D2A25C4:OWASP Top 10 2013
-        - 4E8431F9-1BA1-41A8-BDBD-087D5826751A:PCI 3.2
-        - E2FB0D38-0192-4F03-8E01-FE2A12680CA3:PCI 3.0
-        - 92EB4481-1FD9-4165-8E16-F2DE6CB0BD63:SANS Top 25 2011
-        versionFilterRegex: '[^\n]+'
-      - name: Fortify SSC version summary for {{$app}}
-        type: fortify.FortifySummaryTile
-        row: 2
-        col: 4
-        fortifyServer: {{$fortifyServer}}
-        projectName: {{.FortifyApplication}}
-        projectVersion: {{.FortifyApplicationVersion}}
-        metrics:
-          PercentCriticalPriorityIssues: Critical Priority Issues
-          Issues: Total Issues
-          PercentHighPriorityIssues: High Priority Issues
-      {{- else}}
-      - name: Fortify On Demand application compliance for {{$app}}
-        type: fortifyOnDemand.FortifyOnDemandComplianceTile
-        row: 2
-        col: 0
-        width: 4
-        fortifyOnDemandServer: {{$fortifyServer}}
-        timeFrame: LAST_YEAR
-        projectName: {{.FortifyApplication}}
-        standards:
-        - owasp2017
-        - fisma
-        - owasp2013
-        - pci3_2
-        - pci3
-        - pci2
-        - sans2011
-        - sti4_3
-      - name: Fortify On Demand version summary for {{$app}}
-        type: fortifyOnDemand.FortifyOnDemandSummaryTile
-        row: 2
-        col: 4
-        fortifyOnDemandServer: {{$fortifyServer}}
-        projectName: {{.FortifyApplication}}
-        projectVersion: {{.FortifyApplicationVersion}}
-      {{- end}}
+  {{- end}}
+  {{- if .ConfigureCheckmarx}}
+    {{- if eq .SelectedCheckmarx "both" "CxSAST"}}
+    - name: CxSAST Scan Summary for {{$app}}
+      type: checkmarx.CheckmarxSummaryTile
+      width: 2
+      height: 1
+      row: 6
+      col: 0
+      checkmarxServer: {{$checkmarxServer}}
+      projectName: {{.CheckmarxApplication}}
+      team: {{.CheckmarxTeam}}
     {{- end}}
-    {{- if .ConfigureCheckmarx}}
-      {{- if eq .SelectedCheckmarx "both" "CxSAST"}}
-      - name: CxSAST Scan Summary for {{$app}}
-        type: checkmarx.CheckmarxSummaryTile
-        width: 2
-        height: 1
-        row: 6
-        col: 0
-        checkmarxServer: {{$checkmarxServer}}
-        projectName: {{.CheckmarxApplication}}
-        team: {{.CheckmarxTeam}}
-      {{- end}}
-      {{- if eq .SelectedCheckmarx "both" "CxOSA"}}
-      - name: CxOSA license risks for {{$app}}
-        type: checkmarx.CxosaSummaryTile
-        width: 2
-        height: 1
-        row: 6
-        col: 2
-        checkmarxServer: {{$checkmarxServer}}
-        projectName: {{.CheckmarxApplication}}
-        team: {{.CheckmarxTeam}}
-        riskType: License Risks
-      - name: CxOSA security risks for {{$app}}
-        type: checkmarx.CxosaSummaryTile
-        width: 2
-        height: 1
-        row: 6
-        col: 4
-        checkmarxServer: {{$checkmarxServer}}
-        projectName: {{.CheckmarxApplication}}
-        team: {{.CheckmarxTeam}}
-        riskType: Security Risks
-      {{- end}}
+    {{- if eq .SelectedCheckmarx "both" "CxOSA"}}
+    - name: CxOSA license risks for {{$app}}
+      type: checkmarx.CxosaSummaryTile
+      width: 2
+      height: 1
+      row: 6
+      col: 2
+      checkmarxServer: {{$checkmarxServer}}
+      projectName: {{.CheckmarxApplication}}
+      team: {{.CheckmarxTeam}}
+      riskType: License Risks
+    - name: CxOSA security risks for {{$app}}
+      type: checkmarx.CxosaSummaryTile
+      width: 2
+      height: 1
+      row: 6
+      col: 4
+      checkmarxServer: {{$checkmarxServer}}
+      projectName: {{.CheckmarxApplication}}
+      team: {{.CheckmarxTeam}}
+      riskType: Security Risks
     {{- end}}
-    {{- if .ConfigureBlackduck}}
-      - name: BlackDuck security risk profile for {{$app}}
-        type: blackduck.BlackduckRiskProfileTile
-        row: 7
-        col: 0
-        blackduckServer: {{$blackduckServer}}
-        projectName: {{.BlackduckApplication}}
-        version: {{.BlackduckApplicationVersion}}
-        riskType: Security Risks
-      - name: BlackDuck license risk profile for {{$app}}
-        type: blackduck.BlackduckRiskProfileTile
-        row: 7
-        col: 2
-        blackduckServer: {{$blackduckServer}}
-        projectName: {{.BlackduckApplication}}
-        version: {{.BlackduckApplicationVersion}}
-        riskType: License Risks
-      - name: BlackDuck operational risk profile for {{$app}}
-        type: blackduck.BlackduckRiskProfileTile
-        row: 7
-        col: 4
-        blackduckServer: {{$blackduckServer}}
-        projectName: {{.BlackduckApplication}}
-        version: {{.BlackduckApplicationVersion}}
-        riskType: Operational Risks
-      - name: BlackDuck security risk trend for {{$app}}
-        type: blackduck.BlackduckRiskTrendTile
-        row: 9
-        col: 0
-        blackduckServer: {{$blackduckServer}}
-        projectName: {{.BlackduckApplication}}
-        versionFilterRegex: '[^\n]+'
-        riskType: SECURITY_RISK
-      - name: BlackDuck license risk trend for {{$app}}
-        type: blackduck.BlackduckRiskTrendTile
-        row: 9
-        col: 2
-        blackduckServer: {{$blackduckServer}}
-        projectName: {{.BlackduckApplication}}
-        versionFilterRegex: '[^\n]+'
-        riskType: LICENSE_RISK
-      - name: BlackDuck operational risk trend for {{$app}}
-        type: blackduck.BlackduckRiskTrendTile
-        row: 9
-        col: 4
-        blackduckServer: {{$blackduckServer}}
-        projectName: {{.BlackduckApplication}}
-        versionFilterRegex: '[^\n]+'
-        riskType: OPERATIONAL_RISK
-    {{- end}}
+  {{- end}}
+  {{- if .ConfigureBlackduck}}
+    - name: BlackDuck security risk profile for {{$app}}
+      type: blackduck.BlackduckRiskProfileTile
+      row: 7
+      col: 0
+      blackduckServer: {{$blackduckServer}}
+      projectName: {{.BlackduckApplication}}
+      version: {{.BlackduckApplicationVersion}}
+      riskType: Security Risks
+    - name: BlackDuck license risk profile for {{$app}}
+      type: blackduck.BlackduckRiskProfileTile
+      row: 7
+      col: 2
+      blackduckServer: {{$blackduckServer}}
+      projectName: {{.BlackduckApplication}}
+      version: {{.BlackduckApplicationVersion}}
+      riskType: License Risks
+    - name: BlackDuck operational risk profile for {{$app}}
+      type: blackduck.BlackduckRiskProfileTile
+      row: 7
+      col: 4
+      blackduckServer: {{$blackduckServer}}
+      projectName: {{.BlackduckApplication}}
+      version: {{.BlackduckApplicationVersion}}
+      riskType: Operational Risks
+    - name: BlackDuck security risk trend for {{$app}}
+      type: blackduck.BlackduckRiskTrendTile
+      row: 9
+      col: 0
+      blackduckServer: {{$blackduckServer}}
+      projectName: {{.BlackduckApplication}}
+      versionFilterRegex: '[^\n]+'
+      riskType: SECURITY_RISK
+    - name: BlackDuck license risk trend for {{$app}}
+      type: blackduck.BlackduckRiskTrendTile
+      row: 9
+      col: 2
+      blackduckServer: {{$blackduckServer}}
+      projectName: {{.BlackduckApplication}}
+      versionFilterRegex: '[^\n]+'
+      riskType: LICENSE_RISK
+    - name: BlackDuck operational risk trend for {{$app}}
+      type: blackduck.BlackduckRiskTrendTile
+      row: 9
+      col: 4
+      blackduckServer: {{$blackduckServer}}
+      projectName: {{.BlackduckApplication}}
+      versionFilterRegex: '[^\n]+'
+      riskType: OPERATIONAL_RISK
+  {{- end}}

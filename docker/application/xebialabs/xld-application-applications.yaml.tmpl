@@ -2,21 +2,21 @@
 apiVersion: xl-deploy/v1
 kind: Applications
 spec:
-  - name: {{$app}}
-    type: udm.Application
-    children:
-      - name: {{.DockerImageTag}}
-        type: udm.DeploymentPackage
-        deployables:
-          - name: {{$app}}
-            type: docker.ContainerSpec
-            image: {{.DockerImageRepository}}:{{.DockerImageTag}}
-            showLogsAfter: 5
+- name: {{$app}}
+  type: udm.Application
+  children:
+  - name: {{.DockerImageTag}}
+    type: udm.DeploymentPackage
+    deployables:
+    - name: {{$app}}
+      type: docker.ContainerSpec
+      image: {{.DockerImageRepository}}:{{.DockerImageTag}}
+      showLogsAfter: 5
 {{- if .ExposePort}}
-            portBindings:
-            - name: "{{.ContainerPort}}"
-              type: docker.PortSpec
-              hostPort: "{{.HostPort}}"
-              containerPort: "{{.ContainerPort}}"
-              protocol: tcp
+      portBindings:
+      - name: "{{.ContainerPort}}"
+        type: docker.PortSpec
+        hostPort: "{{.HostPort}}"
+        containerPort: "{{.ContainerPort}}"
+        protocol: tcp
 {{end}}

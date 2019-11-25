@@ -18,19 +18,19 @@ spec:
 
     variables:
     {{- if .ProvisionEFS}}
-      - type: xlrelease.StringVariable
-        key: efs
-        requiresValue: false
-        showOnReleaseStart: false
+    - type: xlrelease.StringVariable
+      key: efs
+      requiresValue: false
+      showOnReleaseStart: false
     {{- end}}
-      - type: xlrelease.StringVariable
-        key: eksEndpoint
-        requiresValue: false
-        showOnReleaseStart: false
-      - type: xlrelease.StringVariable
-        key: eksClusterName
-        requiresValue: false
-        showOnReleaseStart: false
+    - type: xlrelease.StringVariable
+      key: eksEndpoint
+      requiresValue: false
+      showOnReleaseStart: false
+    - type: xlrelease.StringVariable
+      key: eksClusterName
+      requiresValue: false
+      showOnReleaseStart: false
 
     phases:
     # Provision Infra
@@ -93,11 +93,11 @@ spec:
       - name: Provision AWS EFS
         type: xlrelease.SequentialGroup
         tasks:
-          - name: Provision EFS
-            type: xldeploy.Deploy
-            server: XL Deploy
-            deploymentPackage: {{$app}}/EKS-CLOUDFORMATION/{{$app}}-cloudformation-efs/1.0.0
-            deploymentEnvironment: Environments/{{$app}}/aws-cloudformation-{{$app}}
+        - name: Provision EFS
+          type: xldeploy.Deploy
+          server: XL Deploy
+          deploymentPackage: {{$app}}/EKS-CLOUDFORMATION/{{$app}}-cloudformation-efs/1.0.0
+          deploymentEnvironment: Environments/{{$app}}/aws-cloudformation-{{$app}}
       - name: Get EFS ID
         type: xld.GetCIMapPropertyKey
         server: XL Deploy

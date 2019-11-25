@@ -2,8 +2,8 @@ apiVersion: xl/v1
 kind: Import
 metadata:
   imports:
-    - xebialabs/xld-datalake-applications.yaml
-    - xebialabs/xld-datalake-environments.yaml
-    - xebialabs/xld-datalake-infrastructure.yaml
-    - xebialabs/xlr-datalake-pipeline-ci-cd.yaml
-    - xebialabs/xlr-datalake-pipeline-destroy.yaml
+  - xebialabs/xld-datalake-applications.yaml
+  - xebialabs/xld-datalake-environments.yaml
+  - xebialabs/xld-datalake-infrastructure.yaml
+  - xebialabs/xlr-datalake-pipeline-ci-cd.yaml
+  - xebialabs/xlr-datalake-pipeline-destroy.yaml

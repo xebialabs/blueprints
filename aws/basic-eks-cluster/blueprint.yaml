@@ -74,9 +74,9 @@ spec:
     default: '1.11'
     prompt: What version of EKS would you like to run?
     options:
-      - '1.11'
-      - '1.12'
-      - '1.13'
+    - '1.11'
+    - '1.12'
+    - '1.13'
 
   - name: NodeAutoScalingGroupDesiredSize
     type: Input
