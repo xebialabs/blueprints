@@ -7,8 +7,8 @@ metadata:
     This blueprint creates a dictionary for other blueprints to draw secret values from
   author: XebiaLabs
   version: 2.0
-  instructions: No special instructions.
   suppressXebiaLabsFolder: true
+  instructions: This blueprint has no instructions.
 
 spec:
   parameters:

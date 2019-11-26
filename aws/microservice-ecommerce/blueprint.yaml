@@ -11,67 +11,65 @@ metadata:
   instructions: Please read the generated file "xebialabs/USAGE-microservice-ecommerce.md" for further usage instructions.
 
 spec:
-  parameters:
-  # General variables
-  - name: AppName
-    type: Input
-    prompt: What is the name of the application?
+  includeBefore:
+  - blueprint: fragments/aws-credentials
 
-  # AWS specific variables
-  - name: UseAWSCredentialsFromSystem
-    type: Confirm
-    prompt: Do you want to use AWS credentials from ~/.aws/credentials file?
-    promptIf: !expr "awsCredentials('IsAvailable')"
-  - name: AWSAccessKey
-    type: SecretInput
-    prompt: What is the AWS Access Key ID?
-    promptIf: !expr "!UseAWSCredentialsFromSystem"
-    default: !expr "awsCredentials('AccessKeyID')"
-  - name: AWSAccessSecret
-    type: SecretInput
-    prompt: What is the AWS Secret Access Key?
-    promptIf: !expr "!UseAWSCredentialsFromSystem"
-    default: !expr "awsCredentials('SecretAccessKey')"
+  parameters:
   - name: AWSRegion #options are set manually because EKS service is not registered within AWS GO SDK
     type: Select
     prompt: "Select the AWS region:"
     options:
     # This needs to be updated in the RegionMap of cloudformation-microservice-ecommerce/eks-workers.yaml as well
-      - label: US West (Oregon)
-        value: us-west-2
-      # commented out because of https://github.com/boto/boto3/issues/811
-      # - us-east-1
-      - label: US East (Ohio)
-        value: us-east-2
-      - label: EU (Frankfurt)
-        value: eu-central-1
-      # - eu-north-1 # doesn't seem to work
-      - label: EU (Ireland)
-        value: eu-west-1
-      - label: EU (London)
-        value: eu-west-2
-      - label: EU (Paris)
-        value: eu-west-3
-      - label: Asia Pacific (Tokyo)
-        value: ap-northeast-1
-      - label: Asia Pacific (Seoul)
-        value: ap-northeast-2
-      - label: Asia Pacific (Mumbai)
-        value: ap-south-1
-      - label: Asia Pacific (Singapore)
-        value: ap-southeast-1
-      - label: Asia Pacific (Sydney)
-        value: ap-southeast-2
+    # commented out because of https://github.com/boto/boto3/issues/811
+    # - label: US East (N. Virginia)
+    # - us-east-1
+    - label: US West (Oregon)
+      value: us-west-2
+    - label: US East (Ohio)
+      value: us-east-2
+    - label: EU (Frankfurt)
+      value: eu-central-1
+    # - eu-north-1 # doesn't seem to work
+    - label: EU (Ireland)
+      value: eu-west-1
+    - label: EU (London)
+      value: eu-west-2
+    - label: EU (Paris)
+      value: eu-west-3
+    - label: Asia Pacific (Tokyo)
+      value: ap-northeast-1
+    - label: Asia Pacific (Seoul)
+      value: ap-northeast-2
+    - label: Asia Pacific (Mumbai)
+      value: ap-south-1
+    - label: Asia Pacific (Singapore)
+      value: ap-southeast-1
+    - label: Asia Pacific (Sydney)
+      value: ap-southeast-2
+
+  - name: AppName
+    type: Input
+    prompt:  What do you want to name the application? (16 characters max)
+    description: Application name will be used to generate cloud resource names
+    validate: !expr "regex('^[a-zA-Z][\\\\w-]{1,24}[\\\\w]$', AppName)"
+
   - name: ProvisionCluster
     type: Confirm
     prompt: Do you want to provision a new AWS EKS cluster?
+
   - name: ClusterName
     type: Input
-    prompt: What is the name of the cluster?
+    prompt: !expr "ProvisionCluster ? 'What name do you want to give the new cluster?' : 'What is the name of your existing cluster?'"
+    validate: !expr "regex('^[a-zA-Z][\\\\w-]{1,29}[\\\\w]$', ClusterName)"
+
+  # ############################################################################
+  # Own cluster
+  # ############################################################################
   - name: ClusterEndpoint
     type: Input
     prompt: What is the endpoint for the cluster, example https://3219568049031C127A97DD725F241767.yl4.eu-west-1.eks.amazonaws.com
     promptIf: !expr "!ProvisionCluster"
+
   - name: Namespace
     type: Input
     prompt: What is the name of the namespace? This should be same as the one used in Kubernetes files.
@@ -80,38 +78,28 @@ spec:
 
   - name: StoreAdminUsername
     value: admin
+
   - name: StoreAdminPassword
     value: admin
+
   - name: XLDUrlForXLR
     type: Input
-    prompt: XL Deploy URL for XL Release (This will only be used in the XL Release template)
+    prompt: What is the XL Deploy URL used by XL Release? (This is only used in the XL Release template)
     default: http://xl-deploy:4516
-
-  - name: GenerateDockerComposeSetup
-    type: Confirm
-    prompt: "Do you want to generate a docker-compose setup with the required tools to run this blueprint?"
-    default: false
 
   includeAfter:
   - blueprint: xl-devops-platform
-    includeIf: GenerateDockerComposeSetup
     parameterOverrides:
     - name: UseXLDeploy
       value: true
-    - name: XLDeployPort
-      value: 4516
     - name: UseXLRelease
       value: true
-    - name: XLReleasePort
-      value: 5516
     - name: XLVersion
       value: "9.0"
     - name: UseDockerProxy
       value: false
     - name: UseJenkins
       value: true
-    - name: JenkinsPort
-      value: 8080
 
   files:
   # XebiaLabs

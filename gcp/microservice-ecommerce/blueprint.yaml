@@ -91,9 +91,9 @@ spec:
     value: admin
   - name: XLDUrlForXLR
     type: Input
-    prompt: XL Deploy URL for XL Release (This will only be used in the XL Release template)
+    prompt: What is the XL Deploy URL used by XL Release? (This is only used in the XL Release template)
     default: http://xl-deploy:4516
-
+    
   - name: GenerateDockerComposeSetup
     type: Confirm
     prompt: "Do you want to generate a docker-compose setup with the tools to run this blueprint?"

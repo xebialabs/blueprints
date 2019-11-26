@@ -7,8 +7,8 @@ metadata:
     Creates a HashiCorp Vault server.
   author: XebiaLabs
   version: 2.0
-  instructions: Please read xebialabs/USAGE-hashicorp-vault.md.
   suppressXebiaLabsFolder: true
+  instructions: Please read xebialabs/USAGE-hashicorp-vault.md.
 
 spec:
   parameters:

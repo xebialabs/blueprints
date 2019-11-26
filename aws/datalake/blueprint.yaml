@@ -12,40 +12,10 @@ metadata:
   instructions: Please read the generated file "xebialabs/USAGE-datalake.md" for further usage instructions.
 
 spec:
+  includeBefore:
+  - blueprint: fragments/aws-credentials
+
   parameters:
-  - name: S3BucketName
-    type: Input
-    prompt: What is the name of the S3 bucket where CloudFormation templates should be saved?
-    default: data-lake
-    validate: !expr "regex('^(([a-z0-9]|[a-z0-9][a-z0-9\\-]*[a-z0-9])\\.)*([a-z0-9]|[a-z0-9][a-z0-9\\-]*[a-z0-9]){3,63}$', S3BucketName)"
-  - name: AdministratorName
-    type: Input
-    prompt: What is the name of the Data Lake administrator user?
-    default: admin
-    validate: !expr "regex('^.+$', AdministratorName)"
-  - name: AdministratorEmail
-    prompt: "Provide a valid email address where to send the generated Data Lake administrator credentials:"
-    type: Input
-    validate: !expr "regex('^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$', AdministratorEmail)"
-  - name: CognitoDomain
-    prompt: "Provide a name for the Cognito service domain (can only contain lower-case letters, numbers, and hyphens):"
-    default: data-lake
-    type: Input
-    validate: !expr "regex('^[a-z0-9-]+$', CognitoDomain)"
-  - name: UseAWSCredentialsFromSystem
-    type: Confirm
-    prompt: Do you want to use AWS credentials from ~/.aws/credentials file?
-    promptIf: !expr "awsCredentials('IsAvailable')"
-  - name: AWSAccessKey
-    type: SecretInput
-    prompt: What is the AWS Access Key ID?
-    promptIf: !expr "!UseAWSCredentialsFromSystem"
-    default: !expr "awsCredentials('AccessKeyID')"
-  - name: AWSAccessSecret
-    type: SecretInput
-    prompt: What is the AWS Secret Access Key?
-    promptIf: !expr "!UseAWSCredentialsFromSystem"
-    default: !expr "awsCredentials('SecretAccessKey')"
   - name: AWSRegion
     type: Select
     saveInXlvals: true
@@ -77,23 +47,36 @@ spec:
     - label: Asia Pacific (Sydney)
       value: ap-southeast-2
 
-  - name: GenerateDockerComposeSetup
-    type: Confirm
-    prompt: "Do you want to generate a docker-compose setup with the required tools to run this blueprint?"
-    default: false
+  - name: S3BucketName
+    type: Input
+    prompt: What is the name of the S3 bucket where CloudFormation templates should be saved?
+    default: data-lake
+    validate: !expr "regex('^(([a-z0-9]|[a-z0-9][a-z0-9\\-]*[a-z0-9])\\.)*([a-z0-9]|[a-z0-9][a-z0-9\\-]*[a-z0-9]){3,63}$', S3BucketName)"
+
+  - name: AdministratorName
+    type: Input
+    prompt: What is the name of the Data Lake administrator user?
+    default: admin
+    validate: !expr "regex('^.+$', AdministratorName)"
+
+  - name: AdministratorEmail
+    prompt: "Provide a valid email address where to send the generated Data Lake administrator credentials:"
+    type: Input
+    validate: !expr "regex('^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$', AdministratorEmail)"
+
+  - name: CognitoDomain
+    prompt: "Provide a name for the Cognito service domain (can only contain lower-case letters, numbers, and hyphens):"
+    default: data-lake
+    type: Input
+    validate: !expr "regex('^[a-z0-9-]+$', CognitoDomain)"
 
   includeAfter:
   - blueprint: xl-devops-platform
-    includeIf: GenerateDockerComposeSetup
     parameterOverrides:
     - name: UseXLDeploy
       value: true
-    - name: XLDeployPort
-      value: 4516
     - name: UseXLRelease
       value: true
-    - name: XLReleasePort
-      value: 5516
     - name: XLVersion
       value: "9.0"
     - name: UseDockerProxy

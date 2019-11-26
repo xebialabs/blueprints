@@ -8,6 +8,7 @@ metadata:
   author: XebiaLabs
   version: 2.0
   suppressXebiaLabsFolder: true
+  instructions: This blueprint has no instructions.
 
 spec:
   parameters:
