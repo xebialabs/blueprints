@@ -15,131 +15,35 @@ spec:
   - name: AppName
     type: Input
     prompt: What do you want to name the application?
+    validate: !expr "regex('^[a-zA-Z][\\\\w-]{1,29}[\\\\w]$', AppName)"
 
   - name: ProvisionCluster
     type: Confirm
     prompt: Do you want to provision a new Azure AKS cluster?
+
+  - name: ClusterName
+    type: Input
+    prompt: !expr "ProvisionCluster ? 'What name do you want to give the new cluster?' : 'What is the name of your existing cluster?'"
+    validate: !expr "regex('^[a-zA-Z][\\\\w-]{1,29}[\\\\w]$', ClusterName)"
 
   # ############################################################################
   # Own cluster
   # ############################################################################
   - name: ClusterEndpoint
     type: Input
-    prompt: What is the endpoint for the existing cluster, example https://104.155.109.230
+    prompt: !expr "'What is the endpoint for your \\'' + ClusterName + '\\' cluster (example https://104.155.109.230)?'"
     promptIf: !expr "!ProvisionCluster"
+    validate: !expr "regex('^https?://[a-z0-9_-]*[a-z0-9](\\.[a-z0-9_-]*[a-z0-9]+)*(:[0-9]{2,5})?$', ClusterEndpoint)"
 
   - name: PasswordToken
     type: SecretInput
-    prompt: What is the token for accessing the existing cluster
+    prompt: !expr "'What is the token for accessing your \\'' + ClusterName + '\\' cluster?'"
     promptIf: !expr "!ProvisionCluster"
   # ############################################################################
-
-  # ############################################################################
-  # New cluster
-  # ############################################################################
-  - name: AKSRegion
-    type: Select
-    prompt: "Select the AKS region for the cluster:"
-    promptIf: ProvisionCluster
-    options:
-    - label: East Asia
-      value: eastasia
-    - label: Southeast Asia
-      value: southeastasia
-    - label: Central US
-      value: centralus
-    - label: East US
-      value: eastus
-    - label: East US 2
-      value: eastus2
-    - label: West US
-      value: westus
-    - label: North Central US
-      value: northcentralus
-    - label: South Central US
-      value: southcentralus
-    - label: North Europe
-      value: northeurope
-    - label: West Europe
-      value: westeurope
-    - label: Japan West
-      value: japanwest
-    - label: Japan East
-      value: japaneast
-    - label: Brazil South
-      value: brazilsouth
-    - label: Australia East
-      value: australiaeast
-    - label: Australia Southeast
-      value: australiasoutheast
-    - label: South India
-      value: southindia
-    - label: Central India
-      value: centralindia
-    - label: West India
-      value: westindia
-    - label: Canada Central
-      value: canadacentral
-    - label: Canada East
-      value: canadaeast
-    - label: UK South
-      value: uksouth
-    - label: UK West
-      value: ukwest
-    - label: West Central US
-      value: westcentralus
-    - label: West US 2
-      value: westus2
-    - label: Korea Central
-      value: koreacentral
-    - label: Korea South
-      value: koreasouth
-    - label: France Central
-      value: francecentral
-    - label: France South
-      value: francesouth
-    - label: Australia Central
-      value: australiacentral
-    - label: Australia Central 2
-      value: australiacentral2
-    - label: South Africa North
-      value: southafricanorth
-    - label: South Africa West
-      value: southafricawest
-
-    # ############################################################################
-  # Authentication
-  # ############################################################################
-  - name: SubscriptionID
-    type: Input
-    prompt: "Enter you Azure subscription id:"
-    promptIf: ProvisionCluster
-
-  - name: ClientID
-    type: Input
-    prompt: "Enter your Azure client id:"
-    promptIf: ProvisionCluster
-
-  - name: ClientSecret
-    type: SecretInput
-    prompt: "Enter your Azure client secret:"
-    promptIf: ProvisionCluster
-
-  - name: TenantID
-    type: Input
-    prompt: "Enter your Azure tenant id:"
-    promptIf: ProvisionCluster
 
   # ############################################################################
   # For the Terraform backend storage
   # ############################################################################
-  - name: ResourceGroup
-    # Resource group names only allow alphanumeric characters, periods, underscores, hyphens and parenthesis and cannot end in a period
-    type: Input
-    prompt: "The blueprint will create a new Resource Group for the cluster. Please supply a name:"
-    promptIf: ProvisionCluster
-    validate: !expr "regex('^[\\\\w._()-]{2,50}[\\\\w_()-]$', ResourceGroup)"
-
   - name: StorageAccountName
     type: Input
     prompt: "Enter the Storage Account where Terraform will store its state (see README.md step 3.2):"
@@ -157,17 +61,12 @@ spec:
     default: terraform-state
   # ############################################################################
 
-  - name: ClusterName
-    type: Input
-    prompt: What name do you want to give the cluster?
-    validate: !expr "regex('^[a-zA-Z][\\\\w-]{1,29}[\\\\w]$', ClusterName)"
-
   - name: Namespace
     value: xl-demo
 
   - name: XLDUrlForXLR
     type: Input
-    prompt: XL Deploy URL for XL Release (This will only be used in the XL Release template)
+    prompt: What is the XL Deploy URL used by XL Release? (This is only used in the XL Release template)
     default: http://xl-deploy:4516
 
   # ############################################################################
@@ -176,7 +75,6 @@ spec:
   - name: EnableCICD
     type: Confirm
     prompt: Do you want to enable CI/CD integration with Jenkins?
-
   - name: StoreAdminUsername
     value: admin
 
@@ -185,23 +83,19 @@ spec:
     value: admin
   # ############################################################################
 
-  - name: GenerateDockerComposeSetup
-    type: Confirm
-    prompt: "Do you want to generate a docker-compose setup with the required tools to run this blueprint?"
-    default: false
-
   includeAfter:
+  - blueprint: fragments/azure-resourcegroup-location
+    includeIf: ProvisionCluster
+
+  - blueprint: fragments/azure-credentials
+    includeIf: ProvisionCluster
+
   - blueprint: xl-devops-platform
-    includeIf: GenerateDockerComposeSetup
     parameterOverrides:
     - name: UseXLDeploy
       value: true
-    - name: XLDeployPort
-      value: 4516
     - name: UseXLRelease
       value: true
-    - name: XLReleasePort
-      value: 5516
     - name: XLVersion
       value: "9.0"
     - name: UseDockerProxy

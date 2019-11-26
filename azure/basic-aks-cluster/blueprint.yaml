@@ -11,118 +11,20 @@ metadata:
 
 spec:
   parameters:
-  # ############################################################################
-  # Access and authorization
-  # ############################################################################
-  - name: SubscriptionID
-    type: Input
-    prompt: What is your existing Azure subscription id?
-
-  - name: ClientID
-    type: Input
-    prompt: What is the client id (appId) of an existing Service Principal in Azure?
-
-  - name: ClientSecret
-    type: SecretInput
-    prompt: What is the secret (password) for that client id?
-
-  - name: TenantID
-    type: Input
-    prompt: What is your existing Azure tenant id?
-
-  # ############################################################################
-  # Resource group under which the cluster will be created
-  # ############################################################################
-  - name: ResourceGroup
-    type: Input
-    prompt: What do you want to name the resource group?
-
-  - name: ResourceGroupLocation
-    type: Select
-    prompt: "Select where this resource group will go:"
-    options:
-    - label: East Asia
-      value: eastasia
-    - label: Southeast Asia
-      value: southeastasia
-    - label: Central US
-      value: centralus
-    - label: East US
-      value: eastus
-    - label: East US 2
-      value: eastus2
-    - label: West US
-      value: westus
-    - label: North Central US
-      value: northcentralus
-    - label: South Central US
-      value: southcentralus
-    - label: North Europe
-      value: northeurope
-    - label: West Europe
-      value: westeurope
-    - label: Japan West
-      value: japanwest
-    - label: Japan East
-      value: japaneast
-    - label: Brazil South
-      value: brazilsouth
-    - label: Australia East
-      value: australiaeast
-    - label: Australia Southeast
-      value: australiasoutheast
-    - label: South India
-      value: southindia
-    - label: Central India
-      value: centralindia
-    - label: West India
-      value: westindia
-    - label: Canada Central
-      value: canadacentral
-    - label: Canada East
-      value: canadaeast
-    - label: UK South
-      value: uksouth
-    - label: UK West
-      value: ukwest
-    - label: West Central US
-      value: westcentralus
-    - label: West US 2
-      value: westus2
-    - label: Korea Central
-      value: koreacentral
-    - label: Korea South
-      value: koreasouth
-    - label: France Central
-      value: francecentral
-    - label: France South
-      value: francesouth
-    - label: Australia Central
-      value: australiacentral
-    - label: Australia Central 2
-      value: australiacentral2
-    - label: South Africa North
-      value: southafricanorth
-    - label: South Africa West
-      value: southafricawest
-
   - name: ClusterName
     type: Input
     prompt: What do you want to name the cluster?
-
-  - name: GenerateDockerComposeSetup
-    type: Confirm
-    prompt: "Do you want to generate a docker-compose setup with the required tools to run this blueprint?"
-    default: false
+    validate: !expr "regex('^[a-zA-Z][\\\\w-]{1,29}[\\\\w]$', ClusterName)"
 
   includeAfter:
+  - blueprint: fragments/azure-resourcegroup-location
+
+  - blueprint: fragments/azure-credentials
+
   - blueprint: xl-devops-platform
-    includeIf: GenerateDockerComposeSetup
     parameterOverrides:
     - name: UseXLDeploy
       value: true
-    - name: XLDeployPort
-      value: 4516
     - name: UseXLRelease
       value: false
     - name: XLVersion

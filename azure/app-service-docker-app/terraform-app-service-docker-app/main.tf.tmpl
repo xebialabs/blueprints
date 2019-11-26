@@ -6,8 +6,8 @@ provider "azurerm" {
   tenant_id       = "${var.tenant_id}"
 }
 
-resource "azurerm_resource_group" "main" {
-  name     = "${var.prefix}-resources"
+resource "azurerm_resource_group" "k8s" {
+  name     = "${var.resource_group}"
   location = "${var.location}"
 }
 
@@ -15,8 +15,8 @@ resource "azurerm_resource_group" "main" {
 # This creates a MySQL server
 resource "azurerm_mysql_server" "main" {
   name                = "${var.prefix}-mysql-server"
-  location            = "${azurerm_resource_group.main.location}"
-  resource_group_name = "${azurerm_resource_group.main.name}"
+  location            = "${azurerm_resource_group.k8s.location}"
+  resource_group_name = "${azurerm_resource_group.k8s.name}"
 
   sku {
     name     = "B_Gen5_2"
@@ -40,7 +40,7 @@ resource "azurerm_mysql_server" "main" {
 # This is the database that our application will use
 resource "azurerm_mysql_database" "main" {
   name                = "${var.db_name_prefix}_mysql_db"
-  resource_group_name = "${azurerm_resource_group.main.name}"
+  resource_group_name = "${azurerm_resource_group.k8s.name}"
   server_name         = "${azurerm_mysql_server.main.name}"
   charset             = "utf8"
   collation           = "utf8_unicode_ci"
@@ -49,7 +49,7 @@ resource "azurerm_mysql_database" "main" {
 # This rule is to enable the 'Allow access to Azure services' checkbox
 resource "azurerm_mysql_firewall_rule" "main" {
   name                = "${var.prefix}-mysql-firewall"
-  resource_group_name = "${azurerm_resource_group.main.name}"
+  resource_group_name = "${azurerm_resource_group.k8s.name}"
   server_name         = "${azurerm_mysql_server.main.name}"
   start_ip_address    = "0.0.0.0"
   end_ip_address      = "0.0.0.0"
@@ -59,8 +59,8 @@ resource "azurerm_mysql_firewall_rule" "main" {
 # This creates the plan that the service use
 resource "azurerm_app_service_plan" "main" {
   name                = "${var.prefix}-asp"
-  location            = "${azurerm_resource_group.main.location}"
-  resource_group_name = "${azurerm_resource_group.main.name}"
+  location            = "${azurerm_resource_group.k8s.location}"
+  resource_group_name = "${azurerm_resource_group.k8s.name}"
   kind                = "Linux"
   reserved            = true
 
@@ -73,8 +73,8 @@ resource "azurerm_app_service_plan" "main" {
 # This creates the service definition
 resource "azurerm_app_service" "main" {
   name                = "${var.prefix}-appservice"
-  location            = "${azurerm_resource_group.main.location}"
-  resource_group_name = "${azurerm_resource_group.main.name}"
+  location            = "${azurerm_resource_group.k8s.location}"
+  resource_group_name = "${azurerm_resource_group.k8s.name}"
   app_service_plan_id = "${azurerm_app_service_plan.main.id}"
 
   site_config {

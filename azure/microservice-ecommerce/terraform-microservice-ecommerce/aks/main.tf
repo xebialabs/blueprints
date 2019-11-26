@@ -6,8 +6,8 @@ resource "tls_private_key" "key" {
 
 resource "azurerm_kubernetes_cluster" "k8s" {
   name                = "${var.cluster_name}"
-  location            = "${var.location}"
-  resource_group_name = "${var.resource_group_name}"
+  location            = "${var.resource_group_location}"
+  resource_group_name = "${var.resource_group}"
   dns_prefix          = "${var.dns_prefix}"
 
   agent_pool_profile {

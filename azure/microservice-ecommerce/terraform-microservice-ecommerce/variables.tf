@@ -1,16 +1,29 @@
-variable "resource_group_name" {
-  # * ResourceGroup
-  description = "A resource group is a collection of resources that share the same lifecycle, permissions, and policies"
-}
-
 variable "cluster_name" {
-  # * ClusterName
   description = "The name of the Azure Kubernetes Service cluster"
 }
 
-variable "location" {
-  # * AKSRegion
-  description = "Location of resources"
+variable "resource_group" {
+  description = "A resource group is a collection of resources that share the same lifecycle, permissions, and policies"
+}
+
+variable "resource_group_location" {
+  description = "The Azure location where all resources in this example should be created"
+}
+
+variable "client_id" {
+  description = "Service Principal Client ID"
+}
+
+variable "client_secret" {
+  description = "Service Principal Client secret"
+}
+
+variable "subscription_id" {
+  description = "Azure Subscription ID to be used for billing"
+}
+
+variable "tenant_id" {
+  description = "Service Principal Tenant ID"
 }
 
 variable "vm_size" {
@@ -27,26 +40,6 @@ variable "admin_username" {
   # * AdminUsername
   description = "The username for the cluster (cannot be 'admin')"
   default     = "adminuser"
-}
-
-variable "client_id" {
-  # * ClientID
-  description = "The appId of the Service Principal"
-}
-
-variable "client_secret" {
-  # * ClientSecret
-  description = "The password of the Service Principal"
-}
-
-variable "subscription_id" {
-  # * SubscriptionID
-  description = "The Azure subscription id"
-}
-
-variable "tenant_id" {
-  # * TenantID
-  description = "The Azure tenant id"
 }
 
 variable "dns_prefix" {

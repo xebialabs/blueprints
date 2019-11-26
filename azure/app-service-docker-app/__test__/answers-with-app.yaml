@@ -3,6 +3,7 @@ SubscriptionID: C
 ClientID: A
 ClientSecret: B
 TenantID: D
+ResourceGroup: azure-rg
 ResourceGroupLocation: westeurope
 UseSampleApplication: true
 MySqlMasterPassword: Test@1234
