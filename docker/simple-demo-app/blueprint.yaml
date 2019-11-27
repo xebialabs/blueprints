@@ -14,41 +14,36 @@ spec:
   parameters:
   - name: AppName
     type: Input
-    prompt: What is the Application name?
+    prompt: What do you want to name the application?
+    validate: !expr "regex('^[a-zA-Z][\\\\w-]{1,29}[\\\\w]$', AppName)"
+
   - name: ContainerPort
     type: Input
     prompt: At what port should the application be exposed in the container?
     default: 80
+
   - name: HostPort
     type: Input
     prompt: At what port should the container port be mapped in the host?
     default: 8181
+
   - name: BackendDockerImage
     type: Input
     prompt: What is the Docker Image (repo and path) for the Backend service?
     default: xebialabsunsupported/rest-o-rant-api
+
   - name: FrontendDockerImage
     type: Input
     prompt: What is the Docker Image (repo and path) for the Frontend service?
     default: xebialabsunsupported/rest-o-rant-web
 
-  - name: GenerateDockerComposeSetup
-    type: Confirm
-    prompt: "Do you want to generate a docker-compose setup with the required tools to run this blueprint?"
-    default: false
-
   includeAfter:
   - blueprint: xl-devops-platform
-    includeIf: GenerateDockerComposeSetup
     parameterOverrides:
     - name: UseXLDeploy
       value: true
-    - name: XLDeployPort
-      value: 4516
     - name: UseXLRelease
       value: true
-    - name: XLReleasePort
-      value: 5516
     - name: XLVersion
       value: "9.0"
     - name: UseDockerProxy

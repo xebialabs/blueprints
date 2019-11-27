@@ -15,24 +15,29 @@ spec:
     type: Input
     prompt: What is the Docker image repository?
     default: nginx
+
   - name: DockerImageTag
     type: Input
     prompt: What is the Docker image tag?
     default: latest
+
   - name: ExposePort
     type: Confirm
     prompt: Should the Docker container expose a port?
     default: true
+
   - name: ContainerPort
     type: Input
-    prompt: What is the container port to expose?
+    prompt: At what port should the application be exposed in the container?
     promptIf: ExposePort
     default: 80
+
   - name: HostPort
     type: Input
-    prompt: At which host port should that port be exposed?
+    prompt: At what port should the container port be mapped in the host?
     promptIf: ExposePort
     default: 8080
+
   - name: Standalone
     value: true
 

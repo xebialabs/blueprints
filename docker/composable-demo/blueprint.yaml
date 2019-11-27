@@ -16,15 +16,16 @@ spec:
     parameterOverrides:
     - name: Standalone
       value: false
+
   - blueprint: docker/application
 
   includeAfter:
   - blueprint: xl-devops-platform
     parameterOverrides:
+    - name: GenerateDockerComposeSetup
+      value: true
     - name: UseXLDeploy
       value: true
-    - name: XLDeployPort
-      value: 4516
     - name: UseXLRelease
       value: false
     - name: XLVersion
