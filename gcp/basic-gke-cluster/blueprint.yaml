@@ -11,64 +11,29 @@ metadata:
 
 spec:
   parameters:
+  - name: ClusterName
+    type: Input
+    prompt: What is the name of the cluster?
+
   - name: GCPProjectID
     type: Input
     prompt: What is the GCP project ID?
+
   - name: K8SMasterUser
     type: Input
     prompt: What is the username for Kubernetes cluster?
     default: admin
+
   - name: K8SMasterPassword
     type: SecretInput
     prompt: What is the password for Kubernetes cluster? (minimum 16 characters)
     validate: !expr "regex('^(\\\\S){16,}$', K8SMasterPassword)"
-  - name: ClusterName
-    type: Input
-    prompt: What is the name of the cluster?
-  - name: GCPRegion
-    type: Select
-    prompt: "Select the GCP region:"
-    options:
-    - label: Taiwan
-      value: asia-east1
-    - label: Hong Kong
-      value: asia-east2
-    - label: Japan
-      value: asia-northeast1
-    - label: India
-      value: asia-south1
-    - label: Singapore
-      value: asia-southeast1
-    - label: Australia (Sydney)
-      value: australia-southeast1
-    - label: Finland
-      value: europe-north1
-    - label: Belgium
-      value: europe-west1
-    - label: England
-      value: europe-west2
-    - label: Germany
-      value: europe-west3
-    - label: Netherlands
-      value: europe-west4
-    - label: Canada
-      value: northamerica-northeast1
-    - label: Brazil
-      value: southamerica-east1
-    - label: Iowa, USA
-      value: us-central1
-    - label: South Carolina, USA
-      value: us-east1
-    - label: Northern Virginia, USA
-      value: us-east4
-    - label: Oregon, USA
-      value: us-west1
-    - label: California, USA
-      value: us-west2
+
   - name: GKENumNodes
     type: Input
     prompt: What is the number of nodes in each GKE cluster zone?
     default: 2
+
   - name: GKENodeMachineType
     type: Select
     prompt: What is the machine type of the GKE nodes?
@@ -102,19 +67,13 @@ spec:
     - n1-ultramem-160
     - n1-megamem-96
 
-  - name: GenerateDockerComposeSetup
-    type: Confirm
-    prompt: "Do you want to generate a docker-compose setup with the tools to run this blueprint?"
-    default: false
-
   includeAfter:
+  - blueprint: fragments/gcp-region
+
   - blueprint: xl-devops-platform
-    includeIf: GenerateDockerComposeSetup
     parameterOverrides:
     - name: UseXLDeploy
       value: true
-    - name: XLDeployPort
-      value: 4516
     - name: UseXLRelease
       value: false
     - name: XLVersion
