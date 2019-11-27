@@ -62,7 +62,10 @@ spec:
   # ############################################################################
 
   - name: Namespace
-    value: xl-demo
+    type: Input
+    prompt: What is the name of the namespace? This should be same as the one used in Kubernetes files.
+    default: xl-demo
+    value: !expr "ProvisionCluster ? 'xl-demo' : ''"
 
   - name: XLDUrlForXLR
     type: Input
