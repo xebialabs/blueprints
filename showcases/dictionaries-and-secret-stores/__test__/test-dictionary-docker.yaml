@@ -1,6 +1,7 @@
 answers-file: answers-dictionary-docker.yaml
 expected-files:
 - xebialabs.yaml
+- README.md
 - xebialabs/USAGE-dictionaries-and-secret-stores.md
 - xebialabs/USAGE-dictionary.md
 - xebialabs/xld-dictionaries-and-secret-stores-applications.yaml

@@ -14,9 +14,13 @@ spec:
   - name: ResourceGroupPrompt
     value: none
 
+  - name: PromptForResourceGroup
+    value: false
+
   - name: ResourceGroup
     type: Input
     prompt: !expr "ResourceGroupPrompt == 'none' ? 'This blueprint will create a new Azure resource group. Please specify a name:' : ResourceGroupPrompt"
+    promptIf: !expr "PromptForResourceGroup"
     validate: !expr "regex('^[\\\\w._()-]{2,50}[\\\\w_()-]$', ResourceGroup)"
 
   - name: ResourceGroupLocationPrompt

@@ -13,76 +13,8 @@ spec:
   parameters:
   - name: AppName
     type: Input
-    prompt: What name do you want to give the application?
-
-  - name: AzureLocation
-    type: Select
-    prompt: "Select where this resource group will go:"
-    options:
-    - label: East Asia
-      value: eastasia
-    - label: Southeast Asia
-      value: southeastasia
-    - label: Central US
-      value: centralus
-    - label: East US
-      value: eastus
-    - label: East US 2
-      value: eastus2
-    - label: West US
-      value: westus
-    - label: North Central US
-      value: northcentralus
-    - label: South Central US
-      value: southcentralus
-    - label: North Europe
-      value: northeurope
-    - label: West Europe
-      value: westeurope
-    - label: Japan West
-      value: japanwest
-    - label: Japan East
-      value: japaneast
-    - label: Brazil South
-      value: brazilsouth
-    - label: Australia East
-      value: australiaeast
-    - label: Australia Southeast
-      value: australiasoutheast
-    - label: South India
-      value: southindia
-    - label: Central India
-      value: centralindia
-    - label: West India
-      value: westindia
-    - label: Canada Central
-      value: canadacentral
-    - label: Canada East
-      value: canadaeast
-    - label: UK South
-      value: uksouth
-    - label: UK West
-      value: ukwest
-    - label: West Central US
-      value: westcentralus
-    - label: West US 2
-      value: westus2
-    - label: Korea Central
-      value: koreacentral
-    - label: Korea South
-      value: koreasouth
-    - label: France Central
-      value: francecentral
-    - label: France South
-      value: francesouth
-    - label: Australia Central
-      value: australiacentral
-    - label: Australia Central 2
-      value: australiacentral2
-    - label: South Africa North
-      value: southafricanorth
-    - label: South Africa West
-      value: southafricawest
+    prompt: What do you want to name the application?
+    validate: !expr "regex('^[a-zA-Z][\\\\w-]{1,29}[\\\\w]$', AppName)"
 
   - name: AzureVMName
     type: Input
@@ -117,10 +49,6 @@ spec:
     - label: "Med security - encrypted dictionary to be created within XL Deploy"
       value: dictionary
 
-  - name: GenerateDockerComposeSetup
-    type: Confirm
-    prompt: "Do you want to generate a docker-compose setup with the required tools to run this blueprint?"
-    default: false
   includeAfter:
   - blueprint: fragments/secret-store
     includeIf: !expr "CredentialsSource == 'secret-store'"
@@ -138,9 +66,14 @@ spec:
     - name: DictionaryKeys
       value: "azure.clientsecret,azure.ospassword,azure.resourcegroup"
 
+  - blueprint: fragments/azure-resourcegroup-location
+    parameterOverrides:
+    - name: PromptForResourceGroup
+      value: false
+
   - blueprint: fragments/azure-credentials
     parameterOverrides:
-    - name: AskForAzurePassword
+    - name: PromptForClientSecret
       value: !expr "false"
 
   - blueprint: xl-devops-platform
@@ -155,7 +88,9 @@ spec:
       value: !expr "false"
 
   files:
+  # XebiaLabs
   - path: xebialabs.yaml.tmpl
+  - path: README.md
   - path: xebialabs/USAGE-dictionaries-and-secret-stores-dictionary.md.tmpl
     writeIf: !expr "CredentialsSource == 'dictionary'"
     renameTo: xebialabs/USAGE-dictionaries-and-secret-stores.md.tmpl
@@ -167,6 +102,7 @@ spec:
   - path: xebialabs/xld-dictionaries-and-secret-stores-infrastructure.yaml.tmpl
   - path: xebialabs/xlr-dictionaries-and-secret-stores-pipeline-ci-cd.yaml.tmpl
   - path: xebialabs/xlr-dictionaries-and-secret-stores-pipeline-destroy.yaml.tmpl
+  # Terraform
   - path: terraform/main.tf
   - path: terraform/outputs.tf
   - path: terraform/variables.tf

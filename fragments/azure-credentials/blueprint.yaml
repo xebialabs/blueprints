@@ -11,7 +11,7 @@ metadata:
 
 spec:
   parameters:
-  - name: AskForAzurePassword
+  - name: PromptForClientSecret 
     value: true
 
   - name: ClientID
@@ -21,7 +21,7 @@ spec:
   - name: ClientSecret
     type: SecretInput
     prompt: "What is the secret (password) for that client id?"
-    promptIf: !expr "AskForAzurePassword"
+    promptIf: !expr "PromptForClientSecret"
 
   - name: SubscriptionID
     type: Input
