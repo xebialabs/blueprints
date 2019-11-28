@@ -2,7 +2,7 @@
 apiVersion: xl-deploy/v1
 kind: Infrastructure
 spec:
-- name: {{.KubernetesName}}
+- name: {{.KubernetesClusterName}}
   type: k8s.Master
   apiServerURL: {{$modifiedKubernetesURL}}
   skipTLS: {{.KubernetesSkipTLSVerify}}

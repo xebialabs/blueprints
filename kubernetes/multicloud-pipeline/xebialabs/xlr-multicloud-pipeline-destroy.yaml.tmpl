@@ -22,9 +22,9 @@ spec:
         type: xldeploy.Undeploy
         server: XL Deploy
         {{- if eq .Provider "existing cluster"}}
-        deployedApplication: Environments/{{.KubernetesName}}/{{.KubernetesApplicationName}}
+        deployedApplication: Environments/{{.KubernetesClusterName}}/{{.AppName}}
         {{- else}}
-        deployedApplication: Environments/{{$clusterName}}/{{$clusterName}} environment/{{.KubernetesApplicationName}}
+        deployedApplication: Environments/{{$clusterName}}/{{$clusterName}} environment/{{.AppName}}
         {{- end}}
     {{- if ne .Provider "existing cluster"}}
     - name: Deprovision Infrastructure

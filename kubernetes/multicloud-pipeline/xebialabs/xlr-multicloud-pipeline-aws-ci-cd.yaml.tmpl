@@ -26,7 +26,7 @@ spec:
       showOnReleaseStart: false
       value:
         namespace: {{.Namespace}}
-        serviceName: {{.KubernetesApplicationName}}-service
+        serviceName: {{.AppName}}-service
 
     - key: lbHostnameOrIp
       type: xlrelease.StringVariable
@@ -116,7 +116,7 @@ spec:
       - name: Deploy node
         type: xldeploy.Deploy
         server: XL Deploy
-        deploymentPackage: {{.KubernetesApplicationName}}/{{.KubernetesDeploymentPackageVersion}}
+        deploymentPackage: {{.DockerImage}}/{{.DockerImageTag}}
         deploymentEnvironment: Environments/{{$clusterName}}/aws-cloudformation-{{$clusterName}}
         tags:
         - {{.NamespaceTag}}

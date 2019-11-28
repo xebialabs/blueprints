@@ -24,7 +24,7 @@ spec:
       showOnReleaseStart: false
       value:
         namespace: {{.Namespace}}
-        serviceName: {{.KubernetesApplicationName}}-service
+        serviceName: {{.AppName}}-service
 
     - key: lbHostnameOrIp
       type: xlrelease.StringVariable
@@ -66,9 +66,9 @@ spec:
       - name: Deploy node
         type: xldeploy.Deploy
         server: XL Deploy
-        deploymentPackage: {{.KubernetesApplicationName}}/{{.KubernetesDeploymentPackageVersion}}
+        deploymentPackage: {{.DockerImage}}/{{.DockerImageTag}}
         {{- if eq .Provider "existing cluster"}}
-        deploymentEnvironment: Environments/{{.KubernetesName}}
+        deploymentEnvironment: Environments/{{.KubernetesClusterName}}
         {{- else}}
         deploymentEnvironment: Environments/{{$clusterName}}/{{$clusterName}} environment
         {{- end}}
@@ -99,7 +99,7 @@ spec:
           {{- else if eq .Provider "GKE"}}
           ciId: Infrastructure/{{$clusterName}}/gke-{{$clusterName}}-cluster-GKECluster
           {{- else if eq .Provider "existing cluster"}}
-          ciId: Infrastructure/{{.KubernetesName}}
+          ciId: Infrastructure/{{.KubernetesClusterName}}
           {{- end}}
           taskName: describeService
           variableMapping:

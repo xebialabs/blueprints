@@ -1,4 +1,5 @@
-KubernetesApplicationName: httpd
-KubernetesDeploymentPackageVersion: latest
+AppName: myapp
+DockerImage: httpd
+DockerImageTag: latest
 KubernetesResourcesFile: ../kubernetes-application/httpd.yaml
 Namespace: default

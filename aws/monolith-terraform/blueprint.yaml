@@ -11,10 +11,24 @@ metadata:
   instructions: Please read the generated file "xebialabs/USAGE-monolith-terraform.md" for further usage instructions.
 
 spec:
-  includeBefore:
-  - blueprint: fragments/aws-credentials
-
   parameters:
+  - name: UseAWSCredentialsFromSystem
+    type: Confirm
+    prompt: Do you want to use AWS credentials from ~/.aws/credentials file?
+    promptIf: !expr "awsCredentials('IsAvailable')"
+
+  - name: AWSAccessKey
+    type: SecretInput
+    prompt: What is the AWS Access Key ID?
+    promptIf: !expr "!UseAWSCredentialsFromSystem"
+    default: !expr "awsCredentials('AccessKeyID')"
+
+  - name: AWSAccessSecret
+    type: SecretInput
+    prompt: What is the AWS Secret Access Key?
+    promptIf: !expr "!UseAWSCredentialsFromSystem"
+    default: !expr "awsCredentials('SecretAccessKey')"
+
   - name: AWSRegion
     type: Select
     prompt: "Select the AWS region:"

@@ -25,12 +25,8 @@ spec:
 
   - name: ClusterName
     type: Input
-    prompt: "What do you want to name your cluster?"
-
-  - name: XLDUrlForXLR
-    type: Input
-    prompt: XL Deploy URL for XL Release (This will only be used in the XL Release template)
-    default: http://xl-deploy:4516
+    prompt: What do you want to name the cluster?
+    validate: !expr "regex('^[a-zA-Z][\\\\w-]{1,29}[\\\\w]$', ClusterName)"
 
   - name: Namespace
     value: default
@@ -38,11 +34,10 @@ spec:
   - name: NamespaceTag
     value: kubernetes-namespace
 
-  - name: GenerateDockerComposeSetup
-    type: Confirm
-    prompt: "Do you want to generate a docker-compose setup with the required tools to run this blueprint?"
-    promptIf: !expr "Provider == 'existing cluster'"
-    default: false
+  - name: XLDUrlForXLR
+    type: Input
+    prompt: What is the XL Deploy URL used by XL Release? (This is only used in the XL Release template)
+    default: http://xl-deploy:4516
 
   includeAfter:
   - blueprint: kubernetes/environment
@@ -51,7 +46,7 @@ spec:
     - path: xebialabs.yaml
       writeIf: !expr "false"
     parameterOverrides:
-    - name: KubernetesName
+    - name: KubernetesClusterName
       value: !expr "ClusterName"
     - name: KubernetesNamespace
       value: !expr "Namespace"
@@ -94,19 +89,14 @@ spec:
       value: !expr "Namespace"
 
   - blueprint: xl-devops-platform
-    includeIf: GenerateDockerComposeSetup
     fileOverrides:
     - path: xebialabs.yaml
       writeIf: !expr "false"
     parameterOverrides:
     - name: UseXLDeploy
       value: true
-    - name: XLDeployPort
-      value: 4516
     - name: UseXLRelease
       value: true
-    - name: XLReleasePort
-      value: 5516
     - name: XLVersion
       value: "9.0"
     - name: UseDockerProxy

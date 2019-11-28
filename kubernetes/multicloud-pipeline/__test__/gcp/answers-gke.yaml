@@ -10,6 +10,7 @@ GKENumNodes: 2
 GKENodeMachineType: n1-standard-1
 GenerateDockerComposeSetup: false
 
-KubernetesApplicationName: httpd
-KubernetesDeploymentPackageVersion: latest
+AppName: myapp
+DockerImage: httpd
+DockerImageTag: latest
 KubernetesResourcesFile: ../kubernetes/deployment.yaml

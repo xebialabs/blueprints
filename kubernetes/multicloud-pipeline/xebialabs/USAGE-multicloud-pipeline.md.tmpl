@@ -6,8 +6,8 @@
 
 To deploy this blueprint, follow the steps below:
 
-{{if ne .KubernetesApplicationName "nginx"}}
-First, edit `kubernetes/deployment.yaml` to suit the `{{.KubernetesApplicationName}}` image you chose to deploy.
+{{if ne .DockerImage "nginx"}}
+First, edit `kubernetes/deployment.yaml` to suit the `{{.DockerImage}}` image you chose to deploy.
 {{end}}
 
 1. Apply the generated YAML configurations using the XL CLI. Open up a terminal in the folder where you generated the configuration. Then run:
