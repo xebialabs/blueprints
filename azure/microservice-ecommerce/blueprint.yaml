@@ -142,17 +142,17 @@ spec:
 
   - name: StorageAccountName
     type: Input
-    prompt: "Enter the Storage Account where Terraform will store its state (see README.md step 3.2):"
+    prompt: "Enter the Storage Account where Terraform will store its state (see aws/README.md):"
     promptIf: ProvisionCluster
 
   - name: StorageAccessKey
     type: Input
-    prompt: "Enter the Storage Account key for accessing the storage (see README.md step 3.3):"
+    prompt: "Enter the Storage Account key for accessing the storage (see aws/README.md):"
     promptIf: ProvisionCluster
 
   - name: StorageContainerName
     type: Input
-    prompt: "Enter the Storage Container name (see README.md step 3.4):"
+    prompt: "Enter the Storage Container name (see aws/README.md):"
     promptIf: ProvisionCluster
     default: terraform-state
   # ############################################################################
