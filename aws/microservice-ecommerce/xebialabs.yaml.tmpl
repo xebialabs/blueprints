@@ -9,7 +9,7 @@ metadata:
   - xebialabs/xld-microservice-ecommerce-cloudformation-applications.yaml
   {{- end}}
   {{- if not .ProvisionCluster}}
-  - xebialabs/xld-microservice-ecommerce-no-cluster-infra-env.yaml
+  - xebialabs/xld-microservice-ecommerce-infra-env.yaml
   {{- end}}
   - xebialabs/xlr-microservice-ecommerce-pipeline-ci-cd.yaml
   - xebialabs/xlr-microservice-ecommerce-pipeline-destroy.yaml

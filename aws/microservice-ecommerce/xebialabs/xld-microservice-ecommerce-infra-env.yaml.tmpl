@@ -1,35 +1,5 @@
 {{$clusterName := .ClusterName | kebabcase}}
 {{$nameSpace := .Namespace | kebabcase}}
-{{if .ProvisionCluster}}
-# Provision AWS EKS cluster
-apiVersion: xl-deploy/v1
-kind: Infrastructure
-spec:
-- name: {{$clusterName}}
-  type: core.Directory
-  children:
-  - name: aws-{{$clusterName}}
-    type: aws.Cloud
-    accesskey: {{.AWSAccessKey}}
-    accessSecret: {{.AWSAccessSecret}}
-    children:
-    - name: eks-cloudformation
-      type: aws.cloudformation.Stack
-      region: {{.AWSRegion}}
----
-apiVersion: xl-deploy/v1
-kind: Environments
-spec:
-- name: {{$clusterName}}
-  type: core.Directory
-  children:
-  - name: aws-cloudformation-{{$clusterName}}
-    type: udm.Environment
-    members:
-    - Infrastructure/{{$clusterName}}/aws-{{$clusterName}}
-    - Infrastructure/{{$clusterName}}/aws-{{$clusterName}}/eks-cloudformation
-{{else}}
-# Definition of existing EKS cluster
 apiVersion: xl-deploy/v1
 kind: Infrastructure
 spec:
@@ -48,8 +18,9 @@ spec:
     - name: {{$nameSpace}}
       type: k8s.Namespace
       namespaceName: {{.Namespace}}
+
 ---
-# Definition of existing EKS Environment
+
 apiVersion: xl-deploy/v1
 kind: Environments
 spec:
@@ -61,4 +32,3 @@ spec:
     members:
     - Infrastructure/{{$clusterName}}/eks-{{$clusterName}}/{{$nameSpace}}
     - Infrastructure/{{$clusterName}}/eks-{{$clusterName}}
-{{end}}
