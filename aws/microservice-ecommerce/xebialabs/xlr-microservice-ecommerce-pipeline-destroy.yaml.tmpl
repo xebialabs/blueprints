@@ -1,18 +1,18 @@
-{{$app := .AppName | kebabcase}}
+{{$clusterName := .ClusterName | kebabcase}}
 apiVersion: xl-release/v1
 kind: Templates
 spec:
-- name: {{$app}}
+- name: {{$clusterName}}
   type: xlrelease.Folder
   children:
-  - name: {{$app}}-destroy
+  - name: {{$clusterName}}-destroy
     type: xlrelease.Release
     description: |
       This XL Release template shows how to undeploy an application, based on microservices architecture, to AWS EKS using XL Deploy.
     tags:
     - AWS
     - EKS
-    - {{$app}}
+    - {{$clusterName}}
     scriptUsername: !value XL_RELEASE_USERNAME
     scriptUserPassword: !value XL_RELEASE_PASSWORD
     phases:
@@ -25,40 +25,40 @@ spec:
         - name: Undeploy registry svc
           type: xldeploy.Undeploy
           server: XL Deploy
-          deployedApplication: Environments/{{$app}}/aws-eks-{{$app}}/{{$app}}-registry
+          deployedApplication: Environments/{{$clusterName}}/aws-eks-{{$clusterName}}/{{$clusterName}}-registry
         - name: Undeploy invoice svc
           type: xldeploy.Undeploy
           server: XL Deploy
-          deployedApplication: Environments/{{$app}}/aws-eks-{{$app}}/{{$app}}-invoice
+          deployedApplication: Environments/{{$clusterName}}/aws-eks-{{$clusterName}}/{{$clusterName}}-invoice
         - name: Undeploy notification svc
           type: xldeploy.Undeploy
           server: XL Deploy
-          deployedApplication: Environments/{{$app}}/aws-eks-{{$app}}/{{$app}}-notification
+          deployedApplication: Environments/{{$clusterName}}/aws-eks-{{$clusterName}}/{{$clusterName}}-notification
         - name: Undeploy store svc
           type: xldeploy.Undeploy
           server: XL Deploy
-          deployedApplication: Environments/{{$app}}/aws-eks-{{$app}}/{{$app}}-store
+          deployedApplication: Environments/{{$clusterName}}/aws-eks-{{$clusterName}}/{{$clusterName}}-store
       - name: Undeploy stateful services
         type: xlrelease.ParallelGroup
         tasks:
         - name: Undeploy invoice mysql svc
           type: xldeploy.Undeploy
           server: XL Deploy
-          deployedApplication: Environments/{{$app}}/aws-eks-{{$app}}/{{$app}}-invoice-mysql
+          deployedApplication: Environments/{{$clusterName}}/aws-eks-{{$clusterName}}/{{$clusterName}}-invoice-mysql
         - name: Undeploy store mysql svc
           type: xldeploy.Undeploy
           server: XL Deploy
-          deployedApplication: Environments/{{$app}}/aws-eks-{{$app}}/{{$app}}-store-mysql
+          deployedApplication: Environments/{{$clusterName}}/aws-eks-{{$clusterName}}/{{$clusterName}}-store-mysql
         - name: Undeploy notification mongodb svc
           type: xldeploy.Undeploy
           server: XL Deploy
-          deployedApplication: Environments/{{$app}}/aws-eks-{{$app}}/{{$app}}-notification-mongodb
+          deployedApplication: Environments/{{$clusterName}}/aws-eks-{{$clusterName}}/{{$clusterName}}-notification-mongodb
       {{if .ProvisionCluster}}
       # Un-provision namespace
       - name: Undeploy {{.Namespace}} namespace
         type: xldeploy.Undeploy
         server: XL Deploy
-        deployedApplication: Environments/{{$app}}/aws-eks-{{$app}}/{{$app}}-namespace
+        deployedApplication: Environments/{{$clusterName}}/aws-eks-{{$clusterName}}/{{$clusterName}}-namespace
       {{end}}
     {{if .ProvisionCluster}}
     # De-provision Infra
@@ -72,41 +72,41 @@ spec:
         - name: Deprovision EKS config map for workers
           type: xldeploy.Undeploy
           server: XL Deploy
-          deployedApplication: Environments/{{$app}}/{{$app}}-master-EKSCluster-kube-system/{{$app}}-k8s-configmap
+          deployedApplication: Environments/{{$clusterName}}/{{$clusterName}}-master-EKSCluster-kube-system/{{$clusterName}}-k8s-configmap
         - name: Update workers dictionary for kube-system environment
           type: xld.UpdateCIProperty
           server: XL Deploy
-          ciID: Environments/{{$app}}/{{$app}}-master-EKSCluster-kube-system
+          ciID: Environments/{{$clusterName}}/{{$clusterName}}-master-EKSCluster-kube-system
           ciProperty: dictionaries
           propertyValue: '[]'
         - name: Deprovision EKS workers nodes
           type: xldeploy.Undeploy
           server: XL Deploy
-          deployedApplication: Environments/{{$app}}/aws-cloudformation-{{$app}}/{{$app}}-cloudformation-eks-workers
+          deployedApplication: Environments/{{$clusterName}}/aws-cloudformation-{{$clusterName}}/{{$clusterName}}-cloudformation-eks-workers
         - name: Deprovision EKS master node
           type: xldeploy.Undeploy
           server: XL Deploy
-          deployedApplication: Environments/{{$app}}/aws-cloudformation-{{$app}}/{{$app}}-cloudformation-eks-master
+          deployedApplication: Environments/{{$clusterName}}/aws-cloudformation-{{$clusterName}}/{{$clusterName}}-cloudformation-eks-master
       - name: Delete artifacts from S3
         type: xlrelease.SequentialGroup
         tasks:
         - name: Delete artifacts from S3
           type: xldeploy.Undeploy
           server: XL Deploy
-          deployedApplication: Environments/{{$app}}/aws-cloudformation-{{$app}}/{{$app}}-lambda-artifacts
+          deployedApplication: Environments/{{$clusterName}}/aws-cloudformation-{{$clusterName}}/{{$clusterName}}-lambda-artifacts
         - name: Delete S3 bucket
           type: xldeploy.Undeploy
           server: XL Deploy
-          deployedApplication: Environments/{{$app}}/aws-cloudformation-{{$app}}/{{$app}}-lambda-bucket
+          deployedApplication: Environments/{{$clusterName}}/aws-cloudformation-{{$clusterName}}/{{$clusterName}}-lambda-bucket
       - name: Deprovision AWS VPC and IAM resources
         type: xlrelease.SequentialGroup
         tasks:
         - name: Deprovision AWS IAM resources
           type: xldeploy.Undeploy
           server: XL Deploy
-          deployedApplication: Environments/{{$app}}/aws-cloudformation-{{$app}}/{{$app}}-cloudformation-eks-user
+          deployedApplication: Environments/{{$clusterName}}/aws-cloudformation-{{$clusterName}}/{{$clusterName}}-cloudformation-eks-user
         - name: Deprovision AWS VPC
           type: xldeploy.Undeploy
           server: XL Deploy
-          deployedApplication: Environments/{{$app}}/aws-cloudformation-{{$app}}/{{$app}}-cloudformation-eks-vpc
+          deployedApplication: Environments/{{$clusterName}}/aws-cloudformation-{{$clusterName}}/{{$clusterName}}-cloudformation-eks-vpc
     {{end}}

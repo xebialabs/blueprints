@@ -1,0 +1,34 @@
+{{$clusterName := .ClusterName | kebabcase}}
+{{$nameSpace := .Namespace | kebabcase}}
+apiVersion: xl-deploy/v1
+kind: Infrastructure
+spec:
+- name: {{$clusterName}}
+  type: core.Directory
+  children:
+  - name: eks-{{$clusterName}}
+    type: k8s.Master
+    isEKS: true
+    clusterName: {{.ClusterName}}
+    accessKey: {{.AWSAccessKey}}
+    accessSecret: {{.AWSAccessSecret}}
+    apiServerURL: {{.ClusterEndpoint}}
+    skipTLS: true
+    children:
+    - name: {{$nameSpace}}
+      type: k8s.Namespace
+      namespaceName: {{.Namespace}}
+
+---
+
+apiVersion: xl-deploy/v1
+kind: Environments
+spec:
+- name: {{$clusterName}}
+  type: core.Directory
+  children:
+  - name: aws-eks-{{$clusterName}}
+    type: udm.Environment
+    members:
+    - Infrastructure/{{$clusterName}}/eks-{{$clusterName}}/{{$nameSpace}}
+    - Infrastructure/{{$clusterName}}/eks-{{$clusterName}}

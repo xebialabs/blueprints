@@ -1,0 +1,53 @@
+{{$clusterName := .ClusterName | kebabcase}}
+apiVersion: xl-deploy/v1
+kind: Applications
+spec:
+- name: {{$clusterName}}
+  type: core.Directory
+  children:
+  - name: K8S
+    type: core.Directory
+    children:
+    - name: {{$clusterName}}-store-mysql
+      type: udm.Application
+      children:
+      - name: !value BUILD_ID
+        type: udm.DeploymentPackage
+        deployables:
+        - name: {{$clusterName}}-store-mysql
+          type: k8s.ResourcesFile
+          file: !file ../store/build/kubernetes/store-mysql.yml
+          tags:
+          - {{.Namespace}}
+    - name: {{$clusterName}}-registry
+      type: udm.Application
+      children:
+      - name: !value BUILD_ID
+        type: udm.DeploymentPackage
+        deployables:
+        - name: {{$clusterName}}-application-config
+          type: k8s.ResourcesFile
+          file: !file ../registry/kubernetes/application-configmap.yml
+          tags:
+          - {{.Namespace}}
+        - name: {{$clusterName}}-jhipster-registry
+          type: k8s.ResourcesFile
+          file: !file ../registry/kubernetes/jhipster-registry.yml
+          tags:
+          - {{.Namespace}}
+    - name: {{$clusterName}}-store
+      type: udm.Application
+      children:
+      - name: !value BUILD_ID
+        type: udm.DeploymentPackage
+        deployables:
+        - name: {{$clusterName}}-store-deployment
+          type: k8s.ResourcesFile
+          file: !file ../store/build/kubernetes/store-deployment.yml
+          tags:
+          - {{.Namespace}}
+        - name: {{$clusterName}}-store-svc
+          type: k8s.ResourcesFile
+          file: !file ../store/build/kubernetes/store-service.yml
+          tags:
+          - {{.Namespace}}

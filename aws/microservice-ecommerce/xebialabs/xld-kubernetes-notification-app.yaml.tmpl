@@ -1,0 +1,37 @@
+{{$clusterName := .ClusterName | kebabcase}}
+apiVersion: xl-deploy/v1
+kind: Applications
+spec:
+- name: {{$clusterName}}
+  type: core.Directory
+  children:
+  - name: K8S
+    type: core.Directory
+    children:
+    - name: {{$clusterName}}-notification-mongodb
+      type: udm.Application
+      children:
+      - name: !value BUILD_ID
+        type: udm.DeploymentPackage
+        deployables:
+        - name: {{$clusterName}}-notification-mongodb
+          type: k8s.ResourcesFile
+          file: !file ../notification/build/kubernetes/notification-mongodb.yml
+          tags:
+          - {{.Namespace}}
+    - name: {{$clusterName}}-notification
+      type: udm.Application
+      children:
+      - name: !value BUILD_ID
+        type: udm.DeploymentPackage
+        deployables:
+        - name: {{$clusterName}}-invoice-notification
+          type: k8s.ResourcesFile
+          file: !file ../notification/build/kubernetes/notification-deployment.yml
+          tags:
+          - {{.Namespace}}
+        - name: {{$clusterName}}-notification-svc
+          type: k8s.ResourcesFile
+          file: !file ../notification/build/kubernetes/notification-service.yml
+          tags:
+          - {{.Namespace}}
