@@ -6,4 +6,4 @@ ClusterName: cluster1
 NodeAutoScalingGroupDesiredSize: 3
 NodeInstanceType: t2.medium
 GenerateDockerComposeSetup: false
-ClusterVersion: '1.11'
+ClusterVersion: '1.12'

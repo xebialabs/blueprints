@@ -28,7 +28,7 @@ spec:
     type: Input
     prompt: !expr "'What is the endpoint for your \\'' + ClusterName + '\\' cluster (example https://104.155.109.230)?'"
     promptIf: !expr "!ProvisionCluster"
-    validate: !expr "regex('^https?://[a-z0-9_-]*[a-z0-9](\\.[a-z0-9_-]*[a-z0-9]+)*(:[0-9]{2,5})?$', ClusterEndpoint)"
+    validate: !expr "regex('^https?://[a-zA-Z0-9_-]*[a-zA-Z0-9](\\.[a-zA-Z0-9_-]*[a-zA-Z0-9]+)*(:[0-9]{2,5})?$', ClusterEndpoint)"
 
   - name: Namespace
     type: Input

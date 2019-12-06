@@ -114,7 +114,7 @@ spec:
       type: xlrelease.Phase
       tasks:
       - name: Build docker images for {{$clusterName}} services
-        type: xlrelease.SequentialGroup
+        type: xlrelease.ParallelGroup
         tasks:
         - name: Build {{$clusterName}} store docker image
           type: jenkins.Build

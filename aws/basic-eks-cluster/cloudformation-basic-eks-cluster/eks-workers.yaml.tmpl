@@ -2,35 +2,10 @@ AWSTemplateFormatVersion: '2010-09-09'
 Description: 'Amazon EKS - Worker nodes'
 
 Mappings:
+    # See: https://docs.aws.amazon.com/eks/latest/userguide/eks-optimized-ami.html
+    # See: https://docs.aws.amazon.com/eks/latest/userguide/retrieve-ami-id.html
     RegionMap:
-    {{- if eq .ClusterVersion "1.11"}}
-      us-east-2:
-        "AmiId": "ami-03c6648b74285020f"
-      us-east-1:
-        "AmiId": "ami-0a5f5d5b0f6f58199"
-      us-west-2:
-        "AmiId": "ami-057d1c0dcb254a878"
-      ap-south-1:
-        "AmiId": "ami-00f1adebe5ab9a431"
-      ap-northeast-1:
-        "AmiId": "ami-0a0b6606652f9b3b9"
-      ap-northeast-2:
-        "AmiId": "ami-0c84b3f055cda1afb"
-      ap-southeast-1:
-        "AmiId": "ami-05e92412054db3f87"
-      ap-southeast-2:
-        "AmiId": "ami-07eb76498b1ba6cd6"
-      eu-central-1:
-        "AmiId": "ami-0234bc9c2b341aa02"
-      eu-west-1:
-        "AmiId": "ami-06902949103360023"
-      eu-west-2:
-        "AmiId": "ami-0db100ad46c7966d2"
-      eu-west-3:
-        "AmiId": "ami-052046d313576d0ba"
-      eu-north-1:
-        "AmiId": "ami-02ebf24da505128f9"
-    {{- else if eq .ClusterVersion "1.12"}}
+    {{- if eq .ClusterVersion "1.12"}}
       us-east-2:
         "AmiId": "ami-0fe61ae4c397e710d"
       us-east-1:
@@ -84,8 +59,34 @@ Mappings:
         "AmiId": "ami-0537ee9329c1628a2"
       eu-north-1:
         "AmiId": "ami-0fd05922165907b85"
+    {{- else if eq .ClusterVersion "1.14"}}
+      us-east-2:
+        "AmiId": "ami-053250833d1030033"
+      us-east-1:
+        "AmiId": "ami-07d6c8e62ce328a10"
+      us-west-2:
+        "AmiId": "ami-07be7092831897fd6"
+      ap-south-1:
+        "AmiId": "ami-07e2a96e251e970bd"
+      ap-northeast-1:
+        "AmiId": "ami-0b60cbd90564dfe00"
+      ap-northeast-2:
+        "AmiId": "ami-0cf70ba01dfd0f782"
+      ap-southeast-1:
+        "AmiId": "ami-0d275f57a60281ccc"
+      ap-southeast-2:
+        "AmiId": "ami-0159ec8365aea1724"
+      eu-central-1:
+        "AmiId": "ami-03fbd442f4f3aa689"
+      eu-west-1:
+        "AmiId": "ami-02dca57ad67c7bf57"
+      eu-west-2:
+        "AmiId": "ami-0a69fbeff04e330e9"
+      eu-west-3:
+        "AmiId": "ami-074b0da576fa9f5c9"
+      eu-north-1:
+        "AmiId": "ami-01feb408eb7fc7e23"
     {{- end}}
-
 
 Parameters:
   ProjectName:
@@ -172,6 +173,10 @@ Parameters:
     Type: Number
     Description: Maximum size of Node Group ASG.
     Default: 4
+  NodeAutoScalingGroupDesiredSize:
+    Type: Number
+    Description: Desired size of Node Group ASG.
+    Default: 3
   NodeVolumeSize:
     Type: Number
     Description: Node volume size
@@ -310,6 +315,7 @@ Resources:
     Type: AWS::AutoScaling::AutoScalingGroup
     Properties:
       AutoScalingGroupName: !Sub "${ProjectName}-AutoScalingGroup"
+      DesiredCapacity: !Ref NodeAutoScalingGroupDesiredSize
       LaunchConfigurationName: !Ref NodeLaunchConfig
       MinSize: !Ref NodeAutoScalingGroupMinSize
       MaxSize: !Ref NodeAutoScalingGroupMaxSize
