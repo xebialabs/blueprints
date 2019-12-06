@@ -45,5 +45,5 @@ spec:
   # Terraform
   - path: terraform-basic-aks-cluster/.gitignore
   - path: terraform-basic-aks-cluster/main.tf
-  - path: terraform-basic-aks-cluster/output.tf
+  - path: terraform-basic-aks-cluster/outputs.tf
   - path: terraform-basic-aks-cluster/variables.tf
