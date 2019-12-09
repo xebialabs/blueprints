@@ -13,9 +13,11 @@ If you're new to XebiaLabs blueprints, check out:
 
 ## Usage
 
-To use this blueprint, run `xl blueprint` and select:
+To use this blueprint, run `xl blueprint` in an empty directory and select:
 
-    `docker/environment`
+```plain
+docker/environment
+```
 
 If you accept the defaults, the environment will refer to a Docker proxy that is running in the same Docker instance as the XL Deploy container. Use the [xl-devops-platform](https://github.com/xebialabs/blueprints/tree/development/xl-devops-platform) blueprint to create a Docker Compose that sets up XL Deploy and the Docker proxy correctly for this functionality to work.
 
@@ -24,30 +26,35 @@ If you accept the defaults, the environment will refer to a Docker proxy that is
 This blueprint includes the following tools and technologies:
 
 * Target:
-    * Docker
+  * [Docker](https://www.docker.com/)
+* Tools:
+  * [XebiaLabs Deployment Automation](https://xebialabs.com/products/xl-deploy/)
+
+## Minimum required versions
+
+This blueprint version requires at least the following versions of the specified tools to work properly:
+
+* XL Deploy: Version 9.0.0
+* XL CLI: Version 9.0.0
 
 ## Prerequisites
 
-This blueprint requires:
-
-* A running Docker engine
+* XebiaLabs Release Orchestration and Deployment Automation up and running
+* A local Docker installation up and running
 
 ## Information required
-
-This blueprint requires:
 
 * The URL for your Docker engine
 
 ## Output
 
-This blueprint will output:
-
 * The file `xebialabs/environment.yaml` that defines an XL Deploy environment for your Docker engine.
 
 ## Tips and tricks
 
-You can use `xl-devops-platform` blueprint to generate docker-compose file including XLD and Docker Proxy images.
+You can use the `xl-devops-platform` blueprint to generate docker-compose file including XLD and Docker Proxy images.
 
 ## Labels
 
 * Docker
+

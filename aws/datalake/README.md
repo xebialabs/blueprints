@@ -15,60 +15,58 @@ If you're new to XebiaLabs blueprints, check out:
 
 ## Usage
 
-To use this blueprint, run `xl blueprint` and select:
+To use this blueprint, run `xl blueprint` in an empty directory and select:
 
-    aws/datalake
+```plain
+aws/datalake
+```
 
 ## Tools and technologies
 
 This blueprint includes the following tools and technologies:
 
 * Target:
-    * [Amazon Elastic Compute Cloud (EC2)](https://aws.amazon.com/ec2/)
-    * [Amazon Simple Storage Service (S3)](https://aws.amazon.com/s3/)
-    * [Amazon Elasticsearch Service](https://aws.amazon.com/elasticsearch-service/)
-    * [Amazon DynamoDB](https://aws.amazon.com/dynamodb/)
+  * [Amazon Elastic Compute Cloud (EC2)](https://aws.amazon.com/ec2/)
+  * [Amazon Simple Storage Service (S3)](https://aws.amazon.com/s3/)
+  * [Amazon Elasticsearch Service](https://aws.amazon.com/elasticsearch-service/)
+  * [Amazon DynamoDB](https://aws.amazon.com/dynamodb/)
 * Tools:
-    * [XebiaLabs Release Orchestration](https://xebialabs.com/products/xl-release/)
-    * [XebiaLabs Deployment Automation](https://xebialabs.com/products/xl-deploy/)
-    * [AWS CloudFormation](https://aws.amazon.com/cloudformation/)
-    * [Amazon Cognito](https://aws.amazon.com/cognito/)
-    * [AWS Lambda](https://aws.amazon.com/lambda/)
-    * [Amazon API Gateway](https://aws.amazon.com/api-gateway/)
+  * [XebiaLabs Release Orchestration](https://xebialabs.com/products/xl-release/)
+  * [XebiaLabs Deployment Automation](https://xebialabs.com/products/xl-deploy/)
+  * [AWS CloudFormation](https://aws.amazon.com/cloudformation/)
+  * [Amazon Cognito](https://aws.amazon.com/cognito/)
+  * [AWS Lambda](https://aws.amazon.com/lambda/)
+  * [Amazon API Gateway](https://aws.amazon.com/api-gateway/)
 * Application or framework:
-    * [Data Lake Solution](https://docs.aws.amazon.com/solutions/latest/data-lake-solution/overview.html)
-
+  * [Data Lake Solution](https://docs.aws.amazon.com/solutions/latest/data-lake-solution/overview.html)
 
 ## Minimum required versions
 
 This blueprint version requires at least the following versions of the specified tools to work properly:
 
-XL Release: Version 9.0.0
-XL Deploy: Version 9.0.0
-XL CLI: Version 9.0.0
+* XL Release: Version 9.0.0
+* XL Deploy: Version 9.0.0
+* XL CLI: Version 9.0.0
 
 ## Prerequisites
 
 To run the YAML that this blueprint generates, you need:
 
 * XebiaLabs Release Orchestration and Deployment Automation up and running
-* Access to an AWS account to deploy the application to
+* Access to an AWS account that can deploy the application
 * Email address where Data Lake administrator credentials can be sent
 
 ## Information required
 
-This blueprint requires:
-
-* AWS credentials
+* AWS Access Key (find it in `~/.aws/credentials`)
+* AWS Secret Access Key (find it in `~/.aws/credentials`)
 * An AWS region
 * An email address for Data Lake administrator credentials
 
 ## Output
 
-This blueprint will output:
-
+* Release templates
 * Sample Data Lake Solution
-* Release template
 * AWS CloudFormation templates
 * A docker-compose setup for XL Release & XL Deploy
 
@@ -80,3 +78,4 @@ This blueprint will output:
 
 * Cloud
 * AWS
+

@@ -30,7 +30,11 @@ If you're new to XebiaLabs blueprints, check out:
 
 ## Usage
 
-To use this blueprint, run `xl blueprint` and choose `showcases/dictionaries-and-secret-stores`.
+To use this blueprint, run `xl blueprint` in an empty directory and select:
+
+```plain
+showcases/dictionaries-and-secret-stores
+```
 
 Answer the questions to generate the necessary CIs, then follow the instructions in `xebialabs/USAGE-dictionaries-and-secret-stores.md`.
 
@@ -65,6 +69,7 @@ To run the YAML that this blueprint generates, you need:
 ## Information required
 
 You will need the following data from your Azure account:
+
 * Client ID
 * Client Secret
 * Subscription ID
@@ -72,8 +77,7 @@ You will need the following data from your Azure account:
 
 ## Output
 
-This blueprint will output:
-
+* Release templates
 * Docker files to run XL Deploy and XL Release (optional)
 * Docker files to run a secret store (optional)
 * CIs to create a VM in Azure
@@ -84,3 +88,4 @@ This blueprint will output:
 * Terraform
 * HashiCorp Vault
 * CyberArk Conjur
+

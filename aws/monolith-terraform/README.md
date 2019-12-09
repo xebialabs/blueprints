@@ -15,69 +15,67 @@ If you're new to XebiaLabs blueprints, check out:
 
 ## Usage
 
-To use this blueprint, run `xl blueprint` and select:
+To use this blueprint, run `xl blueprint` in an empty directory and select:
 
-    aws/monolith-terraform
+```plain
+aws/monolith-terraform
+```
 
 ## Tools and technologies
 
 This blueprint includes the following tools and technologies:
 
 * Target:
-    * [Amazon Elastic Container Service (ECS)](https://aws.amazon.com/ecs/)
-    * [AWS Fargate](https://aws.amazon.com/fargate/)
+  * [Amazon Elastic Container Service (ECS)](https://aws.amazon.com/ecs/)
+  * [AWS Fargate](https://aws.amazon.com/fargate/)
 * Tools:
-    * [XebiaLabs Release Orchestration](https://xebialabs.com/products/xl-release/)
-    * [XebiaLabs Deployment Automation](https://xebialabs.com/products/xl-deploy/)
-    * [Terraform](https://www.terraform.io/)
+  * [XebiaLabs Release Orchestration](https://xebialabs.com/products/xl-release/)
+  * [XebiaLabs Deployment Automation](https://xebialabs.com/products/xl-deploy/)
+  * [Terraform](https://www.terraform.io/)
 * Application or framework:
-    * [JHipster](https://github.com/xebialabs/e-commerce-monolith)
+  * [JHipster](https://github.com/xebialabs/e-commerce-monolith)
 
 ## Minimum required versions
 
 This blueprint version requires at least the following versions of the specified tools to work properly:
 
-XL Release: Version 9.0.0
-XL Deploy: Version 9.0.0
-XL CLI: Version 9.0.0
+* XL Release: Version 9.0.0
+* XL Deploy: Version 9.0.0
+* XL CLI: Version 9.0.0
 
 ## Prerequisites
 
 To run the YAML that this blueprint generates, you need:
 
 * XebiaLabs Release Orchestration and Deployment Automation up and running
-* Access to an AWS account to deploy the application to
+* Access to an AWS account that can deploy the application
 
 ## Information required
 
-This blueprint requires:
-
-* The application name
-* The port where the application should be exposed
-* The MySQL password
-* AWS credentials
+* AWS Access Key (find it in `~/.aws/credentials`)
+* AWS Secret Access Key (find it in `~/.aws/credentials`)
 * An AWS region
+* The MySQL password
 
 ## Output
 
-This blueprint will output:
-
-* Release template
+* Release templates
 * Terraform templates
 * Infrastructure:
-    * Amazon ECS cluster
-    * Networking infrastructure: Virtual Private Cloud (VPC), subnets, route table
-    * Security infrastructure
-    * Elastic Load Balancer (ELB) infrastructure
-    * Amazon Relational Database Service (RDS)
+  * Amazon ECS cluster
+  * Networking infrastructure: Virtual Private Cloud (VPC), subnets, route table
+  * Security infrastructure
+  * Elastic Load Balancer (ELB) infrastructure
+  * Amazon Relational Database Service (RDS)
 * A docker-compose setup for XL Release and XL Deploy
 
 ## Tips and tricks
 
-The YAML that the blueprint generates includes optional steps to remove the application and deprovision the cluster.
+* The YAML that the blueprint generates includes optional steps to remove the application and deprovision the cluster.
 
 ## Labels
 
 * Cloud
 * AWS
 * Terraform
+

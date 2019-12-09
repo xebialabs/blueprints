@@ -5,15 +5,40 @@
 
 ## Provision simple EKS cluster on AWS
 
-To deploy this blueprint, follow the steps below:
 
-> **Note:** Deployment of basic AWS cluster from XL Deploy requires a few more steps than the Azure or GCP ones.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+To deploy this blueprint to the XebiaLabs DevOps Platform, follow the steps below:
 
 1. Apply the generated YAML configuration using the XL CLI. Open up a terminal in the folder where you generated the configuration. Then run:
 
-    ```plain
-    xl apply -f xebialabs.yaml
-    ```
+```plain
+xl apply -f xebialabs.yaml
+```
+
+> **Note:** Deployment of basic AWS cluster from XL Deploy requires a few more steps than the Azure or GCP ones.
 
 2. Go to XL Deploy and look for the `{{$clusterName}}` folder under `Applications`.
 

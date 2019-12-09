@@ -26,11 +26,10 @@ This blueprint includes the following tools and technologies:
 
 ## Output
 
-This blueprint will output:
-
 * A `docker-compose.yaml` file that will launch the HashiCorp Vault instance
 
 ## Labels
 
 * HashiCorp Vault
 * Docker
+
