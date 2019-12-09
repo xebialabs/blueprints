@@ -6,7 +6,6 @@ This blueprint comprises 3 other blueprints:
 2. Local Docker environment
 3. Application to run on the environment
 
-
 ## Launch XL Deploy
 
 In a separate terminal, run:
@@ -15,7 +14,6 @@ In a separate terminal, run:
 cd docker
 docker-compose up
 ```
-
 
 ## How to use
 
@@ -26,7 +24,6 @@ xl apply -f xebialabs.yaml
 ```
 
 Now follow the instructions in `xebialabs/USAGE-application.md` to deploy the container.
-
 
 ## The `USAGE` files
 
@@ -40,3 +37,4 @@ This tells you about the basic Environment in XL Deploy where the Docker applica
 
 3. `USAGE-application.md`
 This tells you how to deploy and test the application in XL Deploy.
+
