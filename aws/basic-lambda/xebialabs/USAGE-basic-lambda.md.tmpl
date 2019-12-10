@@ -1,22 +1,18 @@
-{{$app := .AppName | kebabcase}}
+{{- $app := .AppName | kebabcase}}
+# Basic Amazon Lambda Function Usage
 
-# AWS Lambda Function
-
-## Deploy the blueprint to XL Deploy
+## Deploy the blueprint to the XL Platform
 
 To deploy this blueprint to the XebiaLabs DevOps Platform, follow the steps below:
 
 1. Apply the generated YAML configuration using the XL CLI. Open up a terminal in the folder where you generated the configuration. Then run:
 
-```plain
-xl apply -f xebialabs.yaml
-```
+    ```plain
+    xl apply -f xebialabs.yaml
+    ```
 
-2. Go to XL Deploy
+2. Go to XL Deploy and look for the `{{$app}` folder under `Applications`.
 
-> **Note:** the default url is http://localhost:4516
-
-## Deploy to AWS
 
 To deploy the Lamba Function to AWS, do the following:
 

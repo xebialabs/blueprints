@@ -1,28 +1,29 @@
-{{$appName := .AppName | kebabcase}}
+{{- $app := .AppName | kebabcase}}
+# Azure App Service Usage
 
-## Provision web application on Azure App Service
+## Deploy the blueprint to the XL Platform
 
-### Prerequisites
+To deploy this blueprint to the XebiaLabs DevOps Platform, follow the steps below:
 
-To deploy this blueprint, follow the steps below:
+1. Apply the generated YAML configuration using the XL CLI. Open up a terminal in the folder where you generated the configuration. Then run:
 
-1. Apply the generated YAML configurations using the XL CLI. Open up a terminal in the folder where you generated the configuration. Then run:
+    ```plain
+    xl apply -f xebialabs.yaml
+    ```
 
-```plain
-xl apply -f xebialabs.yaml
-```
+2. Go to XL Deploy and look for the `{{$app}}-app` folder under `Applications`.
 
-2. Go to XL Deploy, look for the `{{$appName}}-app` under `Applications/{{$appName}}`. Select the `1.0.0` item underneath, click on the ellipsis and select 'Deploy'. Select the `{{$appName}}-terraform` environment (there should be only one), press 'Deploy'.
+3. To provision the service:
+  3.1. Select `{{$app}}/{{$app-app/1.0.0` , click on the ellipsis and select 'Deploy'. Select the `Environments/{{$app}}/{{$app}}-terraform` Environment (there should be only one), press 'Deploy'.
 
 3. After the deployment process is complete, an App Service application will have been provisioned on Azure.
 
-4. In order to access the application you can check the entry `app_service_default_hostname` in dictionary `{{$appName}}-terraform-dictionary` created in XL Deploy under `Environment/{{$appName}}` after the deployment.
+4. In order to access the application you can check the entry `app_service_default_hostname` in dictionary `{{$app}}-terraform-dictionary` created in XL Deploy under `Environment/{{$app}}` after the deployment.
 
-5. To deprovision the service, go to the `{{$appName}}-terraform` environment under `Environment/{{$appName}}`, select the `{{$appName}}-app` item, press the ellipsis and select 'Undeploy'. Follow the instructions on screen.
+## Undeploy the blueprint from XL Platform
 
-## Minimum required versions
+1. To deprovision the application, you will have to perform the above steps in reverse.
 
-This blueprint version requires at least the following versions of the specified tools to work properly:
+2. To deprovision the service:
+  2.1. Select `Environments/{{$app}}/{{$app}}-terraform` and click 'Undeploy'. Follow the instructions on screen.
 
-- XL Deploy: Version 9.0.0
-- XL CLI: Version 9.0.0

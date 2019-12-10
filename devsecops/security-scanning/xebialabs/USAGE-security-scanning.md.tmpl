@@ -51,16 +51,9 @@ To deploy this blueprint with the XebiaLabs DevOps Platform, follow the steps be
 
 1. Apply the generated YAML configurations using the XL CLI.
 
-    ```
-    xl apply -f xebialabs.yaml
-    ```
+```plain
+xl apply -f xebialabs.yaml
+```
 
 2. Go to XL Release, look for the "{{$app}}" folder. Create release using template "{{$app}} security & compliance". Check latest status using "Security and Compliance" dashboard from "{{$app}}" folder.
-
-## Minimum required versions
-
-This blueprint version requires at least the following versions of the specified tools to work properly:
-
-* XL Release: Version 9.0.0
-* XL CLI: Version 9.0.0
 

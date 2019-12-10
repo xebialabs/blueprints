@@ -145,7 +145,7 @@ Please note that you can obtain a trial license or bring your own license for XL
     2. If you are using Jenkins for CI/CD please follow these additional steps
         1. Set the following environment variables before starting the docker containers
 
-        ```
+        ```plain
         export GITHUB_USER=<your GitHub user name>
         export GITHUB_TOKEN=<your GitHub access token, needed only if you are using a private repository, this variable can be skipped for public repositories>
         export DOCKER_USER=<your Docker user name>
@@ -161,18 +161,10 @@ To deploy this blueprint with the XebiaLabs DevOps Platform, follow the steps be
 
 1. Apply the generated YAML configurations using the XL CLI.
 
-    ```
-    xl apply -f xebialabs.yaml
-    ```
+```plain
+xl apply -f xebialabs.yaml
+```
 
 2. Go to XL Release, look for the "{{$app}}-ci-cd" template, and start a new release from it.
 3. Once you are done, go to XL Release, look for the "{{$app}}-destroy" template, and start a new release from it to automatically rollback and destroy the resources you created.
-
-## Minimum required versions
-
-This blueprint version requires at least the following versions of the specified tools to work properly:
-
-* XL Release: Version 9.0.0
-* XL Deploy: Version 9.0.0
-* XL CLI: Version 9.0.0
 

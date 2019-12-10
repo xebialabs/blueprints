@@ -1,57 +1,65 @@
-{{$clusterName := .ClusterName | kebabcase}}
+{{- $clusterName := .ClusterName | kebabcase}}
+# Basic AWS Elastic Kubernetes Service (EKS) Cluster Usage
 
 ## Notes
+
 * This example does not create a namespace, but uses the `default` namespace
 
-## Provision simple EKS cluster on AWS
+## Deploy the blueprint to the XL Platform
+
+> **Note:** Deployment of the basic AWS cluster from XL Deploy requires a few more steps than the Azure or GCP ones.
 
 To deploy this blueprint to the XebiaLabs DevOps Platform, follow the steps below:
 
 1. Apply the generated YAML configuration using the XL CLI. Open up a terminal in the folder where you generated the configuration. Then run:
 
-```plain
-xl apply -f xebialabs.yaml
-```
-
-> **Note:** Deployment of basic AWS cluster from XL Deploy requires a few more steps than the Azure or GCP ones.
+    ```plain
+    xl apply -f xebialabs.yaml
+    ```
 
 2. Go to XL Deploy and look for the `{{$clusterName}}` folder under `Applications`.
 
-3. To provision the lambda artifacts:
-  3.1. Select `{{$clusterName}}/EKS-LAMBDA/{{$clusterName}}-lambda-bucket`, click on the ellipsis and select 'Deploy'. Select the `Environments/{{$clusterName}}/aws-cloudformation-{{$clusterName}}` Environment and click 'Continue'. Verify that there are no error messages, then click 'Deploy'.
-  3.2. Select `{{$clusterName}}/EKS-LAMBDA/{{$clusterName}}-lambda-artifacts`, click on the ellipsis and select 'Deploy'. Select the `Environments/{{$clusterName}}/aws-cloudformation-{{$clusterName}}` Environment and Click 'Continue'. Verify that there are no error messages, then click 'Deploy'.
+3. To provision the Lambda artifacts:
+    1. Select `{{$clusterName}}/EKS-LAMBDA/{{$clusterName}}-lambda-bucket/1.0.0`, click on the ellipsis and select 'Deploy'. Select `Environments/{{$clusterName}}/aws-cloudformation-{{$clusterName}}` and click 'Continue'. Verify that there are no error messages, then click 'Deploy'.
+    2. Select `{{$clusterName}}/EKS-LAMBDA/{{$clusterName}}-lambda-artifacts/1.0.0`, click on the ellipsis and select 'Deploy'. Select `Environments/{{$clusterName}}/aws-cloudformation-{{$clusterName}}` and Click 'Continue'. Verify that there are no error messages, then click 'Deploy'.
 
 4. To provision the VPC and IAM resources:
-  4.1. Select `EKS-CLOUDFORMATION/{{$clusterName}}-cloudformation-eks-user`, click on the ellipsis and select 'Deploy'. Select the `Environments/{{$clusterName}}/aws-cloudformation-{{$clusterName}}` Environment and click 'Continue'. Verify that there are no error messages, then click 'Deploy'.
-  4.2. Select `EKS-CLOUDFORMATION/{{$clusterName}}-cloudformation-eks-vpc`, click on the ellipsis and select 'Deploy'. Select the `Environments/{{$clusterName}}/aws-cloudformation-{{$clusterName}}` Environment and click 'Continue'. Verify that there are no error messages, then click 'Deploy'.
+    1. Select `{{$clusterName}}/EKS-CLOUDFORMATION/{{$clusterName}}-cloudformation-eks-user/1.0.0`, click on the ellipsis and select 'Deploy'. Select `Environments/{{$clusterName}}/aws-cloudformation-{{$clusterName}}` and click 'Continue'. Verify that there are no error messages, then click 'Deploy'.
+    2. Select `{{$clusterName}}/EKS-CLOUDFORMATION/{{$clusterName}}-cloudformation-eks-vpc/1.0.0`, click on the ellipsis and select 'Deploy'. Select `Environments/{{$clusterName}}/aws-cloudformation-{{$clusterName}}` and click 'Continue'. Verify that there are no error messages, then click 'Deploy'.
 
 5. To provision the EKS cluster:
-  5.1 Select `EKS-CLOUDFORMATION/{{$clusterName}}-cloudformation-eks-master`, click on the ellipsis and select 'Deploy'. Select the `Environments/{{$clusterName}}/aws-cloudformation-{{$clusterName}}` Environment and click 'Continue'. Verify that there are no error messages, then click 'Deploy'.
-  5.2 Select `EKS-CLOUDFORMATION/{{$clusterName}}-cloudformation-eks-workers`, click on the ellipsis and select 'Deploy'. Select the `Environments/{{$clusterName}}/aws-cloudformation-{{$clusterName}}` Environment and click 'Continue'. Verify that there are no error messages, then click 'Deploy'.
-  5.3 Select `EKS-CLOUDFORMATION/{{$clusterName}}-k8s-config-map`, click on the ellipsis and select 'Deploy'. Select the `Environments/{{$clusterName}}/aws-eks-{{$clusterName}}-kube-system` Environment and click 'Continue'. Verify that there are no error messages, then click 'Deploy'.
+    1. Select `{{$clusterName}}/EKS-CLOUDFORMATION/{{$clusterName}}-cloudformation-eks-master/1.0.0`, click on the ellipsis and select 'Deploy'. Select `Environments/{{$clusterName}}/aws-cloudformation-{{$clusterName}}` and click 'Continue'. Verify that there are no error messages, then click 'Deploy'.
+    2. Select `{{$clusterName}}/EKS-CLOUDFORMATION/{{$clusterName}}-cloudformation-eks-workers/1.0.0`, click on the ellipsis and select 'Deploy'. Select `Environments/{{$clusterName}}/aws-cloudformation-{{$clusterName}}` and click 'Continue'. Verify that there are no error messages, then click 'Deploy'.
 
-6. After the deployment process is complete, an EKS cluster will have been provisioned on AWS and a configured `K8s.master` environment will have been registered in XL Deploy.
+6. To provision the config map:
+    1. Go to `Environments/{{$clusterName}}/{{$clusterName}}-master-EKSCluster-kube-system`, click on the ellipsis and select 'Edit properties'.
+    2. Under the `Dictionaries` drop-down, locate `Environments/{{$clusterName}}/{{$clusterName}}-eks-workers-dictionary` and click on it.
+    3. Click 'Save and close'.
+    4. Select `{{$clusterName}}/EKS-CLOUDFORMATION/{{$clusterName}}-k8s-config-map/1.0.0`, click on the ellipsis and select 'Deploy'. Select `Environments/{{$clusterName}}/{{$clusterName}}-master-EKSCluster-kube-system` and click 'Continue'. Verify that there are no error messages, then click 'Deploy'.
 
-7. In order to deploy to the k8s cluster, you can execute any k8s blueprints to generate configurations, apply those and deploy the application to your new cluster using XL Deploy.
+7. After the deployment process is complete, an EKS cluster will be provisioned on AWS and a configured `K8s.master` environment will have been registered in XL Deploy.
 
-8. To deprovision the EKS cluster, you will have to perform the above steps in reverse.
+8. In order to deploy to the K8s cluster, you can execute any K8s blueprints to generate configurations, apply those and deploy the application to your new cluster using XL Deploy.
 
-9. To deprovision the EKS cluster:
-  9.1. Select `Environments/{{$clusterName}}/aws-eks-{{$clusterName}}-kube-system/{{$clusterName}}-k8s-configmap` and click 'Undeploy'. Follow the instructions on screen.
-  9.2. Select `Environments/{{$clusterName}}/aws-cloudformation-{{$clusterName}}/{{$clusterName}}-cloudformation-eks-workers` and click 'Undeploy'. Follow the instructions on screen.
-  9.3. Select `Environments/{{$clusterName}}/aws-cloudformation-{{$clusterName}}/{{$clusterName}}-cloudformation-eks-master` and click 'Undeploy'. Follow the instructions on screen.
+## Undeploy the blueprint from XL Platform
 
-10. To remove the S3 storage:
-  10.1. Select `Environments/{{$clusterName}}/aws-cloudformation-{{$clusterName}}/{{$clusterName}}-lambda-artifacts` and click 'Undeploy'. Follow the instructions on screen.
-  10.2. Select `Environments/{{$clusterName}}/aws-cloudformation-{{$clusterName}}/{{$clusterName}}-lambda-bucket` and click 'Undeploy'. Follow the instructions on screen.
+To deprovision the EKS cluster, perform the above steps in reverse.
 
-11. To deprovision the VPC and IAM resources:
-  11.1. Select `Environments/{{$clusterName}}/aws-cloudformation-{{$clusterName}}/{{$clusterName}}-cloudformation-eks-user`and click 'Undeploy'. Follow the instructions on screen.
-  11.2. Select `Environments/{{$clusterName}}/aws-cloudformation-{{$clusterName}}/{{$clusterName}}-cloudformation-eks-vpc`and click 'Undeploy'. Follow the instructions on screen.
+1. To deprovision the config map:
+    1. Select `Environments/{{$clusterName}}/{{$clusterName}}-master-EKSCluster-kube-system/{{$clusterName}}-k8s-configmap (1.0.0)`, click on the ellipsis and select 'Undeploy'. Click 'Undeploy' at the top right of the screen.
+    2. Select `Environments/{{$clusterName}}/{{$clusterName}}-master-EKSCluster-kube-system`, click on the ellipsis and select 'Edit properties'.
+    3. Under the `Dictionaries` section, delete `Environments/{{$clusterName}}/{{$clusterName}}-eks-workers-dictionary`.
+    4. Click 'Save and close'.
 
-## Minimum required versions
+2. To deprovision the EKS cluster:
+    1. Select `Environments/{{$clusterName}}/aws-cloudformation-{{$clusterName}}/{{$clusterName}}-cloudformation-eks-workers (1.0.0)`, click on the ellipsis and select 'Undeploy'. Click 'Undeploy' at the top right of the screen.
+    2. Select `Environments/{{$clusterName}}/aws-cloudformation-{{$clusterName}}/{{$clusterName}}-cloudformation-eks-master (1.0.0)`, click on the ellipsis and select 'Undeploy'. Click 'Undeploy' at the top right of the screen.
 
-This blueprint version requires at least the following versions of the specified tools to work properly:
+3. To deprovision the VPC and IAM resources:
+    1. Select `Environments/{{$clusterName}}/aws-cloudformation-{{$clusterName}}/{{$clusterName}}-cloudformation-eks-user (1.0.0)`, click on the ellipsis and select 'Undeploy'. Click 'Undeploy' at the top right of the screen.
+    2. Select `Environments/{{$clusterName}}/aws-cloudformation-{{$clusterName}}/{{$clusterName}}-cloudformation-eks-vpc (1.0.0)`, click on the ellipsis and select 'Undeploy'. Click 'Undeploy' at the top right of the screen.
 
-- XL Deploy: Version 8.6.1
-- XL CLI: Version 8.6.1
+4. To remove the S3 storage:
+    1. Select `Environments/{{$clusterName}}/aws-cloudformation-{{$clusterName}}/{{$clusterName}}-lambda-artifacts (1.0.0)`, click on the ellipsis and select 'Undeploy'. Click 'Undeploy' at the top right of the screen.
+    2. Select `Environments/{{$clusterName}}/aws-cloudformation-{{$clusterName}}/{{$clusterName}}-lambda-bucket (1.0.0)`, click on the ellipsis and select 'Undeploy'. Click 'Undeploy' at the top right of the screen.
+
