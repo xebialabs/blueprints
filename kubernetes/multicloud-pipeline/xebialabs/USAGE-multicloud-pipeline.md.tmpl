@@ -1,22 +1,19 @@
 {{$clusterName := .ClusterName | kebabcase}}
+# Basic composability demo with EKS/AKS/GKE cluster, Kubernetes application and an XLR pipeline Usage
 
-# Orchestrate provision of Kubernetes cluster
+## Deploy the blueprint to the XL Platform
 
-## Prerequisites
+To deploy this blueprint to the XebiaLabs DevOps Platform, follow the steps below:
 
-To deploy this blueprint, follow the steps below:
-
-{{if ne .DockerImage "nginx"}}
-First, edit `kubernetes/deployment.yaml` to suit the `{{.DockerImage}}` image you chose to deploy.
+{{if ne .KubernetesApplicationName "nginx"}}
+1. Edit `kubernetes-application/deployment.yaml` to suit the `{{.KubernetesApplicationName}}` image you chose to deploy.
 {{end}}
 
-1. Apply the generated YAML configurations using the XL CLI. Open up a terminal in the folder where you generated the configuration. Then run:
+1. Apply the generated YAML configuration using the XL CLI. Open up a terminal in the folder where you generated the configuration. Then run:
 
-```plain
-xl apply -f xebialabs.yaml
-```
+    ```plain
+    xl apply -f xebialabs.yaml
+    ```
 
-2. Go to XL Release (default http://localhost:5516) and look for the "{{$clusterName}}-ci-cd" template and start a new release from it.
-
-3. To deprovision the cluster, look for the "{{$clusterName}}-destroy" template and start a new release from it.
+2. Go to XL Release and look for the `{{$clusterName}}-ci-cd` template and start a new release from it.
 

@@ -1,4 +1,4 @@
-# Kubernetes Application blueprint
+# Kubernetes Application Blueprint
 
 ## Introduction
 

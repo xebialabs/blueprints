@@ -1,4 +1,4 @@
-# Kubernetes Environment blueprint
+# Kubernetes Environment Blueprint
 
 ## Introduction
 
