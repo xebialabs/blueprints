@@ -10,6 +10,6 @@ expected-files:
 - xebialabs/xlr-multicloud-pipeline-destroy.yaml
 - kubernetes-application/deployment.yaml
 - terraform-basic-aks-cluster/main.tf
-- terraform-basic-aks-cluster/output.tf
+- terraform-basic-aks-cluster/outputs.tf
 - terraform-basic-aks-cluster/variables.tf
 - docker/docker-compose.yml

@@ -10,17 +10,17 @@ blueprint-repository:
   owner: xebialabs
   provider: github
   token: ""
-{{- if .UseXLDeploy }}
+{{- if .UseXLDeploy}}
 xl-deploy:
   authmethod: http
   password: admin
   url: http://localhost:{{.XLDeployPort}}/
   username: admin
-{{- end }}
-{{- if .UseXLRelease }}
+{{- end}}
+{{- if .UseXLRelease}}
 xl-release:
   authmethod: http
   password: admin
   url: http://localhost:{{.XLReleasePort}}/
   username: admin
-{{- end }}
+{{- end}}

@@ -1,6 +1,6 @@
 AppName: azure-project
 ResourceGroup: azure-rg
-AKSRegion: westeurope
+ResourceGroupLocation: westeurope
 ProvisionCluster: false
 ClusterEndpoint: https://test.com
 PasswordToken: abcdefgh

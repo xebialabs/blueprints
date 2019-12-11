@@ -2,35 +2,35 @@
 
 This blueprint allows you to run test instances in Docker of:
 
-{{ if .UseXLDeploy -}}
+{{if .UseXLDeploy -}}
 * XL Deploy
-{{- end }}
-{{ if .UseXLRelease -}}
+{{- end}}
+{{if .UseXLRelease -}}
 * XL Release
-{{- end }}
-{{ if .UseJenkins -}}
+{{- end}}
+{{if .UseJenkins -}}
 * Jenkins
-{{- end }}
+{{- end}}
 
 ## Configuration
 
 Copy `xebialabs/config.yaml` to `$HOME/.xebialabs` or make sure your `$HOME/.xebialabs/config.yaml` contains:
 
 ```plain
-{{ if .UseXLDeploy -}}
+{{if .UseXLDeploy -}}
 xl-deploy:
   authmethod: http
   password: admin
   url: http://localhost:{{.XLDeployPort}}/
   username: admin
-{{- end }}
-{{ if .UseXLRelease -}}
+{{- end}}
+{{if .UseXLRelease -}}
 xl-release:
   authmethod: http
   password: admin
   url: http://localhost:{{.XLReleasePort}}/
   username: admin
-{{- end }}
+{{- end}}
 ```
 
 ## Start the containers
@@ -44,20 +44,20 @@ docker-compose up --detach
 
 ## Find the apps here:
 
-{{ if .UseXLDeploy -}}
+{{if .UseXLDeploy -}}
 * XL Deploy: http://localhost:{{.XLDeployPort}}
   * username: admin
   * password: admin
-{{- end }}
+{{- end}}
 
-{{ if .UseXLRelease -}}
+{{if .UseXLRelease -}}
 * XL Release: http://localhost:{{.XLReleasePort}}
   * username: admin
   * password: admin
-{{- end }}
+{{- end}}
 
-{{ if .UseJenkins -}}
+{{if .UseJenkins -}}
 * Jenkins: http://localhost:{{.JenkinsPort}}
   * username: admin
   * password: admin
-{{- end }}
+{{- end}}

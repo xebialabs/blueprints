@@ -11,9 +11,6 @@ metadata:
 
 spec:
   parameters:
-  # ############################################################################
-  # AWS specific variables
-  # ############################################################################
   - name: UseAWSCredentialsFromSystem
     type: Confirm
     prompt: Do you want to use AWS credentials from ~/.aws/credentials file?
@@ -31,52 +28,55 @@ spec:
     promptIf: !expr "!UseAWSCredentialsFromSystem"
     default: !expr "awsCredentials('SecretAccessKey')"
 
-  - name: AWSRegion #options are set manually because EKS service is not registered within AWS GO SDK
+  # Options are set manually because EKS service is not registered within AWS GO SDK
+  - name: AWSRegion
     type: Select
     prompt: "Select the AWS region:"
     options:
+    # This needs to be updated in the RegionMap of cloudformation-microservice-ecommerce/eks-workers.yaml as well
     # commented out because of https://github.com/boto/boto3/issues/811
     # - label: US East (N. Virginia)
     #   value: us-east-1
-    - label: US East (Ohio)
-      value: us-east-2
     - label: US West (Oregon)
       value: us-west-2
-    - label: Asia Pacific (Singapore)
-      value: ap-southeast-1
-    - label: Asia Pacific (Tokyo)
-      value: ap-northeast-1
-    - label: Asia Pacific (Sydney)
-      value: ap-southeast-2
-    - label: Asia Pacific (Seoul)
-      value: ap-northeast-2
-    - label: Asia Pacific (Mumbai)
-      value: ap-south-1
-    - label: EU (Ireland)
-      value: eu-west-1
+    - label: US East (Ohio)
+      value: us-east-2
     - label: EU (Frankfurt)
       value: eu-central-1
+    # - eu-north-1 # doesn't seem to work
+    - label: EU (Ireland)
+      value: eu-west-1
     - label: EU (London)
       value: eu-west-2
     - label: EU (Paris)
       value: eu-west-3
+    - label: Asia Pacific (Tokyo)
+      value: ap-northeast-1
+    - label: Asia Pacific (Seoul)
+      value: ap-northeast-2
+    - label: Asia Pacific (Mumbai)
+      value: ap-south-1
+    - label: Asia Pacific (Singapore)
+      value: ap-southeast-1
+    - label: Asia Pacific (Sydney)
+      value: ap-southeast-2
     - label: EU (Stockholm)
       value: eu-north-1
 
   - name: ClusterName
     type: Input
-    prompt: What do you want to name the cluster?
+    prompt: What name do you want to give the new cluster?
     description: Cluster name will be used to generate cloud resource names
-    validate: !expr "regex('^[a-zA-Z0-9-]{1,16}$', ClusterName)"
+    validate: !expr "regex('^[a-zA-Z][\\\\w-]{1,14}[\\\\w]$', ClusterName)"
 
   - name: ClusterVersion
     type: Select
-    default: '1.11'
+    default: '1.12'
     prompt: What version of EKS would you like to run?
     options:
-      - '1.11'
-      - '1.12'
-      - '1.13'
+    - '1.12'
+    - '1.13'
+    - '1.14'
 
   - name: NodeAutoScalingGroupDesiredSize
     type: Input
@@ -144,23 +144,17 @@ spec:
     - p3.8xlarge
     - p3.16xlarge
 
-  - name: GenerateDockerComposeSetup
-    type: Confirm
-    prompt: "Do you want to generate a docker-compose setup with the required tools to run this blueprint?"
-    default: false
+  - name: IncludeDockerCompose
+    value: true
 
   includeAfter:
   - blueprint: xl-devops-platform
-    includeIf: GenerateDockerComposeSetup
+    includeIf: !expr "IncludeDockerCompose"
     parameterOverrides:
     - name: UseXLDeploy
       value: true
-    - name: XLDeployPort
-      value: 4516
     - name: UseXLRelease
       value: true
-    - name: XLReleasePort
-      value: 5516
     - name: XLVersion
       value: "9.0"
     - name: UseDockerProxy

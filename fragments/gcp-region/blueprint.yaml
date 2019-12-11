@@ -1,0 +1,56 @@
+apiVersion: xl/v2
+kind: Blueprint
+
+metadata:
+  name: GCP locations
+  description: Fragment to collect the GCP location
+  author: XebiaLabs
+  version: 2.0
+  suppressXebiaLabsFolder: false
+  instructions: This blueprint has no instructions.
+
+spec:
+  parameters:
+  - name: GCPRegionPrompt
+    value: none
+
+  - name: GCPRegion
+    type: Select
+    prompt: !expr "GCPRegionPrompt == 'none' ? 'Select the geographical location:' : GCPRegionPrompt"
+    options:
+    - label: Taiwan
+      value: asia-east1
+    - label: Hong Kong
+      value: asia-east2
+    - label: Japan
+      value: asia-northeast1
+    - label: India
+      value: asia-south1
+    - label: Singapore
+      value: asia-southeast1
+    - label: Australia (Sydney)
+      value: australia-southeast1
+    - label: Finland
+      value: europe-north1
+    - label: Belgium
+      value: europe-west1
+    - label: England
+      value: europe-west2
+    - label: Germany
+      value: europe-west3
+    - label: Netherlands
+      value: europe-west4
+    - label: Canada
+      value: northamerica-northeast1
+    - label: Brazil
+      value: southamerica-east1
+    - label: Iowa, USA
+      value: us-central1
+    - label: South Carolina, USA
+      value: us-east1
+    - label: Northern Virginia, USA
+      value: us-east4
+    - label: Oregon, USA
+      value: us-west1
+    - label: California, USA
+      value: us-west2

@@ -3,12 +3,12 @@ variable "prefix" {
   default     = "xl"
 }
 
-variable "location" {
-  description = "The Azure location where all resources in this example should be created"
+variable "resource_group" {
+  description = "A resource group is a collection of resources that share the same lifecycle, permissions, and policies"
 }
 
-variable "subscription_id" {
-  description = "Azure Subscription ID to be used for billing"
+variable "resource_group_location" {
+  description = "The Azure location where all resources in this example should be created"
 }
 
 variable "client_id" {
@@ -17,6 +17,10 @@ variable "client_id" {
 
 variable "client_secret" {
   description = "Service Principal Client secret"
+}
+
+variable "subscription_id" {
+  description = "Azure Subscription ID to be used for billing"
 }
 
 variable "tenant_id" {
@@ -31,7 +35,7 @@ variable "docker_image_tag" {
   description = "Docker image tag"
 }
 
-{{- if .UseSampleApplication }}
+{{- if .UseSampleApplication}}
 variable "mysql_master_password" {
   description = "MySql master password"
 }

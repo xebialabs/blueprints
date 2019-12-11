@@ -6,7 +6,7 @@ spec:
 - name: {{$app}}
   type: core.Directory
   children:
-{{if .ProvisionCluster }}
+{{- if .ProvisionCluster}}
 # Provision AKS cluster using Terraform templates
   - name: AKS-TERRAFORM
     type: core.Directory
@@ -22,19 +22,18 @@ spec:
           file: !file ../terraform-microservice-ecommerce
           inputVariables:
             name: {{$app}}
-            resource_group_name: {{.ResourceGroup}}
+            resource_group: {{.ResourceGroup}}
             cluster_name: {{$clusterName}}
-            location: {{.AKSRegion}}
+            resource_group_location: {{.ResourceGroupLocation}}
             client_id: {{.ClientID}}
             client_secret: !value ClientSecret
             subscription_id: {{.SubscriptionID}}
             tenant_id: {{.TenantID}}
           environmentPath: azure-aks-{{$clusterName}}
-
-{{end}}
+{{- end}}
   - name: K8S
     type: core.Directory
-{{if .ProvisionCluster }}
+{{- if .ProvisionCluster}}
 # Provision K8s namespace
     children:
     - name: {{$app}}-namespace
@@ -46,4 +45,4 @@ spec:
         - name: {{.Namespace}}
           type: k8s.NamespaceSpec
           namespaceName: '{{.Namespace}}'
-{{end}}
+{{- end}}

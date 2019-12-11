@@ -30,7 +30,6 @@ spec:
       type: xlrelease.StringVariable
       requiresValue: false
       showOnReleaseStart: false
-
     - key: store-admin-username
       type: xlrelease.StringVariable
       requiresValue: true
@@ -47,7 +46,7 @@ spec:
       showOnReleaseStart: false
       value: !value XL_DEPLOY_PASSWORD
     phases:
-    {{if .ProvisionCluster }}
+    {{- if .ProvisionCluster}}
     - name: Provision Infrastructure
       color: '#ff9e3b'
       type: xlrelease.Phase
@@ -57,8 +56,8 @@ spec:
         server: XL Deploy
         deploymentPackage: {{$app}}/AKS-TERRAFORM/{{$app}}-terraform-aks/1.0.0
         deploymentEnvironment: Environments/{{$app}}/azure-terraform
-    {{end}}
-    {{if .EnableCICD }}
+    {{- end}}
+    {{- if .EnableCICD}}
     - name: Build {{$app}} application
       type: xlrelease.Phase
       tasks:
@@ -80,11 +79,11 @@ spec:
           jenkinsServer: jenkins
           jobName: devops-as-code-blueprint-invoice-svc
           owner: admin
-    {{end}}
+    {{- end}}
     - name: Deploy {{$app}} application
       type: xlrelease.Phase
       tasks:
-      {{if .ProvisionCluster }}
+      {{- if .ProvisionCluster}}
       - name: Deploy {{.Namespace}} namespace
         type: xlrelease.SequentialGroup
         tasks:
@@ -99,7 +98,7 @@ spec:
           ciID: Infrastructure/{{$app}}/{{$clusterName}}-AKSCluster/{{.Namespace}}
           ciProperty: tags
           propertyValue: '[ "{{.Namespace}}" ]'
-      {{end}}
+      {{- end}}
       - name: Deploy stateful services
         type: xlrelease.ParallelGroup
         tasks:

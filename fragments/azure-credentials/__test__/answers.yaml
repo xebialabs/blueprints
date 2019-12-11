@@ -1,5 +1,5 @@
-AskForAzurePassword: true
-AzureClientID: 9149b9d6-b24f-d09b-3d9e-7ac9977b3dbe
-AzureClientSecret: 8fc1068c-0d26-c733-480b-6c989db08f1a
-AzureSubscriptionID: 375e746d-0f79-4e4e-6627-d27491ca1bcb
-AzureTenantID: 57b6831a-b882-3577-556e-5a246483a5cf
+PromptForClientSecret: true
+ClientID: 9149b9d6-b24f-d09b-3d9e-7ac9977b3dbe
+ClientSecret: 8fc1068c-0d26-c733-480b-6c989db08f1a
+SubscriptionID: 375e746d-0f79-4e4e-6627-d27491ca1bcb
+TenantID: 57b6831a-b882-3577-556e-5a246483a5cf

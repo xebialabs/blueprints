@@ -2,26 +2,26 @@
 apiVersion: xl-release/v1
 kind: Templates
 spec:
-  - name: {{$app}}
-    type: xlrelease.Folder
-    children:
-      - name: {{$app}} on Docker
-        type: xlrelease.Release
-        description: |
-          This XL Release template shows how to deploy and undeploy an application to Docker using XL Deploy.
-        tags:
-          - {{$app}}
-          - Docker
-        phases:
-          - name: Clean up
-            color: '#999999'
-            type: xlrelease.Phase
-            tasks:
-              - name: Undeploy {{$app}} application frontend
-                type: xldeploy.Undeploy
-                server: XL Deploy
-                deployedApplication: Environments/{{$app}}/Local Docker Engine/{{$app}}-frontend
-              - name: Undeploy {{$app}} application backend
-                type: xldeploy.Undeploy
-                server: XL Deploy
-                deployedApplication: Environments/{{$app}}/Local Docker Engine/{{$app}}-backend
+- name: {{$app}}
+  type: xlrelease.Folder
+  children:
+  - name: {{$app}} on Docker
+    type: xlrelease.Release
+    description: |
+      This XL Release template shows how to deploy and undeploy an application to Docker using XL Deploy.
+    tags:
+    - {{$app}}
+    - Docker
+    phases:
+    - name: Clean up
+      color: '#999999'
+      type: xlrelease.Phase
+      tasks:
+      - name: Undeploy {{$app}} application frontend
+        type: xldeploy.Undeploy
+        server: XL Deploy
+        deployedApplication: Environments/{{$app}}/Local Docker Engine/{{$app}}-frontend
+      - name: Undeploy {{$app}} application backend
+        type: xldeploy.Undeploy
+        server: XL Deploy
+        deployedApplication: Environments/{{$app}}/Local Docker Engine/{{$app}}-backend

@@ -12,31 +12,23 @@ metadata:
 
 spec:
   parameters:
-  - name: AppName
-    type: Input
-    prompt: What is the Application name (maximum 25 characters)?
-    validate: !expr "regex('^(\\\\S){0,25}$', AppName)"
-  - name: PublicPort
-    description: The port that the application shoule be exposed
-    value: 80
-  - name: MySQLMasterPassword
-    type: SecretInput
-    prompt: What should be the password for MySQL? (minimum 8 characters)
-    validate: !expr "regex('^(\\\\S){8,}$', MySQLMasterPassword)"
   - name: UseAWSCredentialsFromSystem
     type: Confirm
     prompt: Do you want to use AWS credentials from ~/.aws/credentials file?
     promptIf: !expr "awsCredentials('IsAvailable')"
+
   - name: AWSAccessKey
     type: SecretInput
     prompt: What is the AWS Access Key ID?
     promptIf: !expr "!UseAWSCredentialsFromSystem"
     default: !expr "awsCredentials('AccessKeyID')"
+
   - name: AWSAccessSecret
     type: SecretInput
     prompt: What is the AWS Secret Access Key?
     promptIf: !expr "!UseAWSCredentialsFromSystem"
     default: !expr "awsCredentials('SecretAccessKey')"
+
   - name: AWSRegion
     type: Select
     prompt: "Select the AWS region:"
@@ -45,23 +37,28 @@ spec:
     options:
     - !expr "awsRegions('ecs')"
 
-  - name: GenerateDockerComposeSetup
-    type: Confirm
-    prompt: "Do you want to generate a docker-compose setup with the required tools to run this blueprint?"
-    default: false
+  - name: AppName
+    type: Input
+    prompt:  What do you want to name the application? (16 characters max)
+    description: Application name will be used to generate cloud resource names
+    validate: !expr "regex('^[a-zA-Z][\\\\w-]{1,24}[\\\\w]$', AppName)"
+
+  - name: PublicPort
+    description: The port that the application shoule be exposed
+    value: 80
+
+  - name: MySQLMasterPassword
+    type: SecretInput
+    prompt: What should be the password for MySQL? (minimum 8 characters)
+    validate: !expr "regex('^(\\\\S){8,}$', MySQLMasterPassword)"
 
   includeAfter:
   - blueprint: xl-devops-platform
-    includeIf: GenerateDockerComposeSetup
     parameterOverrides:
     - name: UseXLDeploy
       value: true
-    - name: XLDeployPort
-      value: 4516
     - name: UseXLRelease
       value: true
-    - name: XLReleasePort
-      value: 5516
     - name: XLVersion
       value: "9.0"
     - name: UseDockerProxy

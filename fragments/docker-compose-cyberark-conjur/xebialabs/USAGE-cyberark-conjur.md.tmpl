@@ -15,10 +15,10 @@ Below are the steps you need to follow:
 
 Edit the file `docker-cyberark-conjur/conjur-client/script/provision.sh` and replace "`YOUR_VALUE_HERE`" with the secret values for each of the following keys.
 
-{{ $splitKeys := splitList "," .DockerCyberArkKeys }}
-{{- range $key := $splitKeys }}
-* `{{ $key | trim }}`
-{{- end }}
+{{$splitKeys := splitList "," .DockerCyberArkKeys}}
+{{- range $key := $splitKeys}}
+* `{{$key | trim}}`
+{{- end}}
 
 ### 2. Build and run the Docker image
 

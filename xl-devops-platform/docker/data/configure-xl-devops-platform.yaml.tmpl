@@ -6,7 +6,7 @@ spec:
   url: http://xl-deploy:{{.XLDeployPort}}
   username: admin
   password: admin
-{{- if .UseJenkins }}
+{{- if .UseJenkins}}
 ---
 apiVersion: xl-release/v1
 kind: Templates
@@ -16,4 +16,4 @@ spec:
   url: http://jenkins:{{.JenkinsPort}}
   username: admin
   password: admin
-{{- end }}
+{{- end}}

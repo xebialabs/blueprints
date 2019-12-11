@@ -7,8 +7,8 @@ metadata:
     Creates a CyberArk Conjur server.
   author: XebiaLabs
   version: 2.0
-  instructions: Please read xebialabs/USAGE-cyberark-conjur.md.
   suppressXebiaLabsFolder: true
+  instructions: Please read xebialabs/USAGE-cyberark-conjur.md.
 
 spec:
   parameters:

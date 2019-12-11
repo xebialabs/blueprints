@@ -5,13 +5,13 @@ spec:
 - name: {{$app}}
   type: core.Directory
   children:
-    - name: aws-dictionary
-      type: udm.Dictionary
-      entries:
-        AWSRegion: {{.AWSRegion}}
-    - name: AWS
-      type: udm.Environment
-      members:
-      - "~Infrastructure/{{$app}}/localhost/terraform-client"
-      dictionaries:
-      - "~Environments/{{$app}}/aws-dictionary"
+  - name: aws-dictionary
+    type: udm.Dictionary
+    entries:
+      AWSRegion: {{.AWSRegion}}
+  - name: AWS
+    type: udm.Environment
+    members:
+    - "~Infrastructure/{{$app}}/localhost/terraform-client"
+    dictionaries:
+    - "~Environments/{{$app}}/aws-dictionary"

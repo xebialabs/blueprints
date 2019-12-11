@@ -3,7 +3,7 @@
 apiVersion: xl-deploy/v1
 kind: Infrastructure
 spec:
-- name: {{ $clusterName }}
+- name: {{$clusterName}}
   type: core.Directory
   children:
   - name: terraform-host
@@ -13,4 +13,4 @@ spec:
     - name: terraform-client
       type: terraform.TerraformClient
       path: '/usr/local/bin'
-      workingDirectory: '/tmp/azure-aks-{{ $clusterName }}-terraform'
+      workingDirectory: '/tmp/azure-aks-{{$clusterName}}-terraform'

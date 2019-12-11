@@ -1,29 +1,29 @@
 variable "cluster_name" {
-  description = "Name of the cluster"
-}
-
-variable "subscription_id" {
-  description = "Client ID"
-}
-
-variable "client_id" {
-  description = "Client ID"
-}
-
-variable "client_secret" {
-  description = "Client secret"
-}
-
-variable "tenant_id" {
-  description = "Tenant ID"
+  description = "The name of the Azure Kubernetes Service cluster"
 }
 
 variable "resource_group" {
-  description = "Resource group under which the cluster will be created"
+  description = "A resource group is a collection of resources that share the same lifecycle, permissions, and policies"
 }
 
 variable "resource_group_location" {
-  description = "Geographic location of the cluster"
+  description = "The Azure location where all resources in this example should be created"
+}
+
+variable "client_id" {
+  description = "Service Principal Client ID"
+}
+
+variable "client_secret" {
+  description = "Service Principal Client secret"
+}
+
+variable "subscription_id" {
+  description = "Azure Subscription ID to be used for billing"
+}
+
+variable "tenant_id" {
+  description = "Service Principal Tenant ID"
 }
 
 variable "linux_profile_admin_user" {

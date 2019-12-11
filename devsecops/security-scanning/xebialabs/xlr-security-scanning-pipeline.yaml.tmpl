@@ -6,87 +6,87 @@
 apiVersion: xl-release/v1
 kind: Templates
 spec:
-  - name: {{$app}}
-    type: xlrelease.Folder
-    children:
-    - name: {{$app}} security & compliance
-      type: xlrelease.Release
-      description: |
-        This XL Release template shows how to configure security and compliance.
-      tags:
-        - {{$app}}
-        - Security
-        - Compliance
-      phases:
-      - name: Security & Compliance
-        color: '#d94c3d'
-        type: xlrelease.Phase
-        tasks:
-      {{- if .ConfigureSonar }}
-        - name: Sonarqube Compliance for {{$app}}
-          type: sonar.checkCompliance
-          sonarServer: {{$sonarServer}}
-          resource: {{.SonarResource}}
-          locked: true
-      {{- end}}
-      {{- if .ConfigureFortify }}
-        - name: Fortify Compliance for {{$app}}
-        {{- if eq .SelectedFortify "Fortify SSC"}}
-          type: fortify.checkCompliance
-          fortifyServer: {{$fortifyServer}}
-        {{- else}}
-          type: fortifyOnDemand.checkCompliance
-          fortifyOnDemandServer: {{$fortifyServer}}
-        {{- end}}
-          projectName: {{.FortifyApplication}}
-          projectVersion: {{.FortifyApplicationVersion}}
-          locked: true
-      {{- end}}
-      {{- if .ConfigureCheckmarx }}
-        {{- if eq .SelectedCheckmarx "both" "CxSAST"}}
-        - name: CxSAST Compliance for {{$app}}
-          type: checkmarx.checkCompliance
-          checkmarxServer: {{$checkmarxServer}}
-          projectName: {{.CheckmarxApplication}}
-          team: {{.CheckmarxTeam}}
-          locked: true
-        {{- end}}
-        {{- if eq .SelectedCheckmarx "both" "CxOSA"}}
-        - name: CxOSA Compliance for {{$app}}
-          type: checkmarx.checkOsaCompliance
-          checkmarxServer: {{$checkmarxServer}}
-          projectName: {{.CheckmarxApplication}}
-          team: {{.CheckmarxTeam}}
-          locked: true
-        {{- end}}
-      {{- end}}
-      {{- if .ConfigureBlackduck }}
-        - name: Blackduck Compliance for {{$app}}
-          type: blackduck.checkCompliance
-          blackduckServer: {{$blackduckServer}}
-          projectName: {{.BlackduckApplication}}
-          versionName: {{.BlackduckApplicationVersion}}
-          locked: true
-      {{- end}}
-    - type: xlrelease.Dashboard
-      owner: !value XL_RELEASE_USERNAME
-      tiles:
-    {{- if .ConfigureSonar }}
-      - name: SonarQube analysis summary
-        type: sonar.SonarSummaryTile
-        row: 3
-        col: 0
+- name: {{$app}}
+  type: xlrelease.Folder
+  children:
+  - name: {{$app}} security & compliance
+    type: xlrelease.Release
+    description: |
+      This XL Release template shows how to configure security and compliance.
+    tags:
+    - {{$app}}
+    - Security
+    - Compliance
+    phases:
+    - name: Security & Compliance
+      color: '#d94c3d'
+      type: xlrelease.Phase
+      tasks:
+      {{- if .ConfigureSonar}}
+      - name: Sonarqube Compliance for {{$app}}
+        type: sonar.checkCompliance
         sonarServer: {{$sonarServer}}
         resource: {{.SonarResource}}
-        metrics:
-          new_major_violations: New Major Issues
-          quality_gate_details: Quality Gate Details
-          new_code_smells: New Code Smells
-          new_coverage: Coverage on New Code
-          new_critical_violations: New Critical Issues
-          duplicated_lines_density: Duplicated Lines (%)
-          new_minor_violations: New Minor Issues
-          new_vulnerabilities: New Vulnerabilities
-          new_blocker_violations: New Blocker Issues
-    {{- end}}
-      parentTemplate: {{$app}} security & compliance
+        locked: true
+      {{- end}}
+      {{- if .ConfigureFortify}}
+      - name: Fortify Compliance for {{$app}}
+      {{- if eq .SelectedFortify "Fortify SSC"}}
+        type: fortify.checkCompliance
+        fortifyServer: {{$fortifyServer}}
+      {{- else}}
+        type: fortifyOnDemand.checkCompliance
+        fortifyOnDemandServer: {{$fortifyServer}}
+      {{- end}}
+        projectName: {{.FortifyApplication}}
+        projectVersion: {{.FortifyApplicationVersion}}
+        locked: true
+      {{- end}}
+      {{- if .ConfigureCheckmarx}}
+      {{- if eq .SelectedCheckmarx "both" "CxSAST"}}
+      - name: CxSAST Compliance for {{$app}}
+        type: checkmarx.checkCompliance
+        checkmarxServer: {{$checkmarxServer}}
+        projectName: {{.CheckmarxApplication}}
+        team: {{.CheckmarxTeam}}
+        locked: true
+      {{- end}}
+      {{- if eq .SelectedCheckmarx "both" "CxOSA"}}
+      - name: CxOSA Compliance for {{$app}}
+        type: checkmarx.checkOsaCompliance
+        checkmarxServer: {{$checkmarxServer}}
+        projectName: {{.CheckmarxApplication}}
+        team: {{.CheckmarxTeam}}
+        locked: true
+      {{- end}}
+      {{- end}}
+      {{- if .ConfigureBlackduck}}
+      - name: Blackduck Compliance for {{$app}}
+        type: blackduck.checkCompliance
+        blackduckServer: {{$blackduckServer}}
+        projectName: {{.BlackduckApplication}}
+        versionName: {{.BlackduckApplicationVersion}}
+        locked: true
+      {{- end}}
+  - type: xlrelease.Dashboard
+    owner: !value XL_RELEASE_USERNAME
+    tiles:
+  {{- if .ConfigureSonar}}
+    - name: SonarQube analysis summary
+      type: sonar.SonarSummaryTile
+      row: 3
+      col: 0
+      sonarServer: {{$sonarServer}}
+      resource: {{.SonarResource}}
+      metrics:
+        new_major_violations: New Major Issues
+        quality_gate_details: Quality Gate Details
+        new_code_smells: New Code Smells
+        new_coverage: Coverage on New Code
+        new_critical_violations: New Critical Issues
+        duplicated_lines_density: Duplicated Lines (%)
+        new_minor_violations: New Minor Issues
+        new_vulnerabilities: New Vulnerabilities
+        new_blocker_violations: New Blocker Issues
+  {{- end}}
+    parentTemplate: {{$app}} security & compliance

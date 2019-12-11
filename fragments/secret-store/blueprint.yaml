@@ -3,13 +3,11 @@ kind: Blueprint
 
 metadata:
   name: secret-store
-  description: |
-    External secret store
+  description: External secret store
   author: XebiaLabs
   version: 2.0
-  instructions: |
-    Please read xebialabs/USAGE-secret-store.md
   suppressXebiaLabsFolder: true
+  instructions: Please read xebialabs/USAGE-secret-store.md.
 
 spec:
   parameters:

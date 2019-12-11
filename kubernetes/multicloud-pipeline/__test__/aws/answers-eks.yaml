@@ -10,6 +10,7 @@ NodeAutoScalingGroupDesiredSize: 3
 NodeInstanceType: t2.medium
 GenerateDockerComposeSetup: false
 
-KubernetesApplicationName: httpd
-KubernetesDeploymentPackageVersion: latest
+AppName: myapp
+DockerImage: httpd
+DockerImageTag: latest
 KubernetesResourcesFile: ../kubernetes-application/deployment.yaml

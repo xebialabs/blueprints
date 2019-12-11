@@ -3,10 +3,10 @@
 apiVersion: xl-deploy/v1
 kind: Environments
 spec:
-- name: {{ $clusterName }}
+- name: {{$clusterName}}
   type: core.Directory
   children:
   - name: terraform
     type: udm.Environment
     members:
-    - ~Infrastructure/{{ $clusterName }}/terraform-host/terraform-client
+    - ~Infrastructure/{{$clusterName}}/terraform-host/terraform-client

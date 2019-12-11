@@ -15,8 +15,8 @@ spec:
     type: Input
     prompt: What is the URL of the Docker engine?
     default: http://dockerproxy:2375
+
   - name: Standalone
-    type: Confirm
     value: true
 
   files:

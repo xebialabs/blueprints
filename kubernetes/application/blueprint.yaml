@@ -11,14 +11,19 @@ metadata:
 
 spec:
   parameters:
-  - name: KubernetesApplicationName
+  - name: AppName
     type: Input
-    prompt: "What is the name of the application that you want to deploy?"
+    prompt: What do you want to name the application?
     default: nginx
+    validate: !expr "regex('^[a-zA-Z][\\\\w-]{1,29}[\\\\w]$', AppName)"
 
-  - name: KubernetesDeploymentPackageVersion
+  - name: DockerImage
     type: Input
-    prompt: "What is the version of the application that you want to deploy?"
+    prompt: What is the docker image path that you would like to use?
+
+  - name: DockerImageTag
+    type: Input
+    prompt: What is the docker image tag to be used?
     default: latest
 
   - name: KubernetesResourcesFile
@@ -32,7 +37,6 @@ spec:
     default: default
 
   - name: NamespaceTag
-    type: Input
     value: kubernetes-namespace
 
   files:

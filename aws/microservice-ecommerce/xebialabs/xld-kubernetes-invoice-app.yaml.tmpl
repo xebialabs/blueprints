@@ -1,0 +1,37 @@
+{{$clusterName := .ClusterName | kebabcase}}
+apiVersion: xl-deploy/v1
+kind: Applications
+spec:
+- name: {{$clusterName}}
+  type: core.Directory
+  children:
+  - name: K8S
+    type: core.Directory
+    children:
+    - name: {{$clusterName}}-invoice-mysql
+      type: udm.Application
+      children:
+      - name: !value BUILD_ID
+        type: udm.DeploymentPackage
+        deployables:
+        - name: {{$clusterName}}-invoice-mysql
+          type: k8s.ResourcesFile
+          file: !file ../invoice/build/kubernetes/invoice-mysql.yml
+          tags:
+          - {{.Namespace}}
+    - name: {{$clusterName}}-invoice
+      type: udm.Application
+      children:
+      - name: !value BUILD_ID
+        type: udm.DeploymentPackage
+        deployables:
+        - name: {{$clusterName}}-invoice-deployment
+          type: k8s.ResourcesFile
+          file: !file ../invoice/build/kubernetes/invoice-deployment.yml
+          tags:
+          - {{.Namespace}}
+        - name: {{$clusterName}}-invoice-svc
+          type: k8s.ResourcesFile
+          file: !file ../invoice/build/kubernetes/invoice-service.yml
+          tags:
+          - {{.Namespace}}

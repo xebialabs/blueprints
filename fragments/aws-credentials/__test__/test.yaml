@@ -1,7 +1,0 @@
-answers-file: answers.yaml
-expected-files:
-- xebialabs/secrets.xlvals
-- xebialabs/.gitignore
-not-expected-files:
-- xebialabs.yaml
-- xebialabs/values.xlvals

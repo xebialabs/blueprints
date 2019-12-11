@@ -110,15 +110,15 @@ spec:
     - name: {{$app}}-cloudformation-efs
       type: udm.Application
       children:
-        - name: '1.0.0'
-          type: udm.DeploymentPackage
-          deployables:
-            - name: {{$app}}-efs
-              type: aws.cloudformation.Template
-              file: !file ../cloudformation-intermediate-eks-cluster/efs.yaml
-              inputVariables:
-                VPCStackName: {{$app}}-eks-vpc
-                EnvironmentName: {{$app}}-env
+      - name: '1.0.0'
+        type: udm.DeploymentPackage
+        deployables:
+        - name: {{$app}}-efs
+          type: aws.cloudformation.Template
+          file: !file ../cloudformation-intermediate-eks-cluster/efs.yaml
+          inputVariables:
+            VPCStackName: {{$app}}-eks-vpc
+            EnvironmentName: {{$app}}-env
     {{- end}}
 
     # config map used to create custom user for authentication to the EKS cluster
