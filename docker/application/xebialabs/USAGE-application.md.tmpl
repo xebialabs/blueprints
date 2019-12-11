@@ -1,7 +1,7 @@
-{{- $app := regexReplaceAll "^.*?/" .DockerImageRepository "" }}
+{{- $app := regexReplaceAll "^.*?/" .DockerImageRepository ""}}
 # Docker Single Container Application Usage
 
-{{ if .Standalone }}
+{{if .Standalone}}
 ## Notes
 
 * This blueprint requires that the `docker/environment` blueprint has already been run and deployed.
@@ -20,9 +20,9 @@ To deploy this blueprint to the XebiaLabs DevOps Platform, follow the steps belo
     ```plain
     xl apply -f xebialabs.yaml
     ```
-{{ else }}
+{{else}}
 This blueprint creates a deployment package with a single `docker.ContainerSpec` for the container that was also deployed.
-{{ end }}
+{{end}}
 
 ## To deploy the application to Docker:
 
