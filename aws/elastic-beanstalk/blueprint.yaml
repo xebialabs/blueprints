@@ -4,7 +4,7 @@ kind: Blueprint
 metadata:
   name: AWS-Elastic-Beanstalk-Sample
   description: |
-    The blueprint deploys a sample AWS Elastic Beanstalk PHP5 application.
+    This blueprint deploys a sample AWS Elastic Beanstalk PHP5 application.
   author: XebiaLabs
   version: 2.0
   instructions: Please read the generated file "xebialabs/USAGE-elastic-beanstalk.md" for further usage instructions.

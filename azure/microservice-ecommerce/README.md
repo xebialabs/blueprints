@@ -65,7 +65,7 @@ To run the YAML that this blueprint generates, you need:
 **Important notes:**
 
 * Use the same location/region in all of the follow steps (e.g. `westus`)
-* The blueprint will deploy a Jenkins server for you if you want to test out the CI/CD features
+* This blueprint will deploy a Jenkins server for you if you want to test out the CI/CD features
   * The default login is: `admin`/`admin`
 * You will either use your own existing Kubernetes cluster or have the blueprint create one for you
   * If you want the blueprint to create a cluster for you, follow the instructions in the `aws/README.md` under **Set up Terraform's backend storage for creating a Kubernetes cluster**.

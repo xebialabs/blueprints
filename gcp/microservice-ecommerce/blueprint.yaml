@@ -4,7 +4,7 @@ kind: Blueprint
 metadata:
   name: GCP-Microservice-GKE-with-JHipster
   description: |
-    The blueprint deploys an e-commerce microservice application to GCP GKE.
+    This blueprint deploys an e-commerce microservice application to GCP GKE.
     XL Deploy does the provisioning and deployment, while XL Release orchestrates everything.
   author: XebiaLabs
   version: 2.0

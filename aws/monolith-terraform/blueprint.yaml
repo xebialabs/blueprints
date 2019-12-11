@@ -4,7 +4,7 @@ kind: Blueprint
 metadata:
   name: AWS-Terraform-Monolith-ECS-Fargate
   description: |
-    The blueprint deploys a monolithic application generated with JHipster, to AWS ECS with the Fargate launch type.
+    This blueprint deploys a monolithic application generated with JHipster, to AWS ECS with the Fargate launch type.
     XL Deploy does the provisioning and deployment, while XL Release orchestrates everything.
   author: XebiaLabs
   version: 2.0

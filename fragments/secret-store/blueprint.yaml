@@ -34,7 +34,7 @@ spec:
 
   - name: SecretStoreDictionaryName
     type: Input
-    prompt: "The blueprint will also create a dictionary. Give the dictionary a name:"
+    prompt: "This blueprint will also create a dictionary. Give the dictionary a name:"
     default: !expr "SecretStoreName + ' Dictionary'"
 
   - name: SecretStoreLocation

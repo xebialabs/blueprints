@@ -4,7 +4,7 @@ kind: Blueprint
 metadata:
   name: GKE-Cluster
   description: |
-    The blueprint provisions a GCP GKE Cluster using Terraform and XL Deploy.
+    This blueprint provisions a GCP GKE Cluster using Terraform and XL Deploy.
   author: XebiaLabs
   version: 2.0
   instructions: Read xebialabs/USAGE-basic-gke-cluster.md to learn how to use this blueprint.

@@ -4,7 +4,7 @@ kind: Blueprint
 metadata:
   name: AWS-Datalake
   description: |
-    The blueprint deploys a data lake architecture to AWS using CloudFormation.
+    This blueprint deploys a data lake architecture to AWS using CloudFormation.
     XL Deploy does the provisioning and deployment, while XL Release orchestrates everything.
     Refer to https://docs.aws.amazon.com/solutions/latest/data-lake-solution
   author: XebiaLabs

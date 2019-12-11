@@ -4,7 +4,7 @@ kind: Blueprint
 metadata:
   name: basic-arm-template
   description: |
-    The blueprint provisions a single VM using an ARM template. XL Deploy does the provisioning.
+    This blueprint provisions a single VM using an ARM template. XL Deploy does the provisioning.
   author: XebiaLabs
   version: 2.0
   instructions: Please read the generated file "xebialabs/USAGE-basic-arm-template.md" for further usage instructions.

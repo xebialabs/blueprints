@@ -4,7 +4,7 @@ kind: Blueprint
 metadata:
   name: AWS-EKS-Intermediate
   description: |
-    The blueprint deploys a simple AWS EKS Cluster (with EFS if requested).
+    This blueprint deploys a simple AWS EKS Cluster (with EFS if requested).
     XL Deploy does the provisioning and deployment, while XL Release orchestrates everything.
   author: XebiaLabs
   version: 2.0
