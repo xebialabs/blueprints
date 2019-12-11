@@ -65,7 +65,7 @@ spec:
     type: Input
     prompt: What do you want to name the cluster?
     description: Cluster name will be used to generate cloud resource names
-    validate: !expr "regex('^[a-zA-Z][\\\\w-]{1,29}[\\\\w]$', ClusterName)"
+    validate: !expr "regex('^[a-zA-Z][\\\\w-]{1,14}[\\\\w]$', ClusterName)"
 
   - name: ClusterVersion
     type: Select
