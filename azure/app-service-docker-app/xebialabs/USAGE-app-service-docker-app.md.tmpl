@@ -3,27 +3,32 @@
 
 ## Deploy the blueprint to the XL Platform
 
-To deploy this blueprint to the XebiaLabs DevOps Platform, follow the steps below:
-
-1. Apply the generated YAML configuration using the XL CLI. Open up a terminal in the folder where you generated the configuration. Then run:
+To deploy this blueprint to the XebiaLabs DevOps Platform, open up a terminal in the folder where you generated the configuration. Then run:
 
     ```plain
     xl apply -f xebialabs.yaml
     ```
 
-2. Go to XL Deploy and look for the `{{$app}}-app` folder under `Applications`.
+## Deploy to Azure
 
-3. To provision the service:
-  3.1. Select `{{$app}}/{{$app-app/1.0.0` , click on the ellipsis and select 'Deploy'. Select the `Environments/{{$app}}/{{$app}}-terraform` Environment (there should be only one), press 'Deploy'.
+Go to XL Deploy and look for the `{{$app}}` folder under `Applications`.
 
-3. After the deployment process is complete, an App Service application will have been provisioned on Azure.
+### Provision the service
 
-4. In order to access the application you can check the entry `app_service_default_hostname` in dictionary `{{$app}}-terraform-dictionary` created in XL Deploy under `Environment/{{$app}}` after the deployment.
+1. Select `{{$app}}/{{$app}}-app/1.0.0`, click on the ellipsis and select 'Deploy'.
+    1. Select `Environments/{{$app}}/{{$app}}-terraform` and click 'Continue'.
+    2. Verify that there are no error messages, then click 'Deploy'.
 
-## Undeploy the blueprint from XL Platform
+After the deployment process is complete, an App Service application will have been provisioned on Azure.
 
-1. To deprovision the application, you will have to perform the above steps in reverse.
+In order to access the application you can check the entry `app_service_default_hostname` in `Environments/{{$app}}/{{$app}}-app-service-dictionary`.
 
-2. To deprovision the service:
-  2.1. Select `Environments/{{$app}}/{{$app}}-terraform` and click 'Undeploy'. Follow the instructions on screen.
+## Undeploy from Azure
+
+Go to XL Deploy and look for the `{{$app}}` folder under `Environments`.
+
+### Deprovision the application
+
+1. Select `Environments/{{$app}}/{{$app}}-terraform/{{$app}}-app (1.0.0)`, click on the ellipsis and select 'Undeploy'.
+    1. Click 'Undeploy' at the top right of the screen.
 

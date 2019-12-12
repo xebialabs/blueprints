@@ -17,7 +17,8 @@ spec:
         file: !file ../terraform-app-service-docker-app
         inputVariables:
           prefix: {{$appName}}
-          location: {{.ResourceGroupLocation}}
+          resource_group: {{.ResourceGroup}}
+          resource_group_location: {{.ResourceGroupLocation}}
           subscription_id: {{.SubscriptionID}}
           client_id: {{.ClientID}}
           client_secret: {{.ClientSecret}}

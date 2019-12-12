@@ -8,7 +8,7 @@ provider "azurerm" {
 
 resource "azurerm_resource_group" "k8s" {
   name     = "${var.resource_group}"
-  location = "${var.location}"
+  location = "${var.resource_group_location}"
 }
 
 {{- if .UseSampleApplication}}
