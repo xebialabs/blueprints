@@ -15,7 +15,8 @@ If you're new to XebiaLabs blueprints, check out:
 
 ## Prerequisites
 
-* You must have your AWS Access Key and Secret Key available to use this blueprint
+* XebiaLabs Deployment Automation up and running
+* AWS Access Key and Secret Key for an account that can deploy the application
 * See the AWS [README.md](https://github.com/xebialabs/blueprints/blob/master/aws/README.md) for instructions on how to set this up
 
 ## Usage
@@ -44,13 +45,6 @@ This blueprint version requires at least the following versions of the specified
 * XL Deploy: Version 9.0.0
 * XL CLI: Version 9.0.0
 
-## Prerequisites
-
-To run the YAML that this blueprint generates, you need:
-
-* XebiaLabs Release Orchestration and Deployment Automation up and running
-* Access to an AWS account that can deploy the application
-
 ## Information required
 
 * AWS Access Key (find it in `~/.aws/credentials`)
@@ -63,8 +57,6 @@ To run the YAML that this blueprint generates, you need:
 * AWS CloudFormation templates
 * Infrastructure:
   * EKS cluster (master, nodes)
-
-**Note:** You will find more instructions in `xebialabs/USAGE-basic-eks-cluster.md` after you have run the blueprint.
 
 ## Labels
 
