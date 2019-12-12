@@ -13,6 +13,11 @@ If you're new to XebiaLabs blueprints, check out:
 * [Get started with DevOps as Code](https://docs.xebialabs.com/xl-release/concept/get-started-with-devops-as-code.html)
 * [Get started with blueprints](https://docs.xebialabs.com/xl-release/concept/get-started-with-blueprints.html)
 
+## Prerequisites
+
+* You must have your AWS Access Key and Secret Key available to use this blueprint
+* See the AWS [README.md](https://github.com/xebialabs/blueprints/blob/master/aws/README.md) for instructions on how to set this up
+
 ## Usage
 
 To use this blueprint, run `xl blueprint` in an empty directory and select:
