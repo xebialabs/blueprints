@@ -6,7 +6,10 @@ metadata:
   description: Creates the necessary `docker-compose.yaml` needed to run your specific setup including XL Products for development and testing purpose.
   author: XebiaLabs
   version: 2.0
-  instructions: This setup is not suitable for production its intended for development and testing purpose. Please read the generated file "xebialabs/USAGE-docker-compose.md" for further usage instructions.
+  suppressXebiaLabsFolder: true
+  instructions: |
+    Please read the generated file "xebialabs/USAGE-docker-compose.md" for further usage instructions.
+    This setup is not suitable for production use. It is intended for development and testing purposes only.
 
 spec:
   parameters:
