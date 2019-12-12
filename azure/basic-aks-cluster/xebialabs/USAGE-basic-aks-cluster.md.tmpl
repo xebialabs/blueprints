@@ -10,26 +10,40 @@
 
 ## Deploy the blueprint to the XL Platform
 
-To deploy this blueprint to the XebiaLabs DevOps Platform, follow the steps below:
-
-1. Apply the generated YAML configuration using the XL CLI. Open up a terminal in the folder where you generated the configuration. Then run:
+To deploy this blueprint to the XebiaLabs DevOps Platform, open up a terminal in the folder where you generated the configuration. Then run:
 
     ```plain
     xl apply -f xebialabs.yaml
     ```
 
-2. Go to XL Deploy and look for the `{{$clusterName}}` folder under `Applications`.
+## Deploy to Azure
 
-3. To provision the cluster:
-    1. Select `{{$clusterName}}/{{$clusterName}}/1.0.0`, click on the ellipsis and select 'Deploy'. Select `Environments/{{$clusterName}}/terraform` and click 'Continue'. Verify that there are no error messages, then click 'Deploy'.
+Go to XL Deploy and look for the `{{$clusterName}}` folder under `Applications`.
 
-4. After the deployment process is complete, an AKS cluster will be provisioned on Azure and a configured `K8s.master` environment will have been registered in XL Deploy.
+### Provision the cluster
 
-5. In order to deploy to the K8s cluster, you can execute any K8s blueprints to generate configurations, apply those and deploy the application to your new cluster using XL Deploy.
+1. Select `{{$clusterName}}/{{$clusterName}}/1.0.0`, click on the ellipsis and select 'Deploy'.
+    1. Select `Environments/{{$clusterName}}/terraform` and click 'Continue'.
+    2. Verify that there are no error messages, then click 'Deploy'.
 
-## Undeploy the blueprint from XL Platform
+After the deployment process is complete, an AKS cluster will have been provisioned on Azure and a configured `K8s.master` environment will have been registered in XL Deploy.
 
-To deprovision the AKS cluster, perform the above steps in reverse.
+In order to deploy to the K8s cluster, you can execute any K8s blueprints to generate configurations, apply those and deploy the application to your new cluster using XL Deploy.
 
-1. To deprovision the cluster:
-    1. Select `Environments/{{$clusterName}}/terraform` click on the ellipsis and select 'Undeploy'. Click 'Undeploy' at the top right of the screen.
+## Undeploy from Azure
+
+Go to XL Deploy and look for the `{{$clusterName}}` folder under `Environments`.
+
+### Deprovision the cluster
+
+1. Select `Environments/{{$clusterName}}/terraform/{{$clusterName}} (1.0.0)`, click on the ellipsis and select 'Undeploy'.
+    1. Click 'Undeploy' at the top right of the screen.
+
+## Extras
+
+* To find the Kubernetes Dashboard in the Azure Portal:
+  * Find and click on the `{{.ResourceGroup}}` Resource Group
+  * Find and click on the `{{$clusterName}}` Kubernetes service
+  * Click 'View Kubernetes Dashboard'
+  * Follow the instructions
+
