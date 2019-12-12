@@ -4,7 +4,6 @@
 {{if .Standalone}}
 ## Notes
 
-* This blueprint requires that the `docker/environment` blueprint has already been run and deployed.
 * This blueprint creates a deployment package with a single `docker.ContainerSpec` for the container that you specified.
 
 ## Prerequisites
@@ -13,9 +12,7 @@
 
 ## Deploy the blueprint to the XL Platform
 
-To deploy this blueprint to the XebiaLabs DevOps Platform, follow the steps below:
-
-1. Apply the generated YAML configuration using the XL CLI. Open up a terminal in the folder where you generated the configuration. Then run:
+To deploy this blueprint to the XebiaLabs DevOps Platform, open up a terminal in the folder where you generated the configuration. Then run:
 
     ```plain
     xl apply -f xebialabs.yaml
@@ -24,14 +21,25 @@ To deploy this blueprint to the XebiaLabs DevOps Platform, follow the steps belo
 This blueprint creates a deployment package with a single `docker.ContainerSpec` for the container that was also deployed.
 {{end}}
 
-## Deploy the application to Docker
+## Deploy to Docker
 
-1. Go to XL Deploy and look for the `{{$app}}` folder under `Applications`.
+Go to XL Deploy and look for the `{{$app}}` Application.
 
-2. To provision the container:
-    1. Select `{{$app}}/{{.DockerImageTag}}, click on the ellipsis and select 'Deploy'. Select `Environments/Docker` and click 'Continue'. Verify that there are no error messages, then click 'Deploy'.
+### Provision the container
+
+1. Select `{{$app}}/{{.DockerImageTag}}`, click on the ellipsis and select 'Deploy'.
+    1. Select `Environments/Docker` and click 'Continue'.
+    2. Verify that there are no error messages, then click 'Deploy'.
 
 {{if .ExposePort}}
-Now navigate to http://localhost:{{.HostPort}} to see the deployed container.
+Navigate to http://localhost:{{.HostPort}} to see the deployed container.
 {{end}}
 
+## Undeploy from Docker
+
+Go to XL Deploy and look for the `{{$app}}` folder under `Environments`.
+
+### Deprovision the container
+
+1. Select `Environments/Docker/nginx (latest)`, click on the ellipsis and select 'Undeploy'.
+    1. Click 'Undeploy' at the top right of the screen.
