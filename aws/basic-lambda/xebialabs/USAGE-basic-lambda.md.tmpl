@@ -3,72 +3,64 @@
 
 ## Deploy the blueprint to the XL Platform
 
-To deploy this blueprint to the XebiaLabs DevOps Platform, follow the steps below:
-
-1. Apply the generated YAML configuration using the XL CLI. Open up a terminal in the folder where you generated the configuration. Then run:
+To deploy this blueprint to the XebiaLabs DevOps Platform, open up a terminal in the folder where you generated the configuration. Then run:
 
     ```plain
     xl apply -f xebialabs.yaml
     ```
 
-2. Go to XL Deploy and look for the `{{$app}` folder under `Applications`.
+## Deploy to AWS
 
+Go to XL Deploy and look for the `{{$app}}` folder under `Applications`.
 
-To deploy the Lamba Function to AWS, do the following:
+### Provision the Lambda Function
 
-1. Go to XL Deploy and look for `Applications/{{$app}}/{{$app}}-basic-lambda/1.0.0`
-2. Click the ellipsis
-3. Choose 'Deploy' from the menu
-3. Choose `Environments/{{$app}}/{{$app}}-basic-lambda`
-4. Click the 'Continue' button
-5. Check for errors
-6. Click the 'Deploy' button
-
-Wait for the deployment to finish
+1. Select `{{$app}}/{{$app}}-basic-lambda/1.0.0`, click on the ellipsis and select 'Deploy'.
+    1. Select `Environments/{{$app}}/{{$app}}-basic-lambda` and click 'Continue'.
+    2. Verify that there are no error messages, then click 'Deploy'.
 
 ## Run the Lambda Function
 
 ### Navigate to the Lambda Function
 
-1. Log in to the AWS management console and navigate to the CloudFormation service ((e.g. https://{{.AWSRegion}}.console.aws.amazon.com/cloudformation)
-2. Click on the Stack that was just created: {{$app}}-basic-lambda
-3. Click on the 'Resources' tab and the the 'Physical ID' link of the `LambdaFunction`
+1. Log in to the AWS management console and navigate to the CloudFormation service ((e.g. https://{{.AWSRegion}}.console.aws.amazon.com/cloudformation).
+2. Click on the Stack that was just created: `{{$app}}-basic-lambda`.
+3. Click on the 'Resources' tab and click the 'Physical ID' link of the `LambdaFunction`.
 
 ### Create a test
 
-1. Click on the 'Select a test event' dropdown
-2. Click on 'Configure test events'
-3. Leave the 'Hello World' Event Template
-4. Use `Test01` for the Event name
+1. Click on the 'Select a test event' dropdown.
+2. Click on 'Configure test events'.
+3. Leave the 'Hello World' Event Template.
+4. Use `Test01` for the Event name.
 5. In the body, paste the following:
 
-  ```json
-  {
-    "timeOfDay": "morning",
-    "name": "Fred"
-  }
-  ```
+    ```json
+    {
+      "timeOfDay": "morning",
+      "name": "XebiaLabs"
+    }
+    ```
 
 6. Click 'Create'
 
 ### Run the test
 
-1. Make sure `Test01` now appears in the dropdown
-2. Click the 'Test' button
-3. Expand the green 'Execution result'. You should see:
+1. Make sure `Test01` now appears in the dropdown.
+2. Click the 'Test' button.
+3. Expand 'Details' in the green 'Execution result' box. You should see:
 
-  ```json
-  [
-    "Good morning, Fred!"
-  ]
-  ```
+    ```json
+    [
+      "Good morning, XebiaLabs!"
+    ]
+    ```
 
 ## Undeploy from AWS
 
-To undeploy the Lamba Function to AWS, do the following:
+Go to XL Deploy and look for the `{{$app}}` folder under `Environments`.
 
-1. Go to XL Deploy and look for `Environments/{{$app}}/{{$app}}-basic-lambda/{{$app}}-basic-lambda (1.0.0)`
-2. Click the ellipsis
-3. Choose 'Undeploy' from the menu
-4. Check for errors
-5. Click the 'Undeploy' button
+### Deprovision the Lambda Function
+
+1. Select `{{$app}}/{{$app}}-basic-lambda/{{$app}}-basic-lambda (1.0.0)`, click on the ellipsis and select 'Undeploy'.
+    1. Click 'Undeploy' at the top right of the screen.
