@@ -15,6 +15,7 @@ If you're new to XebiaLabs blueprints, check out:
 
 * XebiaLabs Deployment Automation up and running
 * A local Docker installation up and running
+
 ## Usage
 
 To use this blueprint, run `xl blueprint` in an empty directory and select:
