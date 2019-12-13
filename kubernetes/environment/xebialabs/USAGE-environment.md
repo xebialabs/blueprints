@@ -6,9 +6,7 @@
 
 ## Deploy the blueprint to the XL Platform
 
-To deploy this blueprint to the XebiaLabs DevOps Platform, follow the steps below:
-
-1. Apply the generated YAML configuration using the XL CLI. Open up a terminal in the folder where you generated the configuration. Then run:
+To deploy this blueprint to the XebiaLabs DevOps Platform, open up a terminal in the folder where you generated the configuration. Then run:
 
     ```plain
     xl apply -f xebialabs.yaml

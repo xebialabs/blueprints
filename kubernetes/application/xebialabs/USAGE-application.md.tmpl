@@ -7,15 +7,15 @@ Instantiate and apply one of the following blueprints to create an environment t
 * The `kubernetes/environment` blueprint will create an environment based on an existing Kubernetes cluster that is specified in your `~/.kube/config` file.
 * The `azure/basic-aks-cluster` blueprint will provision an [AKS cluster in Azure](https://docs.microsoft.com/en-us/azure/aks/) and then create an environment for it.
 
-## Deploy the blueprint to the XL Platform
-
-To deploy this blueprint to the XebiaLabs DevOps Platform, follow the steps below:
-
 {{if ne .KubernetesApplicationName "nginx"}}
-1. Edit `kubernetes-application/deployment.yaml` to suit the `{{.KubernetesApplicationName}}` image you chose to deploy.
+## Prerequisites
+
+* Edit `kubernetes-application/deployment.yaml` to suit the `{{.KubernetesApplicationName}}` image you chose to deploy.
 {{end}}
 
-1. Apply the generated YAML configuration using the XL CLI. Open up a terminal in the folder where you generated the configuration. Then run:
+## Deploy the blueprint to the XL Platform
+
+To deploy this blueprint to the XebiaLabs DevOps Platform, open up a terminal in the folder where you generated the configuration. Then run:
 
     ```plain
     xl apply -f xebialabs.yaml
