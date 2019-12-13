@@ -7,15 +7,31 @@
 
 ## Deploy the blueprint to the XL Platform
 
-> **Note:** Deployment of the basic AWS cluster from XL Deploy requires a few more steps than the Azure or GCP ones.
-
-To deploy this blueprint to the XebiaLabs DevOps Platform, follow the steps below:
-
-1. Apply the generated YAML configuration using the XL CLI. Open up a terminal in the folder where you generated the configuration. Then run:
+To deploy this blueprint to the XebiaLabs DevOps Platform, open up a terminal in the folder where you generated the configuration. Then run:
 
     ```plain
     xl apply -f xebialabs.yaml
     ```
 
-2. Go to XL Release, look for the `{{$app}} on Docker` template, and start a new release from it.
+## Deploy to Docker
+
+Go to XL Release and click on `{{$app}}` under the 'Design' tab.
+
+### Provision the CI/CD pipeline
+
+1. Click 'New Release' under `{{$app}}-ci-cd`.
+    1. Give the Release a name.
+    2. Click 'Create'.
+    3. Click 'Start Release'.
+
+## Undeploy from AWS
+
+Go to XL Release and click on `{{$app}}` under the 'Design' tab.
+
+### Deprovision the CI/CD pipeline
+
+1. Click 'New Release' under `{{$app}}-destroy`.
+    1. Give the Release a name.
+    2. Click 'Create'.
+    3. Click 'Start Release'.
 

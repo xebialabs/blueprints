@@ -10,19 +10,15 @@ This blueprint comprises 3 other blueprints:
 
 ## Deploy the blueprint to the XL Platform
 
-To deploy this blueprint to the XebiaLabs DevOps Platform, follow the steps below:
-
-1. Apply the generated YAML configuration using the XL CLI. Open up a terminal in the folder where you generated the configuration. Then run:
+To deploy this blueprint to the XebiaLabs DevOps Platform, open up a terminal in the folder where you generated the configuration. Then run:
 
     ```plain
     xl apply -f xebialabs.yaml
     ```
 
-2. Follow the instructions in the following `USAGE` files in turn.
+## Deploy to Docker
 
-## The `USAGE` files
-
-There will be 3 `USAGE` files in the `xebialabs` directory for you to read:
+Follow the instructions in the following `USAGE` files under the `xebialabs` directory in order:
 
 1. `USAGE-docker-compose.md`
 This tells you about running Docker containers for XL Deploy, Xl Release and the Docker proxy.
