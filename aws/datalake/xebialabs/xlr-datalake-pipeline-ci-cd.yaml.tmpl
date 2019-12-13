@@ -59,7 +59,7 @@ spec:
           server: XL Deploy
           ciID: Environments/DATA-LAKE/provision-data-lake-stack-dictionary
           ciPropertyName: entries
-          ciPropertyNameKey: DATALAKE_CONSOLE_URL
+          ciPropertyNameKey: ConsoleUrl
           variableMapping:
             pythonScript.ciPropertyValue: ${DATALAKE_CONSOLE_URL}
         - name: Get cognito user pool ID
@@ -67,7 +67,7 @@ spec:
           server: XL Deploy
           ciID: Environments/DATA-LAKE/provision-data-lake-stack-dictionary
           ciPropertyName: entries
-          ciPropertyNameKey: COGNITO_USER_POOL_ID
+          ciPropertyNameKey: UserPoolId
           variableMapping:
             pythonScript.ciPropertyValue: ${COGNITO_USER_POOL_ID}
 
