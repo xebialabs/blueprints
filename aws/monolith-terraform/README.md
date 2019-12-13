@@ -13,6 +13,11 @@ If you're new to XebiaLabs blueprints, check out:
 * [Get started with DevOps as Code](https://docs.xebialabs.com/xl-release/concept/get-started-with-devops-as-code.html)
 * [Get started with blueprints](https://docs.xebialabs.com/xl-release/concept/get-started-with-blueprints.html)
 
+## Prerequisites
+
+* XebiaLabs Release Orchestration and Deployment Automation up and running
+* AWS Access Key and Secret Key for an account that can deploy the application
+
 ## Usage
 
 To use this blueprint, run `xl blueprint` in an empty directory and select:
@@ -42,13 +47,6 @@ This blueprint version requires at least the following versions of the specified
 * XL Release: Version 9.0.0
 * XL Deploy: Version 9.0.0
 * XL CLI: Version 9.0.0
-
-## Prerequisites
-
-To run the YAML that this blueprint generates, you need:
-
-* XebiaLabs Release Orchestration and Deployment Automation up and running
-* Access to an AWS account that can deploy the application
 
 ## Information required
 

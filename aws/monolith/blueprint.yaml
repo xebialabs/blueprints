@@ -50,7 +50,7 @@ spec:
   - name: MySQLMasterPassword
     type: SecretInput
     prompt: What should be the password for MySQL? (minimum 8 characters)
-    validate: !expr "regex('^(\\\\S){8,}$', MySQLMasterPassword)"
+    validate: !expr "regex('^[A-Za-z0-9_#-]{8,}$', MySQLMasterPassword)"
 
   includeAfter:
   - blueprint: xl-devops-platform
