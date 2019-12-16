@@ -45,6 +45,8 @@ spec:
     fileOverrides:
     - path: xebialabs.yaml
       writeIf: !expr "false"
+    - path: xebialabs/USAGE-environment.md.tmpl
+      writeIf: !expr "false"
     parameterOverrides:
     - name: KubernetesClusterName
       value: !expr "ClusterName"
@@ -81,6 +83,8 @@ spec:
   - blueprint: kubernetes/application
     fileOverrides:
     - path: xebialabs.yaml
+      writeIf: !expr "false"
+    - path: xebialabs/USAGE-application.md.tmpl
       writeIf: !expr "false"
     parameterOverrides:
     - name: NamespaceTag

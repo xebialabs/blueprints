@@ -23,7 +23,7 @@ spec:
       - name: Undeploy node
         type: xldeploy.Undeploy
         server: XL Deploy
-        deployedApplication: Environments/{{$clusterName}}/aws-cloudformation-{{$clusterName}}/{{.AppName}}
+        deployedApplication: Environments/{{$clusterName}}/aws-cloudformation-{{$clusterName}}/{{.DockerImage}}
 
     - name: Deprovision Infrastructure
       type: xlrelease.Phase

@@ -11,6 +11,10 @@ If you're new to XebiaLabs blueprints, check out:
 * [Get started with DevOps as Code](https://docs.xebialabs.com/xl-release/concept/get-started-with-devops-as-code.html)
 * [Get started with blueprints](https://docs.xebialabs.com/xl-release/concept/get-started-with-blueprints.html)
 
+## Prerequisites
+
+* XebiaLabs Release Orchestration and Deployment Automation up and running
+
 ## Usage
 
 To use this blueprint, run `xl blueprint` in an empty directory and select:
@@ -20,10 +24,10 @@ kubernetes/multicloud-pipeline
 ```
 
 1. When you run this blueprint, you must choose one of the following platforms:
-   1. AKS
-   2. EKS
-   3. GKE
-2. Start an instance of XLD and XLR using the `xl-devops-platform` blueprint generated in the docker directory
+    1. Azure AKS
+    2. Amazon EKS
+    3. Google GKE
+2. Start an instance of XLD and XLR using the `xl-devops-platform` blueprint generated in the `docker` directory
 3. Apply this blueprint to the above platform
 4. In XLR, find the template you created and start a deployment
 
@@ -34,9 +38,13 @@ This blueprint includes the following tools and technologies:
 * Target:
   * Kubernetes
 
-## Prerequisites
+## Minimum required versions
 
-* XebiaLabs Release Orchestration and Deployment Automation up and running
+This blueprint version requires at least the following versions of the specified tools to work properly:
+
+* XL Release: Version 9.0.0
+* XL Deploy: Version 9.0.0
+* XL CLI: Version 9.0.0
 
 ## Information required
 

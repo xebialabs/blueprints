@@ -1,3 +1,4 @@
+{{$app := .AppName | kebabcase}}
 {{$clusterName := .ClusterName | kebabcase}}
 
 apiVersion: xl-release/v1
@@ -116,7 +117,7 @@ spec:
       - name: Deploy node
         type: xldeploy.Deploy
         server: XL Deploy
-        deploymentPackage: {{.DockerImage}}/{{.DockerImageTag}}
+        deploymentPackage: {{$app}}/{{.DockerImage}}/{{.DockerImageTag}}
         deploymentEnvironment: Environments/{{$clusterName}}/aws-cloudformation-{{$clusterName}}
         tags:
         - {{.NamespaceTag}}

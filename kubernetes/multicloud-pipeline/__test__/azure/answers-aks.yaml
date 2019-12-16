@@ -11,6 +11,6 @@ ResourceGroupLocation: westeurope
 GenerateDockerComposeSetup: true
 
 AppName: myapp
-DockerImage: httpd
+DockerImage: nginx
 DockerImageTag: latest
-KubernetesResourcesFile: ../kubernetes/deployment.yaml
+KubernetesResourcesFile: ../kubernetes-application/deployment.yaml

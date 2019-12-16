@@ -1,3 +1,4 @@
+{{$app := .AppName | kebabcase}}
 {{$clusterName := .ClusterName | kebabcase}}
 
 apiVersion: xl-release/v1
@@ -66,7 +67,7 @@ spec:
       - name: Deploy node
         type: xldeploy.Deploy
         server: XL Deploy
-        deploymentPackage: {{.DockerImage}}/{{.DockerImageTag}}
+        deploymentPackage: {{$app}}/{{.DockerImage}}/{{.DockerImageTag}}
         {{- if eq .Provider "existing cluster"}}
         deploymentEnvironment: Environments/{{.KubernetesClusterName}}
         {{- else}}
