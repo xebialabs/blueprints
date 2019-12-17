@@ -15,7 +15,7 @@ spec:
     value: none
 
   - name: PromptForResourceGroup
-    value: false
+    value: true
 
   - name: ResourceGroup
     type: Input
