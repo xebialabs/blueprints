@@ -12,9 +12,9 @@ This blueprint comprises 3 other blueprints:
 
 To deploy this blueprint to the XebiaLabs DevOps Platform, open up a terminal in the folder where you generated the configuration. Then run:
 
-    ```plain
-    xl apply -f xebialabs.yaml
-    ```
+```plain
+xl apply -f xebialabs.yaml
+```
 
 ## Deploy to Docker
 
