@@ -1,4 +1,3 @@
-AppName: test-project
 GCPProjectID: test-project
 K8SMasterUser: admin
 K8SMasterPassword: asdfghjklqwertyuiopzxcvbnm
