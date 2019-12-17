@@ -13,9 +13,26 @@ If you're new to XebiaLabs blueprints, check out:
 * [Get started with DevOps as Code](https://docs.xebialabs.com/xl-release/concept/get-started-with-devops-as-code.html)
 * [Get started with blueprints](https://docs.xebialabs.com/xl-release/concept/get-started-with-blueprints.html)
 
+## Prerequisites
+
+* XebiaLabs Release Orchestration and Deployment Automation up and running
+* Access to a Google Cloud Platform (GCP) account where you can deploy the application
+* A Jenkins server up and running (only if you want to publish your own Docker images)
+
+## Special instructions
+
+1. Fork the https://github.com/xebialabs/e-commerce-microservice repository
+2. Clone your fork of the repository
+3. Check out the `gke-blueprint` branch:
+    ```plain
+    git co -b gke-blueprint origin/gke-blueprint
+    ```
+
+> For more detailed instructions, see [Deploy an app to AWS using a blueprint](https://docs.xebialabs.com/v.9.0/xl-release/how-to/deploy-to-aws-using-blueprints)
+
 ## Usage
 
-To use this blueprint, run `xl blueprint` in an empty directory and select:
+To use this blueprint, run `xl blueprint` in **the forked `e-commerce-microservice` directory of the repository you just cloned** and select:
 
 ```plain
 gcp/microservice-ecommerce
@@ -44,14 +61,6 @@ This blueprint version requires at least the following versions of the specified
 * XL Deploy: Version 9.0.0
 * XL CLI: Version 9.0.0
 
-## Prerequisites
-
-To run the YAML that this blueprint generates, you need:
-
-* XebiaLabs Release Orchestration and Deployment Automation up and running
-* Access to a Google Cloud Platform (GCP) account where you can deploy the application
-* A Jenkins server up and running
-
 ## Information required
 
 * A GCP project ID
@@ -59,7 +68,6 @@ To run the YAML that this blueprint generates, you need:
 * The GKE cluster endpoint (if deploying to an existing cluster)
 * Kubernetes cluster credentials
 * The Kubernetes namespace
-* Jenkins credentials (if enabling CI integration)
 
 ## Output
 
@@ -71,7 +79,7 @@ To run the YAML that this blueprint generates, you need:
   * Security infrastructure
 * A docker-compose setup for XL Release, XL Deploy and Jenkins
 
-## Tips and tricks
+## Notes
 
 * If you opt to use Jenkins in the release template that this blueprint generates, before you run the `xl apply` command, define a Jenkins server as a shared configuration in XL Release and put its name in the `xlr-pipeline-ci-cd.yaml` file. If you use the provided docker-compose files this will be automatically setup for you.
 * The YAML that the blueprint generates includes optional steps to remove the application and deprovision the cluster.
