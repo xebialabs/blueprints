@@ -19,8 +19,6 @@ includeAfter:
 
 ## Tools and technologies
 
-This blueprint includes the following tools and technologies:
-
 * HashiCorp Vault
 * Docker
 

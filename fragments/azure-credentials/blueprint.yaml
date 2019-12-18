@@ -11,7 +11,7 @@ metadata:
 
 spec:
   parameters:
-  - name: PromptForClientSecret 
+  - name: PromptForClientSecret
     value: true
 
   - name: ClientID

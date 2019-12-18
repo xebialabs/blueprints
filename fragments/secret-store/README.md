@@ -2,7 +2,8 @@
 
 ## Introduction
 
-This blueprint will create in Docker or connect you to the following already-running 3rd party secret store tools:
+This blueprint will create (in Docker) or connect you to the following already-running 3rd party secret store tools:
+
 * CyberArk Conjur
 * HashiCorp Vault
 
