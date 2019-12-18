@@ -8,8 +8,8 @@ It has several different possible outcomes, depending on the answers you give. T
 
 1. A dictionary for passwords,
 2. **or** a secret store for passwords. Two products are supported:
-   1. [CyberArk Conjur](/xl-platform/how-to/manage-secrets-using-cyberark-conjur/)
-   2. [HashiCorp Vault](/xl-platform/how-to/manage-secrets-using-hashicorp-vault/)
+   1. [CyberArk Conjur](https://www.conjur.org/)
+   2. [HashiCorp Vault](https://www.vaultproject.io/)
 3. You can choose whether to use your existing secret store or generate Docker files to spin one up locally.
 4. Lastly, you can choose whether to connect to your existing instances of XL Deploy and XL Release or generate Docker files to spin them up locally.
 
