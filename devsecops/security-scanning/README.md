@@ -11,6 +11,11 @@ If you're new to XebiaLabs blueprints, check out:
 * [Get started with DevOps as Code](https://docs.xebialabs.com/xl-release/concept/get-started-with-devops-as-code.html)
 * [Get started with blueprints](https://docs.xebialabs.com/xl-release/concept/get-started-with-blueprints.html)
 
+## Prerequisites
+
+* XebiaLabs Release Orchestration up and running
+* Access to one or more security testing tool(s)
+
 ## Usage
 
 To use this blueprint, run `xl blueprint` in an empty directory and select:
@@ -38,13 +43,6 @@ This blueprint version requires at least the following versions of the specified
 
 * XL Release: Version 9.0
 * XL CLI: Version 9.0
-
-## Prerequisites
-
-To run the YAML that this blueprint generates, you need:
-
-* XebiaLabs Release Orchestration up and running
-* Access to one or more security testing tool(s)
 
 ## Information required
 
