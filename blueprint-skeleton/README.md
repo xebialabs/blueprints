@@ -14,7 +14,7 @@ blueprint-skeleton
 
 This blueprint version requires at least the following versions of the specified tools to work properly:
 
-* XL CLI: Version 9.0.0
+* XL CLI: Version 9.0
 
 ## Prerequisites
 
