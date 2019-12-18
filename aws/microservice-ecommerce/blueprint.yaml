@@ -65,6 +65,8 @@ spec:
       value: !expr "ClusterName"
     - name: IncludeDockerCompose
       value: false
+    - name: XLEnvironmentPath
+      value: !expr "ProvisionCluster ? 'aws-eks-' + ClusterName : ''"
     fileOverrides:
     - path: xebialabs.yaml
       writeIf: !expr "false"
