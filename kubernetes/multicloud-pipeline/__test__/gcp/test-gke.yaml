@@ -3,7 +3,6 @@ expected-files:
 - xebialabs.yaml
 - README.md
 - xebialabs/USAGE-basic-gke-cluster.md
-- xebialabs/USAGE-application.md
 - xebialabs/USAGE-multicloud-pipeline.md
 - xebialabs/xld-basic-gke-cluster-applications.yaml
 - xebialabs/xld-basic-gke-cluster-infrastructure.yaml

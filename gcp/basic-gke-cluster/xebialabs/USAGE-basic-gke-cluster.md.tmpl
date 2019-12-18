@@ -13,6 +13,13 @@ Follow the instructions in the [gcp/README.md](https://github.com/xebialabs/blue
 
 > **Note:** Make sure the `account.json` file you downloaded is placed inside the `terraform-basic-gke-cluster` folder that is created by the blueprint
 
+## Start the XL Platform
+{{if eq .GenerateDockerComposeSetup true}}
+Follow the instructions in `xebialabs/USAGE-docker-compose.md`.
+{{else}}
+Make sure your existing XL Platform is up and running and accessible.
+{{end}}
+
 ## Deploy the blueprint to the XL Platform
 
 To deploy this blueprint to the XebiaLabs DevOps Platform, open up a terminal in the folder where you generated the configuration. Then run:

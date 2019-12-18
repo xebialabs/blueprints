@@ -5,6 +5,13 @@
 
 * This example does not create a namespace, but uses the `default` namespace
 
+## Start the XL Platform
+{{if eq .GenerateDockerComposeSetup true}}
+Follow the instructions in `xebialabs/USAGE-docker-compose.md`.
+{{else}}
+Make sure your existing XL Platform is up and running and accessible.
+{{end}}
+
 ## Deploy the blueprint to the XL Platform
 
 > **Note:** Deployment of the basic AWS cluster from XL Deploy requires a few more steps than the Azure or GCP ones.

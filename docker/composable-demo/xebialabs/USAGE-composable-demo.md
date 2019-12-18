@@ -8,6 +8,13 @@ This blueprint comprises 3 other blueprints:
 2. Local Docker environment
 3. Application to run on the environment
 
+## Start the XL Platform
+{{if eq .GenerateDockerComposeSetup true}}
+Follow the instructions in `xebialabs/USAGE-docker-compose.md`.
+{{else}}
+Make sure your existing XL Platform is up and running and accessible.
+{{end}}
+
 ## Deploy the blueprint to the XL Platform
 
 To deploy this blueprint to the XebiaLabs DevOps Platform, open up a terminal in the folder where you generated the configuration. Then run:

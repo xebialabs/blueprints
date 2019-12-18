@@ -1,6 +1,12 @@
 {{- $app := .AppName | kebabcase}}
 # Monolithic Application on Amazon ECS with Terraform Usage
 
+## Start the XL Platform
+{{if eq .GenerateDockerComposeSetup true}}
+Follow the instructions in `xebialabs/USAGE-docker-compose.md`.
+{{else}}
+Make sure your existing XL Platform is up and running and accessible.
+{{end}}
 
 ## Deploy the blueprint to the XL Platform
 

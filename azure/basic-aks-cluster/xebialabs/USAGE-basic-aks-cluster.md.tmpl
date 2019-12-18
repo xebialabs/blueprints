@@ -8,6 +8,13 @@
   * You can find the key `admin_private_key` under the XL Deploy dictionary `Environments` > `{{$clusterName}}` > `{{$clusterName}}-terraform-module-dictionary`
 * You will also find the cluster API host url and access token under the same dictionary
 
+## Start the XL Platform
+{{if eq .GenerateDockerComposeSetup true}}
+Follow the instructions in `xebialabs/USAGE-docker-compose.md`.
+{{else}}
+Make sure your existing XL Platform is up and running and accessible.
+{{end}}
+
 ## Deploy the blueprint to the XL Platform
 
 To deploy this blueprint to the XebiaLabs DevOps Platform, open up a terminal in the folder where you generated the configuration. Then run:

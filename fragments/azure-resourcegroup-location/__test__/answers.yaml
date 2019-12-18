@@ -1,2 +1,4 @@
+ResourceGroupPrompt: Enter the Resource Group name
+ResourceGroup: my-rg
 ResourceGroupLocationPrompt: Choose the Resource Group Location
 ResourceGroupLocation: eastasia

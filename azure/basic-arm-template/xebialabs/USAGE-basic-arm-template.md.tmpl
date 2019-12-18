@@ -6,6 +6,13 @@
 * When you undeploy, the Resource Group will be completely deleted
 * The deployment will fail if the Resource Group already exists, to guard against deploying to, and destroying, an existing Resource Group
 
+## Start the XL Platform
+{{if eq .GenerateDockerComposeSetup true}}
+Follow the instructions in `xebialabs/USAGE-docker-compose.md`.
+{{else}}
+Make sure your existing XL Platform is up and running and accessible.
+{{end}}
+
 ## Deploy the blueprint to the XL Platform
 
 To deploy this blueprint to the XebiaLabs DevOps Platform, open up a terminal in the folder where you generated the configuration. Then run:

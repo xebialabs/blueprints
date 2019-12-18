@@ -2,7 +2,6 @@ answers-file: answers-existing-cluster.yaml
 expected-files:
 - xebialabs.yaml
 - README.md
-- xebialabs/USAGE-application.md
 - xebialabs/USAGE-environment.md
 - xebialabs/USAGE-multicloud-pipeline.md
 - xebialabs/xld-environment-infrastructure.yaml
