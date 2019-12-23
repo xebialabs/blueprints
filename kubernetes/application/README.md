@@ -1,4 +1,4 @@
-# Kubernetes Application blueprint
+# Kubernetes Application Blueprint
 
 ## Introduction
 
@@ -11,40 +11,39 @@ If you're new to XebiaLabs blueprints, check out:
 * [Get started with DevOps as Code](https://docs.xebialabs.com/xl-release/concept/get-started-with-devops-as-code.html)
 * [Get started with blueprints](https://docs.xebialabs.com/xl-release/concept/get-started-with-blueprints.html)
 
+## Prerequisites
+
+* XebiaLabs Deployment Automation up and running
+
 ## Usage
 
-To use this blueprint, run `xl blueprint` and select:
+To use this blueprint, run `xl blueprint` in an empty directory and select:
 
-    `[kubernetes/application]`
-
-If you accept the defaults, a package with a simple [nginx deployment](https://kubernetes.io/docs/tasks/run-application/run-stateless-application-deployment/#creating-and-exploring-an-nginx-deployment) will be defined.
+```plain
+kubernetes/application
+```
 
 ## Tools and technologies
 
 This blueprint includes the following tools and technologies:
 
 * Target:
-    * Kubernetes
+  * Kubernetes
 
 ## Prerequisites
 
-None
+* XebiaLabs Release Orchestration and Deployment Automation up and running
 
 ## Information required
 
-None
+* The application name
+* Docker image for a front-end service
 
 ## Output
 
-This blueprint will output:
-
-* The file `xebialabs/application.yaml` that defines a package that deploys a single Docker container.
-
-## Tips and tricks
-
-None
+* Release templates
 
 ## Labels
 
-* `kubernetes`
+* Kubernetes
 

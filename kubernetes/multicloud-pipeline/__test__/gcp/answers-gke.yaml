@@ -11,6 +11,6 @@ GKENodeMachineType: n1-standard-1
 GenerateDockerComposeSetup: false
 
 AppName: myapp
-DockerImage: httpd
+DockerImage: nginx
 DockerImageTag: latest
-KubernetesResourcesFile: ../kubernetes/deployment.yaml
+KubernetesResourcesFile: ../kubernetes-application/deployment.yaml

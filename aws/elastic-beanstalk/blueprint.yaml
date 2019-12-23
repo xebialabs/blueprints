@@ -4,7 +4,7 @@ kind: Blueprint
 metadata:
   name: AWS-Elastic-Beanstalk-Sample
   description: |
-    The blueprint deploys a sample AWS Elastic Beanstalk PHP5 application.
+    This blueprint deploys a sample AWS Elastic Beanstalk PHP5 application.
   author: XebiaLabs
   version: 2.0
   instructions: Please read the generated file "xebialabs/USAGE-elastic-beanstalk.md" for further usage instructions.
@@ -52,7 +52,7 @@ spec:
     type: Input
     prompt: Enter a Beanstalk Solution Stack Name
     description: If the blueprint fails, it may be because this value is out of date. In that case, enter a more recent one from https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/concepts.platforms.html
-    default: "64bit Amazon Linux 2018.03 v2.8.6 running Python 3.6"
+    default: "64bit Amazon Linux 2018.03 v2.9.4 running Python 3.6"
 
   - name: S3Key
     value: "python-app-v1.zip"

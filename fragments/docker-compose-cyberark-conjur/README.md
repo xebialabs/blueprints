@@ -19,14 +19,10 @@ includeAfter:
 
 ## Tools and technologies
 
-This blueprint includes the following tools and technologies:
-
 * CyberArk Conjur
 * Docker
 
 ## Output
-
-This blueprint will output:
 
 * A `docker-compose.yaml` file that will launch the CyberArk Conjur instance
 
@@ -34,3 +30,4 @@ This blueprint will output:
 
 * CyberArk Conjur
 * Docker
+

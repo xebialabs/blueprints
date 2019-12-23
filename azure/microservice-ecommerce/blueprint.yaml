@@ -4,7 +4,7 @@ kind: Blueprint
 metadata:
   name: Azure-Microservice-AKS-with-JHipster
   description: |
-    The blueprint deploys an e-commerce microservice application to Azure AKS.
+    This blueprint deploys an e-commerce microservice application to Azure AKS.
     XL Deploy does the provisioning and deployment, while XL Release orchestrates everything.
   author: XebiaLabs
   version: 2.0

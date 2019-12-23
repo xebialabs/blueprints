@@ -4,7 +4,7 @@ kind: Blueprint
 metadata:
   name: Security and Compliance Demo Application
   description: |
-    The blueprint creates a simple template to orchestrate Security and Compliance with XL Release.
+    This blueprint creates a simple template to orchestrate Security and Compliance with XL Release.
   author: XebiaLabs
   version: 2.0
   instructions: Please read the generated file "xebialabs/USAGE-security-scanning.md" for further usage instructions.
@@ -146,8 +146,6 @@ spec:
       value: false
     - name: UseXLRelease
       value: true
-    - name: XLReleasePort
-      value: 5516
     - name: XLVersion
       value: "9.0"
     - name: UseDockerProxy

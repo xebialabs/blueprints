@@ -2,7 +2,7 @@
 
 provider "google" {
   credentials = "${file("account.json")}"
-  version = "~> 1.16"
+  version = "~> 2.11"
   project = "${var.project_id}"
   region  = "${var.region}"
 }

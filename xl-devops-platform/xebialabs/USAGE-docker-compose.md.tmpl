@@ -1,4 +1,4 @@
-# XL DevOps Platform
+# XL DevOps Platform Usage
 
 This blueprint allows you to run test instances in Docker of:
 
@@ -39,10 +39,12 @@ Run the following:
 
 ```plain
 cd docker
-docker-compose up --detach
+docker-compose up [--detach]
 ```
 
-## Find the apps here:
+> **Note:** If you omit `--detach`, Docker will take command of your terminal and you will need to open another to apply the blueprints.
+
+## Find the apps here
 
 {{if .UseXLDeploy -}}
 * XL Deploy: http://localhost:{{.XLDeployPort}}
@@ -61,3 +63,7 @@ docker-compose up --detach
   * username: admin
   * password: admin
 {{- end}}
+
+## Notes
+
+* You can obtain a trial license or bring your own license for the XL Platform.

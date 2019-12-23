@@ -4,7 +4,7 @@ kind: Blueprint
 metadata:
   name: Azure-App-Service
   description: |
-    The blueprint provisions an Azure App service instance with given Docker image or with a sample application
+    This blueprint provisions an Azure App service instance with given Docker image or with a sample application
   author: XebiaLabs
   version: 2.0
   instructions: Please read the generated file "xebialabs/USAGE-app-service-docker-app.md" for further usage instructions.

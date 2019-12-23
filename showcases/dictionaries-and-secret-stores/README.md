@@ -28,11 +28,20 @@ If you're new to XebiaLabs blueprints, check out:
 * [Get started with DevOps as Code](https://docs.xebialabs.com/xl-release/concept/get-started-with-devops-as-code.html)
 * [Get started with blueprints](https://docs.xebialabs.com/xl-release/concept/get-started-with-blueprints.html)
 
+## Prerequisites
+
+* XebiaLabs Release Orchestration and Deployment Automation up and running
+* Azure credentials that allow creating the infrastructure
+* CyberArk Conjur or HashiCorp Vault up and running
+* Docker (Linux) or Docker Desktop (Mac, Windows)
+
 ## Usage
 
-To use this blueprint, run `xl blueprint` and choose `showcases/dictionaries-and-secret-stores`.
+To use this blueprint, run `xl blueprint` in an empty directory and select:
 
-Answer the questions to generate the necessary CIs, then follow the instructions in `xebialabs/USAGE-dictionaries-and-secret-stores.md`.
+```plain
+showcases/dictionaries-and-secret-stores
+```
 
 ## Tools and technologies
 
@@ -53,18 +62,8 @@ This blueprint version requires at least the following versions of the specified
 * XL Release: Version 9.5.0
 * XL CLI: Version 9.5.0
 
-## Prerequisites
-
-To run the YAML that this blueprint generates, you need:
-
-* Docker (Linux) or Docker Desktop (Mac, Windows)
-* XebiaLabs Deployment Automation up and running
-* CyberArk Conjur or HashiCorp Vault up and running
-* A valid Azure account
-
 ## Information required
 
-You will need the following data from your Azure account:
 * Client ID
 * Client Secret
 * Subscription ID
@@ -72,8 +71,7 @@ You will need the following data from your Azure account:
 
 ## Output
 
-This blueprint will output:
-
+* Release templates
 * Docker files to run XL Deploy and XL Release (optional)
 * Docker files to run a secret store (optional)
 * CIs to create a VM in Azure
@@ -84,3 +82,4 @@ This blueprint will output:
 * Terraform
 * HashiCorp Vault
 * CyberArk Conjur
+

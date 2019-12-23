@@ -9,6 +9,6 @@ KubernetesClientPrivateKey: LS0tLS1CRUdJTiBSU0EgUFJJVkFURSBLRVktLS0tLQpNSUlFcEFJ
 GenerateDockerComposeSetup: false
 
 AppName: myapp
-DockerImage: httpd
+DockerImage: nginx
 DockerImageTag: latest
 KubernetesResourcesFile: ../kubernetes-application/httpd.yaml

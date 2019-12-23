@@ -20,10 +20,9 @@ You probably want to pass the same XL directory from your blueprint to this one.
 
 ## Information required
 
-This blueprint will ask for a comma-separated set of keys (e.g. `key.one,key.two`). The values (usually passwords) will need to be manually captured by the user after the dictionary has been applied to XL Deploy.
+* This blueprint will ask for a comma-separated set of keys (e.g. `key.one,key.two`). The values (usually passwords) will need to be manually captured by the user after the dictionary has been applied to XL Deploy.
 
 ## Output
 
-This blueprint will output:
-
 * A YAML environment file for XL Deploy
+

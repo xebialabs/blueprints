@@ -15,3 +15,7 @@ If you want the blueprint to automatically detect your AWS Access Key and AWS Se
 3. Run `aws configure` and follow the prompts.
 
 You should now be set up to use the AWS CLI and have the blueprints detect the AWS secrets.
+
+## AWS Access Key and Secret Key
+
+* [How do I create an AWS access key?](https://aws.amazon.com/premiumsupport/knowledge-center/create-access-key/)

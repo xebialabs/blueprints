@@ -1,64 +1,89 @@
 {{$app := .AppName | kebabcase}}
+# Microservice Application on Azure Kubernetes Service
 
-# Prerequisites
-* You must have [Docker](https://docs.docker.com/install/) for your platfo
+## Prerequisites
+
+* You must have [Docker](https://docs.docker.com/install/) for your platform
 * You must have [docker-compose](https://docs.docker.com/compose/install/) installed
 
-# Launch local environment
+### Azure-specific steps
 
-Follow the below instructions to get XLD and XLR (and Jenkins) running so you can deploy the blueprint.
+Follow the instructions in the [azure/README.md](https://github.com/xebialabs/blueprints/blob/master/azure/README.md) on how to:
 
-## Step 1: Set environment variables (if you are using Jenkins CI/CD)
+* Download and install the Azure CLI
+* Obtain the necessary Azure credentials
 
-If you intend to use the Jenkins CI/CD pipeline to generate your own Docker images, you will need to set the following environment variables before running `docker-compose up` (see below) in the same terminal session:
+### Environment variables
 
-```ini
-GITHUB_USER=<GITHUB USER>
-GITHUB_TOKEN=<GITHUB API TOKEN>
-DOCKER_USER=<YOUR DOCKER USERNAME>
-DOCKER_PASS=<YOUR DOCKER PASSWORD>
-```
-
-You will also need to modify the Docker image names to your own GitHub user account.
-
-1. Replace the occurrences of `xebialabsunsupported` in the `kubernetes/*-deployment.yml` files with your own DockerHub ID
-2. Push the cloned repository to your GitHub account so that Jenkins can checkout `https://github.com/${GITHUB_USER}/e-commerce-microservice.git`
-
-## Step 2: Make sure XL Deploy and XL Release (and Jenkins) are running
-
-> **Note:** If you already have XL Deploy and XL Release (and Jenkins) servers running, you can skip this step.
-
-The blueprint generates `docker/docker-compose.yml`. This will start up XLD and XLR (and Jenkins). Inside the `e-commerce-microservice` directory run:
+If you intend to use the Jenkins CI/CD pipeline to generate your own Docker images, you will need to set the following environment variables before running `docker-compose up` in the same terminal session:
 
 ```plain
-cd docker
-docker-compose up
+export GITHUB_USER=<your GitHub user name>
+export GITHUB_TOKEN=<your GitHub access token, needed only if you are using a private repository, this variable can be skipped for public repositories>
+export DOCKER_USER=<your Docker user name>
+export DOCKER_PASS=<your Docker password>
 ```
 
-This will start the services and take control of the terminal. You will need to open a new terminal to continue.
+{{if eq .GenerateDockerComposeSetup false}}
+> **Note:** If you do not have XL Release and XL Deploy instances already running, you can re-run this blueprint and choose to generate a Docker configuration setup.
+{{end}}
 
-> **Note:** Watch the log output for `docker_xl-cli_1`. Its job is to connect XL Release to XL Deploy. It must exit with code `0`. If not, open a new terminal in the same directory and run:
+### Docker repository configuration
+
+1. Replace the occurrences of `<your-dockerhub-user>` in the following files with your own DockerHub ID:
+
+    * `notification/kubernetes/notification-deployment.yml`
+    * `store/kubernetes/store-deployment.yml`
+    * `invoice/kubernetes/invoice-deployment.yml`
+
+2. Commit all changes and push this cloned repository to your GitHub account so that Jenkins can checkout `https://github.com/${GITHUB_USER}/e-commerce-microservice.git`.
+
+## Start the XL Platform
+{{if eq .GenerateDockerComposeSetup true}}
+Follow the instructions in `xebialabs/USAGE-docker-compose.md`.
+{{else}}
+Make sure your existing XL Platform is up and running and accessible.
+{{end}}
+
+### XL CLI
+
+Watch the log output for `docker_xl-cli_1`. Its job is to connect XL Release to XL Deploy. It must exit with code `0`. If not, open a new terminal in the same directory and run:
+
 ```plain
 docker-compose up -d xl-cli
 ```
 
-## Step 3: Deploy the blueprint
+## Deploy the blueprint to the XL Platform
 
-> **Note:** Please read the instructions in [azure/microservice-ecommerce/README.md](https://github.com/xebialabs/blueprints/blob/development/azure/microservice-ecommerce/README.md) to prepare the environment before proceeding.
-
-1. Inside the `e-commerce-microservice` directory, apply the generated `.yaml` configurations using the XL CLI.
+To deploy this blueprint to the XebiaLabs DevOps Platform, open up a terminal in the `e-commerce-microservice` folder where you generated the configuration. Then run:
 
 ```plain
 xl apply -f xebialabs.yaml
 ```
 
-2. Go to XL Release (default http://localhost:5516) and look for the "{{$app}}-ci-cd" template and start a new release from it.
-3. Once you are done, go back to XL Release, look for the "{{$app}}-destroy" template and start a new release from it to automatically rollback and destroy the resources you created.
+## Deploy to Azure
 
-## Minimum Required versions
+Go to XL Release and click on `{{$app}}` under the 'Design' tab.
 
-This blueprint version requires at least the below versions of the specified tools to work properly.
+### Provision the CI/CD pipeline
 
-XL Release: Version 9.0.0
-XL Deploy: Version 9.0.0
-XL CLI: Version 9.0.0
+1. Click 'New Release' under `{{$app}}-ci-cd`.
+    1. Give the Release a name.
+    2. Click 'Create'.
+    3. Click 'Start Release'.
+
+## Undeploy from Azure
+
+Go to XL Release and click on `{{$app}}` under the 'Design' tab.
+
+### Deprovision the CI/CD pipeline
+
+1. Click 'New Release' under `{{$app}}-destroy`.
+    1. Give the Release a name.
+    2. Click 'Create'.
+    3. Click 'Start Release'.
+
+## Extras
+
+* You can find a detailed tutorial for this blueprint [here](https://docs.xebialabs.com/v.9.0/xl-release/how-to/deploy-to-aws-using-blueprints)
+

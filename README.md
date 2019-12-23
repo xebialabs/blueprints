@@ -70,6 +70,5 @@ aws/
 
 When committed, [Travis](https://travis-ci.org/xebialabs/blueprints) will test your blueprint along with all the others.
 
-
 [travis-image]: https://travis-ci.org/xebialabs/blueprints.svg?branch=development
 [travis-url-main]: https://travis-ci.org/xebialabs/blueprints/branches

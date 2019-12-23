@@ -4,7 +4,7 @@ kind: Blueprint
 metadata:
   name: Docker Sample
   description: |
-    The blueprint deploys a simple application in Docker container into your local Docker setup.
+    This blueprint deploys a simple application in Docker container into your local Docker setup.
     XL Deploy does the deployment, while XL Release orchestrates everything.
   author: XebiaLabs
   version: 2.0

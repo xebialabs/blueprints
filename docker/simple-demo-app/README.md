@@ -1,4 +1,4 @@
-# Local Docker Deployment
+# Simple API and web application on Docker
 
 ## Introduction
 
@@ -11,43 +11,42 @@ If you're new to XebiaLabs blueprints, check out:
 * [Get started with DevOps as Code](https://docs.xebialabs.com/xl-release/concept/get-started-with-devops-as-code.html)
 * [Get started with blueprints](https://docs.xebialabs.com/xl-release/concept/get-started-with-blueprints.html)
 
+## Prerequisites
+
+* XebiaLabs Release Orchestration and Deployment Automation up and running
+* A local Docker installation up and running
+
+
 ## Usage
 
-To use this blueprint, run `xl blueprint` and select:
+To use this blueprint, run `xl blueprint` in an empty directory and select:
 
-    docker/simple-demo-app
+```plain
+docker/simple-demo-app
+```
 
 ## Tools and technologies
 
 This blueprint includes the following tools and technologies:
 
 * Target:
-    * [Docker](https://www.docker.com/)
+  * [Docker](https://www.docker.com/)
 * Tools:
-    * [XebiaLabs Release Orchestration](https://xebialabs.com/products/xl-release/)
-    * [XebiaLabs Deployment Automation](https://xebialabs.com/products/xl-deploy/)
+  * [XebiaLabs Release Orchestration](https://xebialabs.com/products/xl-release/)
+  * [XebiaLabs Deployment Automation](https://xebialabs.com/products/xl-deploy/)
 * Application or framework:
-    * [Sample application API component](https://hub.docker.com/r/xebialabsunsupported/rest-o-rant-api)
-    * [Sample application web component](https://hub.docker.com/r/xebialabsunsupported/rest-o-rant-web)
+  * [Sample application API component](https://hub.docker.com/r/xebialabsunsupported/rest-o-rant-api)
+  * [Sample application web component](https://hub.docker.com/r/xebialabsunsupported/rest-o-rant-web)
 
 ## Minimum required versions
 
 This blueprint version requires at least the following versions of the specified tools to work properly:
 
-XL Release: Version 9.0.0
-XL Deploy: Version 9.0.0
-XL CLI: Version 9.0.0
-
-## Prerequisites
-
-To run the YAML that this blueprint generates, you need:
-
-* XebiaLabs Release Orchestration and Deployment Automation up and running
-* A local Docker installation up and running
+* XL Release: Version 9.0
+* XL Deploy: Version 9.0
+* XL CLI: Version 9.0
 
 ## Information required
-
-This blueprint requires:
 
 * The application name
 * The port where the application should be exposed
@@ -55,9 +54,7 @@ This blueprint requires:
 
 ## Output
 
-This blueprint will output:
-
-* Release template
+* Release templates
 * Docker infrastructure
 * A docker-compose setup for XL Release, XL Deploy & Docker proxy
 
@@ -69,3 +66,4 @@ This blueprint will output:
 ## Labels
 
 * Docker
+

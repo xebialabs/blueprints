@@ -1,28 +1,45 @@
 {{$app := .AppName | kebabcase}}
+# Basic ARM Template Usage
 
 ## Notes
 * This blueprint will create the {{.ResourceGroup}} Resource Group and place everything under it.
 * When you undeploy, the Resource Group will be completely deleted
 * The deployment will fail if the Resource Group already exists, to guard against deploying to, and destroying, an existing Resource Group
 
-## Provision simple ARM template on Azure
+## Start the XL Platform
+{{if eq .GenerateDockerComposeSetup true}}
+Follow the instructions in `xebialabs/USAGE-docker-compose.md`.
+{{else}}
+Make sure your existing XL Platform is up and running and accessible.
+{{end}}
 
-### Prerequisites
+## Deploy the blueprint to the XL Platform
 
-To deploy this blueprint, follow the steps below:
+To deploy this blueprint to the XebiaLabs DevOps Platform, open up a terminal in the folder where you generated the configuration. Then run:
 
-1. Apply the generated YAML configurations using the XL CLI. Open up a terminal in the folder where you generated the configuration. Then run:
+```plain
+xl apply -f xebialabs.yaml
+```
 
-    ```plain
-    xl apply -f xebialabs.yaml
-    ```
+## Deploy to Azure
 
-2. Go to XL Release, look for the "{{$app}}-ci-cd" template, and start a new release from it.
+Go to XL Release and click on `{{$app}}` under the 'Design' tab.
 
-## Minimum required versions
+### Provision the CI/CD pipeline
 
-This blueprint version requires at least the following versions of the specified tools to work properly:
+1. Click 'New Release' under `{{$app}}-ci-cd`.
+    1. Give the Release a name.
+    2. Click 'Create'.
+    3. Click 'Start Release'.
 
-- XL Deploy: Version 9.5.0
-- XL Release: Version 9.5.0
-- XL CLI: Version 9.5.0
+## Undeploy from Azure
+
+Go to XL Release and click on `{{$app}}` under the 'Design' tab.
+
+### Deprovision the CI/CD pipeline
+
+1. Click 'New Release' under `{{$app}}-destroy`.
+    1. Give the Release a name.
+    2. Click 'Create'.
+    3. Click 'Start Release'.
+

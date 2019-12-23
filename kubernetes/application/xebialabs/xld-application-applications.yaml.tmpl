@@ -2,13 +2,16 @@ apiVersion: xl-deploy/v1
 kind: Applications
 spec:
 - name: {{.AppName}}
-  type: udm.Application
+  type: core.Directory
   children:
-  - name: {{.DockerImageTag}}
-    type: udm.DeploymentPackage
-    deployables:
-    - name: {{.AppName}}
-      type: k8s.ResourcesFile
-      file: !file "../kubernetes-application/deployment.yaml"
-      tags:
-      - {{.NamespaceTag}}
+  - name: {{.DockerImage}}
+    type: udm.Application
+    children:
+    - name: {{.DockerImageTag}}
+      type: udm.DeploymentPackage
+      deployables:
+      - name: {{.AppName}}
+        type: k8s.ResourcesFile
+        file: !file "../kubernetes-application/deployment.yaml"
+        tags:
+        - {{.NamespaceTag}}

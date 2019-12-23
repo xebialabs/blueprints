@@ -4,7 +4,7 @@ kind: Blueprint
 metadata:
   name: Docker Demo Application
   description: |
-    The blueprint deploys a simple application in 2 Docker containers into your local Docker setup.
+    This blueprint deploys a simple application in 2 Docker containers into your local Docker setup.
     XL Deploy does the deployment, while XL Release orchestrates everything.
   author: XebiaLabs
   version: 2.0

@@ -121,7 +121,7 @@ In this step, you will create the necessary storage objects so that Terraform ca
 
 > **Note:** These step are only necessary if:
 >
-> * The blueprint needs a Kubernetes cluster
+> * This blueprint needs a Kubernetes cluster
 > * You want the blueprint to create a new cluster for you
 
 ### Create a Resource Group to house the storage

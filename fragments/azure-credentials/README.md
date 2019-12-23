@@ -25,3 +25,4 @@ This blueprint outputs nothing and simply makes the following variables availabl
 * Client Secret
 * Subscription ID
 * Tenant ID
+

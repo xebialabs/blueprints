@@ -11,6 +11,6 @@ NodeInstanceType: t2.medium
 GenerateDockerComposeSetup: false
 
 AppName: myapp
-DockerImage: httpd
+DockerImage: nginx
 DockerImageTag: latest
 KubernetesResourcesFile: ../kubernetes-application/deployment.yaml

@@ -4,7 +4,7 @@ kind: Blueprint
 metadata:
   name: AWS-Microservice-EKS-with-JHipster
   description: |
-    The blueprint deploys an e-commerce microservice application to AWS EKS.
+    This blueprint deploys an e-commerce microservice application to AWS EKS.
     XL Deploy does the provisioning and deployment, while XL Release orchestrates everything.
   author: XebiaLabs
   version: 2.0
@@ -65,6 +65,8 @@ spec:
       value: !expr "ClusterName"
     - name: IncludeDockerCompose
       value: false
+    - name: XLEnvironmentPath
+      value: !expr "ProvisionCluster ? 'aws-eks-' + ClusterName : ''"
     fileOverrides:
     - path: xebialabs.yaml
       writeIf: !expr "false"

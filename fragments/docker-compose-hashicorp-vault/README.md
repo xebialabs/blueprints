@@ -19,14 +19,10 @@ includeAfter:
 
 ## Tools and technologies
 
-This blueprint includes the following tools and technologies:
-
 * HashiCorp Vault
 * Docker
 
 ## Output
-
-This blueprint will output:
 
 * A `docker-compose.yaml` file that will launch the HashiCorp Vault instance
 
@@ -34,3 +30,4 @@ This blueprint will output:
 
 * HashiCorp Vault
 * Docker
+
