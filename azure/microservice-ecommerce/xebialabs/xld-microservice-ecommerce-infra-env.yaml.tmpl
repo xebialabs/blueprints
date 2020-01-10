@@ -38,7 +38,7 @@ spec:
 - name: {{$app}}
   type: core.Directory
   children:
-  - name: azure-aks-{{$clusterName}}
+  - name: {{$clusterName}}-AKSCluster
     type: k8s.Master
     apiServerURL: {{.ClusterEndpoint}}
     skipTLS: true
@@ -47,6 +47,8 @@ spec:
     - name: {{.Namespace | kebabcase}}
       type: k8s.Namespace
       namespaceName: {{.Namespace}}
+      tags:
+      - {{.Namespace}}
 ---
 # Definition of existing AKS Environment
 apiVersion: xl-deploy/v1
@@ -58,6 +60,6 @@ spec:
   - name: azure-aks-{{$app}}
     type: udm.Environment
     members:
-    - Infrastructure/{{$app}}/azure-aks-{{$clusterName}}/{{.Namespace | kebabcase}}
-    - Infrastructure/{{$app}}/azure-aks-{{$clusterName}}
+    - Infrastructure/{{$app}}/{{$clusterName}}-AKSCluster
+    - Infrastructure/{{$app}}/{{$clusterName}}-AKSCluster/{{.Namespace | kebabcase}}
 {{end}}

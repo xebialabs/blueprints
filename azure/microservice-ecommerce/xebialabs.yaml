@@ -3,9 +3,9 @@ kind: Import
 metadata:
   imports:
   - xebialabs/xld-microservice-ecommerce-infra-env.yaml
-  - xebialabs/xld-microservice-ecommerce-invoice-application.yaml
-  - xebialabs/xld-microservice-ecommerce-notification-application.yaml
-  - xebialabs/xld-microservice-ecommerce-store-application.yaml
-  - xebialabs/xld-microservice-ecommerce-terraform-application.yaml
+  - xebialabs/xld-microservice-ecommerce-invoice-applications.yaml
+  - xebialabs/xld-microservice-ecommerce-notification-applications.yaml
+  - xebialabs/xld-microservice-ecommerce-store-applications.yaml
+  - xebialabs/xld-microservice-ecommerce-terraform-applications.yaml
   - xebialabs/xlr-microservice-ecommerce-pipeline-ci-cd.yaml
   - xebialabs/xlr-microservice-ecommerce-pipeline-destroy.yaml
