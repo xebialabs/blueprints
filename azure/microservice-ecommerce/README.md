@@ -23,8 +23,13 @@ If you're new to XebiaLabs blueprints, check out:
 
 1. Fork the https://github.com/xebialabs/e-commerce-microservice repository
 2. Clone your fork of the repository
+3. Check out the `gke-blueprint` branch:
+    ```plain
+    git co -b gke-blueprint origin/gke-blueprint
+    ```
 
 > For more detailed instructions, see [Deploy an app to AWS using a blueprint](https://docs.xebialabs.com/v.9.0/xl-release/how-to/deploy-to-aws-using-blueprints)
+> **Note:** This blueprint uses the same branch as the Google GKE example
 
 ## Usage
 
@@ -63,7 +68,7 @@ This blueprint version requires at least the following versions of the specified
 * Azure Resource Group
 * Azure Region
 * The AKS cluster endpoint, if you are deploying to an existing cluster
-* Azure Storage Account for the Terraform state, if creating a new cluster (see step 3.2)
+* Azure Storage Account for the Terraform state, if creating a new cluster
 * Kubernetes cluster credentials
 * The Kubernetes namespace
 

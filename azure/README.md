@@ -1,6 +1,6 @@
 # Microsoft Azure
 
-These are notes common to all AWS blueprints.
+These are notes common to all Azure blueprints.
 
 All the Azure blueprints require the following information:
 

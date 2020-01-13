@@ -47,17 +47,19 @@ spec:
   # ############################################################################
   - name: StorageAccountName
     type: Input
-    prompt: "Enter the Storage Account where Terraform will store its state (see aws/README.md):"
+    prompt: "Enter the Storage Account where Terraform will store its state (see azure/README.md):"
+    description: Can contain only lowercase letters and numbers. Must be between 3 and 24 characters.
     promptIf: ProvisionCluster
+    validate: !expr "regex('^[a-z0-9]{3,24}$', StorageAccountName)"
 
   - name: StorageAccessKey
     type: Input
-    prompt: "Enter the Storage Account key for accessing the storage (see aws/README.md):"
+    prompt: "Enter the Storage Account key for accessing the storage (see azure/README.md):"
     promptIf: ProvisionCluster
 
   - name: StorageContainerName
     type: Input
-    prompt: "Enter the Storage Container name (see aws/README.md):"
+    prompt: "Enter the Storage Container name (see azure/README.md):"
     promptIf: ProvisionCluster
     default: terraform-state
   # ############################################################################
