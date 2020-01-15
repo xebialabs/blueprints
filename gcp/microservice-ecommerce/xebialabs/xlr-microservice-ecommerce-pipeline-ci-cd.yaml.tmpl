@@ -59,8 +59,9 @@ spec:
         deploymentPackage: {{$app}}/GKE-TERRAFORM/{{$app}}-terraform-gke/1.0.0
         deploymentEnvironment: Environments/{{$app}}/gcp-terraform
     # Apply RBAC
-    - name: Apply RBAC authentication
-      type: core.manual
+      - name: Apply RBAC authentication
+        type: xlrelease.Task
+        description: Check back to the USAGE-microservice-ecommerce.md file for more
     {{end}}
     {{if .EnableCICD}}
     - name: Build {{$app}} application

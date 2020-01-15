@@ -106,6 +106,7 @@ spec:
   - path: xebialabs/xld-microservice-ecommerce-infra-env.yaml.tmpl
   - path: xebialabs/xlr-microservice-ecommerce-pipeline-ci-cd.yaml.tmpl
   - path: xebialabs/xlr-microservice-ecommerce-pipeline-destroy.yaml.tmpl
+  - path: manifest.yaml
   # Terraform
   - path: terraform-microservice-ecommerce/gke/main.tf
     writeIf: ProvisionCluster
