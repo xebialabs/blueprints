@@ -38,7 +38,7 @@ resource "google_container_cluster" "primary" {
       "https://www.googleapis.com/auth/monitoring",
     ]
 
-    labels {
+    labels = {
       env = "${var.gke_label}"
     }
 
