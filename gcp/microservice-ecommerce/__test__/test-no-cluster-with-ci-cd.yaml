@@ -26,3 +26,4 @@ not-expected-files:
 - terraform-microservice-ecommerce/main.tf
 - terraform-microservice-ecommerce/outputs.tf
 - terraform-microservice-ecommerce/variables.tf
+- manifest.yaml
