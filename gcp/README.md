@@ -116,7 +116,7 @@ gcloud iam service-accounts keys create account.json \
 --iam-account terraform@${TF_ADMIN}.iam.gserviceaccount.com
 ```
 
-> **Note:** Store `account.json` somewhere safe. You'll need it to deploy blueprints to GCP
+> **Note:** Store `account.json` somewhere safe. You'll need it to deploy blueprints to GCP. Your account.json file needs to be put in the generated terraform folder before xl apply can be run.  
 
 Grant the service account permission to view the Admin Project and manage Cloud Storage
 
