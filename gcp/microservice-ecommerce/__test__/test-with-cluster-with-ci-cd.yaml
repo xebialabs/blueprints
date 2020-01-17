@@ -25,3 +25,4 @@ expected-files:
 - docker/docker-compose.yml
 - docker/data/configure-xl-devops-platform.yaml
 - docker/jenkins/jenkins.yaml
+- manifest.yaml

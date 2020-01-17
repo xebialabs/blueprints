@@ -24,5 +24,7 @@ expected-files:
 - terraform-microservice-ecommerce/variables.tf
 - docker/docker-compose.yml
 - docker/data/configure-xl-devops-platform.yaml
+- manifest.yaml
 not-expected-files:
 - docker/jenkins/jenkins.yaml
+

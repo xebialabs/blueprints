@@ -129,3 +129,5 @@ spec:
     writeIf: ProvisionCluster
   - path: terraform-microservice-ecommerce/variables.tf
     writeIf: ProvisionCluster
+  - path: manifest.yaml
+    writeIf: ProvisionCluster
