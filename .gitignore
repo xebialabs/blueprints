@@ -131,3 +131,6 @@ index.json
 # Maven Wrapper
 ######################
 !.mvn/wrapper/maven-wrapper.jar
+
+secrets.xlvals
+**/secrets.xlvals
