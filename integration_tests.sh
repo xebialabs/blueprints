@@ -1,0 +1,68 @@
+#!/bin/bash
+
+function usage() {
+    echo "Usage: `basename $0` [-h|--help] [[--blueprints BLUEPRINT]...]"
+    echo "       --blueprint        name of the blueprint"
+    echo ""
+}
+
+function run_test() {
+    ./xl-yaml-test --local-repo-path $(pwd) --blueprint-directory $1 --test-path "$1/__test__"
+}
+
+function handle_args() {
+    BLUEPRINTS=()
+
+    while [[ $# -gt 0 ]]; do
+        arg=$1
+        case $arg in
+            -h|--help)
+                usage
+                shift
+                ;;
+            -b|--blueprint)
+                shift
+                BLUEPRINTS+=("$1")
+                shift
+                ;;
+            *)
+                usage
+                shift
+                ;;
+        esac
+    done
+
+    if [ "${#BLUEPRINTS[@]}" -gt 0 ]; then
+        for bp in "${BLUEPRINTS[@]}"; do
+            if [ ! -d $bp ]; then
+                echo "Directory $bp does not exist. Exiting."
+                exit 1
+            fi
+        done
+
+        for test in "${BLUEPRINTS[@]}"; do
+            run_test $test
+        done
+    fi
+}
+
+function find_all_blueprint_tests() {
+    BLUEPRINTS=()
+    DIRS=($(find . -name blueprint.yaml | sed 's#^\./##' | grep basic-eks-cluster))
+    for fn in "${DIRS[@]}"; do
+        dir=$(dirname $fn)
+        if [ -d "$dir/__test__" ]; then
+            BLUEPRINTS+=("$dir")
+        fi
+    done
+
+    for test in "${BLUEPRINTS[@]}"; do
+        run_test $test
+    done
+}
+
+if [ $# -gt 0 ]; then
+    handle_args $*
+else
+    find_all_blueprint_tests
+fi
