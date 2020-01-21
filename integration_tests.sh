@@ -61,6 +61,15 @@ function find_all_blueprint_tests() {
     done
 }
 
+function setup_aws_environment() {
+    if [ ! -d $HOME/.aws ]; then
+        mkdir $HOME/.aws
+        echo $'[default]\naws_access_key_id = ABCDEFGHIJKLMNOPQRST\naws_secret_access_key = 1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZabcd' > $HOME/.aws/credentials
+    fi
+}
+
+setup_aws_environment
+
 if [ $# -gt 0 ]; then
     handle_args $*
 else
