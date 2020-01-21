@@ -10,6 +10,4 @@ jobs:
     steps:
     - uses: actions/checkout@v1
     - name: Run a one-line script
-      run: |
-        echo $HOME
-        env
+      run: ./integration_tests.sh
