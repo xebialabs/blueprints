@@ -19,6 +19,8 @@ If you're new to XebiaLabs blueprints, check out:
 * Azure credentials that allow creating the infrastructure
 * See the Azure [README.md](https://github.com/xebialabs/blueprints/blob/master/azure/README.md) for instruction on how to set this up
 
+This blueprint will store your Azure credentials in plain text in a file called `xebialabs/secrets.xlvals`. This is not production-level secure. If you wish to use a more secure method for dealing with secrets and passwords, refer to the `showcases/dictionaries-and-secret-stores` blueprint for a demonstration that uses CyberArk Conjur or HashiCorp Vault to better store and handle secrets.
+
 ## Usage
 
 To use this blueprint, run `xl blueprint` in an empty directory and select:

@@ -18,6 +18,10 @@ If you're new to XebiaLabs blueprints, check out:
 * XebiaLabs Deployment Automation up and running
 * Access to a Google Cloud Platform (GCP) account where you can deploy the GKE Cluster
 
+## Security warning
+
+This blueprint will store the Kubernetes master password in a file called `xebialabs/secrets.xlvals`. This is not production-level secure. If you wish to use a more secure method for dealing with secrets and passwords, refer to the `showcases/dictionaries-and-secret-stores` blueprint for a demonstration that uses CyberArk Conjur or HashiCorp Vault to better store and handle secrets.
+
 ## Usage
 
 To use this blueprint, run `xl blueprint` in an empty directory and select:
