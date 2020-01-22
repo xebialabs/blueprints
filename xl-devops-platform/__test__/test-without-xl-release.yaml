@@ -11,8 +11,8 @@ with_answers:
   JenkinsPort: 8080
 expect:
   to_exist:
-  - xebialabs/config.yam
-  - xebialabs/USAGE-docker-compose.md
+  - xebialabs/config.yaml
+  - xebialabs/USAGE-docker-compose.mda
   - docker/docker-compose.yml
   - docker/jenkins/jenkins.yaml
   - docker/data/configure-xl-devops-platform.yaml
