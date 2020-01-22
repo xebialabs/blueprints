@@ -1,6 +1,0 @@
-UseAWSCredentialsFromSystem: false
-AWSAccessKey: ANDGDJDHJHD4235
-AWSAccessSecret: ANDGDJDHJHD4235
-AWSRegion: ap-northeast-1
-AppName: test-project
-GenerateDockerComposeSetup: true

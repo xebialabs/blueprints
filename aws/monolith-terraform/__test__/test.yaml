@@ -1,0 +1,25 @@
+xl_mode: blueprint
+with_answers:
+  AppName: test-project
+  PublicPort: 80
+  MySQLMasterPassword: asdfghjkqwert
+  UseAWSCredentialsFromSystem: false
+  AWSAccessKey: ANDGDJDHJHD4235
+  AWSAccessSecret: ANDGDJDHJHD4235
+  AWSRegion: us-west-1
+  GenerateDockerComposeSetup: true
+expect:
+  to_exist:
+  - xebialabs.yaml
+  - README.md
+  - xebialabs/USAGE-monolith-terraform.md
+  - xebialabs/xld-monolith-terraform-applications.yaml
+  - xebialabs/xld-monolith-terraform-infrastructure.yaml
+  - xebialabs/xld-monolith-terraform-environments.yaml
+  - xebialabs/xlr-monolith-terraform-pipeline-ci-cd.yaml
+  - xebialabs/xlr-monolith-terraform-pipeline-destroy.yaml
+  - terraform-monolith-terraform/infrastructure/infrastructure.tf
+  - terraform-monolith-terraform/infrastructure/outputs.tf
+  - terraform-monolith-terraform/infrastructure/variables.tf
+  - docker/docker-compose.yml
+  - docker/data/configure-xl-devops-platform.yaml

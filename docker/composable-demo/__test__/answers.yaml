@@ -1,8 +1,0 @@
-DockerURL: http://docker:2375
-DockerImageRepository: nginx
-DockerImageTag: latest
-ExposePort: false
-XLDeployPort: 4321
-XLVersion: 8.6.1
-UseDockerProxy: true
-GenerateDockerComposeSetup: true

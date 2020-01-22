@@ -1,8 +1,9 @@
 #!/bin/bash
 
 function usage() {
-    echo "Usage: `basename $0` [-h|--help] [[--blueprints BLUEPRINT]...]"
-    echo "       --blueprint        name of the blueprint"
+    echo "Usage: `basename $0` [-h|--help] [[-b|--blueprints BLUEPRINT]...]"
+    echo "       -h, --help             this help message"
+    echo "       -b, --blueprint        name of the blueprint"
     echo ""
 }
 
@@ -11,7 +12,7 @@ function run_test() {
 }
 
 function handle_args() {
-    BLUEPRINTS=()
+    local BLUEPRINTS=()
 
     while [[ $# -gt 0 ]]; do
         arg=$1
@@ -22,7 +23,8 @@ function handle_args() {
                 ;;
             -b|--blueprint)
                 shift
-                BLUEPRINTS+=("$1")
+                local BP_PATH=$1
+                BLUEPRINTS+=("${BP_PATH%/}")
                 shift
                 ;;
             *)
@@ -40,6 +42,13 @@ function handle_args() {
             fi
         done
 
+        echo "Limit integration tests to:"
+        for test in "${BLUEPRINTS[@]}"; do
+            echo "- $test"
+        done
+
+        echo ""
+
         for test in "${BLUEPRINTS[@]}"; do
             run_test $test
         done
@@ -47,8 +56,8 @@ function handle_args() {
 }
 
 function find_all_blueprint_tests() {
-    BLUEPRINTS=()
-    DIRS=($(find . -name blueprint.yaml | sed 's#^\./##' | grep basic-eks-cluster))
+    local BLUEPRINTS=()
+    local DIRS=($(find . -name blueprint.yaml | sed 's#^\./##'))
     for fn in "${DIRS[@]}"; do
         dir=$(dirname $fn)
         if [ -d "$dir/__test__" ]; then

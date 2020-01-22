@@ -1,5 +1,12 @@
-answers-file: answers.yaml
-expected-files:
-- xebialabs.yaml
-- README.md
-- xebialabs/xld-application-applications.yaml
+xl_mode: blueprint
+with_answers:
+  DockerImageRepository: nginx
+  DockerImageTag: latest
+  ExposePort: true
+  ContainerPort: 80
+  HostPort: 8080
+expect:
+  to_exist:
+  - xebialabs.yaml
+  - README.md
+  - xebialabs/xld-application-applications.yaml

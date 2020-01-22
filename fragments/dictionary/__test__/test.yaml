@@ -1,6 +1,13 @@
-answers-file: answers.yaml
-expected-files:
-- xebialabs/USAGE-dictionary.md
-- xebialabs/xld-dictionary-environments.yaml
-not-expected-files:
-- xebialabs.yaml
+xl_mode: blueprint
+with_answers:
+  DictionaryName: MyDictionary
+  DictionaryDirectoryName: dirname
+  DictionaryKeys: "a.b.c,d.e.f"
+expect:
+  to_exist:
+  - xebialabs/USAGE-dictionary.md
+  - xebialabs/xld-dictionary-environments.yaml
+  to_not_exist:
+  - xebialabs.yaml
+  - xebialabs/values.xlvals
+  - xebialabs/secrets.xlvals

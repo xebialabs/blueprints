@@ -1,10 +1,18 @@
-answers-file: answers.yaml
-expected-files:
-- xebialabs.yaml
-- README.md
-- xebialabs/USAGE-basic-lambda.md
-- xebialabs/xld-basic-lambda-applications.yaml
-- xebialabs/xld-basic-lambda-infrastructure.yaml
-- xebialabs/xld-basic-lambda-environments.yaml
-- cloudformation-basic-lambda/lambda-function.yaml
-- docker/docker-compose.yml
+xl_mode: blueprint
+with_answers:
+  UseAWSCredentialsFromSystem: false
+  AWSAccessKey: ANDGDJDHJHD4235
+  AWSAccessSecret: ANDGDJDHJHD4235
+  AWSRegion: ap-northeast-1
+  AppName: test-project
+  GenerateDockerComposeSetup: true
+expect:
+  to_exist:
+  - xebialabs.yaml
+  - README.md
+  - xebialabs/USAGE-basic-lambda.md
+  - xebialabs/xld-basic-lambda-applications.yaml
+  - xebialabs/xld-basic-lambda-infrastructure.yaml
+  - xebialabs/xld-basic-lambda-environments.yaml
+  - cloudformation-basic-lambda/lambda-function.yaml
+  - docker/docker-compose.yml

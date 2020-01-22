@@ -1,3 +1,4 @@
+xl_mode: blueprint
 with_answers:
   UseAWSCredentialsFromSystem: false
   AWSAccessKey: A

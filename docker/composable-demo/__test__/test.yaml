@@ -1,10 +1,20 @@
-answers-file: answers.yaml
-expected-files:
-- xebialabs.yaml
-- README.md
-- xebialabs/USAGE-composable-demo.md
-- xebialabs/xld-environment-infrastructure.yaml
-- xebialabs/xld-environment-environments.yaml
-- xebialabs/xld-application-applications.yaml
-- xebialabs/config.yaml
-- docker/docker-compose.yml
+xl_mode: blueprint
+with_answers:
+  DockerURL: http://docker:2375
+  DockerImageRepository: nginx
+  DockerImageTag: latest
+  ExposePort: false
+  XLDeployPort: 4321
+  XLVersion: 8.6.1
+  UseDockerProxy: true
+  GenerateDockerComposeSetup: true
+expect:
+  to_exist:
+  - xebialabs.yaml
+  - README.md
+  - xebialabs/USAGE-composable-demo.md
+  - xebialabs/xld-environment-infrastructure.yaml
+  - xebialabs/xld-environment-environments.yaml
+  - xebialabs/xld-application-applications.yaml
+  - xebialabs/config.yaml
+  - docker/docker-compose.yml

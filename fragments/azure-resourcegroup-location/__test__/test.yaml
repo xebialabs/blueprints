@@ -1,1 +1,11 @@
-answers-file: answers.yaml
+xl_mode: blueprint
+with_answers:
+  ResourceGroupPrompt: Enter the Resource Group name
+  ResourceGroup: my-rg
+  ResourceGroupLocationPrompt: Choose the Resource Group Location
+  ResourceGroupLocation: eastasia
+expect:
+  to_not_exist:
+  - xebialabs.yaml
+  - xebialabs/values.xlvals
+  - xebialabs/secrets.xlvals

@@ -1,7 +1,20 @@
-answers-file: answers-cyberark-conjur-existing.yaml
-expected-files:
-- xebialabs/USAGE-secret-store.md
-- xebialabs/xld-secret-store-configuration.yaml
-- xebialabs/xld-secret-store-environments.yaml
-not-expected-files:
-- xebialabs.yaml
+xl_mode: blueprint
+with_answers:
+  SecretStoreTool: cyberark-conjur
+  SecretStoreName: MySecretStore
+  SecretStoreDirectoryName: secretdir
+  SecretStoreDictionaryName: MySecretStore Dictionary
+  SecretStoreLocation: existing
+  SecretStoreServerAddress: http://10.0.0.1:80
+  SecretStoreKeys: key.one,key.two
+  CyberArkAccount: xebialabs
+  CyberArkPolicyPath: demo
+expect:
+  to_exist:
+  - xebialabs/USAGE-secret-store.md
+  - xebialabs/xld-secret-store-configuration.yaml
+  - xebialabs/xld-secret-store-environments.yaml
+  to_not_exist:
+  - xebialabs.yaml
+  - xebialabs/values.xlvals
+  - xebialabs/secrets.xlvals

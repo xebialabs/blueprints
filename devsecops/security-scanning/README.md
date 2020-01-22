@@ -16,6 +16,10 @@ If you're new to XebiaLabs blueprints, check out:
 * XebiaLabs Release Orchestration up and running
 * Access to one or more security testing tool(s)
 
+## Security warning
+
+This blueprint will store various passwords in plain text in a file called `xebialabs/secrets.xlvals`. This is not production-level secure. If you wish to use a more secure method for dealing with secrets and passwords, refer to the `showcases/dictionaries-and-secret-stores` blueprint for a demonstration that uses CyberArk Conjur or HashiCorp Vault to better store and handle secrets.
+
 ## Usage
 
 To use this blueprint, run `xl blueprint` in an empty directory and select:
