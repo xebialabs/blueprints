@@ -7,8 +7,15 @@ function usage() {
     echo ""
 }
 
+EXIT_CODE=0
+
 function run_test() {
+    echo "Running..."
     ./xl-yaml-test --local-repo-path $(pwd) --blueprint-directory $1 --test-path "$1/__test__"
+    local TMP_EXIT_CODE=$?
+    if [ $TMP_EXIT_CODE -ne 0 ]; then
+        EXIT_CODE=$TMP_EXIT_CODE
+    fi
 }
 
 function handle_args() {
@@ -84,3 +91,5 @@ if [ $# -gt 0 ]; then
 else
     find_all_blueprint_tests
 fi
+
+exit $EXIT_CODE
