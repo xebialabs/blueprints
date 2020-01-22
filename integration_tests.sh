@@ -10,7 +10,6 @@ function usage() {
 EXIT_CODE=0
 
 function run_test() {
-    echo "Running..."
     ./xl-yaml-test --local-repo-path $(pwd) --blueprint-directory $1 --test-path "$1/__test__"
     local TMP_EXIT_CODE=$?
     if [ $TMP_EXIT_CODE -ne 0 ]; then
@@ -64,7 +63,7 @@ function handle_args() {
 
 function find_all_blueprint_tests() {
     local BLUEPRINTS=()
-    local DIRS=($(find . -name blueprint.yaml | sed 's#^\./##'))
+    local DIRS=($(find . -name blueprint.yaml | sed 's#^\./##' | sort))
     for fn in "${DIRS[@]}"; do
         dir=$(dirname $fn)
         if [ -d "$dir/__test__" ]; then
