@@ -62,9 +62,7 @@ spec:
   # Jenkins
   # ############################################################################
   - name: EnableCICD
-    type: Confirm
-    prompt: Do you want to enable CI/CD integration with Jenkins?
-    default: true
+    value: true
 
   - name: StoreAdminUsername
     value: admin
