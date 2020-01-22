@@ -1,5 +1,0 @@
-DockerImageRepository: nginx
-DockerImageTag: latest
-ExposePort: true
-ContainerPort: 80
-HostPort: 8080

@@ -1,6 +1,9 @@
-answers-file: answers.yaml
-expected-files:
-- xebialabs.yaml
-- README.md
-- xebialabs/xld-environment-infrastructure.yaml
-- xebialabs/xld-environment-environments.yaml
+xl_mode: blueprint
+with_answers:
+  DockerURL: http://docker:2375
+expect:
+  to_exist:
+  - xebialabs.yaml
+  - README.md
+  - xebialabs/xld-environment-infrastructure.yaml
+  - xebialabs/xld-environment-environments.yaml

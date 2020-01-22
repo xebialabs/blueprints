@@ -1,25 +1,41 @@
-# test the scenario with neither cluster nor CI-CD enabled
-answers-file: answers-with-cluster-no-ci-cd.yaml
-expected-files:
-- xebialabs.yaml
-- README.md
-- xebialabs/USAGE-microservice-ecommerce.md
-- xebialabs/xld-microservice-ecommerce-infra-env.yaml
-- xebialabs/xld-microservice-ecommerce-invoice-applications.yaml
-- xebialabs/xld-microservice-ecommerce-notification-applications.yaml
-- xebialabs/xld-microservice-ecommerce-store-applications.yaml
-- xebialabs/xld-microservice-ecommerce-terraform-applications.yaml
-- xebialabs/xlr-microservice-ecommerce-pipeline-ci-cd.yaml
-- xebialabs/xlr-microservice-ecommerce-pipeline-destroy.yaml
-- docker/docker-compose.yml
-- docker/data/configure-xl-devops-platform.yaml
-- terraform-microservice-ecommerce/aks/main.tf
-- terraform-microservice-ecommerce/aks/outputs.tf
-- terraform-microservice-ecommerce/aks/variables.tf
-- terraform-microservice-ecommerce/.gitignore
-- terraform-microservice-ecommerce/backend.tf
-- terraform-microservice-ecommerce/main.tf
-- terraform-microservice-ecommerce/outputs.tf
-- terraform-microservice-ecommerce/variables.tf
-not-expected-files:
-- docker/jenkins/jenkins.yaml
+xl_mode: blueprint
+with_answers:
+  AppName: azure-project
+  ResourceGroup: azure-rg
+  ResourceGroupLocation: westeurope
+  ProvisionCluster: true
+  ClusterName: azure-cluster
+  ClientID: A
+  ClientSecret: B
+  SubscriptionID: C
+  TenantID: D
+  EnableCICD: false
+  XLDUrlForXLR: http://xl-deploy:4516
+  StorageAccountName: storageuser
+  StorageContainerName: terraform-state
+  StorageAccessKey: abcdefgh
+  GenerateDockerComposeSetup: true
+expect:
+  to_exist:
+  - xebialabs.yaml
+  - README.md
+  - xebialabs/USAGE-microservice-ecommerce.md
+  - xebialabs/xld-microservice-ecommerce-infra-env.yaml
+  - xebialabs/xld-microservice-ecommerce-invoice-applications.yaml
+  - xebialabs/xld-microservice-ecommerce-notification-applications.yaml
+  - xebialabs/xld-microservice-ecommerce-store-applications.yaml
+  - xebialabs/xld-microservice-ecommerce-terraform-applications.yaml
+  - xebialabs/xlr-microservice-ecommerce-pipeline-ci-cd.yaml
+  - xebialabs/xlr-microservice-ecommerce-pipeline-destroy.yaml
+  - docker/docker-compose.yml
+  - docker/data/configure-xl-devops-platform.yaml
+  - terraform-microservice-ecommerce/aks/main.tf
+  - terraform-microservice-ecommerce/aks/outputs.tf
+  - terraform-microservice-ecommerce/aks/variables.tf
+  - terraform-microservice-ecommerce/.gitignore
+  - terraform-microservice-ecommerce/backend.tf
+  - terraform-microservice-ecommerce/main.tf
+  - terraform-microservice-ecommerce/outputs.tf
+  - terraform-microservice-ecommerce/variables.tf
+  to_not_exist:
+  - docker/jenkins/jenkins.yaml

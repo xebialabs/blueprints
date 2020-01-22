@@ -1,20 +1,38 @@
-answers-file: answers-eks.yaml
-expected-files:
-- xebialabs.yaml
-- README.md
-- xebialabs/USAGE-basic-eks-cluster.md
-- xebialabs/USAGE-multicloud-pipeline.md
-- xebialabs/xld-basic-eks-cluster-applications.yaml
-- xebialabs/xld-basic-eks-cluster-environments.yaml
-- xebialabs/xld-application-applications.yaml
-- xebialabs/xlr-multicloud-pipeline-ci-cd.yaml
-- xebialabs/xlr-multicloud-pipeline-destroy.yaml
-- cloudformation-basic-eks-cluster/cfn-secret-provider.zip
-- cloudformation-basic-eks-cluster/eks-master.yaml
-- cloudformation-basic-eks-cluster/eks-user.yaml
-- cloudformation-basic-eks-cluster/eks-vpc.yaml
-- cloudformation-basic-eks-cluster/eks-workers.yaml
-- kubernetes-basic-eks-cluster/aws-auth-cm.yaml
-- kubernetes-application/deployment.yaml
-not-expected-files:
-- xebialabs/basic-eks-cluster.yaml
+xl_mode: blueprint
+with_answers:
+  Provider: EKS
+  ClusterName: clustername
+  XLDUrlForXLR: http://xl-deploy:4516
+  UseAWSCredentialsFromSystem: false
+  AWSAccessKey: ABCDEFGHIJKLMNOPQRST
+  AWSAccessSecret: abcdefghijklmnopqrstuvwxyz1234567890ABCDE
+  AWSRegion: eu-west-3
+  NodeAutoScalingGroupDesiredSize: 3
+  NodeInstanceType: t2.medium
+  GenerateDockerComposeSetup: false
+  AppName: myapp
+  DockerImage: nginx
+  DockerImageTag: latest
+  KubernetesResourcesFile: ../kubernetes-application/deployment.yaml
+expect:
+  to_exist:
+  - README.md
+  - xebialabs.yaml
+  - xebialabs/values.xlvals
+  - xebialabs/secrets.xlvals
+  - xebialabs/USAGE-basic-eks-cluster.md
+  - xebialabs/USAGE-multicloud-pipeline.md
+  - xebialabs/xld-basic-eks-cluster-applications.yaml
+  - xebialabs/xld-basic-eks-cluster-environments.yaml
+  - xebialabs/xld-application-applications.yaml
+  - xebialabs/xlr-multicloud-pipeline-ci-cd.yaml
+  - xebialabs/xlr-multicloud-pipeline-destroy.yaml
+  - cloudformation-basic-eks-cluster/cfn-secret-provider.zip
+  - cloudformation-basic-eks-cluster/eks-master.yaml
+  - cloudformation-basic-eks-cluster/eks-user.yaml
+  - cloudformation-basic-eks-cluster/eks-vpc.yaml
+  - cloudformation-basic-eks-cluster/eks-workers.yaml
+  - kubernetes-basic-eks-cluster/aws-auth-cm.yaml
+  - kubernetes-application/deployment.yaml
+  to_not_exist:
+  - xebialabs/basic-eks-cluster.yaml

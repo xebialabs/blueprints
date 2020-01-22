@@ -1,7 +1,18 @@
-answers-file: answers-without-xl-release.yaml
-expected-files:
-- xebialabs/config.yaml
-- xebialabs/USAGE-docker-compose.md
-- docker/docker-compose.yml
-- docker/jenkins/jenkins.yaml
-- docker/data/configure-xl-devops-platform.yaml
+xl_mode: blueprint
+with_answers:
+  GenerateDockerComposeSetup: true
+  UseXLDeploy: true
+  XLDeployPort: 4516
+  UseXLRelease: false
+  XLReleasePort: 4516
+  XLVersion: "9.0"
+  UseDockerProxy: true
+  UseJenkins: true
+  JenkinsPort: 8080
+expect:
+  to_exist:
+  - xebialabs/config.yaml
+  - xebialabs/USAGE-docker-compose.md
+  - docker/docker-compose.yml
+  - docker/jenkins/jenkins.yaml
+  - docker/data/configure-xl-devops-platform.yaml

@@ -1,13 +1,29 @@
-answers-file: answers.yaml
-expected-files:
-- xebialabs.yaml
-- README.md
-- xebialabs/USAGE-basic-eks-cluster.md
-- xebialabs/xld-basic-eks-cluster-applications.yaml
-- xebialabs/xld-basic-eks-cluster-infrastructure.yaml
-- xebialabs/xld-basic-eks-cluster-environments.yaml
-- kubernetes-basic-eks-cluster/aws-auth-cm.yaml
-- cloudformation-basic-eks-cluster/eks-master.yaml
-- cloudformation-basic-eks-cluster/eks-user.yaml
-- cloudformation-basic-eks-cluster/eks-vpc.yaml
-- cloudformation-basic-eks-cluster/eks-workers.yaml
+xl_mode: blueprint
+with_answers:
+  UseAWSCredentialsFromSystem: false
+  AWSAccessKey: A
+  AWSAccessSecret: B
+  AWSRegion: eu-west-3
+  ClusterName: cluster1
+  NodeAutoScalingGroupDesiredSize: 3
+  NodeInstanceType: t2.medium
+  GenerateDockerComposeSetup: false
+  ClusterVersion: '1.12'
+expect:
+  to_exist:
+  - xebialabs.yaml
+  - README.md
+  - xebialabs/USAGE-basic-eks-cluster.md
+  - xebialabs/xld-basic-eks-cluster-applications.yaml
+  - xebialabs/xld-basic-eks-cluster-infrastructure.yaml
+  - xebialabs/xld-basic-eks-cluster-environments.yaml
+  - kubernetes-basic-eks-cluster/aws-auth-cm.yaml
+  - cloudformation-basic-eks-cluster/eks-master.yaml
+  - cloudformation-basic-eks-cluster/eks-user.yaml
+  - cloudformation-basic-eks-cluster/eks-vpc.yaml
+  - cloudformation-basic-eks-cluster/eks-workers.yaml
+  assertion:
+    generated_files:
+    - file_name: xebialabs/xld-basic-eks-cluster-applications.yaml
+      has_elements:
+        'spec[0].name': cluster-1

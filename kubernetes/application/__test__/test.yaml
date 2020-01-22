@@ -1,7 +1,16 @@
-answers-file: answers.yaml
-expected-files:
-- xebialabs.yaml
-- README.md
-- xebialabs/USAGE-application.md
-- xebialabs/xld-application-applications.yaml
-- kubernetes-application/deployment.yaml
+xl_mode: blueprint
+with_answers:
+  AppName: myapp
+  DockerImage: httpd
+  DockerImageTag: latest
+  KubernetesResourcesFile: ../kubernetes-application/httpd.yaml
+  Namespace: default
+expect:
+  to_exist:
+  - README.md
+  - xebialabs.yaml
+  - xebialabs/values.xlvals
+  - xebialabs/secrets.xlvals
+  - xebialabs/USAGE-application.md
+  - xebialabs/xld-application-applications.yaml
+  - kubernetes-application/deployment.yaml

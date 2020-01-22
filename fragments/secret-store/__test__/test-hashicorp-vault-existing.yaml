@@ -1,7 +1,20 @@
-answers-file: answers-hashicorp-vault-existing.yaml
-expected-files:
-- xebialabs/USAGE-secret-store.md
-- xebialabs/xld-secret-store-configuration.yaml
-- xebialabs/xld-secret-store-environments.yaml
-not-expected-files:
-- xebialabs.yaml
+xl_mode: blueprint
+with_answers:
+  SecretStoreTool: hashicorp-vault
+  SecretStoreName: MySecretStore
+  SecretStoreDirectoryName: secretdir
+  SecretStoreDictionaryName: MySecretStore Dictionary
+  SecretStoreLocation: existing
+  SecretStoreServerAddress: http://10.0.0.1:8200
+  SecretStoreKeys: key.one,key.two
+  HashiCorpBackend: VERSIONED
+  HashiCorpSecretPath: xebialabs/demo
+expect:
+  to_exist:
+  - xebialabs/USAGE-secret-store.md
+  - xebialabs/xld-secret-store-configuration.yaml
+  - xebialabs/xld-secret-store-environments.yaml
+  to_not_exist:
+  - xebialabs.yaml
+  - xebialabs/values.xlvals
+  - xebialabs/secrets.xlvals

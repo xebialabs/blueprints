@@ -1,0 +1,23 @@
+xl_mode: blueprint
+with_answers:
+  AppName: test-project
+  PublicPort: 80
+  MySQLMasterPassword: asdfghjkqwert
+  UseAWSCredentialsFromSystem: false
+  AWSAccessKey: ANDGDJDHJHD4235
+  AWSAccessSecret: ANDGDJDHJHD4235
+  AWSRegion: us-west-1
+  GenerateDockerComposeSetup: true
+expect:
+  to_exist:
+  - xebialabs.yaml
+  - README.md
+  - xebialabs/USAGE-monolith.md
+  - xebialabs/xld-monolith-applications.yaml
+  - xebialabs/xld-monolith-service-applications.yaml
+  - xebialabs/xld-monolith-infrastructure.yaml
+  - xebialabs/xld-monolith-environments.yaml
+  - xebialabs/xlr-monolith-pipeline-ci-cd.yaml
+  - xebialabs/xlr-monolith-pipeline-destroy.yaml
+  - docker/docker-compose.yml
+  - docker/data/configure-xl-devops-platform.yaml

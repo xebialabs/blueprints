@@ -1,14 +1,31 @@
-answers-file: answers-dictionary-existing.yaml
-expected-files:
-- xebialabs.yaml
-- README.md
-- xebialabs/USAGE-dictionaries-and-secret-stores.md
-- xebialabs/USAGE-dictionary.md
-- xebialabs/xld-dictionaries-and-secret-stores-applications.yaml
-- xebialabs/xld-dictionaries-and-secret-stores-environments.yaml
-- xebialabs/xld-dictionaries-and-secret-stores-infrastructure.yaml
-- xebialabs/xlr-dictionaries-and-secret-stores-pipeline-ci-cd.yaml
-- xebialabs/xlr-dictionaries-and-secret-stores-pipeline-destroy.yaml
-- terraform/main.tf
-- terraform/outputs.tf
-- terraform/variables.tf
+xl_mode: blueprint
+with_answers:
+  AppName: testapp
+  ResourceGroupLocation: westeurope
+  AzureVMName: testvm
+  AzureVMSize: Standard_DS1_v2
+  AzureOSUsername: azureuser
+  CredentialsSource: dictionary
+  DictionaryName: TestDictionary
+  ClientID: 9149b9d6-b24f-d09b-3d9e-7ac9977b3dbe
+  SubscriptionID: 375e746d-0f79-4e4e-6627-d27491ca1bcb
+  TenantID: 57b6831a-b882-3577-556e-5a246483a5cf
+  GenerateDockerComposeSetup: false
+expect:
+  to_exist:
+  - README.md
+  - xebialabs.yaml
+  - xebialabs/secrets.xlvals
+  - xebialabs/USAGE-dictionaries-and-secret-stores.md
+  - xebialabs/USAGE-dictionary.md
+  - xebialabs/xld-dictionaries-and-secret-stores-applications.yaml
+  - xebialabs/xld-dictionaries-and-secret-stores-environments.yaml
+  - xebialabs/xld-dictionaries-and-secret-stores-infrastructure.yaml
+  - xebialabs/xlr-dictionaries-and-secret-stores-pipeline-ci-cd.yaml
+  - xebialabs/xlr-dictionaries-and-secret-stores-pipeline-destroy.yaml
+  - terraform/main.tf
+  - terraform/outputs.tf
+  - terraform/variables.tf
+  to_not_exist:
+  - xebialabs/values.xlvals
+

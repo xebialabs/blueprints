@@ -1,14 +1,32 @@
-answers-file: answers-aks.yaml
-expected-files:
-- xebialabs.yaml
-- README.md
-- xebialabs/USAGE-basic-aks-cluster.md
-- xebialabs/USAGE-multicloud-pipeline.md
-- xebialabs/xld-application-applications.yaml
-- xebialabs/xlr-multicloud-pipeline-ci-cd.yaml
-- xebialabs/xlr-multicloud-pipeline-destroy.yaml
-- kubernetes-application/deployment.yaml
-- terraform-basic-aks-cluster/main.tf
-- terraform-basic-aks-cluster/outputs.tf
-- terraform-basic-aks-cluster/variables.tf
-- docker/docker-compose.yml
+xl_mode: blueprint
+with_answers:
+  Provider: AKS
+  ClusterName: cluster
+  XLDUrlForXLR: http://xl-deploy:4516
+  SubscriptionID: A
+  ClientID: B
+  ClientSecret: C
+  TenantID: D
+  ResourceGroup: azure-rg
+  ResourceGroupLocation: westeurope
+  GenerateDockerComposeSetup: true
+  AppName: myapp
+  DockerImage: nginx
+  DockerImageTag: latest
+  KubernetesResourcesFile: ../kubernetes-application/deployment.yaml
+expect:
+  to_exist:
+  - README.md
+  - xebialabs.yaml
+  - xebialabs/values.xlvals
+  - xebialabs/secrets.xlvals
+  - xebialabs/USAGE-basic-aks-cluster.md
+  - xebialabs/USAGE-multicloud-pipeline.md
+  - xebialabs/xld-application-applications.yaml
+  - xebialabs/xlr-multicloud-pipeline-ci-cd.yaml
+  - xebialabs/xlr-multicloud-pipeline-destroy.yaml
+  - kubernetes-application/deployment.yaml
+  - terraform-basic-aks-cluster/main.tf
+  - terraform-basic-aks-cluster/outputs.tf
+  - terraform-basic-aks-cluster/variables.tf
+  - docker/docker-compose.yml

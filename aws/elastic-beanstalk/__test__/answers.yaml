@@ -1,9 +1,0 @@
-AppName: appname
-S3BucketName: s3bucket
-UseAWSCredentialsFromSystem: false
-AWSAccessKey: ABCDEFGHIJKLMNOPQRST
-AWSAccessSecret: 1234567890abcdefghijklmnopqrstuvwxyz12345
-AWSRegion: eu-west-3
-SolutionStackName: "64bit Amazon Linux 2018.03 v2.8.6 running Python 3.6"
-S3Key: python-app-v1.zip
-GenerateDockerComposeSetup: true

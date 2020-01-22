@@ -1,22 +1,40 @@
-answers-file: answers-gke.yaml
-expected-files:
-- xebialabs.yaml
-- README.md
-- xebialabs/USAGE-basic-gke-cluster.md
-- xebialabs/USAGE-multicloud-pipeline.md
-- xebialabs/xld-basic-gke-cluster-applications.yaml
-- xebialabs/xld-basic-gke-cluster-infrastructure.yaml
-- xebialabs/xld-basic-gke-cluster-environments.yaml
-- xebialabs/xld-application-applications.yaml
-- xebialabs/xlr-multicloud-pipeline-ci-cd.yaml
-- xebialabs/xlr-multicloud-pipeline-destroy.yaml
-- kubernetes-application/deployment.yaml
-- terraform-basic-gke-cluster/main.tf
-- terraform-basic-gke-cluster/outputs.tf
-- terraform-basic-gke-cluster/variables.tf
-- terraform-basic-gke-cluster/gke/main.tf
-- terraform-basic-gke-cluster/gke/outputs.tf
-- terraform-basic-gke-cluster/gke/variables.tf
-- terraform-basic-gke-cluster/vpc/main.tf
-- terraform-basic-gke-cluster/vpc/outputs.tf
-- terraform-basic-gke-cluster/vpc/variables.tf
+xl_mode: blueprint
+with_answers:
+  Provider: GKE
+  ClusterName: clustername
+  XLDUrlForXLR: http://xl-deploy:4516
+  GCPProjectID: gcpprojectid
+  K8SMasterUser: admin
+  K8SMasterPassword: 1234567890123456
+  GCPRegion: europe-west4
+  GKENumNodes: 2
+  GKENodeMachineType: n1-standard-1
+  GenerateDockerComposeSetup: false
+  AppName: myapp
+  DockerImage: nginx
+  DockerImageTag: latest
+  KubernetesResourcesFile: ../kubernetes-application/deployment.yaml
+expect:
+  to_exist:
+  - README.md
+  - xebialabs.yaml
+  - xebialabs/values.xlvals
+  - xebialabs/secrets.xlvals
+  - xebialabs/USAGE-basic-gke-cluster.md
+  - xebialabs/USAGE-multicloud-pipeline.md
+  - xebialabs/xld-basic-gke-cluster-applications.yaml
+  - xebialabs/xld-basic-gke-cluster-infrastructure.yaml
+  - xebialabs/xld-basic-gke-cluster-environments.yaml
+  - xebialabs/xld-application-applications.yaml
+  - xebialabs/xlr-multicloud-pipeline-ci-cd.yaml
+  - xebialabs/xlr-multicloud-pipeline-destroy.yaml
+  - kubernetes-application/deployment.yaml
+  - terraform-basic-gke-cluster/main.tf
+  - terraform-basic-gke-cluster/outputs.tf
+  - terraform-basic-gke-cluster/variables.tf
+  - terraform-basic-gke-cluster/gke/main.tf
+  - terraform-basic-gke-cluster/gke/outputs.tf
+  - terraform-basic-gke-cluster/gke/variables.tf
+  - terraform-basic-gke-cluster/vpc/main.tf
+  - terraform-basic-gke-cluster/vpc/outputs.tf
+  - terraform-basic-gke-cluster/vpc/variables.tf
