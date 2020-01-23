@@ -100,8 +100,6 @@ spec:
       value: false
     - name: UseJenkins
       value: !expr "EnableCICD"
-    - name: JenkinsBranch
-      value: gke-blueprint
 
   files:
   # XebiaLabs
