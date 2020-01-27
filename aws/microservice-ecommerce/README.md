@@ -17,7 +17,7 @@ If you're new to XebiaLabs blueprints, check out:
 
 * XebiaLabs Release Orchestration and Deployment Automation up and running
 * AWS Access Key and Secret Key for an account that can deploy the application
-* A Jenkins server up and running (only if you want to publish your own Docker images)
+* A Jenkins server up and running for publishing your Docker images
 
 ## Special instructions
 
@@ -85,7 +85,7 @@ This blueprint version requires at least the following versions of the specified
 
 ## Notes
 
-* If you opt to use Jenkins in the release template that this blueprint generates, before you run the `xl apply` command, define a Jenkins server as a shared configuration in XL Release and put its name in the `xlr-pipeline-ci-cd.yaml` file. If you use the provided docker-compose files this will be automatically setup for you.
+* Before you run the `xl apply` command, define a Jenkins server as a shared configuration in XL Release and put its name in the `xlr-pipeline-ci-cd.yaml` file. If you use the provided docker-compose files this will be automatically setup for you.
 * The YAML that the blueprint generates includes optional steps to remove the application and deprovision the cluster.
 
 ## Labels

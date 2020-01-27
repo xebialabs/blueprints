@@ -48,9 +48,6 @@ spec:
           capabilities:
           - CAPABILITY_IAM
           - CAPABILITY_NAMED_IAM
-          {{- if ne .XLEnvironmentPath "none"}}
-          environmentPath: {{.XLEnvironmentPath | kebabcase}}
-          {{- end}}
           inputVariables:
             ProjectName: {{$app}}
             UserStackName: {{$app}}-eks-user
@@ -83,6 +80,9 @@ spec:
           capabilities:
           - CAPABILITY_IAM
           - CAPABILITY_NAMED_IAM
+          {{- if ne .XLEnvironmentPath "none"}}
+          environmentPath: {{.XLEnvironmentPath | kebabcase}}
+          {{- end}}
           inputVariables:
             ProjectName: {{$app}}
             VPCStackName: {{$app}}-eks-vpc
