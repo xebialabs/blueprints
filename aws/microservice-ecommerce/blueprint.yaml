@@ -36,6 +36,23 @@ spec:
     default: xl-demo
     value: !expr "ProvisionCluster ? 'xl-demo' : ''"
 
+  - name: UseAWSCredentialsFromSystem
+    type: Confirm
+    prompt: Do you want to use AWS credentials from ~/.aws/credentials file?
+    promptIf: !expr "!ProvisionCluster && awsCredentials('IsAvailable')"
+
+  - name: AWSAccessKey
+    type: SecretInput
+    prompt: What is the AWS Access Key ID?
+    promptIf: !expr "!ProvisionCluster && !UseAWSCredentialsFromSystem"
+    default: !expr "awsCredentials('AccessKeyID')"
+
+  - name: AWSAccessSecret
+    type: SecretInput
+    prompt: What is the AWS Secret Access Key?
+    promptIf: !expr "!ProvisionCluster && !UseAWSCredentialsFromSystem"
+    default: !expr "awsCredentials('SecretAccessKey')"
+
   - name: XLDUrlForXLR
     type: Input
     prompt: What is the XL Deploy URL used by XL Release? (This is only used in the XL Release template)
@@ -45,9 +62,7 @@ spec:
   # Jenkins
   # ############################################################################
   - name: EnableCICD
-    type: Confirm
-    prompt: Do you want to enable CI/CD integration with Jenkins?
-    default: true
+    value: true
 
   - name: StoreAdminUsername
     value: admin
@@ -85,8 +100,6 @@ spec:
       value: false
     - name: UseJenkins
       value: !expr "EnableCICD"
-    - name: JenkinsBranch
-      value: gke-blueprint
 
   files:
   # XebiaLabs
