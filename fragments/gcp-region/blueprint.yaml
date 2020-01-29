@@ -6,7 +6,7 @@ metadata:
   description: Fragment to collect the GCP location
   author: XebiaLabs
   version: 2.0
-  suppressXebiaLabsFolder: false
+  suppressXebiaLabsFolder: true
   instructions: This blueprint has no instructions.
 
 spec:

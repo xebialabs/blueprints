@@ -1,0 +1,40 @@
+xl_mode: blueprint
+with_answers:
+  AppName: test
+  ConfigureSonar: true
+  SonarUrl: https://sonarcloud.io
+  ConfigureSonarUsername: true
+  SonarUsername: test
+  ConfigureSonarPassword: true
+  SonarPassword: dummy
+  SonarResource: dummy
+  ConfigureFortify: true
+  SelectedFortify: Fortify SSC
+  FortifyUrl: https://api.emea.fortify.com
+  FortifyUsername: dummy
+  FortifyPassword: dummy
+  FortifyApplication: dummy
+  FortifyApplicationVersion: 1
+  ConfigureCheckmarx: true
+  SelectedCheckmarx: both
+  CheckmarxUrl: http://dummy.com
+  CheckmarxUsername: dummy
+  CheckmarxPassword: dummy
+  CheckmarxApplication: dummy
+  CheckmarxTeam: dummy
+  ConfigureBlackduck: true
+  BlackduckUrl: http://dummy.com
+  BlackduckUsername: dummy
+  BlackduckPassword: dummy
+  BlackduckApplication: dummy
+  BlackduckApplicationVersion: 1
+  GenerateDockerComposeSetup: true
+expect:
+  to_exist:
+  - xebialabs.yaml
+  - README.md
+  - xebialabs/USAGE-security-scanning.md
+  - xebialabs/xlr-security-scanning-configuration.yaml
+  - xebialabs/xlr-security-scanning-pipeline.yaml
+  - xebialabs/xlr-security-scanning-dashboard.yaml
+  - docker/docker-compose.yml

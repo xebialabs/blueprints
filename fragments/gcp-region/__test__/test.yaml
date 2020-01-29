@@ -1,1 +1,9 @@
-answers-file: answers.yaml
+xl_mode: blueprint
+with_answers:
+  GCPRegionPrompt: Choose the region
+  GCPRegion: asia-east1
+expect:
+  to_not_exist:
+  - xebialabs.yaml
+  - xebialabs/values.xlvals
+  - xebialabs/secrets.xlvals

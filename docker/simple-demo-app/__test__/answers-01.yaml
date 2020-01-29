@@ -1,6 +1,0 @@
-AppName: test-project
-ContainerPort: 80
-HostPort: 8181
-BackendDockerImage: xebialabsunsupported/rest-o-rant-api
-FrontendDockerImage: xebialabsunsupported/rest-o-rant-web
-GenerateDockerComposeSetup: true

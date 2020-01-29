@@ -1,14 +1,25 @@
-answers-file: answers.yaml
-expected-files:
-- xebialabs.yaml
-- README.md
-- xebialabs/USAGE-elastic-beanstalk.md
-- xebialabs/xld-elastic-beanstalk-applications.yaml
-- xebialabs/xld-elastic-beanstalk-infrastructure.yaml
-- xebialabs/xld-elastic-beanstalk-environments.yaml
-- xebialabs/xlr-elastic-beanstalk-pipeline-ci-cd.yaml
-- xebialabs/xlr-elastic-beanstalk-pipeline-destroy.yaml
-- cloudformation-elastic-beanstalk//beanstalk.yaml
-- cloudformation-elastic-beanstalk//python-app-v1.zip
-- docker/docker-compose.yml
-- docker/data/configure-xl-devops-platform.yaml
+xl_mode: blueprint
+with_answers:
+  AppName: appname
+  S3BucketName: s3bucket
+  UseAWSCredentialsFromSystem: false
+  AWSAccessKey: ABCDEFGHIJKLMNOPQRST
+  AWSAccessSecret: 1234567890abcdefghijklmnopqrstuvwxyz12345
+  AWSRegion: eu-west-3
+  SolutionStackName: "64bit Amazon Linux 2018.03 v2.8.6 running Python 3.6"
+  S3Key: python-app-v1.zip
+  GenerateDockerComposeSetup: true
+expect:
+  to_exist:
+  - xebialabs.yaml
+  - README.md
+  - xebialabs/USAGE-elastic-beanstalk.md
+  - xebialabs/xld-elastic-beanstalk-applications.yaml
+  - xebialabs/xld-elastic-beanstalk-infrastructure.yaml
+  - xebialabs/xld-elastic-beanstalk-environments.yaml
+  - xebialabs/xlr-elastic-beanstalk-pipeline-ci-cd.yaml
+  - xebialabs/xlr-elastic-beanstalk-pipeline-destroy.yaml
+  - cloudformation-elastic-beanstalk//beanstalk.yaml
+  - cloudformation-elastic-beanstalk//python-app-v1.zip
+  - docker/docker-compose.yml
+  - docker/data/configure-xl-devops-platform.yaml
