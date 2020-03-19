@@ -12,7 +12,7 @@ for current_dir, dirs, files in os.walk(local_directory):
     files = set([f.lower() for f in files])
 
     # extract root blueprint directories
-    if (len(set(files) & bluprint_def_files) > 0) and './fragments/' not in current_dir:
+    if (len(set(files) & bluprint_def_files) > 0):
         blueprint_dirs.append(current_dir[2:])
 
 blueprint_dirs.sort()
