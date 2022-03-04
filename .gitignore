@@ -79,7 +79,7 @@ blueprints.sublime-workspace
 # Gradle
 ######################
 .gradle/
-/build/
+build/
 
 ######################
 # Windows
