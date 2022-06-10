@@ -170,8 +170,8 @@ tasks {
     register<Exec>("syncBlueprintsArchives") {
         dependsOn("blueprintsArchives")
         commandLine(
-            "ssh", "xebialabs@nexus1.xebialabs.cyso.net", "rsync", "-razv", "--delete", "--chmod=Du=rwx,Dg=rx,Do=rx,Fu=rw,Fg=r,Fo=r",
-            "--exclude", "*.py", layout.buildDirectory.dir("blueprints").get().asFile.absolutePath,
+            "rsync", "-razv", "--delete", "--chmod=Du=rwx,Dg=rx,Do=rx,Fu=rw,Fg=r,Fo=r",
+            "--exclude", "*.py", "'${layout.buildDirectory.dir("blueprints").get().asFile.absolutePath}'",
             "xldown@dist.xebialabs.com:/var/www/dist.xebialabs.com/public/blueprints/$releasedVersion"
         )
     }
