@@ -181,7 +181,7 @@ tasks {
             commandLine(commandUnzip.split(" "))
         } else {
             commandLine("echo",
-                "You have to specify which version you want to sync, ex. ./gradlew syncBlueprintsArchives -PversionToSync=22.0.0")
+                "You have to specify which version you want to sync, ex. ./gradlew syncBlueprintsArchives -PversionToSync=10.2.0")
         }
     }
 
@@ -199,7 +199,7 @@ tasks {
             commandLine(commandRsync.split(" "))
         } else {
             commandLine("echo",
-                "You have to specify which version you want to sync, ex. ./gradlew syncBlueprintsArchives -PversionToSync=22.0.0")
+                "You have to specify which version you want to sync, ex. ./gradlew syncBlueprintsArchives -PversionToSync=10.2.0")
         }
     }
 
