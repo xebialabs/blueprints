@@ -25,9 +25,9 @@ buildscript {
 }
 
 plugins {
-    kotlin("jvm") version "1.8.10"
+    kotlin("jvm") version "2.1.20"
 
-    id("com.github.node-gradle.node") version "4.0.0"
+    id("com.github.node-gradle.node") version "7.0.2"
     id("idea")
     id("nebula.release") version (properties["nebulaReleasePluginVersion"] as String)
     id("maven-publish")
@@ -38,12 +38,14 @@ apply(plugin = "ai.digital.gradle-commit")
 group = "ai.digital.xlclient.blueprints"
 project.defaultTasks = listOf("build")
 
-val releasedVersion = System.getenv()["RELEASE_EXPLICIT"] ?: if (project.version.toString().contains("SNAPSHOT")) {
-    project.version.toString()
-} else {
-    "23.3.0-${LocalDateTime.now().format(DateTimeFormatter.ofPattern("Mdd.Hmm"))}"
-}
+
+val releasedVersion = System.getenv()["RELEASE_EXPLICIT"] ?:
+    "${project.version}-${LocalDateTime.now().format(DateTimeFormatter.ofPattern("Mdd.Hmm"))}"
+
 project.extra.set("releasedVersion", releasedVersion)
+
+val languageLevel = properties["languageLevel"]
+val pythonBinary = properties["pythonBinary"]
 
 repositories {
     mavenLocal()
@@ -67,8 +69,8 @@ dependencies {
 }
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_11
-    targetCompatibility = JavaVersion.VERSION_11
+    sourceCompatibility = JavaVersion.toVersion(languageLevel)
+    targetCompatibility = JavaVersion.toVersion(languageLevel)
 }
 
 tasks.named<Test>("test") {
@@ -101,7 +103,7 @@ tasks {
         group = "blueprint"
         dependsOn("blueprintsCopy")
         workingDir(layout.buildDirectory.dir("blueprints"))
-        commandLine("python", "./generate_index.py")
+        commandLine(pythonBinary, "./generate_index.py")
 
         standardOutput = ByteArrayOutputStream()
         errorOutput = ByteArrayOutputStream()
