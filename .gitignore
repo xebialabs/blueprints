@@ -80,6 +80,7 @@ blueprints.sublime-workspace
 ######################
 .gradle/
 build/
+buildSrc/.kotlin
 
 ######################
 # Windows
