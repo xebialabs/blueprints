@@ -44,8 +44,8 @@ val releasedVersion = System.getenv()["RELEASE_EXPLICIT"] ?:
 
 project.extra.set("releasedVersion", releasedVersion)
 
-val languageLevel = properties["languageLevel"]
-val pythonBinary = properties["pythonBinary"]
+val languageLevel = properties["languageLevel"] as String
+val pythonBinary = properties["pythonBinary"] as String
 
 repositories {
     mavenLocal()
@@ -198,8 +198,8 @@ tasks {
         group = "release"
         doLast {
             project.logger.lifecycle("Dumping version $releasedVersion")
-            file(buildDir).mkdirs()
-            file("$buildDir/version.dump").writeText("version=${releasedVersion}")
+            layout.buildDirectory.get().asFile.mkdirs()
+            layout.buildDirectory.file("version.dump").get().asFile.writeText("version=${releasedVersion}")
         }
     }
 
