@@ -27,7 +27,7 @@ buildscript {
 plugins {
     kotlin("jvm") version "2.1.20"
 
-    id("com.github.node-gradle.node") version "7.0.2"
+    id("com.github.node-gradle.node") version "7.1.0"
     id("idea")
     id("nebula.release") version (properties["nebulaReleasePluginVersion"] as String)
     id("maven-publish")
@@ -38,6 +38,8 @@ apply(plugin = "ai.digital.gradle-commit")
 group = "ai.digital.xlclient.blueprints"
 project.defaultTasks = listOf("build")
 
+val nodeVersion = properties["nodeVersion"] as String
+val yarnVersion = properties["yarnVersion"] as String
 
 val releasedVersion = System.getenv()["RELEASE_EXPLICIT"] ?:
     "${project.version}-${LocalDateTime.now().format(DateTimeFormatter.ofPattern("Mdd.Hmm"))}"
@@ -279,7 +281,7 @@ publishing {
 }
 
 node {
-    version.set("16.13.2")
-    yarnVersion.set("1.22.17")
+    version.set(nodeVersion)
+    yarnVersion.set(yarnVersion)
     download.set(true)
 }
