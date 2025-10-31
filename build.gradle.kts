@@ -27,7 +27,7 @@ buildscript {
 plugins {
     kotlin("jvm") version "2.1.20"
 
-    id("com.github.node-gradle.node") version "7.0.2"
+    id("com.github.node-gradle.node") version "7.1.0"
     id("idea")
     id("nebula.release") version (properties["nebulaReleasePluginVersion"] as String)
     id("maven-publish")
@@ -38,14 +38,16 @@ apply(plugin = "ai.digital.gradle-commit")
 group = "ai.digital.xlclient.blueprints"
 project.defaultTasks = listOf("build")
 
+val nodeVersion = properties["nodeVersion"] as String
+val yarnVersion = properties["yarnVersion"] as String
 
 val releasedVersion = System.getenv()["RELEASE_EXPLICIT"] ?:
     "${project.version}-${LocalDateTime.now().format(DateTimeFormatter.ofPattern("Mdd.Hmm"))}"
 
 project.extra.set("releasedVersion", releasedVersion)
 
-val languageLevel = properties["languageLevel"]
-val pythonBinary = properties["pythonBinary"]
+val languageLevel = properties["languageLevel"] as String
+val pythonBinary = properties["pythonBinary"] as String
 
 repositories {
     mavenLocal()
@@ -198,8 +200,8 @@ tasks {
         group = "release"
         doLast {
             project.logger.lifecycle("Dumping version $releasedVersion")
-            file(buildDir).mkdirs()
-            file("$buildDir/version.dump").writeText("version=${releasedVersion}")
+            layout.buildDirectory.get().asFile.mkdirs()
+            layout.buildDirectory.file("version.dump").get().asFile.writeText("version=${releasedVersion}")
         }
     }
 
@@ -279,7 +281,7 @@ publishing {
 }
 
 node {
-    version.set("16.13.2")
-    yarnVersion.set("1.22.17")
+    version.set(nodeVersion)
+    yarnVersion.set(yarnVersion)
     download.set(true)
 }
