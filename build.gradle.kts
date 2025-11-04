@@ -207,6 +207,7 @@ tasks {
 
     register<NebulaRelease>("nebulaRelease") {
         group = "release"
+        version = releasedVersion
         dependsOn(named("buildOperators"), named("updateDocs"))
     }
 
